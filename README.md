@@ -1,235 +1,101 @@
-<p align="center">
-  <img src="assets/icons/icon.png" width="80" alt="Cline" />
+﻿<p align="center">
+  <img src="assets/branding/sekokuva-app-icon-256.png" width="96" alt="SekoKuva Coding Agent" />
 </p>
 
-<h1 align="center">Cline</h1>
+<h1 align="center">SekoKuva Coding Agent</h1>
 
 <p align="center">
-The open source coding agent in your IDE, terminal, & desktop!
+An AI coding agent for your editor and your terminal.
 </p>
 
-<div align="center">
-
-<div align="center">
-<table>
-<tbody>
-<td align="center">
-<a href="https://docs.cline.bot" target="_blank"><strong>Docs</strong></a>
-</td>
-<td align="center">
-<a href="https://discord.gg/cline" target="_blank"><strong>Discord</strong></a>
-</td>
-<td align="center">
-<a href="https://www.reddit.com/r/cline/" target="_blank"><strong>r/cline</strong></a>
-</td>
-<td align="center">
-<a href="https://github.com/cline/cline/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank"><strong>Feature Requests</strong></a>
-</td>
-<td align="center">
-<a href="https://cline.bot/join-us" target="_blank"><strong>Join us!</strong></a>
-</td>
-</tbody>
-</table>
-</div>
-
-</div>
-
-<br>
-
-<div align="center">
-<table>
-<tr>
-<td align="center" width="50%">
-
-### CLI
-
-Run Cline in your terminal.
-Interactive chat or fully headless 
-for CI/CD and scripting.
-
-```
-npm i -g cline
-```
-
-<a href="./apps/cli/README.md">Learn more</a>
-<br><br>
-
-</td>
-<td align="center" width="50%">
-
-### Desktop App
-
-Cline as a native app for macOS and Windows.
-Run agent sessions in any folder, schedule
-routines, and manage models, plugins, and MCP servers.
-
-<a href="https://cline.bot/desktop">Download for macOS and Windows</a>
-<br><br>
-
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-
-### VS Code Extension
-
-AI coding assistant in your editor.
-Create files, run commands, browse the web,
-and use tools with human-in-the-loop approval.
-
-<a href="https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev">Install from VS Marketplace</a>
-<br><br>
-
-</td>
-<td align="center" width="50%">
-
-### JetBrains Plugin
-
-The same Cline experience in IntelliJ IDEA,
-PyCharm, WebStorm, GoLand, and the rest of
-the JetBrains family.
-
-<a href="https://plugins.jetbrains.com/plugin/28247-cline">Install from JetBrains Marketplace</a>
-<br><br>
-
-</td>
-</tr>
-</table>
-</div>
-
-<div align="center">
-<table>
-<tr>
-<td align="center">
-
-### SDK
-
-Build your own AI agents and integrations powered by the same engine that runs the CLI, desktop app, VS Code extension, and JetBrains plugin. Custom tools, multi-agent teams, connectors, scheduled automations, and more.
-
-```
-npm install @cline/sdk
-```
-
-<a href="https://docs.cline.bot/cline-sdk/overview">Documentation</a>
-<br><br>
-
-</td>
-</tr>
-</table>
-</div>
+<p align="center">
+  <a href="https://ca.sekokuva.fi"><strong>Website</strong></a> ·
+  <a href="https://ca.sekokuva.fi/docs"><strong>Docs</strong></a> ·
+  <a href="CONTRIBUTING.md"><strong>Contributing</strong></a>
+</p>
 
 ---
 
-## Index
+SekoKuva Coding Agent reads your project, edits files, runs commands, and works
+through tasks with you. Every file change and terminal command requires your
+approval, so you stay in control of what actually changes.
 
-| Product | Description | Location | CHANGELOG |
-|---------|------------|--------------|--------------|
-| **SDK** | Node.js programmatic agent API and extension exports. | [`sdk/`](https://github.com/cline/cline/tree/main/sdk) | [CHANGELOG.md](https://github.com/cline/cline/blob/main/sdk/CHANGELOG.md) |
-| **CLI** | Terminal UI, headless mode, shell commands, and CLI-specific flows. | [`apps/cli/`](https://github.com/cline/cline/tree/main/apps/cli) | [CHANGELOG.md](https://github.com/cline/cline/blob/main/apps/cli/CHANGELOG.md) |
-| **VS Code Extension** | The Marketplace extension and extension host integration. | [`apps/vscode/`](https://github.com/cline/cline/tree/main/apps/vscode) | [CHANGELOG.md](https://github.com/cline/cline/blob/main/CHANGELOG.md) |
-| **Desktop App** | Native macOS and Windows app (Tauri shell, Bun sidecar, Next.js UI). | [`apps/examples/desktop-app/`](https://github.com/cline/cline/tree/main/apps/examples/desktop-app) | [CHANGELOG.md](https://github.com/cline/cline/blob/main/apps/examples/desktop-app/CHANGELOG.md) |
-| **JetBrains Plugin** | JetBrains-hosted client that talks to the shared agent core. | Currently we are not open-sourcing JetBrains plugins | - |
-| **Docs site** | Public documentation pages. | [`docs/`](https://docs.cline.bot/) | - |
+It runs on the SekoKuva model gateway at `api.sekokuva.fi`, and can also be
+pointed at any OpenAI-compatible endpoint.
 
-## Edits Code Across Your Project
+## What's in this repository
 
-Cline reads your project structure, understands the relationships between files, and makes coordinated changes across your codebase. It monitors linter and compiler errors as it works, fixing issues like missing imports, type mismatches, and syntax errors before you even see them. In VS Code and JetBrains, every edit shows up as a diff you can review, modify, or revert. All changes are tracked with checkpoints, so you can easily undo the agent's work.
+| Part | Description | Location |
+| --- | --- | --- |
+| **VS Code extension** | The editor integration and its webview UI. | [`apps/vscode/`](apps/vscode) |
+| **CLI** | Terminal UI, headless mode, and shell commands. | [`apps/cli/`](apps/cli) |
+| **Agent core** | The tool loop, provider abstraction, and session runtime. | [`sdk/packages/`](sdk/packages) |
+| **Desktop app** | Native shell (Tauri) around the agent core. | [`apps/examples/desktop-app/`](apps/examples/desktop-app) |
+| **Docs** | Documentation site. | [`docs/`](docs) |
 
-## Runs Bash Commands
+## Features
 
-Cline executes commands directly in your terminal and watches the output in real time. Install packages, run build scripts, execute tests, deploy applications, manage databases. For long-running processes like dev servers, Cline continues working in the background and reacts to new output as it appears, catching compile errors, test failures, and server crashes as they happen.
+**Edits code across your project.** The agent reads your project structure,
+understands the relationships between files, and makes coordinated changes. It
+watches linter and compiler output as it works and fixes issues before you see
+them. Every edit appears as a diff you can review, modify, or revert, and
+checkpoints let you undo the agent's work.
 
-## Plan and Act
+**Runs commands.** Commands execute in your terminal with output streamed back
+in real time. Long-running processes like dev servers keep running in the
+background while the agent reacts to new output.
 
-Toggle between Plan mode and Act mode. In Plan mode, Cline explores your codebase, asks clarifying questions, and lays out a strategy. Once you're aligned, switch to Act mode and Cline executes the plan. Every file edit and terminal command requires your approval, so you stay in control of what actually changes. Or toggle auto-approve and let Cline run autonomously.
+**Plan and Act.** In Plan mode the agent explores the codebase, asks clarifying
+questions, and lays out a strategy. Switch to Act mode to execute it. Auto-approve
+is available when you want the agent to run unattended.
 
-## Rules and Skills
+**Rules and skills.** Project-specific rules live in `.sekokuva-ca-rules` and are
+picked up automatically by every surface. Skills let the model load specific
+rules only when they are relevant.
 
-Define project-specific rules in `.clinerules` files that guide how Cline works in your codebase: coding standards, architecture conventions, deployment procedures, testing requirements. Rules are picked up automatically by the CLI, VS Code extension, and JetBrains plugin. Use skills to let the model load specific rules when needed.
+**Extensible.** Register tools and lifecycle hooks through the plugin system, or
+connect MCP servers over `stdio`, `sse`, or `streamableHttp`.
 
-## Works With Every Model
+## Getting started
 
-Cline is not locked to a single AI provider. Use whichever model fits your workflow:
+### VS Code extension
 
-| Provider | Models |
-|----------|--------|
-| Anthropic | Claude Opus, Sonnet, Haiku |
-| OpenAI | GPT series models |
-| Google | Gemini series models |
-| OpenRouter | 200+ models from any provider |
-| Vercel AI Gateway | Route to many providers through one gateway |
-| AWS Bedrock | Claude, Llama, and more |
-| Azure / GCP Vertex | All hosted models |
-| Cerebras / Groq | Fast inference models |
-| Ollama / LM Studio | Run local models on your machine |
-| Any OpenAI-compatible API | Self-hosted or third-party endpoints |
+Install **SekoKuva Coding Agent** from the VS Code Marketplace, then open the
+SekoKuva view in the activity bar.
 
-## Extend With Plugins or MCP Servers
-
-Extend Cline's capabilities with plugins. Using the SDK, register tools and lifecycle hooks programmatically through the plugin system for logging, auditing, policy enforcement, or adding domain-specific capabilities. Simple plugin example below.
-
-```typescript
-import { Agent, createTool } from "@cline/sdk"
-
-const deployTool = createTool({
-  name: "deploy",
-  description: "Deploy the current branch to staging.",
-  inputSchema: { type: "object", properties: { env: { type: "string" } }, required: ["env"] },
-  execute: async (input) => {
-    // your deployment logic
-  },
-})
-
-const agent = new Agent({ tools: [deployTool], /* ... */ })
-```
-...or use [MCPs](https://github.com/modelcontextprotocol) to connect to databases, query APIs, manage cloud infrastructure, and interact with external systems. Use [community-built servers](https://github.com/modelcontextprotocol/servers) or ask Cline to create custom tools on the fly. In the CLI, manage servers with `cline mcp`.
-
-## Multi-Agent Teams
-
-Coordinate multiple agents working together on complex tasks. A coordinator agent breaks the work into subtasks and delegates to specialist agents, each with their own tools and context. Team state persists across sessions so you can pick up where you left off.
+### CLI
 
 ```bash
-cline --team-name auth-sprint "Plan and implement user authentication with tests"
+npm install -g sekokuva-ca
+sekokuva-ca
 ```
 
-## Scheduled Agents
+Run `sekokuva-ca doctor` to check your local setup.
 
-Run agents on cron schedules for recurring automations. Daily PR summaries, weekly dependency checks, codebase health reports. Schedules persist across restarts and run independently of any terminal session.
+### From source
 
 ```bash
-cline schedule create "PR summary" \
-  --cron "0 9 * * MON-FRI" \
-  --prompt "List all open PRs and their review status" \
-  --workspace /path/to/repo
+bun install
+bun run build:sdk
+bun run cli
 ```
 
-## Connect to Slack, Telegram, Discord, and More
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full development setup.
 
-Chat with your agent from any messaging platform: Telegram, Slack, Discord, Google Chat, WhatsApp, and Linear. Each conversation thread maps to an agent session with full context. Set up access control to restrict who can interact with your agent.
+## Configuration
 
-```bash
-# Connect to Telegram
-cline connect telegram -k $BOT_TOKEN
-# Connect to Slack through webhook
-cline connect slack --bot-token $SLACK_TOKEN --signing-secret $SECRET --base-url $URL
-# Connect to Slack using socket mode
-cline connect slack --bot-token $SLACK_TOKEN --app-token $SLACK_APP_TOKEN
-```
+Configuration lives in `~/.sekokuva-ca`. Set `SEKOKUVA_CA_API_BASE_URL` to point
+the agent at a different gateway.
 
-## Headless CLI for CI/CD
+## Brand assets
 
-Run Cline with zero interaction for scripting and automation. Pipe input, get JSON output, chain commands, integrate into CI/CD pipelines.
-
-```bash
-cline "Run tests and fix any failures"
-git diff origin/main | cline "Review these changes for issues"
-cline --json "List all TODO comments" | jq -r 'select(.type == "agent_event" and .event.text) | .event.text'
-```
-
-## Contributing
-
-Start with the [Contributing Guide](CONTRIBUTING.md). Join our [Discord](https://discord.gg/cline) and head to the `#contributors` channel to connect with other contributors. Check our [careers page](https://cline.bot/join-us) for full-time roles.
+Logos, the icon mark, and the color palette are documented in
+[`assets/branding/README.md`](assets/branding/README.md). Canonical brand values
+live in [`sdk/packages/shared/src/brand.ts`](sdk/packages/shared/src/brand.ts).
 
 ## License
 
-[Apache 2.0 © 2026 Cline Bot Inc.](./LICENSE)
+[Apache License 2.0](LICENSE) © 2026 BC Bertenex Oy.
+
+This product includes software developed by Cline Bot Inc., licensed under the
+Apache License 2.0. See [NOTICE](NOTICE).

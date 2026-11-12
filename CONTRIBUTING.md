@@ -1,209 +1,143 @@
-# Contributing to Cline
+﻿# Contributing to SekoKuva Coding Agent
 
-We're thrilled you're interested in contributing to Cline. Whether you're fixing a bug, adding a feature, or improving our docs, every contribution makes Cline smarter! To keep our community vibrant and welcoming, all members must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+Thanks for your interest in contributing. This document covers how to set up the
+project, what we expect from a pull request, and how to get help.
+
+By participating, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Reporting Bugs or Issues
 
-Bug reports help make Cline better for everyone! Before creating a new issue, please [search existing ones](https://github.com/cline/cline/issues) to avoid duplicates. When you're ready to report a bug, head over to our [issues page](https://github.com/cline/cline/issues/new/choose) where you'll find a template to help you with filling out the relevant information.
+Before opening an issue, search the existing issues to avoid duplicates.
 
-<blockquote class='warning-note'>
-     🔐 <b>Important:</b> If you discover a security vulnerability, please use the <a href="https://github.com/cline/cline/security/advisories/new">GitHub security tool to report it privately</a>.
-</blockquote>
+When you open a bug report, include:
 
+- What you expected to happen
+- What actually happened
+- Steps to reproduce
+- Your OS, editor version, and SekoKuva Coding Agent version
+- Relevant logs or screenshots
+
+> **Security issues:** do not open a public issue. See [SECURITY.md](SECURITY.md).
 
 ## Before Contributing
 
-All contributions must begin with a GitHub Issue, unless the change is for small bug fixes, typo corrections, minor wording improvements, or simple type fixes that don't change functionality.
-**For features and contributions**:
-- First check the [Feature Requests discussions board](https://github.com/cline/cline/discussions/categories/feature-requests) for similar ideas
-- If your idea is new, create a new feature request  
-- Wait for approval from core maintainers before starting implementation
-- Once approved, feel free to begin working on a PR with the help of our community!
+All contributions should begin with an issue, unless the change is a small bug
+fix, typo correction, or minor wording improvement.
 
-**PRs without approved issues may be closed.**
+For features:
 
+1. Check existing issues and discussions for similar ideas.
+2. Open an issue describing the change and why it is needed.
+3. Wait for a maintainer to approve before starting implementation.
 
-## Deciding What to Work On
-
-Looking for a good first contribution? Check out issues labeled ["good first issue"](https://github.com/cline/cline/labels/good%20first%20issue) or ["help wanted"](https://github.com/cline/cline/labels/help%20wanted). These are specifically curated for new contributors and areas where we'd love some help!
-
-We also welcome contributions to our [documentation](https://github.com/cline/cline/tree/main/docs)! Whether it's fixing typos, improving existing guides, or creating new educational content - we'd love to build a community-driven repository of resources that helps everyone get the most out of Cline. You can start by diving into `/docs` and looking for areas that need improvement.
+Pull requests without an approved issue may be closed.
 
 ## Development Setup
 
+### Prerequisites
 
-### Local Development Instructions
+- [git-lfs](https://git-lfs.com/)
+- [Bun](https://bun.com) 1.4.2
+- Node.js >= 22
+- VS Code 1.101 or newer
 
-1. Clone the repository _(Requires [git-lfs](https://git-lfs.com/))_:
-    ```bash
-    git clone https://github.com/cline/cline.git
-    ```
-2. Open the project in VSCode:
-    ```bash
-    code cline
-    ```
-3. Install [bun](https://bun.com)
-4. Install the necessary dependencies for the extension and webview-gui:
-    ```bash
-    cd apps/vscode && bun run install:all && cd ../..
-    cd sdk && bun run build && cd ..
-    ```
-5. Generate Protocol Buffer files (required before first build):
-6. Launch by pressing `F5` (or `Run`->`Start Debugging`) to open a new VSCode window with the extension loaded. (You may need to install the [esbuild problem matchers extension](https://marketplace.visualstudio.com/items?itemName=connor4312.esbuild-problem-matchers) if you run into issues building the project.)
+### First build
 
+```bash
+git clone <this-repository>
+cd coding-agent
+bun install
+bun run build:sdk
+```
 
-
-
-### Creating a Pull Request
-
-1. Commit your changes.
-
-2. Push your branch and create a PR on GitHub. Our CI will:
-   - Run tests and checks
-3. Testing
-    - Run `cd apps/vscode && bun run test` to run tests locally. 
-    - Before submitting PR, run `bun run format:fix` to format your code
+The SDK packages resolve each other through compiled `dist/` output, so
+`bun run build:sdk` must run after any change to `sdk/packages/*` and before
+running the CLI, the extension, or the SDK tests.
 
 ### Extension
 
-1. **VS Code Extensions**
+```bash
+cd apps/vscode
+bun run protos      # required before the first build
+bun run dev         # generates protos and starts watch mode
+```
 
-    - When opening the project, VS Code will prompt you to install recommended extensions
-    - These extensions are required for development - please accept all installation prompts
-    - If you dismissed the prompts, you can install them manually from the Extensions panel
+Then press `F5` (or **Run -> Start Debugging**) to launch a second VS Code window
+with the extension loaded. You may need the
+[esbuild problem matchers extension](https://marketplace.visualstudio.com/items?itemName=connor4312.esbuild-problem-matchers).
 
-2. **Local Development**
-    - cd into the vscode extension, `cd apps/vscode`
-    - Run `bun run install:all` to install dependencies
-    - Run `bun run protos` to generate Protocol Buffer files (required before first build)
-    - Run `bun run test` to run tests locally
-    - Run → Start Debugging or `>Debug: Select and Start Debugging` and wait for a new VS Code instance to open
-    - **Terminal Workflow**: Use `bun run dev` (generates protos + runs watch mode) or `bun run watch` (if protos already generated)
-    - Before submitting PR, run `bun run format:fix` to format your code
+### CLI
 
-3. **Linux-specific Setup**
-    VS Code extension tests on Linux require the following system libraries:
+```bash
+bun run cli          # interactive
+bun run cli doctor   # local health check
+```
 
-    - `dbus`
-    - `libasound2`
-    - `libatk-bridge2.0-0`
-    - `libatk1.0-0`
-    - `libdrm2`
-    - `libgbm1`
-    - `libgtk-3-0`
-    - `libnss3`
-    - `libx11-xcb1`
-    - `libxcomposite1`
-    - `libxdamage1`
-    - `libxfixes3`
-    - `libxkbfile1`
-    - `libxrandr2`
-    - `xvfb`
+### Linux test dependencies
 
-    These libraries provide necessary GUI components and system services for the test environment.
+Extension tests on Linux require:
 
-    For example, on Debian-based distributions (e.g., Ubuntu), you can install these libraries using apt:
-    ```bash
-    sudo apt update
-    sudo apt install -y \
-      dbus \
-      libasound2 \
-      libatk-bridge2.0-0 \
-      libatk1.0-0 \
-      libdrm2 \
-      libgbm1 \
-      libgtk-3-0 \
-      libnss3 \
-      libx11-xcb1 \
-      libxcomposite1 \
-      libxdamage1 \
-      libxfixes3 \
-      libxkbfile1 \
-      libxrandr2 \
-      xvfb
-    ```
+```bash
+sudo apt update
+sudo apt install -y \
+  dbus libasound2 libatk-bridge2.0-0 libatk1.0-0 libdrm2 libgbm1 \
+  libgtk-3-0 libnss3 libx11-xcb1 libxcomposite1 libxdamage1 \
+  libxfixes3 libxkbfile1 libxrandr2 xvfb
+```
 
 ## Writing and Submitting Code
 
-Anyone can contribute code to Cline, but we ask that you follow these guidelines to ensure your contributions can be smoothly integrated:
+### Keep pull requests focused
 
-1. **Keep Pull Requests Focused**
+- One feature or bug fix per pull request.
+- Split large changes into smaller, related pull requests.
+- Break changes into logical commits that can be reviewed independently.
 
-    - Limit PRs to a single feature or bug fix
-    - Split larger changes into smaller, related PRs
-    - Break changes into logical commits that can be reviewed independently
+### Code quality
 
-2. **Code Quality**
+```bash
+bun run lint
+bun run format
+bun run types
+```
 
-    - Run `bun run lint` to check code style
-    - Run `bun run format` to automatically format code
-    - All PRs must pass CI checks which include both linting and formatting
-    - Address any warnings or errors from linter before submitting
-    - Follow TypeScript best practices and maintain type safety
+All pull requests must pass CI, which runs linting, formatting, type checking,
+and tests.
 
-3. **Testing**
+### Testing
 
-    - Add tests for new features
-    - Run `bun test` to ensure all tests pass
-    - Update existing tests if your changes affect them
-    - Include both unit tests and integration tests where appropriate
+```bash
+bun run test:unit
+```
 
-    **End-to-End (E2E) Testing**
-    
-    Cline includes comprehensive E2E tests using Playwright that simulate real user interactions with the extension in VS Code:
-    
-    - **Running E2E tests:**
-      ```bash
-      bun run test:e2e        # Build and run all E2E tests
-      bun run e2e             # Run tests without rebuilding
-      bun run test:e2e -- --debug  # Run with interactive debugger
-      ```
-    
-    - **Writing E2E tests:**
-      - Tests are located in `src/test/e2e/`
-      - Use the `e2e` fixture for single-root workspace tests
-      - Use `e2eMultiRoot` fixture for multi-root workspace tests
-      - Follow existing patterns in `auth.test.ts`, `chat.test.ts`, `file-edit.test.ts`, and `editor.test.ts`
-      - See `src/test/e2e/README.md` for detailed documentation
-    
-    - **Debug mode features:**
-      - Interactive Playwright Inspector for step-by-step debugging
-      - Record new interactions and generate test code automatically
-      - Visual VS Code instance for manual testing
-      - Element inspection and selector validation
-    
-    - **Test environment:**
-      - Automated VS Code setup with Cline extension loaded
-      - Mock API server for backend testing
-      - Temporary workspaces with test fixtures
-      - Video recording for failed tests
+Add tests for new behavior. Update existing tests when your change affects them.
 
-4. **Versioning & Changelog Notes**
+After changing prompts or tool definitions, regenerate snapshots:
 
-    - Contributors do not need to create changelog-entry files as part of PRs.
-    - Maintainers handle release versioning and changelog curation during the release process.
+```bash
+UPDATE_SNAPSHOTS=true bun run test:unit
+```
 
-5. **Commit Guidelines**
+### Commit messages
 
-    - Write clear, descriptive commit messages
-    - Use conventional commit format (e.g., "feat:", "fix:", "docs:")
-    - Reference relevant issues in commits using #issue-number
+Use conventional commit format (`feat:`, `fix:`, `docs:`, `refactor:`,
+`test:`, `chore:`) and reference relevant issues.
 
-6. **Before Submitting**
+### Before submitting
 
-    - Rebase your branch on the latest main
-    - Ensure your branch builds successfully
-    - Double-check all tests are passing
-    - Review your changes for any debugging code or console logs
+- Rebase on the latest `main`.
+- Confirm the branch builds.
+- Confirm tests pass.
+- Remove debugging code and stray console output.
 
-7. **Pull Request Description**
-    - Clearly describe what your changes do
-    - Include steps to test the changes
-    - List any breaking changes
-    - Add screenshots for UI changes
+### Pull request description
+
+- Describe what the change does and why.
+- Include steps to verify it.
+- List any breaking changes.
+- Add screenshots for UI changes.
 
 ## Contribution Agreement
 
-By submitting a pull request, you agree that your contributions will be licensed under the same license as the project ([Apache 2.0](LICENSE)).
-
-Remember: Contributing to Cline isn't just about writing code - it's about being part of a community that's shaping the future of AI-assisted development. Let's build something amazing together! 🚀
+By submitting a pull request, you agree that your contributions are licensed
+under the [Apache License 2.0](LICENSE), the same license as this project.

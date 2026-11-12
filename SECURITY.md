@@ -2,13 +2,16 @@
 
 ## Supported Versions
 
-We actively patch only the most recent minor release of Cline. Older versions receive fixes at our discretion.
+SekoKuva Coding Agent is pre-release software. Security fixes are applied to the
+latest published version only.
 
 ## Reporting a Vulnerability
 
-We appreciate your efforts to responsibly disclose your findings and will make every effort to acknowledge your contributions.
+Please report security issues privately. Do not open a public issue.
 
-To report a security issue, please submit your report through our [Bugcrowd Vulnerability Disclosure Program](https://bugcrowd.com/engagements/clinebot-vdp-ess). Bugcrowd will manage communication and triage on our behalf.
+Use GitHub's private vulnerability reporting on this repository
+(**Security** → **Report a vulnerability**), or email
+security@sekokuva.fi.
 
 When reporting, please include:
 
@@ -16,10 +19,7 @@ When reporting, please include:
 - Steps to reproduce or a proof of concept
 - Any logs, stack traces, or screenshots that might help us understand the problem
 
+We will acknowledge your report and keep you informed as we work on a fix.
 Please keep the details private until a resolution has been reached.
 
-## Escalation
-
-If you are unable to submit through Bugcrowd, you may send an email to security@cline.bot.
-
-Thank you for helping us keep Cline users safe.
+Thank you for helping keep SekoKuva users safe.

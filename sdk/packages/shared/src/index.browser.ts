@@ -1,5 +1,6 @@
 export * from "./agent";
 export * from "./agents";
+export * from "./brand";
 export type {
 	ConnectorAuthorizationDecision,
 	ConnectorAuthorizationRequest,
