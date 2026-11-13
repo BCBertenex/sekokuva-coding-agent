@@ -539,6 +539,10 @@ async function runCommand(
 			env: process.env,
 			// Prevent a console window from flashing on Windows.
 			windowsHide: true,
+			// Windows cannot spawn a `.cmd`/`.bat` shim (npm, yarn, pnpm) without
+			// a shell; `spawn` fails with EINVAL. Matches the MCP client's
+			// platform handling.
+			...(process.platform === "win32" ? { shell: true } : {}),
 		});
 		let stderr = "";
 		child.stderr.on("data", (chunk) => {

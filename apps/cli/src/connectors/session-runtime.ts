@@ -417,20 +417,28 @@ export async function stopConnectorSessions(input: {
 		client.close();
 	}
 
-	const service = new CoreSessionService(new SqliteSessionStore());
-	const rows = await service.listSessions(5000);
-	const filtered = rows.filter((row) => {
-		if (row.parentSessionId?.trim()) {
-			return false;
-		}
-		return input.localMatcher(parseLocalRowMetadata(row));
-	});
-	await Promise.allSettled(
-		filtered.map(async (row) => {
-			await service.deleteSession(row.sessionId);
-		}),
-	);
-	return filtered.length;
+	const store = new SqliteSessionStore();
+	try {
+		const service = new CoreSessionService(store);
+		const rows = await service.listSessions(5000);
+		const filtered = rows.filter((row) => {
+			if (row.parentSessionId?.trim()) {
+				return false;
+			}
+			return input.localMatcher(parseLocalRowMetadata(row));
+		});
+		await Promise.allSettled(
+			filtered.map(async (row) => {
+				await service.deleteSession(row.sessionId);
+			}),
+		);
+		return filtered.length;
+	} finally {
+		// Release the SQLite handle. On Windows an open handle keeps the file
+		// locked, so callers that remove the data dir afterwards fail with
+		// EBUSY.
+		store.close();
+	}
 }
 
 export { readSessionMessageCount, readSessionReplyText };

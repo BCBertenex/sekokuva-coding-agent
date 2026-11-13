@@ -473,7 +473,15 @@ describe("slack legacy connector state", () => {
 
 			expect(result?.stoppedProcesses).toBe(1);
 		} finally {
-			child.kill("SIGKILL");
+			// Wait for the child to actually exit before removing the data dir.
+			// On Windows an open SQLite handle makes `rmSync` fail with EBUSY,
+			// and `kill()` only signals — it does not wait.
+			if (child.exitCode === null && child.signalCode === null) {
+				await new Promise<void>((resolve) => {
+					child.once("exit", () => resolve());
+					child.kill("SIGKILL");
+				});
+			}
 			if (previousDataDir === undefined) {
 				delete process.env.CLINE_DATA_DIR;
 			} else {

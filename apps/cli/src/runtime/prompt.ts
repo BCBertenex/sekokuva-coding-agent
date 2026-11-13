@@ -37,7 +37,11 @@ export async function resolveSystemPrompt(input: {
 	});
 }
 
-const FILE_MENTION_PREFIX = String.raw`(?:\/|~\/|\.{1,2}\/)`;
+// A mention must start with something that anchors it to a path, so plain
+// `@word` (a handle, an email) is not treated as a file. Accepts POSIX
+// absolute/home/relative paths and Windows drive-letter, UNC, and
+// backslash-relative paths.
+const FILE_MENTION_PREFIX = String.raw`(?:[A-Za-z]:[\\/]|\\\\|\/|~[\\/]|\.{1,2}[\\/])`;
 const FILE_MENTION_PATTERN_TEST = new RegExp(
 	String.raw`@(?:"${FILE_MENTION_PREFIX}[^"\r\n]+"|${FILE_MENTION_PREFIX}\S+)`,
 	"i",

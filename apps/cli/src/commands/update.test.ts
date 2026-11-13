@@ -1,7 +1,7 @@
 import type { ChildProcess } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
+import { dirname, join, sep } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const { mockSpawn } = vi.hoisted(() => ({
@@ -244,7 +244,7 @@ describe("hub restart owner selection", () => {
 
 		const owner = resolveCliHubOwnerContext();
 
-		expect(owner.discoveryPath).toContain("/locks/hub/owners/");
+		expect(owner.discoveryPath).toContain(`${sep}locks${sep}hub${sep}owners${sep}`);
 		expect(owner.discoveryPath).not.toBe(
 			"/tmp/cline-update-test-data/locks/hub/production.json",
 		);

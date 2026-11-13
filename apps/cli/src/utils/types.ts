@@ -96,6 +96,11 @@ export interface ParsedArgs {
 	invalidRetries?: string;
 	cwd?: string;
 	teamName?: string;
+	/**
+	 * Whether agent-team tools are enabled. `undefined` means "not specified",
+	 * so the caller applies the mode-based default.
+	 */
+	enableAgentTeams?: boolean;
 	defaultToolAutoApprove: boolean;
 	autoApproveOverride?: boolean;
 }

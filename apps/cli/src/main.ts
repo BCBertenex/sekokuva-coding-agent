@@ -1099,8 +1099,11 @@ export async function runCli(): Promise<void> {
 			telemetry: getCliTelemetryService(loggerAdapter.core),
 			defaultToolAutoApprove,
 			toolPolicies,
-			enableSpawnAgent: !isYoloMode,
-			enableAgentTeams: !isYoloMode,
+			enableSpawnAgent: !isZenMode,
+			// Explicit `--teams` / `--no-teams` wins; otherwise teams are on
+			// everywhere except zen, where the CLI exits before the work starts
+			// and nobody can stop an unbounded fan-out of teammates.
+			enableAgentTeams: args.enableAgentTeams ?? !isZenMode,
 			enableTools: true,
 			cwd,
 			workspaceRoot,
