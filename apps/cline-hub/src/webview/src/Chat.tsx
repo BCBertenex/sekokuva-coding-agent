@@ -3,8 +3,8 @@
 import {
 	type GeneratedMedia,
 	USER_REJECTED_TOOL_REASON,
-} from "@cline/shared/browser";
-import { GeneratedMediaContent } from "@cline/ui";
+} from "@sekokuva-ca/shared/browser";
+import { GeneratedMediaContent } from "@sekokuva-ca/ui";
 import {
 	CheckIcon,
 	GitBranchIcon,

@@ -241,7 +241,7 @@ function contrastRatio(first: number[], second: number[]): number {
 	return (Math.max(...values) + 0.05) / (Math.min(...values) + 0.05);
 }
 
-describe("@cline/ui theme contract", () => {
+describe("@sekokuva-ca/ui theme contract", () => {
 	it("owns complete Cline brand and Radix solid and alpha palettes", () => {
 		const palette = read("palette.css");
 		const light = block(palette, ":root");
@@ -276,7 +276,7 @@ describe("@cline/ui theme contract", () => {
 		const root = block(tokens, ":root");
 		const dark = block(tokens, ".dark");
 
-		expect(tokens).toContain('@import "@cline/ui/theme/palette.css";');
+		expect(tokens).toContain('@import "@sekokuva-ca/ui/theme/palette.css";');
 		expect(tokens).not.toContain("--cline-");
 		for (const token of [
 			...visualRoleTokens,
@@ -461,7 +461,7 @@ describe("@cline/ui theme contract", () => {
 		);
 		expect(components).toContain('@import "./theme/component-theme.css";');
 		expect(base).toContain(
-			'@import "@cline/ui/components/markdown.css" layer(components);',
+			'@import "@sekokuva-ca/ui/components/markdown.css" layer(components);',
 		);
 		expect(markdown).toContain(":is(.markdown, .cline-markdown)");
 		expect(markdown).not.toContain("@apply");
@@ -471,7 +471,7 @@ describe("@cline/ui theme contract", () => {
 		expect(base).not.toContain("#__next");
 		expect(base).not.toContain("@source");
 		expect(index).toBe(
-			'@import "@cline/ui/theme/tokens.css";\n@import "@cline/ui/theme/theme.css";\n@import "@cline/ui/theme/base.css";\n',
+			'@import "@sekokuva-ca/ui/theme/tokens.css";\n@import "@sekokuva-ca/ui/theme/theme.css";\n@import "@sekokuva-ca/ui/theme/base.css";\n',
 		);
 	});
 

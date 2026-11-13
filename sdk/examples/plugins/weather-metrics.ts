@@ -22,7 +22,7 @@ import {
 	type AgentPlugin,
 	createTool,
 	type ITelemetryService,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 // ---------------------------------------------------------------------------
 // Plugin-level state — populated from setup context and available to all hook

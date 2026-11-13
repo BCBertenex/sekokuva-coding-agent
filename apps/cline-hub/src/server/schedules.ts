@@ -2,13 +2,13 @@ import {
 	createLocalHubScheduleRuntimeHandlers,
 	HubScheduleCommandService,
 	HubScheduleService,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	CLINE_DEFAULT_MODEL_ID,
 	ONE_TIME_SCHEDULE_CRON_PATTERN,
 	ONE_TIME_SCHEDULE_RUN_AT_METADATA_KEY,
 	readHubScheduleMode,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { asTrimmedString, toPositiveInt } from "./utils";
 
 let scheduleService: HubScheduleService | undefined;

@@ -2,8 +2,8 @@ import type {
 	AgentExtensionCommand,
 	AgentExtensionCommandResult,
 	ITelemetryService,
-} from "@cline/shared";
-import { createSessionId } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { createSessionId } from "@sekokuva-ca/shared";
 import {
 	captureToolUsage,
 	type TelemetryAgentIdentityProperties,

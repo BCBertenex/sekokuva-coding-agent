@@ -3,7 +3,7 @@ import type {
 	GatewayProviderContext,
 	GatewayProviderMetadata,
 	GatewayStreamRequest,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { modelRouteMatches, resolveModelFamily } from "../model-facts";
 
 /**

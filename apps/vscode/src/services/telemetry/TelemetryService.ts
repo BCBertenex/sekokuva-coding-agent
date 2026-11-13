@@ -434,11 +434,11 @@ export class TelemetryService {
 	 * this file have no caller on this line but are called on
 	 * `legacy-extension`. They are kept, not deleted: the signals they emit
 	 * originate in this bundle (webview UI, VS Code storage, host terminal,
-	 * checkpoints, legacy-task migration), so @cline/core cannot
+	 * checkpoints, legacy-task migration), so @sekokuva-ca/core cannot
 	 * emit them and the missing piece is a call site here. Tracked in
 	 * https://linear.app/cline-bot/issue/ENG-2401
 	 *
-	 * Anything whose event @cline/core already emits was deleted instead: a
+	 * Anything whose event @sekokuva-ca/core already emits was deleted instead: a
 	 * second capture path for a core-owned event is how the
 	 * task.provider_api_error double-emission happened (cline/cline#12820).
 	 *

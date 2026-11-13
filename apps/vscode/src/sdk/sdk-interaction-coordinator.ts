@@ -1,5 +1,10 @@
-import type { AskQuestionExecutor } from "@cline/core"
-import type { ConsecutiveMistakeLimitContext, ConsecutiveMistakeLimitDecision, ImageContent, TextContent } from "@cline/shared"
+import type { AskQuestionExecutor } from "@sekokuva-ca/core"
+import type {
+	ConsecutiveMistakeLimitContext,
+	ConsecutiveMistakeLimitDecision,
+	ImageContent,
+	TextContent,
+} from "@sekokuva-ca/shared"
 import type { ClineAskQuestion, ClineMessage, TurnPhase } from "@shared/ExtensionMessage"
 import type { ClineAskResponse } from "@shared/WebviewMessage"
 import { processFilesIntoText } from "@/integrations/misc/extract-text"

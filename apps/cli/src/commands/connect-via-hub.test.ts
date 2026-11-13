@@ -10,7 +10,7 @@ const mocks = vi.hoisted(() => ({
 	clientOptions: vi.fn(),
 }));
 
-vi.mock("@cline/core", () => ({
+vi.mock("@sekokuva-ca/core", () => ({
 	ensureDetachedHubServer: mocks.ensureDetachedHubServer,
 	readHubDiscovery: mocks.readHubDiscovery,
 	resolveProductionHubOwnerContext: () => ({

@@ -13,7 +13,7 @@
 //      reject the parameter; sending it needs its own change.
 import { createServer, type IncomingMessage, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
-import type { GatewayStreamRequest } from "@cline/shared";
+import type { GatewayStreamRequest } from "@sekokuva-ca/shared";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createGateway } from "../gateway";
 

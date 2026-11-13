@@ -1,10 +1,10 @@
-import { AgentRuntimeAbortError } from "@cline/agents";
+import { AgentRuntimeAbortError } from "@sekokuva-ca/agents";
 import {
 	captureSdkError,
 	ensureLoopbackProxyBypass,
 	initVcr,
 	resolveClineBuildEnv,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	resolveAgentPluginPathsWithDiagnostics,
 	resolvePluginExecutionMode,

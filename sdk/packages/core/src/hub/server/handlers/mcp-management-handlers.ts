@@ -1,4 +1,4 @@
-import type { HubCommandEnvelope, HubReplyEnvelope } from "@cline/shared";
+import type { HubCommandEnvelope, HubReplyEnvelope } from "@sekokuva-ca/shared";
 import { z } from "zod";
 import { parseMcpInstallArgs } from "../../../services/mcp-install";
 import type { McpManagementService } from "../../../services/mcp-management";

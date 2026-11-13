@@ -14,12 +14,12 @@ import {
 	setHomeDirIfUnset,
 	type ToolApprovalRequest,
 	type ToolApprovalResult,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	type AgentEvent,
 	HUB_CLIENT_TOOL_APPROVAL_CAPABILITY,
 	isGeneratedMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	discardAllTrackedAttachments,
 	flushConsumedAttachments,

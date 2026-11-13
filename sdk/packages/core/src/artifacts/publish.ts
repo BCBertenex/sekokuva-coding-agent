@@ -1,7 +1,7 @@
 import type { Stats } from "node:fs";
 import { stat } from "node:fs/promises";
 import { basename, isAbsolute } from "node:path";
-import { createTool } from "@cline/shared";
+import { createTool } from "@sekokuva-ca/shared";
 
 export type ArtifactPublicationResult =
 	| { path: string; artifactId: string }

@@ -2,7 +2,7 @@ import type {
 	AgentEvent,
 	AgentToolContext,
 	HubEventEnvelope,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { version as corePackageVersion } from "../../../package.json";
 import { createSessionCompactionState } from "../../session/models/session-compaction";

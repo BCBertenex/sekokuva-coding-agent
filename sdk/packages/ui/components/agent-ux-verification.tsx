@@ -14,7 +14,7 @@ import {
 import {
 	UxVerificationReportSchema,
 	type UxVerificationCheck,
-} from "@cline/shared/browser";
+} from "@sekokuva-ca/shared/browser";
 import { GeneratedMediaContent } from "./generated-media.js";
 import { clsx as cn } from "clsx";
 import {

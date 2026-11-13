@@ -30,8 +30,8 @@ import {
 	Llms,
 	ProviderSettingsManager,
 	SessionSource,
-} from "@cline/core";
-import { isLikelyAuthError, type MessageWithMetadata } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { isLikelyAuthError, type MessageWithMetadata } from "@sekokuva-ca/shared";
 import { getPersistedProviderApiKey } from "../commands/auth";
 import { resolveSystemPrompt } from "../runtime/prompt";
 import { subscribeToAgentEvents } from "../runtime/session-events";

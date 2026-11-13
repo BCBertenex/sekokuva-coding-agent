@@ -12,7 +12,7 @@ const result = await Bun.build({
 	packages: "bundle",
 	minify,
 	sourcemap,
-	external: ["@cline/core"],
+	external: ["@sekokuva-ca/core"],
 });
 
 if (result.logs.length > 0) {

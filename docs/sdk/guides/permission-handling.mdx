@@ -11,7 +11,7 @@ Tool policies control whether tools are enabled and whether they run without app
 The simplest way to manage permissions is through tool policies. Set them per-tool when creating an agent:
 
 ```typescript
-import { Agent, createBuiltinTools } from "@cline/sdk"
+import { Agent, createBuiltinTools } from "@sekokuva-ca/sdk"
 
 const agent = new Agent({
   // ...config
@@ -79,7 +79,7 @@ Auto-approving all tools means the agent can execute any shell command, modify a
 For applications that need human oversight, implement a custom approval handler:
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { ClineCore } from "@sekokuva-ca/sdk"
 import * as readline from "readline"
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout })

@@ -1,4 +1,4 @@
-import { readTuiThemeGlobally, setTuiThemeGlobally } from "@cline/core";
+import { readTuiThemeGlobally, setTuiThemeGlobally } from "@sekokuva-ca/core";
 import { useRenderer } from "@opentui/react";
 import {
 	type ReactNode,

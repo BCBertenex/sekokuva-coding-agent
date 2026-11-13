@@ -1,5 +1,5 @@
-import { type ProviderSettings, ProviderSettingsManager } from "@cline/core";
-import { CLINE_DEFAULT_MODEL_ID } from "@cline/shared";
+import { type ProviderSettings, ProviderSettingsManager } from "@sekokuva-ca/core";
+import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 
 export const DEFAULT_SCHEDULE_PROVIDER = "cline";
 

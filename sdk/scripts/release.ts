@@ -48,7 +48,7 @@ if (!target || !["sdk", "cli"].includes(target)) {
 	console.error("");
 	console.error("Targets:");
 	console.error(
-		"  sdk   Publish @cline/{shared,llms,agents,core,sdk,ui} to npm",
+		"  sdk   Publish @sekokuva-ca/{shared,llms,agents,core,sdk,ui} to npm",
 	);
 	console.error("  cli   Publish cline from an existing cli-vX.Y.Z git tag");
 	console.error("");
@@ -431,7 +431,7 @@ async function releaseSDK(version: string): Promise<number> {
 	header("Step 4/5: Publishing packages");
 	for (const workspace of SDK_PUBLISH_ORDER) {
 		const pkgDir = join(packagesDir, workspace);
-		const name = `@cline/${workspace}`;
+		const name = `@sekokuva-ca/${workspace}`;
 		console.log(`  Publishing ${name}@${version} with tag '${npmTag}'...`);
 		const stagedReadme = await stageSdkReadmeForPublish(workspace);
 		try {
@@ -474,7 +474,7 @@ async function releaseSDK(version: string): Promise<number> {
 	} else {
 		console.log(`  Published SDK packages with tag '${npmTag}':`);
 		for (const workspace of SDK_PUBLISH_ORDER) {
-			console.log(`    - @cline/${workspace}@${version}`);
+			console.log(`    - @sekokuva-ca/${workspace}@${version}`);
 		}
 	}
 	console.log(`${"═".repeat(60)}\n`);

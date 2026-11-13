@@ -1,4 +1,4 @@
-import { CLINE_ENVIRONMENTS } from "@cline/shared/browser";
+import { CLINE_ENVIRONMENTS } from "@sekokuva-ca/shared/browser";
 
 const CLOUD_SESSION_ERROR_PREFIX = "CLOUD_SESSION_ERROR:";
 

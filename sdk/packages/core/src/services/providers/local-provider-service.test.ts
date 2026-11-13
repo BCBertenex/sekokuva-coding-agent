@@ -1,8 +1,8 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import * as LlmsModels from "@cline/llms";
-import { CLINE_DEFAULT_MODEL_ID } from "@cline/shared";
+import * as LlmsModels from "@sekokuva-ca/llms";
+import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	FALLBACK_CLINE_RECOMMENDED_MODELS,

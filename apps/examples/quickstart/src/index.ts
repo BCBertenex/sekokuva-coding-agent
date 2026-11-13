@@ -1,4 +1,4 @@
-import { Agent, Llms } from "@cline/sdk";
+import { Agent, Llms } from "@sekokuva-ca/sdk";
 
 const agent = new Agent({
 	providerId: "cline",

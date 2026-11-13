@@ -4,7 +4,7 @@ import {
 	augmentNodeCommandForDebug,
 	type ClineDebugRole,
 	isBunEmbeddedModulePath,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 
 export interface ResolveCliLaunchSpecOptions {
 	execPath?: string;

@@ -924,7 +924,7 @@ export function resolvePngDesiredScale(
 }
 /**
  * Attached images are validated on their base64 length, capped at 5 MiB
- * (`DEFAULT_MAX_IMAGE_ENCODED_BYTES` in `@cline/shared`'s `llms/media.ts`).
+ * (`DEFAULT_MAX_IMAGE_ENCODED_BYTES` in `@sekokuva-ca/shared`'s `llms/media.ts`).
  */
 export const PNG_MAX_ENCODED_BYTES = 5 * 1024 * 1024;
 /** Each retry re-encodes at this fraction of the previous scale. */

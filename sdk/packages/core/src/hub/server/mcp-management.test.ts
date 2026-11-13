@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { HubReplyEnvelope } from "@cline/shared";
+import type { HubReplyEnvelope } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import WebSocket from "ws";
 import * as McpClient from "../../extensions/mcp/client";

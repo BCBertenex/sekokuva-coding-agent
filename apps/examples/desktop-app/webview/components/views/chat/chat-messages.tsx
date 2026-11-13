@@ -1,6 +1,6 @@
 "use client";
 
-import { AgentAskQuestion } from "@cline/ui";
+import { AgentAskQuestion } from "@sekokuva-ca/ui";
 import {
 	MessageScroller,
 	MessageScrollerButton,
@@ -8,7 +8,7 @@ import {
 	MessageScrollerItem,
 	MessageScrollerProvider,
 	MessageScrollerViewport,
-} from "@cline/ui/components/message-scroller";
+} from "@sekokuva-ca/ui/components/message-scroller";
 import { Loader2 } from "lucide-react";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import {

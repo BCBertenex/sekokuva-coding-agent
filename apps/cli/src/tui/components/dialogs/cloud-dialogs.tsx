@@ -3,7 +3,7 @@ import type {
 	CloudBranchListResult,
 	CloudModel,
 	CloudRepositoryOption,
-} from "@cline/core/cloud";
+} from "@sekokuva-ca/core/cloud";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";
 import { useEffect, useMemo, useState } from "react";

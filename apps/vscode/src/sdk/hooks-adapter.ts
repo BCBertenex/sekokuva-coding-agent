@@ -18,7 +18,7 @@ import type {
 	AgentRunLifecycleContext,
 	AgentRunStartResult,
 	AgentStopControl,
-} from "@cline/shared"
+} from "@sekokuva-ca/shared"
 import type { ClineMessage } from "@shared/ExtensionMessage"
 import { Logger } from "@shared/services/Logger"
 import { HookFactory } from "@/core/hooks/hook-factory"

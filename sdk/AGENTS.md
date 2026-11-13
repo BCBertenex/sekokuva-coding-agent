@@ -18,17 +18,17 @@ Run SDK commands from `sdk/`, not from the legacy repository root. Do not run di
 
 ### Published SDK Packages
 
-- `@cline/shared`: shared contracts, schemas, path helpers, hook engine, extension registry, low-level utilities
-- `@cline/llms`: provider settings/config, model catalogs, provider manifests, gateway contracts, handler creation
-- `@cline/agents`: stateless agent loop, tool orchestration, hook/extension runtime, event streaming
-- `@cline/core`: stateful orchestration, session lifecycle, storage, config watching, plugin loading, default tools, telemetry. Exposes `@cline/core/hub` for discovery, the detached daemon entry, WebSocket clients, and session/UI client adapters, plus `@cline/core/hub/daemon-entry` for launching the shared daemon
-- `@cline/ui`: shared web theme and reusable agent UI React components; depends only on `@cline/shared`
+- `@sekokuva-ca/shared`: shared contracts, schemas, path helpers, hook engine, extension registry, low-level utilities
+- `@sekokuva-ca/llms`: provider settings/config, model catalogs, provider manifests, gateway contracts, handler creation
+- `@sekokuva-ca/agents`: stateless agent loop, tool orchestration, hook/extension runtime, event streaming
+- `@sekokuva-ca/core`: stateful orchestration, session lifecycle, storage, config watching, plugin loading, default tools, telemetry. Exposes `@sekokuva-ca/core/hub` for discovery, the detached daemon entry, WebSocket clients, and session/UI client adapters, plus `@sekokuva-ca/core/hub/daemon-entry` for launching the shared daemon
+- `@sekokuva-ca/ui`: shared web theme and reusable agent UI React components; depends only on `@sekokuva-ca/shared`
 
 ### Dependency Direction
 
 ```mermaid
 flowchart TD
-  shared["@cline/shared"] --> llms["@cline/llms"] & agents["@cline/agents"] & core["@cline/core"]
+  shared["@sekokuva-ca/shared"] --> llms["@sekokuva-ca/llms"] & agents["@sekokuva-ca/agents"] & core["@sekokuva-ca/core"]
   llms --> agents & core
   agents --> core
   core --> apps["CLI / VS Code / Desktop App"]
@@ -38,16 +38,16 @@ Rules:
 - `shared` stays low-level and reusable
 - `agents` stays stateless — no session/storage/config concerns
 - `core` owns stateful orchestration, including the shared-hub daemon, server, and client adapters under `src/hub/`
-- `@cline/core/cloud` owns remote cloud-session transport and state. The shared hub owns desktop cloud controllers, credentials, organization lookup, and connections; desktop owns feature gating, persistence, and UI projection.
+- `@sekokuva-ca/core/cloud` owns remote cloud-session transport and state. The shared hub owns desktop cloud controllers, credentials, organization lookup, and connections; desktop owns feature gating, persistence, and UI projection.
 
 ## Change Routing
 
 Route changes to the package that owns the concern:
 
-- model/provider schemas or handler behavior: `@cline/llms`
-- stateless loop, tool orchestration, streaming, hook/extension runtime: `@cline/agents`
-- session lifecycle, storage, config watching, default tools, plugin loading, telemetry, hub runtime services, hub discovery, hub daemon spawn, and session-oriented client helpers (`HubSessionClient`, `HubUIClient`, `connectToHub`): `@cline/core` (hub pieces live under `src/hub/`)
-- remote-config schemas, managed instruction materialization, blob upload metadata, and OpenTelemetry config normalization: `@cline/shared/src/remote-config`
+- model/provider schemas or handler behavior: `@sekokuva-ca/llms`
+- stateless loop, tool orchestration, streaming, hook/extension runtime: `@sekokuva-ca/agents`
+- session lifecycle, storage, config watching, default tools, plugin loading, telemetry, hub runtime services, hub discovery, hub daemon spawn, and session-oriented client helpers (`HubSessionClient`, `HubUIClient`, `connectToHub`): `@sekokuva-ca/core` (hub pieces live under `src/hub/`)
+- remote-config schemas, managed instruction materialization, blob upload metadata, and OpenTelemetry config normalization: `@sekokuva-ca/shared/src/remote-config`
 - host-specific UX or shell behavior: app package
 
 ## Verifying Changes
@@ -76,14 +76,14 @@ bun run check       # lint + build + typecheck + check-publish
 For focused verification, prefer workspace package scripts from the SDK root:
 
 ```sh
-bun -F @cline/shared test
-bun -F @cline/llms test
-bun -F @cline/agents test
-bun -F @cline/core test:unit
-bun -F @cline/cli test:unit
+bun -F @sekokuva-ca/shared test
+bun -F @sekokuva-ca/llms test
+bun -F @sekokuva-ca/agents test
+bun -F @sekokuva-ca/core test:unit
+bun -F @sekokuva-ca/cli test:unit
 ```
 
-If a focused test command fails with a missing `@cline/*` export or missing `dist/` file, build the relevant dependency package or run `bun run build:sdk`, then rerun the same test command. Treat that as a workspace setup issue, not as evidence of a source-code bug.
+If a focused test command fails with a missing `@sekokuva-ca/*` export or missing `dist/` file, build the relevant dependency package or run `bun run build:sdk`, then rerun the same test command. Treat that as a workspace setup issue, not as evidence of a source-code bug.
 
 If you touch hub/bootstrap/session flows, please update `ARCHITECTURE.md`.
 
@@ -92,7 +92,7 @@ If you touch hub/bootstrap/session flows, please update `ARCHITECTURE.md`.
 ### Keep Boundaries Clean
 
 - Don't move stateful logic down into `agents`
-- For `@cline/llms` provider/model routing rules, follow [packages/llms/AGENTS.md](./packages/llms/AGENTS.md).
+- For `@sekokuva-ca/llms` provider/model routing rules, follow [packages/llms/AGENTS.md](./packages/llms/AGENTS.md).
 - Don't put app-specific behavior into `core` unless it is truly shared host behavior
 - Keep remote-config primitives generic in `shared`; host-facing session integration belongs in `core`
 

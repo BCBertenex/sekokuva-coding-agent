@@ -1,5 +1,5 @@
-import type * as LlmsProviders from "@cline/llms";
-import type { ITelemetryService } from "@cline/shared";
+import type * as LlmsProviders from "@sekokuva-ca/llms";
+import type { ITelemetryService } from "@sekokuva-ca/shared";
 import type {
 	CheckpointEntry,
 	CheckpointMetadata,

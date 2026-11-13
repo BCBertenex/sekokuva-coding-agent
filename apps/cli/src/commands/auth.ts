@@ -8,7 +8,7 @@ import {
 	type ProviderSettings,
 	type ProviderSettingsManager,
 	saveProviderOAuthCredentials,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { Command } from "commander";
 import React from "react";
 import { disableOpenTuiGraphicsProbe } from "../tui/opentui-env";

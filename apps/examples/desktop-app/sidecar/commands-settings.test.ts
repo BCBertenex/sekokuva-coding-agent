@@ -4,7 +4,7 @@ import { join } from "node:path";
 import {
 	clearLiveModelsCatalogCache,
 	resetClineRecommendedModelsCacheForTests,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getCloudSessionManager } from "./cloud-sessions";
 import { handleCommand } from "./commands";

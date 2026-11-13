@@ -5,7 +5,7 @@ import {
 	FEATURE_FLAGS,
 	type FeatureFlagsAndPayloads,
 	type IFeatureFlagsProvider,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { FeatureFlagsService } from "./FeatureFlagsService";
 

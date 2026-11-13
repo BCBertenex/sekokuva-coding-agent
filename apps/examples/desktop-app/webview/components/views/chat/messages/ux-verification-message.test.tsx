@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
-import type { MessageWithMetadata } from "@cline/shared";
-import type { UxVerificationReport } from "@cline/shared/browser";
+import type { MessageWithMetadata } from "@sekokuva-ca/shared";
+import type { UxVerificationReport } from "@sekokuva-ca/shared/browser";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, onTestFinished, vi } from "vitest";

@@ -1,11 +1,11 @@
 import * as os from "node:os";
-import { resolveCoreDistinctId } from "@cline/core";
+import { resolveCoreDistinctId } from "@sekokuva-ca/core";
 import type {
 	ClientContext,
 	ExtensionContext,
 	TelemetryMetadata,
 	UserContext,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { version } from "../package.json";
 
 /** Shared identity for request headers, Hub attribution, and telemetry. */

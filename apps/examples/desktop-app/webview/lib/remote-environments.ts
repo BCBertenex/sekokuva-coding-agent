@@ -3,12 +3,12 @@ export const DEFAULT_REMOTE_ENVIRONMENT_PORT = 22;
 export type {
 	RemoteEnvironmentInput as RemoteEnvironmentProfile,
 	RemoteEnvironmentStatus,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 import type {
 	RemoteEnvironmentInput as RemoteEnvironmentProfile,
 	RemoteEnvironmentStatus,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 export type RemoteEnvironmentListResult = {
 	profiles: RemoteEnvironmentProfile[];

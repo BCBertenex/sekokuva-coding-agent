@@ -1,4 +1,4 @@
-import { resolveProviderRequestHeaders } from "@cline/llms";
+import { resolveProviderRequestHeaders } from "@sekokuva-ca/llms";
 import type {
 	AgentConfig,
 	AgentEvent,
@@ -13,11 +13,11 @@ import type {
 	ToolApprovalRequest,
 	ToolApprovalResult,
 	WorkspaceInfo,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	buildClineSystemPrompt,
 	hasRuntimeConfigExtension,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { version as corePackageVersion } from "../../package.json";
 import {
 	type AgentPluginPackageDiagnostic,

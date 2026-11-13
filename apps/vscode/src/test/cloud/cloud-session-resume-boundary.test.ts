@@ -1,4 +1,4 @@
-import { SessionSource } from "@cline/core"
+import { SessionSource } from "@sekokuva-ca/core"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { CloudSessionHost } from "@/sdk/cloud-session-host"
 import { MessageIdMinter } from "@/sdk/message-id-minter"

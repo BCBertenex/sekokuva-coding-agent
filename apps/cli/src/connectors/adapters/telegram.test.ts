@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { ConnectTelegramOptions } from "@cline/shared";
+import type { ConnectTelegramOptions } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CONNECT_ALREADY_RUNNING_EXIT_CODE } from "../common";
 import { handleConnectorUserTurn } from "../connector-host";

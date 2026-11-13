@@ -4,8 +4,8 @@
 // This allows the SdkController to reuse the classic state-building logic
 // without inheriting the entire classic Controller implementation.
 
-import { isModelToolEnabledGlobally, readCompactionStrategyGlobally } from "@cline/core"
 import { getHooksEnabledSafe } from "@core/hooks/hooks-utils"
+import { isModelToolEnabledGlobally, readCompactionStrategyGlobally } from "@sekokuva-ca/core"
 import type { ExtensionState, Platform } from "@shared/ExtensionMessage"
 import { ClineEnv } from "@/config"
 import { ExtensionRegistryInfo, HostRegistryInfo } from "@/registry"

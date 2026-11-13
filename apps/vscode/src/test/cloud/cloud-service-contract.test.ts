@@ -1,4 +1,4 @@
-import { CloudCreationUnconfirmedError } from "@cline/core/cloud"
+import { CloudCreationUnconfirmedError } from "@sekokuva-ca/core/cloud"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { CloudSessionError, CloudSessionsService, type CloudSessionsServiceOptions } from "@/services/cloud/CloudSessionsService"
 import { type LocalCloudEnvironment, startLocalCloudEnvironment } from "./local-cloud-environment"

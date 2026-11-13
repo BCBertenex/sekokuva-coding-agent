@@ -1,6 +1,6 @@
 import { readFileSync, rmSync } from "node:fs";
 import { dirname } from "node:path";
-import type { AgentEvent, TeamEvent } from "@cline/core";
+import type { AgentEvent, TeamEvent } from "@sekokuva-ca/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	handleEvent,

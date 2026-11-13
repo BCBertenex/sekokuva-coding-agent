@@ -1,4 +1,4 @@
-# `@cline/ui`
+# `@sekokuva-ca/ui`
 
 Shared visual foundations and reusable React presentation primitives for Cline
 web products. The package lets teams adopt the same semantic theme and agent
@@ -14,29 +14,29 @@ component examples, boundaries, and release status.
 ## Install
 
 ```bash
-bun add --exact @cline/ui
+bun add --exact @sekokuva-ca/ui
 ```
 
-Use `@cline/ui@nightly` only for deliberate previews. Monorepo consumers use
-`"@cline/ui": "workspace:*"` instead.
+Use `@sekokuva-ca/ui@nightly` only for deliberate previews. Monorepo consumers use
+`"@sekokuva-ca/ui": "workspace:*"` instead.
 
 ## Entry points
 
 | Import | Contents | Runtime requirement |
 | --- | --- | --- |
-| `@cline/ui` | Reusable React primitives exported from [`components/index.ts`](./components/index.ts) | React 18.3 or 19 and Tailwind v4 |
-| `@cline/ui/components.css` | Styles, namespaced Tailwind mappings, and source registration for the root React primitives | Tailwind v4 and theme tokens |
-| `@cline/ui/theme/palette.css` | Cline-owned light/dark solid and alpha color scales | CSS |
-| `@cline/ui/theme/tokens.css` | Light/dark custom properties only | CSS |
-| `@cline/ui/theme/scoped-tokens.css` | Light/dark custom properties scoped to `.cline-ui-theme` | CSS |
-| `@cline/ui/theme/theme.css` | Tailwind v4 semantic mapping and dark variant | Tailwind v4 |
-| `@cline/ui/components/markdown.css` | Optional framework-neutral Markdown and Streamdown treatment | Theme tokens |
-| `@cline/ui/theme/base.css` | Optional document, Markdown, scrollbar, selection, and cursor styles | Tailwind v4 |
-| `@cline/ui/theme/index.css` | Complete theme: tokens, Tailwind mapping, and base styles | Tailwind v4 |
-| `@cline/ui/components/agent-chat` | Conversation, message, reasoning, action, and tool-activity React primitives | React 18.3 or 19 |
-| `@cline/ui/components/agent-chat.css` | Framework-neutral styles for the agent-chat primitives | Theme tokens |
-| `@cline/ui/components/message-scroller` | Shadcn message scrolling, turn anchors, visibility hooks, and centered scroll controls | React 19 |
-| `@cline/ui/components/message-scroller.css` | Framework-neutral scroller styles (also included in `components.css`) | Theme tokens |
+| `@sekokuva-ca/ui` | Reusable React primitives exported from [`components/index.ts`](./components/index.ts) | React 18.3 or 19 and Tailwind v4 |
+| `@sekokuva-ca/ui/components.css` | Styles, namespaced Tailwind mappings, and source registration for the root React primitives | Tailwind v4 and theme tokens |
+| `@sekokuva-ca/ui/theme/palette.css` | Cline-owned light/dark solid and alpha color scales | CSS |
+| `@sekokuva-ca/ui/theme/tokens.css` | Light/dark custom properties only | CSS |
+| `@sekokuva-ca/ui/theme/scoped-tokens.css` | Light/dark custom properties scoped to `.cline-ui-theme` | CSS |
+| `@sekokuva-ca/ui/theme/theme.css` | Tailwind v4 semantic mapping and dark variant | Tailwind v4 |
+| `@sekokuva-ca/ui/components/markdown.css` | Optional framework-neutral Markdown and Streamdown treatment | Theme tokens |
+| `@sekokuva-ca/ui/theme/base.css` | Optional document, Markdown, scrollbar, selection, and cursor styles | Tailwind v4 |
+| `@sekokuva-ca/ui/theme/index.css` | Complete theme: tokens, Tailwind mapping, and base styles | Tailwind v4 |
+| `@sekokuva-ca/ui/components/agent-chat` | Conversation, message, reasoning, action, and tool-activity React primitives | React 18.3 or 19 |
+| `@sekokuva-ca/ui/components/agent-chat.css` | Framework-neutral styles for the agent-chat primitives | Theme tokens |
+| `@sekokuva-ca/ui/components/message-scroller` | Shadcn message scrolling, turn anchors, visibility hooks, and centered scroll controls | React 19 |
+| `@sekokuva-ca/ui/components/message-scroller.css` | Framework-neutral scroller styles (also included in `components.css`) | Theme tokens |
 
 `@shadcn/react` is pinned to 0.3.1 with a Bun dependency patch in
 `patches/@shadcn%2Freact@0.3.1.patch`. The patch consumes anchors from loaded
@@ -88,7 +88,7 @@ are 1.75rem, 2rem, 2.25rem, and 2.5rem respectively; icon buttons are square.
 See the [button sizing table](./ADOPTION.md#buttons).
 
 ```tsx
-import { Button, IconButton } from "@cline/ui";
+import { Button, IconButton } from "@sekokuva-ca/ui";
 
 <Button size="sm" tone="accent" variant="primary">
 	Continue
@@ -165,21 +165,21 @@ For a Tailwind v4 app, import framework and consumer dependencies first:
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
-@import "@cline/ui/theme/index.css";
+@import "@sekokuva-ca/ui/theme/index.css";
 ```
 
 An app that only needs framework-neutral values can import:
 
 ```css
-@import "@cline/ui/theme/tokens.css";
+@import "@sekokuva-ca/ui/theme/tokens.css";
 ```
 
 For an embedded surface, import scoped tokens and optional Markdown styles:
 
 ```css
-@import "@cline/ui/theme/scoped-tokens.css";
-@import "@cline/ui/components.css";
-@import "@cline/ui/components/markdown.css";
+@import "@sekokuva-ca/ui/theme/scoped-tokens.css";
+@import "@sekokuva-ca/ui/components.css";
+@import "@sekokuva-ca/ui/components/markdown.css";
 ```
 
 ```tsx
@@ -190,7 +190,7 @@ For an embedded surface, import scoped tokens and optional Markdown styles:
 
 Dark values activate when `.dark` is on the wrapper or an ancestor.
 
-Embedded hosts should not import `@cline/ui/theme/theme.css`; it intentionally
+Embedded hosts should not import `@sekokuva-ca/ui/theme/theme.css`; it intentionally
 maps generic Tailwind names such as `bg-background` for Cline-owned surfaces.
 
 The theme follows the standard shadcn semantic contract (`--background`,
@@ -240,8 +240,8 @@ In the application's global CSS, import the component styles after at least the
 theme tokens:
 
 ```css
-@import "@cline/ui/theme/tokens.css";
-@import "@cline/ui/components/agent-chat.css";
+@import "@sekokuva-ca/ui/theme/tokens.css";
+@import "@sekokuva-ca/ui/components/agent-chat.css";
 ```
 
 Then import the React components:
@@ -268,7 +268,7 @@ import {
 	WorkActivity,
 	WorkActivityContent,
 	WorkActivityTrigger,
-} from "@cline/ui/components/agent-chat";
+} from "@sekokuva-ca/ui/components/agent-chat";
 ```
 
 `Conversation` owns sticky scrolling, `Message` owns role presentation,
@@ -279,11 +279,11 @@ rows behind a "Worked for 4m 12s and made 14 tool calls" summary, and the
 smaller action, empty-state, detail, and code primitives fill out common
 transcript states.
 
-For assistant Markdown, `@cline/ui/components/markdown` exports the shared
+For assistant Markdown, `@sekokuva-ca/ui/components/markdown` exports the shared
 Streamdown configuration — `markdownCodeHighlighter` (lazy Shiki with GitHub
 light/dark themes), `agentMarkdownControls`, and the opt-in
 `createLazyMermaidPlugin` / `agentMarkdownControlsWithMermaid` pair — and
-`@cline/ui/components/markdown.css` carries the matching chat styling (quiet
+`@sekokuva-ca/ui/components/markdown.css` carries the matching chat styling (quiet
 single-box code blocks with a hover copy control, chat-scale headings, table
 cards). The Mermaid plugin dynamically imports the renderer only after a
 `mermaid` fence is encountered and enforces strict security for model-authored
@@ -293,7 +293,7 @@ and (when enabling diagrams) `mermaid` installed as optional peer dependencies.
 Products keep their own `<Streamdown>` wrapper for link and image policy.
 
 Hosts that want a native-looking diagram block register
-`createMermaidRenderer()` from `@cline/ui/components/mermaid-block` through
+`createMermaidRenderer()` from `@sekokuva-ca/ui/components/mermaid-block` through
 `<Streamdown plugins={{ renderers: [createMermaidRenderer()] }} />` instead of
 the `mermaid` diagram plugin (Streamdown consults `renderers` first, so the
 built-in block is skipped). The block shows the diagram's filename in its
@@ -309,7 +309,7 @@ PNG exports are opaque (filled with the surface color), rendered at 2x-3x
 (following the device pixel ratio, not Streamdown's fixed 5x), and capped at
 4096px on the longest edge, re-encoding smaller if needed, so they stay under
 the ~5 MiB image attachment limit. The pure naming, theming, and
-sizing logic lives in `@cline/ui/components/mermaid-diagram` (DOM-free).
+sizing logic lives in `@sekokuva-ca/ui/components/mermaid-diagram` (DOM-free).
 
 Give
 each conversation a bounded height through an explicit height or a complete
@@ -345,19 +345,19 @@ menus, data formatting, and session behavior. See the session-row section in
 Run the interactive component catalog from the repository root:
 
 ```bash
-bun -F @cline/ui storybook
+bun -F @sekokuva-ca/ui storybook
 ```
 
 Then open `http://localhost:6006`. Build the static catalog with:
 
 ```bash
-bun -F @cline/ui build-storybook
+bun -F @sekokuva-ca/ui build-storybook
 ```
 
 In the repository's agent sandbox, bind to a forwarded host and unused port:
 
 ```bash
-bun -F @cline/ui storybook -- --host 0.0.0.0 --port 3490 --exact-port
+bun -F @sekokuva-ca/ui storybook -- --host 0.0.0.0 --port 3490 --exact-port
 ```
 
 The catalog includes the theme foundations and representative agent-chat
@@ -383,9 +383,9 @@ ownership model settle.
 
 ## Releases
 
-`@cline/ui` is released with the SDK packages and shares their version. The
+`@sekokuva-ca/ui` is released with the SDK packages and shares their version. The
 `sdk-publish.yml` workflow (or `bun release sdk` locally) publishes it after
-`@cline/sdk`: production releases use the npm `latest` tag and nightly builds
+`@sekokuva-ca/sdk`: production releases use the npm `latest` tag and nightly builds
 use `nightly`. See [Publishing](../../CONTRIBUTING.md#publishing).
 
 Earlier standalone releases used `0.1.0` and `0.2.0-next.N`. The SDK moved to
@@ -407,7 +407,7 @@ consumers:
 Consumers on `0.2.0-next.9` can retain existing props. Adopt the callback
 explicitly to enable catalog refresh.
 
-Monorepo consumers retain `workspace:*`; rebuild with `bun -F @cline/ui build`
+Monorepo consumers retain `workspace:*`; rebuild with `bun -F @sekokuva-ca/ui build`
 and restart the consuming app. External consumers should pin an exact version,
 commit their lockfile, and update deliberately. The package is ESM and its
 React components target browser applications. A complete Tailwind theme also
@@ -420,9 +420,9 @@ request's context tokens. See [context usage](./ADOPTION.md#context-usage).
 
 ### UX verification reports
 
-`AgentUxVerification` renders the shared `UxVerificationReport` contract from `@cline/shared/browser` as an evidence carousel. It supports passed/failed/blocked checks, titles, observations, thumbnails, keyboard navigation and optional slideshow. Pass `state="running"` while verification runs, then `state="completed"` with its report. Invalid output or `state="error"` displays a failure state rather than a success count.
+`AgentUxVerification` renders the shared `UxVerificationReport` contract from `@sekokuva-ca/shared/browser` as an evidence carousel. It supports passed/failed/blocked checks, titles, observations, thumbnails, keyboard navigation and optional slideshow. Pass `state="running"` while verification runs, then `state="completed"` with its report. Invalid output or `state="error"` displays a failure state rather than a success count.
 
-Inline screenshots use the existing safe Blob renderer. Hosts can supply `renderScreenshot(check, className, presentation)` to resolve authenticated asset references, and `onExpandScreenshot(check)` to open their focus-managed image viewer. The component owns no transport or upload client. Its styles ship in `@cline/ui/components.css`; see the **Agent/UX verification** Storybook stories.
+Inline screenshots use the existing safe Blob renderer. Hosts can supply `renderScreenshot(check, className, presentation)` to resolve authenticated asset references, and `onExpandScreenshot(check)` to open their focus-managed image viewer. The component owns no transport or upload client. Its styles ship in `@sekokuva-ca/ui/components.css`; see the **Agent/UX verification** Storybook stories.
 
 When the carousel has focus, Left/Right switch slides and Space toggles slideshow playback without scrolling the page. Arrow navigation pauses playback. Space on a focused button retains that button’s normal action.
 

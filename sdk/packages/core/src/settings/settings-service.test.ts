@@ -8,7 +8,7 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { setHomeDir } from "@cline/shared/storage";
+import { setHomeDir } from "@sekokuva-ca/shared/storage";
 import { afterEach, describe, expect, it } from "vitest";
 import { loadAgentPluginPackages } from "../extensions/agent-plugin";
 import {

@@ -83,7 +83,7 @@ Each session is guaranteed at most one `task.completed` emission. The `source` f
 ## CLI Directory-Ordering Rule
 
 The CLI accepts `--config <dir>`. The CLI **must** apply `setClineDir(...)` and
-`setHomeDir(...)` from `@cline/shared/storage` **before** calling
+`setHomeDir(...)` from `@sekokuva-ca/shared/storage` **before** calling
 `captureCliExtensionActivated()`. Otherwise the telemetry singleton's persisted distinct-id
 and any other on-disk telemetry state lands under `~/.cline` instead of the user's chosen
 config dir.

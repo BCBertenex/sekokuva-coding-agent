@@ -4,8 +4,8 @@ const mocks = vi.hoisted(() => ({
 	listLocalProviders: vi.fn(async () => ({ providers: [], settingsPath: "" })),
 }));
 
-vi.mock("@cline/core", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@cline/core")>();
+vi.mock("@sekokuva-ca/core", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@sekokuva-ca/core")>();
 	return {
 		...actual,
 		listLocalProviders: mocks.listLocalProviders,

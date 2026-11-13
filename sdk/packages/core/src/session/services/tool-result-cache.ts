@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { ImageContent } from "@cline/shared";
+import type { ImageContent } from "@sekokuva-ca/shared";
 import YAML from "yaml";
 
 export const TOOL_RESULT_CACHE_MAX_BYTES = 16 * 1024 * 1024;

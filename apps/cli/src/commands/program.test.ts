@@ -3,7 +3,7 @@ import {
 	resolveClineDataDir,
 	resolveClineDir,
 	setHomeDir,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { CLI_DEFAULT_MAX_CONSECUTIVE_MISTAKES } from "../runtime/defaults";
 import { createProgram } from "./program";

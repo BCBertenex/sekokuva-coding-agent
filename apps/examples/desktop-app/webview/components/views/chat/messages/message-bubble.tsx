@@ -6,7 +6,7 @@ import {
 	MessageAction,
 	MessageActions,
 	MessageContent,
-} from "@cline/ui/components/agent-chat";
+} from "@sekokuva-ca/ui/components/agent-chat";
 import {
 	Check,
 	Copy,

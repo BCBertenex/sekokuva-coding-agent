@@ -24,7 +24,7 @@ import type {
 	AgentTool,
 	BasicLogger,
 	ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { version as clineCoreVersion } from "../../../package.json";
 
 /**

@@ -1,4 +1,4 @@
-import type { HubCommandEnvelope, HubReplyEnvelope } from "@cline/shared";
+import type { HubCommandEnvelope, HubReplyEnvelope } from "@sekokuva-ca/shared";
 import {
 	isSessionNotFoundError,
 	SESSION_NOT_FOUND_ERROR_CODE,

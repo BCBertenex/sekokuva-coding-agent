@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { CheckpointEntry } from "@cline/core";
+import type { CheckpointEntry } from "@sekokuva-ca/core";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
 	getSessionChanges,

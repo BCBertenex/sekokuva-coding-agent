@@ -13,7 +13,7 @@
 //      `max` they reject;
 //   2. `max` reaches the wire for models that advertise it;
 //   3. models the catalog does not describe get the requested level as-is.
-import type { GatewayStreamRequest, ModelReasoningOption } from "@cline/shared";
+import type { GatewayStreamRequest, ModelReasoningOption } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { createGateway } from "../gateway";
 

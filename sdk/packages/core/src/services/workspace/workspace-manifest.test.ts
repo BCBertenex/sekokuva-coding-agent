@@ -1,7 +1,7 @@
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, parse, resolve } from "node:path";
-import { emptyWorkspaceManifest, upsertWorkspaceInfo } from "@cline/shared";
+import { emptyWorkspaceManifest, upsertWorkspaceInfo } from "@sekokuva-ca/shared";
 import simpleGit from "simple-git";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import {

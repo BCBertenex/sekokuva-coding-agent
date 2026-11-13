@@ -1,6 +1,6 @@
 import { isDeepStrictEqual } from "node:util";
-import type { HubMcpOAuthSnapshot } from "@cline/shared";
-import { resolveMcpSettingsPath } from "@cline/shared/storage";
+import type { HubMcpOAuthSnapshot } from "@sekokuva-ca/shared";
+import { resolveMcpSettingsPath } from "@sekokuva-ca/shared/storage";
 import {
 	parseMcpServerRegistration,
 	resolveMcpServerRegistration,

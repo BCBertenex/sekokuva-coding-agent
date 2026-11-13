@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 import { isMainThread } from "node:worker_threads";
-import { setPluginSandboxLauncher } from "@cline/core";
+import { setPluginSandboxLauncher } from "@sekokuva-ca/core";
 import {
 	buildTelemetrySelfcheckReport,
 	claimHubDaemonProcess,
@@ -12,7 +12,7 @@ import {
 	ensureLoopbackProxyBypass,
 	initVcr,
 	setConnectorCliLaunchSpec,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { logCliProcessError } from "./logging/errors";
 import {
 	abortActiveRuntime,
@@ -59,7 +59,7 @@ if (!isMainThread) {
 	// The hub daemon owns its process-level abort handling. Installing the CLI's
 	// fatal rejection handler first would make expected abort rejections exit it.
 	registerClineClientIdentity("cline-cli");
-	void import("@cline/core/hub/daemon-entry");
+	void import("@sekokuva-ca/core/hub/daemon-entry");
 } else {
 	// Same reasoning as the daemon sentinel above: consume the supervised-connector
 	// marker so the processes an agent session spawns cannot inherit it and mistake

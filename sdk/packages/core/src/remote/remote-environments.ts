@@ -20,8 +20,8 @@ import {
 	CLINE_HUB_LAUNCHER_TRANSPORT_ENV,
 	CLINE_HUB_LAUNCHER_VERSION_ENV,
 	getClineClientIdentity,
-} from "@cline/shared";
-import { resolveClineDataDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 import { requestHubShutdown } from "../hub/client";
 
 export interface RemoteEnvironmentProfile {

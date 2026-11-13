@@ -1,7 +1,7 @@
 import type {
 	GatewayProviderContext,
 	GatewayStreamRequest,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { buildAnthropicProviderOptions } from "./anthropic-compatible";
 import { buildCompatibleProviderOptions } from "./generic-compatible";
 import { withoutPortableReasoning } from "./portable-reasoning";

@@ -1,4 +1,4 @@
-import { isChatWorkspacePath } from "@cline/shared/browser";
+import { isChatWorkspacePath } from "@sekokuva-ca/shared/browser";
 import { normalizeTitle } from "@/components/utils";
 import {
 	parseTimestamp,

@@ -1,12 +1,12 @@
 "use client";
 
-import type { PluginCommandCatalog } from "@cline/core";
+import type { PluginCommandCatalog } from "@sekokuva-ca/core";
 
 import {
 	ANTHROPIC_DEFAULT_MODEL_ID,
 	CLINE_DEFAULT_MODEL_ID,
 	formatDisplayUserInput,
-} from "@cline/shared/browser";
+} from "@sekokuva-ca/shared/browser";
 import {
 	AgentComposer,
 	AgentComposerActions,
@@ -21,7 +21,7 @@ import {
 	AgentComposerTextarea,
 	AgentPromptQueue,
 	SearchCombobox,
-} from "@cline/ui";
+} from "@sekokuva-ca/ui";
 import {
 	ArrowUp,
 	Brain,

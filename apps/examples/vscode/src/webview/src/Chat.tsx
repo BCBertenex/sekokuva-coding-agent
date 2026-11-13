@@ -1,7 +1,7 @@
 "use client";
 
-import type { GeneratedMedia } from "@cline/shared/browser";
-import { GeneratedMediaContent } from "@cline/ui";
+import type { GeneratedMedia } from "@sekokuva-ca/shared/browser";
+import { GeneratedMediaContent } from "@sekokuva-ca/ui";
 import { GitBranchIcon, Loader2Icon, PlusIcon, Trash2Icon } from "lucide-react";
 import { nanoid } from "nanoid";
 import {

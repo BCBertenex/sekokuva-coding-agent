@@ -8,8 +8,8 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { SessionNotFoundError } from "@cline/core";
-import { resolveClineDir, setClineDir } from "@cline/shared/storage";
+import { SessionNotFoundError } from "@sekokuva-ca/core";
+import { resolveClineDir, setClineDir } from "@sekokuva-ca/shared/storage";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { materializeUserFiles } from "./attachments";
 import {
@@ -48,8 +48,8 @@ const { createContextCompactionPrepareTurnMock } = vi.hoisted(() => ({
 	createContextCompactionPrepareTurnMock: vi.fn(),
 }));
 
-vi.mock("@cline/core", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@cline/core")>();
+vi.mock("@sekokuva-ca/core", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@sekokuva-ca/core")>();
 	createContextCompactionPrepareTurnMock.mockImplementation(
 		actual.createContextCompactionPrepareTurn,
 	);

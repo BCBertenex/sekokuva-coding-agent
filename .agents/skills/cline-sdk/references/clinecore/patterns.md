@@ -3,7 +3,7 @@
 ## Basic Session with Built-in Tools
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { ClineCore } from "@sekokuva-ca/sdk"
 
 const cline = await ClineCore.create({ clientName: "my-app" })
 
@@ -105,7 +105,7 @@ const cline = await ClineCore.create({
 ## Custom Tools Alongside Built-ins
 
 ```typescript
-import { ClineCore, createTool } from "@cline/sdk"
+import { ClineCore, createTool } from "@sekokuva-ca/sdk"
 import { z } from "zod"
 
 const deployTool = createTool({
@@ -139,7 +139,7 @@ await cline.start({
 Load plugins inline with `extensions` and provide workspace context so plugins can access `ctx.workspaceInfo`:
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { ClineCore } from "@sekokuva-ca/sdk"
 import myPlugin from "./my-plugin"
 
 const cline = await ClineCore.create({
@@ -217,7 +217,7 @@ process.on("SIGTERM", async () => {
 For request/response workloads (API endpoints, queue consumers):
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { ClineCore } from "@sekokuva-ca/sdk"
 
 const cline = await ClineCore.create({
   clientName: "worker",

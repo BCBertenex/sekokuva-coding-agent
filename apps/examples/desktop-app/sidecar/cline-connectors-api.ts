@@ -1,5 +1,5 @@
-import { isClineAccountFeatureEnabled } from "@cline/core";
-import { type BasicLogger, FeatureFlag } from "@cline/shared";
+import { isClineAccountFeatureEnabled } from "@sekokuva-ca/core";
+import { type BasicLogger, FeatureFlag } from "@sekokuva-ca/shared";
 import type { ComposioToolkitSlug } from "../webview/lib/composio-types";
 import {
 	type ClineAuthTelemetryContext,

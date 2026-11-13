@@ -1,12 +1,12 @@
-import type { ChatStartSessionRequest, RuntimeLoggerConfig } from "@cline/core";
+import type { ChatStartSessionRequest, RuntimeLoggerConfig } from "@sekokuva-ca/core";
 import {
 	CoreSessionService,
 	HubSessionClient,
 	Llms,
 	ProviderSettingsManager,
 	SqliteSessionStore,
-} from "@cline/core";
-import { CLINE_DEFAULT_MODEL_ID } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 import type { Thread } from "chat";
 import {
 	ensureOAuthProviderApiKey,

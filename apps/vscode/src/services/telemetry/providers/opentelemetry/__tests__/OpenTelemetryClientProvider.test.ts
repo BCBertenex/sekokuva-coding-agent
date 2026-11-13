@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, mock } from "bun:test"
-import { isOtlpTraceRelayProvider } from "@cline/shared"
 import { context, propagation, trace } from "@opentelemetry/api"
 import { InMemorySpanExporter, NodeTracerProvider, SimpleSpanProcessor } from "@opentelemetry/sdk-trace-node"
+import { isOtlpTraceRelayProvider } from "@sekokuva-ca/shared"
 import * as exporterFactory from "../OpenTelemetryExporterFactory"
 
 const exporters = new Map<string, InMemorySpanExporter>()

@@ -1,10 +1,10 @@
-import { readCloudModelIdGlobally, setCloudModelIdGlobally } from "@cline/core";
+import { readCloudModelIdGlobally, setCloudModelIdGlobally } from "@sekokuva-ca/core";
 import type {
 	CloudModel,
 	CloudRepositoryOption,
 	CloudSessionSnapshot,
-} from "@cline/core/cloud";
-import { CLINE_DEFAULT_MODEL_ID } from "@cline/shared";
+} from "@sekokuva-ca/core/cloud";
+import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import type { DialogActions } from "@opentui-ui/dialog/react";
 import { useCallback, useEffect, useRef, useState } from "react";

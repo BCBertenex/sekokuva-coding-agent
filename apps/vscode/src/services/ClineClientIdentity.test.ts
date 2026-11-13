@@ -14,7 +14,7 @@ const hostState = vi.hoisted(() => ({
 	hostVersionError: undefined as Error | undefined,
 }))
 
-vi.mock("@cline/shared", () => ({
+vi.mock("@sekokuva-ca/shared", () => ({
 	setClineClientIdentity: identityMocks.setClineClientIdentity,
 }))
 

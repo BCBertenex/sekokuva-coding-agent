@@ -1,8 +1,8 @@
 import {
 	GENERATED_CLINE_RECOMMENDED_MODELS,
 	getGeneratedProviderModels,
-} from "@cline/llms";
-import { setClineClientIdentity } from "@cline/shared";
+} from "@sekokuva-ca/llms";
+import { setClineClientIdentity } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	applyClineFeaturedModels,

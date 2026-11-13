@@ -108,15 +108,15 @@ If no `cline.plugins` field is present, the installer falls back to auto-discove
 
 ### Host-Provided Dependencies
 
-Dependencies under the `@cline/` scope are provided by the host runtime. The installer automatically strips these from the plugin's dependency list before running `npm install`, so declare any `@cline/*` package your plugin imports as an optional peer dependency. The host currently provides `@cline/sdk`, `@cline/core`, `@cline/agents`, `@cline/llms`, and `@cline/shared`.
+Dependencies under the `@sekokuva-ca/` scope are provided by the host runtime. The installer automatically strips these from the plugin's dependency list before running `npm install`, so declare any `@sekokuva-ca/*` package your plugin imports as an optional peer dependency. The host currently provides `@sekokuva-ca/sdk`, `@sekokuva-ca/core`, `@sekokuva-ca/agents`, `@sekokuva-ca/llms`, and `@sekokuva-ca/shared`.
 
 ```json
 {
   "peerDependencies": {
-    "@cline/sdk": "*"
+    "@sekokuva-ca/sdk": "*"
   },
   "peerDependenciesMeta": {
-    "@cline/sdk": {
+    "@sekokuva-ca/sdk": {
       "optional": true
     }
   }

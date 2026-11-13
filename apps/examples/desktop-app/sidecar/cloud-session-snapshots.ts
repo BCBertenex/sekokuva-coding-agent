@@ -6,4 +6,4 @@ export {
 	sessionRowModelId,
 	submittedPromptsFromEvents,
 	updatedAt,
-} from "@cline/core/cloud";
+} from "@sekokuva-ca/core/cloud";

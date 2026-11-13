@@ -6,8 +6,8 @@ import type {
 	AgendaTaskScope,
 	AgendaTaskType,
 	GatewayModelSelection,
-} from "@cline/shared";
-import { stripUtf8Bom } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { stripUtf8Bom } from "@sekokuva-ca/shared";
 import YAML from "yaml";
 import { normalizeAgendaTaskLocation } from "../task-location";
 

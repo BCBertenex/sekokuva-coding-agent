@@ -1,5 +1,5 @@
 {
-	"name": "@cline/vscode",
+	"name": "@sekokuva-ca/vscode",
 	"displayName": "Cline Chat",
 	"description": "Autonomous coding agent right in your IDE, capable of creating/editing files, running commands, using the browser, and more with your permission every step of the way. Backed by the Cline CLI runtime.",
 	"version": "0.0.0",
@@ -51,9 +51,9 @@
 	},
 	"dependencies": {
 		"@ai-sdk/react": "^4.0.139",
-		"@cline/core": "workspace:*",
-		"@cline/llms": "workspace:*",
-		"@cline/shared": "workspace:*",
+		"@sekokuva-ca/core": "workspace:*",
+		"@sekokuva-ca/llms": "workspace:*",
+		"@sekokuva-ca/shared": "workspace:*",
 		"ai": "^7.0.136"
 	},
 	"devDependencies": {

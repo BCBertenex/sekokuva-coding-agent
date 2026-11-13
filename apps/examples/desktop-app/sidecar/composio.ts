@@ -10,9 +10,9 @@ import { dirname, join } from "node:path";
 import {
 	isClineAccountFeatureEnabled,
 	resolveComposioConnectionStatePath,
-} from "@cline/core";
-import { type BasicLogger, FeatureFlag } from "@cline/shared";
-import { resolveClineDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/core";
+import { type BasicLogger, FeatureFlag } from "@sekokuva-ca/shared";
+import { resolveClineDir } from "@sekokuva-ca/shared/storage";
 import {
 	COMPOSIO_RECOMMENDED_TOOLKITS,
 	type ComposioCatalogResponse,

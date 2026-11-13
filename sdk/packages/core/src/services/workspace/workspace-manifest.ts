@@ -2,8 +2,8 @@ import { execFile } from "node:child_process";
 import { basename, resolve } from "node:path";
 import { performance } from "node:perf_hooks";
 import { promisify } from "node:util";
-import type { WorkspaceInfo } from "@cline/shared";
-import { processWorkspaceInfo } from "@cline/shared";
+import type { WorkspaceInfo } from "@sekokuva-ca/shared";
+import { processWorkspaceInfo } from "@sekokuva-ca/shared";
 import simpleGit from "simple-git";
 
 const execFileAsync = promisify(execFile);

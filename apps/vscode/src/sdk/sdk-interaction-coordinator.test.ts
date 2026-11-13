@@ -1,4 +1,4 @@
-import type { AgentEvent } from "@cline/shared"
+import type { AgentEvent } from "@sekokuva-ca/shared"
 import { describe, expect, it, vi } from "vitest"
 import { processFilesIntoText } from "@/integrations/misc/extract-text"
 import { MessageTranslatorState, translateSessionEvent } from "./message-translator"

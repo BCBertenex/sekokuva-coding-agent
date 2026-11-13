@@ -3,9 +3,9 @@ import { join } from "node:path";
 import {
 	formatSessionSearchPreview,
 	formatSessionSearchTitle,
-} from "@cline/shared";
-import { loadSqliteDb, nowIso, type SqliteDb } from "@cline/shared/db";
-import { resolveDbDataDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { loadSqliteDb, nowIso, type SqliteDb } from "@sekokuva-ca/shared/db";
+import { resolveDbDataDir } from "@sekokuva-ca/shared/storage";
 import type { RuntimeHost } from "../../runtime/host/runtime-host";
 import type { SessionRecord } from "../../types/sessions";
 

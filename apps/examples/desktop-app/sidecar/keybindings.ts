@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { resolveClineDataDir } from "@cline/shared/storage";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 
 /**
  * One user-configurable shortcut. `key` is an accelerator such as "Mod+N"

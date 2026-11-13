@@ -1,6 +1,6 @@
 "use client";
 
-import { GitHubIcon } from "@cline/ui";
+import { GitHubIcon } from "@sekokuva-ca/ui";
 import { Loader2, Lock } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";

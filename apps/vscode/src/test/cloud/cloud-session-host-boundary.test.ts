@@ -1,5 +1,5 @@
-import { SessionSource } from "@cline/core"
-import { CLOUD_SESSION_SYSTEM_PROMPT } from "@cline/core/cloud"
+import { SessionSource } from "@sekokuva-ca/core"
+import { CLOUD_SESSION_SYSTEM_PROMPT } from "@sekokuva-ca/core/cloud"
 import { afterEach, describe, expect, it } from "vitest"
 import { CloudSessionHost } from "@/sdk/cloud-session-host"
 import { CloudSessionsService } from "@/services/cloud/CloudSessionsService"

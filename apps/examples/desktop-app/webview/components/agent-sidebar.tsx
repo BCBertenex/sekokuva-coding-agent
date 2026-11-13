@@ -4,7 +4,7 @@ import {
 	AgentSessionOverview,
 	AgentSessionRow,
 	AgentSessionRowEditor,
-} from "@cline/ui";
+} from "@sekokuva-ca/ui";
 
 import {
 	ArrowLeft,

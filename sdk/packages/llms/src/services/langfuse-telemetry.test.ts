@@ -37,8 +37,8 @@ const {
 	}>,
 }));
 
-vi.mock("@cline/shared", async (importOriginal) => ({
-	...(await importOriginal<typeof import("@cline/shared")>()),
+vi.mock("@sekokuva-ca/shared", async (importOriginal) => ({
+	...(await importOriginal<typeof import("@sekokuva-ca/shared")>()),
 	registerDisposable: registerDisposableSpy,
 }));
 
@@ -110,7 +110,7 @@ vi.mock("@opentelemetry/context-async-hooks", () => ({
 const { globalSettingsPathRef } = vi.hoisted(() => ({
 	globalSettingsPathRef: { current: "/nonexistent/cline-global-settings.json" },
 }));
-vi.mock("@cline/shared/storage", () => ({
+vi.mock("@sekokuva-ca/shared/storage", () => ({
 	resolveGlobalSettingsPath: () => globalSettingsPathRef.current,
 }));
 

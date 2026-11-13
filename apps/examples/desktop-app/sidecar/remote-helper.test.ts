@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { remoteHelperBinaryFilename } from "@cline/core";
+import { remoteHelperBinaryFilename } from "@sekokuva-ca/core";
 import { expect, it } from "vitest";
 import { resolveDesktopRemoteHelper } from "./remote-helper";
 

@@ -1,8 +1,8 @@
 "use client";
 
-import type { HandoffGitPreview } from "@cline/core/cloud";
-import type { ProviderAuthInfo } from "@cline/shared/browser";
-import { AttachmentDropZone } from "@cline/ui";
+import type { HandoffGitPreview } from "@sekokuva-ca/core/cloud";
+import type { ProviderAuthInfo } from "@sekokuva-ca/shared/browser";
+import { AttachmentDropZone } from "@sekokuva-ca/ui";
 import { Loader2, LoaderCircle, SquareTerminal } from "lucide-react";
 import dynamic from "next/dynamic";
 import {

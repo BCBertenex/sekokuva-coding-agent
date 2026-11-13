@@ -6,7 +6,7 @@ import {
 	UxVerificationReportSchema,
 	validateWithZod,
 	zodToJsonSchema,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { z } from "zod";
 
 const check = UxVerificationCheckSchema.shape;

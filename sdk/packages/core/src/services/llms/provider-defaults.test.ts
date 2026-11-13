@@ -1,4 +1,4 @@
-import { getGeneratedModelsForProvider } from "@cline/llms";
+import { getGeneratedModelsForProvider } from "@sekokuva-ca/llms";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
 	clearLiveModelsCatalogCache,

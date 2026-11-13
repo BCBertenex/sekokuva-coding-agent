@@ -11,8 +11,8 @@ import {
 	type ScheduleExecutionRecord,
 	type ScheduleExecutionStatus,
 	type ScheduleRecord,
-} from "@cline/shared";
-import type { ResolveCronSpecsDirOptions } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import type { ResolveCronSpecsDirOptions } from "@sekokuva-ca/shared/storage";
 import { CronMaterializer } from "../runner/cron-materializer";
 import { CronRunner } from "../runner/cron-runner";
 import { validateCronPattern, validateTimezone } from "../schedule/scheduler";

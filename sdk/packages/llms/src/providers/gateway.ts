@@ -11,11 +11,11 @@ import type {
 	GatewayStreamRequest,
 	ITelemetryService,
 	ReasoningEffort,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	estimateRequestInputTokens,
 	ReasoningEffortSchema,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { toAsyncIterable } from "./async";
 import { BUILTIN_PROVIDER_REGISTRATIONS } from "./builtins-runtime";
 import { providerManifestSupportsModelOperation } from "./model-operations";
@@ -24,7 +24,7 @@ import { GatewayRegistry } from "./registry";
 import { resolveReasoningPreference } from "./routing/reasoning-options";
 import { isPositiveFiniteNumber } from "./utils";
 
-export type * from "@cline/shared";
+export type * from "@sekokuva-ca/shared";
 
 export const DEFAULT_GATEWAY_MAX_OUTPUT_TOKENS = 32_000;
 /**

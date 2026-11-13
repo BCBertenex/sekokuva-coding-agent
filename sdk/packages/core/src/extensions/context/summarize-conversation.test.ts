@@ -1,9 +1,9 @@
-import type { ApiStreamChunk } from "@cline/llms";
+import type { ApiStreamChunk } from "@sekokuva-ca/llms";
 import type {
 	MessageWithMetadata,
 	ToolResultContent,
 	ToolUseContent,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { toPersistedToolResultContent } from "../../session/persisted-tool-result-content";
 import { buildSummaryMessage, estimateTokens } from "./compaction-shared";
@@ -14,8 +14,8 @@ const { createHandlerMock, createMessageMock } = vi.hoisted(() => ({
 	createMessageMock: vi.fn(),
 }));
 
-vi.mock("@cline/llms", async (importOriginal) => ({
-	...(await importOriginal<typeof import("@cline/llms")>()),
+vi.mock("@sekokuva-ca/llms", async (importOriginal) => ({
+	...(await importOriginal<typeof import("@sekokuva-ca/llms")>()),
 	createHandlerAsync: createHandlerMock,
 }));
 

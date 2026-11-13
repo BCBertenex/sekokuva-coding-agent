@@ -1,4 +1,4 @@
-import { createHandlerAsync } from "@cline/llms";
+import { createHandlerAsync } from "@sekokuva-ca/llms";
 import type { ProviderConfig } from "../../types/provider-settings";
 
 export async function generateSummary(options: {

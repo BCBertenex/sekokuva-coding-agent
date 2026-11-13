@@ -9,8 +9,8 @@ import type {
 	ITelemetryService,
 	JsonValue,
 	SessionParticipant,
-} from "@cline/shared";
-import { createSessionId } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { createSessionId } from "@sekokuva-ca/shared";
 import type {
 	CommandExecutionRuntimeService,
 	McpAppsRuntimeService,

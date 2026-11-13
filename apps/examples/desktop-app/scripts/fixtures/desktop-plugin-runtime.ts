@@ -1,4 +1,4 @@
-import { ClineCore, resolvePluginRuntimeDirectory } from "@cline/core";
+import { ClineCore, resolvePluginRuntimeDirectory } from "@sekokuva-ca/core";
 import { adoptDesktopCliRuntime } from "../../sidecar/cli-runtime";
 
 async function main() {

@@ -7,7 +7,7 @@ const sharedManifestPath = fileURLToPath(
 	new URL("../../shared/package.json", import.meta.url),
 );
 
-describe("@cline/ui package", () => {
+describe("@sekokuva-ca/ui package", () => {
 	it("is published with the SDK packages on their shared version", () => {
 		const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
 			internal?: boolean;

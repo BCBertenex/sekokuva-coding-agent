@@ -18,7 +18,7 @@ import {
 	type AgentRuntime,
 	type AgentRuntimeConfig,
 	createAgentRuntime,
-} from "@cline/agents";
+} from "@sekokuva-ca/agents";
 import {
 	type AgentConfig,
 	type AgentEvent,
@@ -31,7 +31,7 @@ import {
 	type AgentTool,
 	type AgentToolContext,
 	EMPTY_CONTENT_TEXT,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import { createContextCompactionPrepareTurn } from "../../extensions/context/compaction";
 import { createDefaultTools } from "../../extensions/tools/definitions";

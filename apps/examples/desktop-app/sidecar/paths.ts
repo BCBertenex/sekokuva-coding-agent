@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
-import { resolveSessionDataDir } from "@cline/shared/storage";
+import { resolveSessionDataDir } from "@sekokuva-ca/shared/storage";
 import type { JsonRecord } from "./types";
 
 // ---------------------------------------------------------------------------
@@ -66,7 +66,7 @@ export function toolApprovalDir(): string {
 }
 
 // MCP settings intentionally have no resolver here: every reader and writer
-// must share @cline/shared/storage `resolveMcpSettingsPath()` so the sidecar,
+// must share @sekokuva-ca/shared/storage `resolveMcpSettingsPath()` so the sidecar,
 // the hub runtime, and the CLI all agree on one canonical file. A local
 // duplicate silently diverged under CLINE_DIR/CLINE_DATA_DIR overrides
 // (cline/cline#14152).

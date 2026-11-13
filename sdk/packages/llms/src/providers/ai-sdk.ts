@@ -14,7 +14,7 @@ import type {
 	ModelToolExecution,
 	ModelToolName,
 	ProviderErrorClass,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	type AiSdkFormatterMessage,
 	type AiSdkFormatterPart,
@@ -31,7 +31,7 @@ import {
 	validateAndReserveBase64Media,
 	validateAndReserveImageMedia,
 	validateImageMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	type CallSettings,
 	generateImage,

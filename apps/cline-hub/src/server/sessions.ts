@@ -3,8 +3,8 @@ import {
 	type ClineCoreStartInput,
 	type SessionRecord,
 	SessionSource,
-} from "@cline/core";
-import type { MessageWithMetadata } from "@cline/llms";
+} from "@sekokuva-ca/core";
+import type { MessageWithMetadata } from "@sekokuva-ca/llms";
 import type { WebviewConfig, WebviewReasonLevel } from "../webview-protocol";
 import { rejectPendingApprovalsForSession } from "./approvals";
 import { providerSettingsManager, workspaceRoot } from "./deps";

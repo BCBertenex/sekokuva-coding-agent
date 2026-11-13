@@ -1,5 +1,5 @@
 import { randomUUID, timingSafeEqual } from "node:crypto";
-import { captureSdkError } from "@cline/shared";
+import { captureSdkError } from "@sekokuva-ca/shared";
 import type { DesktopTransportRequest } from "../webview/lib/desktop-transport";
 import { MAX_DESKTOP_TRANSPORT_PAYLOAD_BYTES } from "../webview/lib/voice-input-limits";
 import { handleCommand } from "./commands";

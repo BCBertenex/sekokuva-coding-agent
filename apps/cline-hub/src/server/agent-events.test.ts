@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import type { CoreSessionEvent } from "@cline/core";
+import type { CoreSessionEvent } from "@sekokuva-ca/core";
 import type { HubContext } from "./state";
 
 // agent-events.ts only needs these siblings at runtime; mocking them keeps the
-// test from loading @cline/core (state-payloads imports it at module scope),
+// test from loading @sekokuva-ca/core (state-payloads imports it at module scope),
 // whose transitive provider deps do not survive vitest's module interop.
 vi.mock("./approvals", () => ({ rejectPendingApprovalsForSession: vi.fn() }));
 vi.mock("./state-payloads", () => ({ broadcastHubState: vi.fn() }));

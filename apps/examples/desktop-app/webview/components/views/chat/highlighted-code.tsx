@@ -1,6 +1,6 @@
 "use client";
 
-import { markdownCodeHighlighter } from "@cline/ui/components/markdown";
+import { markdownCodeHighlighter } from "@sekokuva-ca/ui/components/markdown";
 import { parseDiffFromFile } from "@pierre/diffs";
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";

@@ -1,5 +1,5 @@
-import type { ClineCore } from "@cline/core";
-import type { MessageWithMetadata } from "@cline/shared";
+import type { ClineCore } from "@sekokuva-ca/core";
+import type { MessageWithMetadata } from "@sekokuva-ca/shared";
 
 export async function loadInteractiveResumeMessages(
 	sessionManager: ClineCore,

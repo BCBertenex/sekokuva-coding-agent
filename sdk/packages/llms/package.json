@@ -1,5 +1,5 @@
 {
-	"name": "@cline/llms",
+	"name": "@sekokuva-ca/llms",
 	"version": "0.2.0",
 	"description": "Config-driven SDK for selecting, extending, and instantiating LLM providers and models",
 	"repository": {
@@ -62,7 +62,7 @@
 		"@ai-sdk/provider": "^4.0.26",
 		"@ai-sdk/provider-utils": "^5.0.58",
 		"@aws-sdk/credential-providers": "^3.922.0",
-		"@cline/shared": "workspace:*",
+		"@sekokuva-ca/shared": "workspace:*",
 		"@jerome-benoit/sap-ai-provider": "5.0.3",
 		"@langfuse/core": "5.10.1",
 		"@langfuse/otel": "5.10.1",

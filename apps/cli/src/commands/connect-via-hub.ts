@@ -4,12 +4,12 @@ import {
 	readHubDiscovery,
 	resolveProductionHubOwnerContext,
 	resolveSharedHubOwnerContext,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	type ConnectorStartResult,
 	resolveClineBuildEnv,
 	type SupervisedConnectorRecord,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { ConnectIo } from "../connectors/types";
 
 /**

@@ -1,4 +1,4 @@
-import { SessionSource } from "@cline/core"
+import { SessionSource } from "@sekokuva-ca/core"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { HostProvider } from "@/hosts/host-provider"
 import { CloudSessionHost } from "@/sdk/cloud-session-host"

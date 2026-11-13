@@ -13,7 +13,7 @@ const runtime = vi.hoisted(() => ({
 	startSession: vi.fn(async (input: { config: { sessionId: string } }) => ({ sessionId: input.config.sessionId })),
 }))
 
-vi.mock("@cline/core", () => ({
+vi.mock("@sekokuva-ca/core", () => ({
 	RemoteRuntimeHost: class {
 		pendingPrompts = { list: runtime.pendingList, update: runtime.pendingUpdate, delete: runtime.pendingDelete }
 		connect = vi.fn(async () => undefined)

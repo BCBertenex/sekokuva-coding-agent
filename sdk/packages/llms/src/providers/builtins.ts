@@ -11,7 +11,7 @@ import {
 	type JsonValue,
 	type ProviderCapability,
 	type ProviderConfigField,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { getGeneratedModelsForProvider } from "../catalog/catalog.generated-access";
 import { withInterleavedReasoningOverlay } from "../catalog/catalog-live";
 import { GENERATED_CLINE_RECOMMENDED_MODELS } from "../catalog/cline-recommended.generated";

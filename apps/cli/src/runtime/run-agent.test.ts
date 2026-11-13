@@ -55,8 +55,8 @@ const CLINE_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_MESSAGE =
 	"Organization accounts cannot use ClinePass subscriptions. Go to /account -> change account to switch to your personal account for ClinePass";
 
 vi.mock(
-	"@cline/core",
-	async (importActual: () => Promise<typeof import("@cline/core")>) => ({
+	"@sekokuva-ca/core",
+	async (importActual: () => Promise<typeof import("@sekokuva-ca/core")>) => ({
 		...(await importActual()),
 		getClineOrgIndividualInferenceSubscriptionMessage: () =>
 			CLINE_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_MESSAGE,

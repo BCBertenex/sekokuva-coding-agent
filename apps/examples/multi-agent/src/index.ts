@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { Agent, Llms } from "@cline/sdk";
+import { Agent, Llms } from "@sekokuva-ca/sdk";
 
 const PORT = Number(process.env.PORT || 3456);
 

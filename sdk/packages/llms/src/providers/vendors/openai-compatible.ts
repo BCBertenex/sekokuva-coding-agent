@@ -4,8 +4,8 @@ import type { LanguageModelV4 } from "@ai-sdk/provider";
 import type {
 	GatewayProviderContext,
 	GatewayResolvedProviderConfig,
-} from "@cline/shared";
-import { modelProducesImages } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { modelProducesImages } from "@sekokuva-ca/shared";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { wrapLanguageModel } from "ai";
 import { ensureFetch, resolveApiKey } from "../http";

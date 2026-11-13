@@ -28,7 +28,7 @@ const componentThemeHeader = `/*
  */
 
 `;
-const paletteImport = '@import "@cline/ui/theme/palette.css";';
+const paletteImport = '@import "@sekokuva-ca/ui/theme/palette.css";';
 
 function stripContractComment(source: string, sourcePath: string): string {
 	const withoutHeader = source.replace(/^\/\*[\s\S]*?\*\/\s*/, "");
@@ -195,10 +195,10 @@ if (checkOnly) {
 			throw new Error(`${outputPath} is out of date`);
 		}
 	}
-	console.log("@cline/ui generated theme files are current");
+	console.log("@sekokuva-ca/ui generated theme files are current");
 } else {
 	for (const [outputPath, generated] of outputs) {
 		writeFileSync(outputPath, generated);
 	}
-	console.log("Generated @cline/ui alpha palette, scoped and component themes");
+	console.log("Generated @sekokuva-ca/ui alpha palette, scoped and component themes");
 }

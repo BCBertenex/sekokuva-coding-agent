@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import type { UxVerificationReport } from "@cline/shared/browser";
+import type { UxVerificationReport } from "@sekokuva-ca/shared/browser";
 import { AgentUxVerification } from "../components/agent-ux-verification";
 const home = new URL("./assets/ux-verifier/home.jpg", import.meta.url).href;
 const sidebar = new URL("./assets/ux-verifier/sidebar.jpg", import.meta.url)

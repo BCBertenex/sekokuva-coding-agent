@@ -7,12 +7,12 @@ import {
 	NoOpFeatureFlagsProvider,
 	registerDisposable,
 	resolveCoreDistinctId,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	buildClinePostHogClient,
 	PostHogFeatureFlagsProvider,
-} from "@cline/core/services/feature-flags/posthog";
-import { resolveClineDataDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/core/services/feature-flags/posthog";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 
 let cliFeatureFlagsContext: FeatureFlagsContext = { clientName: "cline-cli" };
 let cliFeatureFlagsService: FeatureFlagsService | undefined;

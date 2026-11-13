@@ -6,9 +6,9 @@ import {
 	readHubDiscovery,
 	resolveProductionHubOwnerContext,
 	resolveSharedHubOwnerContext,
-} from "@cline/core";
-import { hasActiveHubSessions } from "@cline/core/hub";
-import { resolveClineBuildEnv } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { hasActiveHubSessions } from "@sekokuva-ca/core/hub";
+import { resolveClineBuildEnv } from "@sekokuva-ca/shared";
 import { version } from "../../package.json";
 import { c, writeErr, writeln } from "../utils/output";
 import {

@@ -17,8 +17,8 @@ import type {
 	PluginSetupContext,
 	PluginStatusRecord,
 	SessionPluginIssue,
-} from "@cline/shared";
-import { getPluginDisplayName } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { getPluginDisplayName } from "@sekokuva-ca/shared/storage";
 import { markPluginCommand } from "./plugin-command-origin";
 import type {
 	PluginInitializationFailure,

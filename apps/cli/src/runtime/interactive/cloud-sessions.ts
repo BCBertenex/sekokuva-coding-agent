@@ -1,5 +1,5 @@
-import { NodeHubClient } from "@cline/core";
-import { HubCloudSessionClient } from "@cline/core/cloud";
+import { NodeHubClient } from "@sekokuva-ca/core";
+import { HubCloudSessionClient } from "@sekokuva-ca/core/cloud";
 import { ensureCliHubServer } from "../../utils/hub-runtime";
 
 /** Cloud sessions are experimental; `CLINE_CLOUD_SESSIONS=1` opts in. */

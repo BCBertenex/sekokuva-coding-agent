@@ -33,20 +33,20 @@ const npmTag = values.tag ?? "latest";
 const wrapperPackageName = "cline";
 
 const expectedPlatformPackages = [
-	"@cline/cli-darwin-arm64",
-	"@cline/cli-darwin-x64",
-	"@cline/cli-linux-arm64",
-	"@cline/cli-linux-x64",
-	"@cline/cli-windows-arm64",
-	"@cline/cli-windows-x64",
+	"@sekokuva-ca/cli-darwin-arm64",
+	"@sekokuva-ca/cli-darwin-x64",
+	"@sekokuva-ca/cli-linux-arm64",
+	"@sekokuva-ca/cli-linux-x64",
+	"@sekokuva-ca/cli-windows-arm64",
+	"@sekokuva-ca/cli-windows-x64",
 ] as const;
 
 const hostSdkPackages = [
-	{ name: "@cline/sdk", directory: "sdk" },
-	{ name: "@cline/core", directory: "core" },
-	{ name: "@cline/agents", directory: "agents" },
-	{ name: "@cline/llms", directory: "llms" },
-	{ name: "@cline/shared", directory: "shared" },
+	{ name: "@sekokuva-ca/sdk", directory: "sdk" },
+	{ name: "@sekokuva-ca/core", directory: "core" },
+	{ name: "@sekokuva-ca/agents", directory: "agents" },
+	{ name: "@sekokuva-ca/llms", directory: "llms" },
+	{ name: "@sekokuva-ca/shared", directory: "shared" },
 ] as const;
 
 interface PlatformPackageManifest {
@@ -244,7 +244,7 @@ console.log("\nPublishing platform packages...");
 const platformTasks = Object.keys(binaries)
 	.sort()
 	.map(async (name) => {
-		const dirName = name.replace("@cline/", "");
+		const dirName = name.replace("@sekokuva-ca/", "");
 		const pkgDir = join(cliDir, "dist", dirName);
 
 		await publishPackage({

@@ -1,5 +1,5 @@
 {
-	"name": "@cline/cli",
+	"name": "@sekokuva-ca/cli",
 	"displayName": "cline",
 	"version": "3.0.74",
 	"description": "Autonomous coding agent CLI - capable of creating/editing files, running commands, using the browser, and more",
@@ -76,7 +76,7 @@
 		"@chat-adapter/telegram": "^4.23.0",
 		"@chat-adapter/whatsapp": "^4.23.0",
 		"@clack/prompts": "^1.2.0",
-		"@cline/cline-hub": "workspace:*",
+		"@sekokuva-ca/cline-hub": "workspace:*",
 		"@gramio/format": "^0.7.0",
 		"@opentui-ui/dialog": "^0.1.2",
 		"@opentui/core": "0.4.3",
@@ -97,8 +97,8 @@
 		"zod": "^4.1.11"
 	},
 	"devDependencies": {
-		"@cline/core": "workspace:*",
-		"@cline/shared": "workspace:*",
+		"@sekokuva-ca/core": "workspace:*",
+		"@sekokuva-ca/shared": "workspace:*",
 		"@microsoft/tui-test": "^0.0.2",
 		"@types/bun": "^1.4.2",
 		"@types/react": "19.2.14",

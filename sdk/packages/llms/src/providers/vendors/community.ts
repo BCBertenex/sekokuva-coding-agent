@@ -3,7 +3,7 @@ import type { EventEmitter } from "node:events";
 import { accessSync, existsSync, constants as fsConstants } from "node:fs";
 import { createRequire } from "node:module";
 import { delimiter, dirname, join } from "node:path";
-import type { GatewayResolvedProviderConfig } from "@cline/shared";
+import type { GatewayResolvedProviderConfig } from "@sekokuva-ca/shared";
 import { createDifyProvider } from "dify-ai-provider";
 import { resolveApiKey } from "../http";
 import type { ProviderFactoryResult } from "./types";
@@ -133,7 +133,7 @@ export async function createClaudeCodeProviderModule(
 	} catch (error) {
 		throw new Error(
 			"The Claude Code provider requires the optional 'ai-sdk-provider-claude-code' package. " +
-				"Install it alongside @cline/llms to use this provider.",
+				"Install it alongside @sekokuva-ca/llms to use this provider.",
 			{ cause: error },
 		);
 	}
@@ -148,7 +148,7 @@ export async function createClaudeCodeProviderModule(
 		}
 	}
 	// Hosts forward the workspace root as a top-level `cwd` option (e.g.
-	// @cline/core's buildGatewayProviderOptions). Anchor the spawned agent
+	// @sekokuva-ca/core's buildGatewayProviderOptions). Anchor the spawned agent
 	// session there; otherwise it inherits the host process cwd (`/` in GUI
 	// extension hosts) and refuses writes outside it. Guard on existence:
 	// the provider hard-fails settings validation for missing directories.
@@ -193,7 +193,7 @@ export async function createOpenAICodexProviderModule(
 	} catch (error) {
 		throw new Error(
 			"The OpenAI Codex provider requires the optional 'ai-sdk-provider-codex-cli' package. " +
-				"Install it alongside @cline/llms to use this provider.",
+				"Install it alongside @sekokuva-ca/llms to use this provider.",
 			{ cause: error },
 		);
 	}

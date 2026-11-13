@@ -5,8 +5,8 @@ import {
 	type ConnectorChannel,
 	type ConnectorChannelsResponse,
 	shouldIncludeConnectorField,
-} from "@cline/shared/browser";
-import { Switch } from "@cline/ui";
+} from "@sekokuva-ca/shared/browser";
+import { Switch } from "@sekokuva-ca/ui";
 import { Circle, Eye, EyeOff, RefreshCw, Search } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {

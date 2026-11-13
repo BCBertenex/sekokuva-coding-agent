@@ -9,11 +9,11 @@ import {
 	type SupervisedConnectorOrigin,
 	type SupervisedConnectorRecord,
 	type SupervisedConnectorState,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	ensureParentDir,
 	resolveConnectorLogPath,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import { listActiveConnectors } from "./active-connectors";
 import {
 	disableConnectorAutostart,

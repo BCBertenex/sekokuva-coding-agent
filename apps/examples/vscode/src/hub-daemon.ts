@@ -5,12 +5,12 @@ import {
 	createLocalHubScheduleRuntimeHandlers,
 	ensureHubWebSocketServer,
 	resolveSharedHubOwnerContext,
-} from "@cline/core/hub";
+} from "@sekokuva-ca/core/hub";
 import {
 	createClineTelemetryServiceConfig,
 	createClineTelemetryServiceMetadata,
 	type TelemetryMetadata,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 
 type DetachedHubDaemonConfig = {
 	workspaceRoot: string;

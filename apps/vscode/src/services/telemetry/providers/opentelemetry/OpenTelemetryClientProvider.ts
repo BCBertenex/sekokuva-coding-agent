@@ -1,4 +1,3 @@
-import { markOtlpTraceRelayProvider, OTLP_TRACE_RELAY_MARKER } from "@cline/shared"
 import { metrics, trace } from "@opentelemetry/api"
 import { logs } from "@opentelemetry/api-logs"
 import { Resource } from "@opentelemetry/resources"
@@ -6,6 +5,7 @@ import { BatchLogRecordProcessor, LoggerProvider } from "@opentelemetry/sdk-logs
 import { MeterProvider } from "@opentelemetry/sdk-metrics"
 import { BatchSpanProcessor, NodeTracerProvider } from "@opentelemetry/sdk-trace-node"
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions"
+import { markOtlpTraceRelayProvider, OTLP_TRACE_RELAY_MARKER } from "@sekokuva-ca/shared"
 import { ExtensionRegistryInfo } from "@/registry"
 import { OpenTelemetryClientValidConfig } from "@/shared/services/config/otel-config"
 import { Logger } from "@/shared/services/Logger"

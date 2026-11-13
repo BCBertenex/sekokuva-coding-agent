@@ -5,8 +5,8 @@ import type {
 	RestoreInput,
 	RestoreResult,
 	StartSessionResult,
-} from "@cline/core"
-import { formatModeSwitchNotice, type ModeSwitchNotice } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import { formatModeSwitchNotice, type ModeSwitchNotice } from "@sekokuva-ca/shared"
 import type { Mode } from "@shared/storage/types"
 import { StateManager } from "@/core/storage/StateManager"
 import type { VscodeTerminalManager } from "@/hosts/vscode/terminal/VscodeTerminalManager"

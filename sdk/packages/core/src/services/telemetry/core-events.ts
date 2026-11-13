@@ -13,7 +13,7 @@ import {
 	TASK_PROVIDER_STREAM_FAILED_EVENT,
 	TASK_PROVIDER_STREAM_STARTED_EVENT,
 	type TelemetryProperties,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type {
 	CoreCompactionBudgetPolicyIntent,
 	CoreCompactionLiveTailHandling,

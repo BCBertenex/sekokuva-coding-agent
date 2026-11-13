@@ -7,12 +7,12 @@ import type {
 	PluginPolicies,
 	ToolApprovalRequest,
 	UserContext,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	createSessionId,
 	parseRuntimeConfigExtensions,
 	ReasoningEffortSchema,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	isCoreBuiltinToolAvailable,
 	resolveToolClientType,

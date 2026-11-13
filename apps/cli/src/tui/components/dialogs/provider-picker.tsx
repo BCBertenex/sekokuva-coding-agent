@@ -10,8 +10,8 @@ import {
 	saveLocalProviderOAuthCredentials,
 	saveLocalProviderSettings,
 	startClineDeviceAuth,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

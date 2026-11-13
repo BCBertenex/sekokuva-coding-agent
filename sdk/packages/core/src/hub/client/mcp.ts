@@ -2,8 +2,8 @@ import type {
 	HubCommandInput,
 	HubCommandOutputMap,
 	HubMcpCommandName,
-} from "@cline/shared";
-import { createSessionId } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { createSessionId } from "@sekokuva-ca/shared";
 import { HubCommandError, type NodeHubClient } from "./index";
 /** Uses the registered local Hub, including when Desktop is viewing a remote workspace. */
 export function createHubMcpApi(client: Pick<NodeHubClient, "command">) {

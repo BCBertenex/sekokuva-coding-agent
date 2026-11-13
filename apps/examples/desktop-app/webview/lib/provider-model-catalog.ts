@@ -1,11 +1,11 @@
 "use client";
 
-import type { CloudModel } from "@cline/core/cloud";
+import type { CloudModel } from "@sekokuva-ca/core/cloud";
 import {
 	isChatCompatibleModel,
 	isTranscriptionModel,
 	type ProviderAuthInfo,
-} from "@cline/shared/browser";
+} from "@sekokuva-ca/shared/browser";
 import { desktopClient } from "@/lib/desktop-client";
 import { isProviderConnected } from "@/lib/provider-connection";
 import type {

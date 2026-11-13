@@ -158,16 +158,16 @@ cline -i "do something"  # Hooks will execute automatically
 To use the SDK in your own Node app (outside this monorepo), start with:
 
 ```bash
-npm add @cline/core
+npm add @sekokuva-ca/core
 ```
 
-Add `@cline/agents` or `@cline/llms` only if you intentionally want lower-level control. For RPC client helpers, prefer importing from `@cline/core` when you want the app-facing SDK surface.
+Add `@sekokuva-ca/agents` or `@sekokuva-ca/llms` only if you intentionally want lower-level control. For RPC client helpers, prefer importing from `@sekokuva-ca/core` when you want the app-facing SDK surface.
 
 Current SDK layering:
 
-- `@cline/core` owns config discovery/watchers, runtime plugin loading, and the context pipeline
+- `@sekokuva-ca/core` owns config discovery/watchers, runtime plugin loading, and the context pipeline
 - context compaction is core-owned and runs through turn preparation before model calls
-- most app integrations should stay on the `@cline/core` surface unless they intentionally need lower-level agent or model control
+- most app integrations should stay on the `@sekokuva-ca/core` surface unless they intentionally need lower-level agent or model control
 
 ## 📚 Learning Path
 

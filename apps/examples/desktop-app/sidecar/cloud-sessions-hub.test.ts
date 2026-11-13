@@ -2,8 +2,8 @@ import {
 	HubCommandError,
 	HubTransportError,
 	type NodeHubClient,
-} from "@cline/core";
-import type { HubEventEnvelope } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { HubEventEnvelope } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import { createCloudSessionTestRuntime } from "./cloud-session-test-runtime";
 import {
@@ -214,7 +214,7 @@ class FakeHubClient {
 async function createFixture({
 	hub = new FakeHubClient(),
 	...options
-}: Partial<import("@cline/core/cloud").CloudSessionControllerOptions> & {
+}: Partial<import("@sekokuva-ca/core/cloud").CloudSessionControllerOptions> & {
 	hub?: FakeHubClient;
 } = {}) {
 	const { ctx, events } = createContext();

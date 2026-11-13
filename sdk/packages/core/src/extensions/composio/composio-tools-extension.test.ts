@@ -1,8 +1,8 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { AgentRuntime } from "@cline/agents";
-import type { AgentModel, AgentTool, ITelemetryService } from "@cline/shared";
+import { AgentRuntime } from "@sekokuva-ca/agents";
+import type { AgentModel, AgentTool, ITelemetryService } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { RuntimeEventAdapter } from "../../runtime/orchestration/runtime-event-adapter";
 import {
@@ -13,7 +13,7 @@ import { CORE_TELEMETRY_EVENTS } from "../../services/telemetry/core-events";
 import type { CoreSessionConfig } from "../../types/config";
 
 // These tests supply a scripted model; no provider gateway is involved.
-vi.mock("@cline/llms", () => ({
+vi.mock("@sekokuva-ca/llms", () => ({
 	createGateway: vi.fn(() => {
 		throw new Error("Unexpected provider gateway in scripted-model test");
 	}),

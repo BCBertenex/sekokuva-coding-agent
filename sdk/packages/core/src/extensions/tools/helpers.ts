@@ -1,4 +1,4 @@
-import { validateWithZod } from "@cline/shared";
+import { validateWithZod } from "@sekokuva-ca/shared";
 import type { z } from "zod";
 import {
 	type EditFileInput,

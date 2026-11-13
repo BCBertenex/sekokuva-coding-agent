@@ -172,7 +172,7 @@ vi.mock("./runtime/run-interactive", () => {
 });
 vi.mock("./utils/session", () => sessionMocks);
 vi.mock("./session/session", () => sessionMocks);
-vi.mock("@cline/core", async () => {
+vi.mock("@sekokuva-ca/core", async () => {
 	mockState.coreImports += 1;
 	// Keep dispatch tests independent of the full SDK runtime import graph.
 	// Only persisted-settings behavior needs its real implementation here.

@@ -3,7 +3,7 @@ import {
 	type CloudHubConnection,
 	type CloudSessionEvent,
 	HubCloudSessionClient,
-} from "@cline/core/cloud";
+} from "@sekokuva-ca/core/cloud";
 import {
 	ensureSharedHubClient,
 	getEnvironmentContext,
@@ -15,7 +15,7 @@ import { readSessionMessagesSync } from "./session-data/messages";
 import type { LiveSession, SidecarContext } from "./types";
 import { LOCAL_ENVIRONMENT_ID } from "./types";
 
-export * from "@cline/core/cloud";
+export * from "@sekokuva-ca/core/cloud";
 
 /** Desktop projection adapter. Cloud transport and authoritative state live in core. */
 export class CloudSessionManager extends HubCloudSessionClient {

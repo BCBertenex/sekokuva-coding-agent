@@ -1,4 +1,4 @@
-import { resolveClineBuildEnv } from "@cline/shared";
+import { resolveClineBuildEnv } from "@sekokuva-ca/shared";
 import { resolveHubEndpointOptions } from "../discovery/defaults";
 import {
 	resolveProductionHubOwnerContext,

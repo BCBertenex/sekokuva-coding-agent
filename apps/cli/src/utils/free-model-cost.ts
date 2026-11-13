@@ -1,5 +1,5 @@
-import { type AgentEvent, buildClineClientHeaders } from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+import { type AgentEvent, buildClineClientHeaders } from "@sekokuva-ca/core";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 import type { Config } from "./types";
 
 const CLINE_RECOMMENDED_MODELS_TIMEOUT_MS = 5_000;

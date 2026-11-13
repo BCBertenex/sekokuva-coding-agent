@@ -1,4 +1,4 @@
-import { setClineClientIdentity } from "@cline/shared"
+import { setClineClientIdentity } from "@sekokuva-ca/shared"
 import { HostProvider } from "@/hosts/host-provider"
 import { ExtensionRegistryInfo } from "@/registry"
 import { ClineClient } from "@/shared/cline"

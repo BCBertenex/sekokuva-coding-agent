@@ -2,8 +2,8 @@ import type {
 	HubCommandEnvelope,
 	HubEventEnvelope,
 	HubReplyEnvelope,
-} from "@cline/shared";
-import { createSessionId } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { createSessionId } from "@sekokuva-ca/shared";
 import { captureCapabilityOwnerGone } from "../../../services/telemetry/core-events";
 import { logHubMessage } from "../hub-server-logging";
 import { errorReply, type HubTransportContext, okReply } from "./context";

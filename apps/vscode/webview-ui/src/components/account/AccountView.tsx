@@ -1,4 +1,4 @@
-import { resolveClineAppUrl } from "@cline/shared/browser"
+import { resolveClineAppUrl } from "@sekokuva-ca/shared/browser"
 import type { UsageTransaction as ClineAccountUsageTransaction, PaymentTransaction } from "@shared/ClineAccount"
 import { isClineInternalTester } from "@shared/internal/account"
 import type { UserOrganization } from "@shared/proto/cline/account"

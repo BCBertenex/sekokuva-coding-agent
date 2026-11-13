@@ -1,7 +1,7 @@
 import type {
 	GatewayProviderContext,
 	GatewayStreamRequest,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { ProviderOptionsPatch } from "./utils";
 
 export type AiSdkProviderOptionsTarget =

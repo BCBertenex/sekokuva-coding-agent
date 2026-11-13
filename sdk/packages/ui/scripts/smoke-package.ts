@@ -39,26 +39,26 @@ import {
 	SearchCombobox,
 	SessionStatus,
 	Switch,
-} from "@cline/ui";
-import { Conversation, Message } from "@cline/ui/components/agent-chat";
+} from "@sekokuva-ca/ui";
+import { Conversation, Message } from "@sekokuva-ca/ui/components/agent-chat";
 import {
 	MessageScroller,
 	MessageScrollerProvider,
 	useMessageScrollerVisibility,
-} from "@cline/ui/components/message-scroller";
-import { ToolFileDiff } from "@cline/ui/components/agent-chat/tool-diff";
-import { buildToolSummary } from "@cline/ui/components/agent-chat/tool-summary";
+} from "@sekokuva-ca/ui/components/message-scroller";
+import { ToolFileDiff } from "@sekokuva-ca/ui/components/agent-chat/tool-diff";
+import { buildToolSummary } from "@sekokuva-ca/ui/components/agent-chat/tool-summary";
 import {
 	agentMarkdownControlsWithMermaid,
 	createLazyMermaidPlugin,
 	DIAGRAM_LINK_HREF_ATTRIBUTE,
 	neutralizeDiagramLinks,
-} from "@cline/ui/components/markdown";
-import { createMermaidRenderer } from "@cline/ui/components/mermaid-block";
+} from "@sekokuva-ca/ui/components/markdown";
+import { createMermaidRenderer } from "@sekokuva-ca/ui/components/mermaid-block";
 import {
 	computePngExportSize,
 	resolveDiagramSlug,
-} from "@cline/ui/components/mermaid-diagram";
+} from "@sekokuva-ca/ui/components/mermaid-diagram";
 
 if (
 	[MessageScroller, MessageScrollerProvider, useMessageScrollerVisibility].some(
@@ -71,18 +71,18 @@ if (
 if (typeof AgentUxVerification !== "function") throw new Error("packed UX verifier export is missing");
 
 for (const specifier of [
-	"@cline/ui/components.css",
-	"@cline/ui/components/markdown.css",
-	"@cline/ui/components/message-scroller.css",
-	"@cline/ui/theme/palette.css",
-	"@cline/ui/theme/scoped-tokens.css",
+	"@sekokuva-ca/ui/components.css",
+	"@sekokuva-ca/ui/components/markdown.css",
+	"@sekokuva-ca/ui/components/message-scroller.css",
+	"@sekokuva-ca/ui/theme/palette.css",
+	"@sekokuva-ca/ui/theme/scoped-tokens.css",
 ]) {
 	if (!existsSync(fileURLToPath(import.meta.resolve(specifier)))) {
 		throw new Error("packed CSS export does not exist: " + specifier);
 	}
 }
 
-const packageJsonUrl = import.meta.resolve("@cline/ui/package.json");
+const packageJsonUrl = import.meta.resolve("@sekokuva-ca/ui/package.json");
 for (const control of [Button, IconButton, Badge]) {
  if (!control) throw new Error("packed shared control export is missing");
 }
@@ -106,8 +106,8 @@ if (inlineHeroMaskCount !== 4) {
 	throw new Error("packed hero CSS does not contain four inline SVG masks");
 }
 
-const css = import.meta.resolve("@cline/ui/components/agent-chat.css");
-const tokens = import.meta.resolve("@cline/ui/theme/tokens.css");
+const css = import.meta.resolve("@sekokuva-ca/ui/components/agent-chat.css");
+const tokens = import.meta.resolve("@sekokuva-ca/ui/theme/tokens.css");
 const summary = buildToolSummary({
 	toolName: "read_files",
 	input: { files: [{ path: "src/app.tsx", start_line: 10, end_line: 80 }] },
@@ -236,9 +236,9 @@ async function verifyDiffDeclarations(root: string): Promise<void> {
 	const consumer = join(root, "tool-diff-consumer.ts");
 	writeFileSync(
 		consumer,
-		`import { ToolFileDiff } from "@cline/ui/components/agent-chat/tool-diff";
+		`import { ToolFileDiff } from "@sekokuva-ca/ui/components/agent-chat/tool-diff";
 import { createElement, createRef, type ComponentProps } from "react";
-import { Badge, Button, IconButton, Switch, type BadgeProps, type InteractiveBadgeProps } from "@cline/ui";
+import { Badge, Button, IconButton, Switch, type BadgeProps, type InteractiveBadgeProps } from "@sekokuva-ca/ui";
 interface LegacyBadgeWrapperProps extends BadgeProps { hint?: string }
 const spanProps: LegacyBadgeWrapperProps = { title: "Status", onClick(event) { event.currentTarget.dataset.clicked = "true"; } };
 const buttonBadge: InteractiveBadgeProps = { interactive: true, onClick(event) { event.currentTarget.disabled = true; } };
@@ -318,8 +318,8 @@ async function verifyTailwindContract(
 		"tailwind",
 		[
 			'@import "tailwindcss";',
-			'@import "@cline/ui/theme/scoped-tokens.css";',
-			'@import "@cline/ui/components.css";',
+			'@import "@sekokuva-ca/ui/theme/scoped-tokens.css";',
+			'@import "@sekokuva-ca/ui/components.css";',
 			"@theme inline {",
 			"\t--color-background: var(--host-background);",
 			"\t--radius-lg: var(--host-radius-lg);",
@@ -363,8 +363,8 @@ async function verifyTailwindContract(
 		[
 			"@layer theme, base, components, utilities;",
 			'@import "tailwindcss/theme.css" layer(theme);',
-			'@import "@cline/ui/theme/scoped-tokens.css";',
-			'@import "@cline/ui/components.css";',
+			'@import "@sekokuva-ca/ui/theme/scoped-tokens.css";',
+			'@import "@sekokuva-ca/ui/components.css";',
 			'@import "tailwindcss/utilities.css" layer(utilities);',
 		],
 		runner,
@@ -408,7 +408,7 @@ try {
 	const archive = process.argv[2]
 		? resolve(process.argv[2])
 		: await pack(packageRoot, join(temporaryRoot, "pack"));
-	// The packed UI pins @cline/shared to the workspace version, which is not on
+	// The packed UI pins @sekokuva-ca/shared to the workspace version, which is not on
 	// the registry yet during a release, so both consumers install the local pack.
 	// npm dedupes onto it directly; Bun needs an override to resolve it.
 	const sharedArchive = await pack(
@@ -417,7 +417,7 @@ try {
 	);
 
 	const bunConsumer = join(temporaryRoot, "bun-consumer");
-	createConsumer(bunConsumer, { "@cline/shared": `file:${sharedArchive}` });
+	createConsumer(bunConsumer, { "@sekokuva-ca/shared": `file:${sharedArchive}` });
 	await run(
 		[
 			process.execPath,

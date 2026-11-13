@@ -1,13 +1,13 @@
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { createAgentRuntime } from "@cline/agents";
+import { createAgentRuntime } from "@sekokuva-ca/agents";
 import type {
 	AgentConfig,
 	AgentMessage,
 	AgentModel,
 	AgentToolResultPart,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { createPublishArtifactsTool } from "../../artifacts/publish";
 import { createDefaultTools } from "../../extensions/tools/definitions";

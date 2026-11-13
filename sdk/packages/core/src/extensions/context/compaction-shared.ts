@@ -1,11 +1,11 @@
-import type { ModelInfo, ToolResultContent } from "@cline/llms";
+import type { ModelInfo, ToolResultContent } from "@sekokuva-ca/llms";
 import {
 	CHARS_PER_TOKEN,
 	createImageAwareReplacer,
 	ESTIMATED_TOKENS_PER_IMAGE,
 	estimateTokens,
 	type MessageWithMetadata,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 
 export { CHARS_PER_TOKEN, estimateTokens };
 

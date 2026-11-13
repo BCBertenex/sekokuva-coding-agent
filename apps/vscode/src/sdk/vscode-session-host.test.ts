@@ -1,12 +1,12 @@
-import { type ClineCoreStartInput, type ITelemetryService, toClineCoreStartInput } from "@cline/core"
+import { type ClineCoreStartInput, type ITelemetryService, toClineCoreStartInput } from "@sekokuva-ca/core"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const mockClineCoreCreate = vi.hoisted(() => vi.fn())
 const mockCreateVscodeExtraTools = vi.hoisted(() => vi.fn(async () => []))
 const mockInnerStart = vi.hoisted(() => vi.fn())
 
-vi.mock("@cline/core", async () => {
-	const actual = await vi.importActual<typeof import("@cline/core")>("@cline/core")
+vi.mock("@sekokuva-ca/core", async () => {
+	const actual = await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core")
 	return { ...actual, ClineCore: { create: mockClineCoreCreate } }
 })
 vi.mock("@/services/logging/distinctId", () => ({ getDistinctId: () => "distinct-id" }))

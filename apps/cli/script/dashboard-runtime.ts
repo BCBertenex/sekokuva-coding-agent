@@ -12,7 +12,7 @@ export function buildDashboardRuntimeDirectory(): Promise<string> {
 
 async function buildDirectory(): Promise<string> {
 	const root = resolve(import.meta.dir, "../../..");
-	await $`bun -F @cline/cline-hub build:webview`.cwd(root).quiet();
+	await $`bun -F @sekokuva-ca/cline-hub build:webview`.cwd(root).quiet();
 	const directory = join(root, "apps/cline-hub/dist/webview");
 	if (!existsSync(join(directory, "index.html")))
 		throw new Error("Dashboard build produced no index.html");

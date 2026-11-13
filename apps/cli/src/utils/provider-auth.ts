@@ -6,7 +6,7 @@ import {
 	Llms,
 	type ProviderOAuthCredentials,
 	type ProviderSettings,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 export type OAuthCredentials = ProviderOAuthCredentials;
 

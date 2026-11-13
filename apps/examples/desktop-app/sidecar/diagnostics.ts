@@ -9,7 +9,7 @@ import {
 } from "node:fs";
 import { arch, homedir, platform, release } from "node:os";
 import { join } from "node:path";
-import { readGlobalSettings, resolveClineDataDir } from "@cline/core";
+import { readGlobalSettings, resolveClineDataDir } from "@sekokuva-ca/core";
 import packageJson from "../package.json";
 import { readSessionManifest } from "./paths";
 

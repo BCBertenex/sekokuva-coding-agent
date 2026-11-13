@@ -1,4 +1,4 @@
-import type { ExtensionContext } from "@cline/shared";
+import type { ExtensionContext } from "@sekokuva-ca/shared";
 import type { RuntimeCapabilities } from "../runtime/capabilities";
 import { normalizeRuntimeCapabilities } from "../runtime/capabilities";
 import type {

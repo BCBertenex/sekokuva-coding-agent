@@ -12,7 +12,7 @@ function isPluginRuntime(directory: string): boolean {
 	return (
 		existsSync(join(directory, "plugin-sandbox-bootstrap.js")) &&
 		existsSync(
-			join(directory, "node_modules", "@cline", "core", "package.json"),
+			join(directory, "node_modules", "@sekokuva-ca", "core", "package.json"),
 		)
 	);
 }

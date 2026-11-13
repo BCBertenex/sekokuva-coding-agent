@@ -1,6 +1,6 @@
 "use client";
 
-import { AgentWelcomeHero, Button, IconButton } from "@cline/ui";
+import { AgentWelcomeHero, Button, IconButton } from "@sekokuva-ca/ui";
 import {
 	ArrowLeft,
 	Check,

@@ -15,8 +15,8 @@ import {
 	resolvePluginConfigSearchPaths,
 	type SkillConfig,
 	type WorkflowConfig,
-} from "@cline/core";
-import { readFileSyncStrippingUtf8Bom } from "@cline/shared/node";
+} from "@sekokuva-ca/core";
+import { readFileSyncStrippingUtf8Bom } from "@sekokuva-ca/shared/node";
 import { Command } from "commander";
 import { getToolCatalog } from "../runtime/tools";
 import { createCliCore } from "../session/session";

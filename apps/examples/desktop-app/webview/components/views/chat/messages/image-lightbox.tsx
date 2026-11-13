@@ -1,6 +1,6 @@
 "use client";
 
-import { AgentImageLightboxContent } from "@cline/ui";
+import { AgentImageLightboxContent } from "@sekokuva-ca/ui";
 import type { ChatMessageImage } from "@/lib/chat-schema";
 
 export function ChatImageLightbox({

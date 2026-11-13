@@ -35,7 +35,7 @@ export default defineConfig({
 		setupFiles: ["./src/test/vitest-setup.ts"],
 		// Several suites lazily `await import()` their subject inside the first test
 		// (needed so vi.mock factories apply first). That import pulls in heavy
-		// workspace packages (@cline/core/@cline/llms/@cline/shared), and on loaded
+		// workspace packages (@sekokuva-ca/core/@sekokuva-ca/llms/@sekokuva-ca/shared), and on loaded
 		// CI runners the first test in a file can blow past the 5s default and flake
 		// (seen in catalog.test.ts and resolveModelInfo.test.ts). Raise the per-test
 		// timeout so import cost attributed to the first test doesn't cause flakes.
@@ -51,22 +51,28 @@ export default defineConfig({
 			// its default export. Restore the package's declared `z` export for tests.
 			{ find: /^zod$/, replacement: path.resolve(__dirname, "src/test/zod-vitest-stub.ts") },
 			{
-				find: /^@cline\/core\/cloud$/,
-				replacement: path.resolve(__dirname, "node_modules/@cline/core/dist/cloud/index.js"),
+				find: /^@sekokuva-ca\/core\/cloud$/,
+				replacement: path.resolve(__dirname, "node_modules/@sekokuva-ca/core/dist/cloud/index.js"),
 			},
-			{ find: "@cline/core", replacement: path.resolve(__dirname, "src/test/cline-core-vitest-stub.ts") },
-			{ find: "@cline/llms", replacement: path.resolve(__dirname, "node_modules/@cline/llms/dist/index.js") },
-			// Map @cline/shared subpath exports explicitly. The bare "@cline/shared"
-			// alias below does not cover subpaths (e.g. "@cline/shared/storage"), and
+			{ find: "@sekokuva-ca/core", replacement: path.resolve(__dirname, "src/test/cline-core-vitest-stub.ts") },
+			{ find: "@sekokuva-ca/llms", replacement: path.resolve(__dirname, "node_modules/@sekokuva-ca/llms/dist/index.js") },
+			// Map @sekokuva-ca/shared subpath exports explicitly. The bare "@sekokuva-ca/shared"
+			// alias below does not cover subpaths (e.g. "@sekokuva-ca/shared/storage"), and
 			// Vite's fallback Node resolution does not read the package `exports` map
 			// here, so subpath imports fail with "Cannot find package". Keep the more
 			// specific subpath alias(es) before the bare package alias.
 			{
-				find: "@cline/shared/storage",
-				replacement: path.resolve(__dirname, "node_modules/@cline/shared/dist/storage/index.js"),
+				find: "@sekokuva-ca/shared/storage",
+				replacement: path.resolve(__dirname, "node_modules/@sekokuva-ca/shared/dist/storage/index.js"),
 			},
-			{ find: "@cline/shared/db", replacement: path.resolve(__dirname, "node_modules/@cline/shared/dist/db/index.js") },
-			{ find: "@cline/shared", replacement: path.resolve(__dirname, "node_modules/@cline/shared/dist/index.js") },
+			{
+				find: "@sekokuva-ca/shared/db",
+				replacement: path.resolve(__dirname, "node_modules/@sekokuva-ca/shared/dist/db/index.js"),
+			},
+			{
+				find: "@sekokuva-ca/shared",
+				replacement: path.resolve(__dirname, "node_modules/@sekokuva-ca/shared/dist/index.js"),
+			},
 			{ find: "vscode", replacement: path.resolve(__dirname, "src/test/vscode-vitest-stub.ts") },
 			{ find: "@", replacement: path.resolve(__dirname, "src") },
 			{ find: "@api", replacement: path.resolve(__dirname, "src/core/api") },

@@ -3,7 +3,7 @@ import {
 	CLINE_ENVIRONMENT_ENV,
 	CLINE_ENVIRONMENTS,
 	type GatewayProviderContext,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { GENERATED_CLINE_RECOMMENDED_MODELS } from "../catalog/cline-recommended.generated";
 import {

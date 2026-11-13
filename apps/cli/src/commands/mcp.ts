@@ -7,10 +7,10 @@ import {
 	type McpUninstallOptions as CoreMcpUninstallOptions,
 	type McpUninstallResult as CoreMcpUninstallResult,
 	uninstallMcpServer,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import type { McpAddDefaults } from "../wizards/mcp";
 
-export { buildMcpInstallTransport, uninstallMcpServer } from "@cline/core";
+export { buildMcpInstallTransport, uninstallMcpServer } from "@sekokuva-ca/core";
 
 export interface McpCommandIo {
 	writeln?: (text: string) => void;

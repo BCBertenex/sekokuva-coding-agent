@@ -1,5 +1,5 @@
 {
-	"name": "@cline/shared",
+	"name": "@sekokuva-ca/shared",
 	"version": "0.2.0",
 	"description": "Shared utilities, types, and schemas for Cline packages",
 	"repository": {

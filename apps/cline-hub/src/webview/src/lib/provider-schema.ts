@@ -1,4 +1,4 @@
-import type { ModelModality, ModelOperation } from "@cline/shared";
+import type { ModelModality, ModelOperation } from "@sekokuva-ca/shared";
 
 export interface ProviderModel {
 	id: string;

@@ -22,8 +22,8 @@ import {
 	saveLocalProviderSettings,
 	setAutoUpdateEnabledGlobally,
 	setTelemetryOptOutGlobally,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 import {
 	connectorChannelsPayload,
 	startConnectorChannel,

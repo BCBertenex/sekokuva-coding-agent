@@ -139,7 +139,7 @@ if (!arch) {
 	arch = os.arch();
 }
 
-const base = "@cline/cli-" + platform + "-" + arch;
+const base = "@sekokuva-ca/cli-" + platform + "-" + arch;
 const binary = platform === "windows" ? "cline.exe" : "cline";
 
 // Build fallback chain of package names to try
@@ -151,8 +151,8 @@ function findBinary(startDir) {
 		const modules = path.join(current, "node_modules");
 		if (fs.existsSync(modules)) {
 			for (const name of names) {
-				// Scoped package: @cline/cli-darwin-arm64 lives at
-				// node_modules/@cline/cli-darwin-arm64
+				// Scoped package: @sekokuva-ca/cli-darwin-arm64 lives at
+				// node_modules/@sekokuva-ca/cli-darwin-arm64
 				const candidate = path.join(modules, name, "bin", binary);
 				if (fs.existsSync(candidate)) return candidate;
 			}

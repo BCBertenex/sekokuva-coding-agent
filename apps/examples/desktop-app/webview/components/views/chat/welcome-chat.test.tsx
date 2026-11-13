@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 
-import type { ClineAccountOrganization } from "@cline/core";
-import type { AgendaTaskRecord } from "@cline/shared";
-import { getClineEnvironmentConfig } from "@cline/shared/browser";
+import type { ClineAccountOrganization } from "@sekokuva-ca/core";
+import type { AgendaTaskRecord } from "@sekokuva-ca/shared";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared/browser";
 import { act, type ComponentProps, type ReactNode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

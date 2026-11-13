@@ -7,8 +7,8 @@ import {
 	type EditFileInput,
 	type EditorExecutor,
 	PatchActionType,
-} from "@cline/core"
-import type { AgentToolContext } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import type { AgentToolContext } from "@sekokuva-ca/shared"
 import * as fs from "fs/promises"
 import * as path from "path"
 import { HostProvider } from "@/hosts/host-provider"

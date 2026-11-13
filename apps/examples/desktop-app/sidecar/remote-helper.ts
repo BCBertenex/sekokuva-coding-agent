@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import {
 	type RemoteHelperTarget,
 	remoteHelperBinaryFilename,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { resolveDesktopCliPath } from "./cli-runtime";
 
 /** Base name of the Cline CLI binary the desktop app bundles (Tauri externalBin). */

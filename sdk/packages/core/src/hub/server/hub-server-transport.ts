@@ -9,14 +9,14 @@ import type {
 	HubEventEnvelope,
 	HubReplyEnvelope,
 	ToolApprovalRequest,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	CLINE_DEFAULT_MODEL_ID,
 	captureSdkError,
 	createSessionId,
 	HUB_CLIENT_TOOL_APPROVAL_CAPABILITY,
-} from "@cline/shared";
-import { isChatWorkspacePath } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { isChatWorkspacePath } from "@sekokuva-ca/shared/storage";
 import { CronService } from "../../cron/service/cron-service";
 import { HubScheduleCommandService } from "../../cron/service/schedule-command-service";
 import { HubScheduleService } from "../../cron/service/schedule-service";

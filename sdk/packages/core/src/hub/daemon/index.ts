@@ -16,7 +16,7 @@ import {
 	resolveClineBuildEnv,
 	withHubLauncherIdentity,
 	withResolvedClineBuildEnv,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	queryHubSessionActivity,
 	rememberRecoverableLocalHubUrl,

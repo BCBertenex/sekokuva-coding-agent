@@ -6,7 +6,7 @@ import {
 	normalizeProviderId,
 	resolveGatewayProviderRegistrationSync,
 	toGatewayModelCapabilities,
-} from "@cline/llms";
+} from "@sekokuva-ca/llms";
 import type {
 	AgentConfig,
 	AgentModel,
@@ -14,7 +14,7 @@ import type {
 	GatewayModelDefinition,
 	ITelemetryService,
 	ModelInfo,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { createAgentModelFromApiHandler } from "./apihandler-agent-model-adapter";
 import type { ProviderConfig } from "./provider-settings";
 

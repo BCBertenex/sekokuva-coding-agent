@@ -7,8 +7,8 @@ import {
 	truncateSync,
 } from "node:fs";
 import { dirname } from "node:path";
-import type { BasicLogger, RuntimeLoggerConfig } from "@cline/core";
-import { registerDisposable } from "@cline/shared";
+import type { BasicLogger, RuntimeLoggerConfig } from "@sekokuva-ca/core";
+import { registerDisposable } from "@sekokuva-ca/shared";
 import pino, {
 	type DestinationStream,
 	type LevelWithSilent,

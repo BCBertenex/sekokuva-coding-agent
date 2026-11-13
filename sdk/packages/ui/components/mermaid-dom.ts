@@ -32,7 +32,7 @@ const TOKEN_VARIABLES = {
 
 const FONT_VARIABLE = "--font-sans";
 
-// Attributes that change the resolved tokens: `.dark` (@cline/ui theme),
+// Attributes that change the resolved tokens: `.dark` (@sekokuva-ca/ui theme),
 // the desktop theme/accent data attributes, and inline style overrides.
 const THEME_ATTRIBUTES = [
 	"class",

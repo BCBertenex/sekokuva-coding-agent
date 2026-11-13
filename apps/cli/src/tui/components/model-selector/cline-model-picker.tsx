@@ -3,7 +3,7 @@
 import {
 	type ClineRecommendedModelsData,
 	fetchClineRecommendedModels,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import "opentui-spinner/react";

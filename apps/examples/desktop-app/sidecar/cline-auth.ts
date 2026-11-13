@@ -4,9 +4,9 @@ import {
 	OAuthReauthRequiredError,
 	ProviderSettingsManager,
 	RuntimeOAuthTokenManager,
-} from "@cline/core";
-import type { BasicLogger, ITelemetryService } from "@cline/shared";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { BasicLogger, ITelemetryService } from "@sekokuva-ca/shared";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 
 /**
  * Shared Cline-account auth for the sidecar: one refresh-aware OAuth manager

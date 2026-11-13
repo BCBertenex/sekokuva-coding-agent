@@ -1,8 +1,8 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type * as LlmsProviders from "@cline/llms";
-import { formatDisplayUserInput, normalizeUserInput } from "@cline/shared";
-import { resolveSessionDataDir } from "@cline/shared/storage";
+import type * as LlmsProviders from "@sekokuva-ca/llms";
+import { formatDisplayUserInput, normalizeUserInput } from "@sekokuva-ca/shared";
+import { resolveSessionDataDir } from "@sekokuva-ca/shared/storage";
 import { toSessionRecord } from "../../services/session-data";
 import type { SessionManifest } from "../../session/models/session-manifest";
 import { SessionManifestSchema } from "../../session/models/session-manifest";

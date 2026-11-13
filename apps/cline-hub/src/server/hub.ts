@@ -5,8 +5,8 @@ import {
 	HubUIClient,
 	stopLocalHubServerGracefully,
 	toHubHealthUrl,
-} from "@cline/core";
-import type { HubUINotifyPayload } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { HubUINotifyPayload } from "@sekokuva-ca/shared";
 import { handleSessionEvent } from "./agent-events";
 import {
 	rejectAllPendingApprovals,

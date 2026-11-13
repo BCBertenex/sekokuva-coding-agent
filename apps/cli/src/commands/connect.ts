@@ -4,11 +4,11 @@ import {
 	listActiveConnectors,
 	persistConnectorConnection,
 	removePersistedConnectorConnection,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	isSupervisedConnectorProcess,
 	setStartingConnectorInstance,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	CLINE_CONNECTOR_DETACHED_CHILD_ENV,
 	CONNECT_ALREADY_RUNNING_EXIT_CODE,

@@ -229,7 +229,7 @@ export interface ProviderListItem {
 	enabled: boolean;
 	/**
 	 * True when the persisted settings hold real credentials or a usable
-	 * keyless endpoint (see @cline/core's isProviderSettingsUsable), unlike
+	 * keyless endpoint (see @sekokuva-ca/core's isProviderSettingsUsable), unlike
 	 * `enabled` which is set by any persisted entry.
 	 */
 	configured?: boolean;

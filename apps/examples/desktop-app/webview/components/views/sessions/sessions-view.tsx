@@ -1,6 +1,6 @@
 "use client";
 
-import { SessionStatus } from "@cline/ui";
+import { SessionStatus } from "@sekokuva-ca/ui";
 import {
 	ArrowUpDown,
 	Check,

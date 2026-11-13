@@ -8,7 +8,7 @@ import {
 	relative,
 	resolve,
 } from "node:path";
-import { stripUtf8Bom } from "@cline/shared";
+import { stripUtf8Bom } from "@sekokuva-ca/shared";
 import {
 	AGENTS_RULES_FILE_NAME,
 	RULES_CONFIG_DIRECTORY_NAME,
@@ -18,7 +18,7 @@ import {
 	resolveWorkflowsConfigSearchPaths as resolveWorkflowsConfigSearchPathsFromShared,
 	SKILLS_CONFIG_DIRECTORY_NAME,
 	WORKFLOWS_CONFIG_DIRECTORY_NAME,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import YAML from "yaml";
 import {
 	type AgentPluginPackageSkill,

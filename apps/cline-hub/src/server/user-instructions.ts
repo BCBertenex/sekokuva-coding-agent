@@ -7,8 +7,8 @@ import {
 	listHookConfigFiles,
 	readGlobalSettings,
 	resolveAgentConfigSearchPaths as resolveSharedAgentConfigSearchPaths,
-} from "@cline/core";
-import { readFileSyncStrippingUtf8Bom } from "@cline/shared/node";
+} from "@sekokuva-ca/core";
+import { readFileSyncStrippingUtf8Bom } from "@sekokuva-ca/shared/node";
 import { readMcpServersResponse } from "./mcp";
 import type { JsonRecord } from "./types";
 

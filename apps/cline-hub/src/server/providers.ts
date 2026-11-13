@@ -8,8 +8,8 @@ import {
 	markLocalProviderEnabled,
 	normalizeOAuthProvider,
 	saveLocalProviderSettings,
-} from "@cline/core";
-import { isChatCompatibleModel } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { isChatCompatibleModel } from "@sekokuva-ca/shared";
 import type {
 	WebviewInboundMessage,
 	WebviewProviderModel,

@@ -44,7 +44,7 @@ export async function buildPluginRuntime(): Promise<void> {
 				Object.values(exports).map((file) => join(root, file as string)),
 			),
 			root: packagesRoot,
-			outdir: join(outdir, "node_modules/@cline"),
+			outdir: join(outdir, "node_modules/@sekokuva-ca"),
 			naming: { chunk: "core/dist/[name]-[hash].[ext]" },
 			target: "node",
 			format: "esm",
@@ -71,7 +71,7 @@ export async function buildPluginRuntime(): Promise<void> {
 	writeFileSync(
 		join(outdir, "package.json"),
 		JSON.stringify({
-			name: "@cline/plugin-runtime",
+			name: "@sekokuva-ca/plugin-runtime",
 			private: true,
 			type: "module",
 		}),

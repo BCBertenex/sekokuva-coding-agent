@@ -11,13 +11,13 @@ import {
 	resolveProductionHubOwnerContext,
 	resolveSharedHubOwnerContext,
 	stopLocalHubServerGracefully,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	type ActiveConnectorRecord,
 	formatUptime,
 	resolveClineBuildEnv,
 	type SupervisedConnectorRecord,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { Command } from "commander";
 import { version as cliVersion } from "../../package.json";
 import { isProcessRunning } from "../connectors/common";

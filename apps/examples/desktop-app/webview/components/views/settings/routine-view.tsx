@@ -5,8 +5,8 @@ import {
 	CLINE_DEFAULT_MODEL_ID,
 	ONE_TIME_SCHEDULE_CRON_PATTERN,
 	ONE_TIME_SCHEDULE_RUN_AT_METADATA_KEY,
-} from "@cline/shared/browser";
-import { Switch } from "@cline/ui";
+} from "@sekokuva-ca/shared/browser";
+import { Switch } from "@sekokuva-ca/ui";
 import {
 	CheckCircle2,
 	ChevronDown,

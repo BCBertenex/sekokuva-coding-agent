@@ -4,12 +4,12 @@ import {
 	getUserRunSpan,
 	projectSessionMessagesForDisplay,
 	resolveMessageDisplayRole,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	isGeneratedMedia,
 	type MessageWithMetadata,
 	validateImageMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	readSessionManifest,
 	sharedSessionMessagesPath,

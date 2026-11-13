@@ -7,7 +7,7 @@ import type {
 	AgentRuntimePlugin,
 	AgentTool,
 	ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	AGENT_UNEXPECTED_REASONING_TOKENS_EVENT,
 	resetSdkErrorRateLimiterForTests,
@@ -19,7 +19,7 @@ import {
 	TASK_PROVIDER_STREAM_FAILED_EVENT,
 	TASK_PROVIDER_STREAM_STARTED_EVENT,
 	TOOL_REJECTION_SUFFIX,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AgentRuntime } from "./index";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { isChatCompatibleModel } from "@cline/shared";
+import { isChatCompatibleModel } from "@sekokuva-ca/shared";
 import { desktopClient } from "@/lib/desktop-client";
 import type {
 	Provider,

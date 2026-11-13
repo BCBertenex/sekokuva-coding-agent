@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import * as LlmsModels from "@cline/llms";
-import { ReasoningLevelSchema } from "@cline/shared";
-import { resolveClineDataDir } from "@cline/shared/storage";
+import * as LlmsModels from "@sekokuva-ca/llms";
+import { ReasoningLevelSchema } from "@sekokuva-ca/shared";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 import {
 	emptyStoredProviderSettings,
 	type ProviderSettings,
@@ -464,7 +464,7 @@ function getDefaultModelForProvider(providerId: string): string | undefined {
  * model, a suffixed variant like `...:1m`, corrupted state) would otherwise
  * be carried into inference requests as-is. Resolve the legacy id against the
  * runtime catalog (the collection model list, which `buildClineModels` in
- * @cline/llms mirrors), folding alias spellings onto their canonical ids
+ * @sekokuva-ca/llms mirrors), folding alias spellings onto their canonical ids
  * (e.g. OpenRouter's `z-ai/...` -> `zai/...`) so those users keep their
  * model. Returns undefined for unavailable models so the caller falls back
  * to the catalog default.

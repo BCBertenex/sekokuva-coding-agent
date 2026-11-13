@@ -8,7 +8,7 @@ import {
 	TASK_PROVIDER_REQUEST_STARTED_EVENT,
 	TASK_PROVIDER_STREAM_FAILED_EVENT,
 	TASK_PROVIDER_STREAM_STARTED_EVENT,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, test, vi } from "vitest";
 import {
 	CORE_TELEMETRY_EVENTS,

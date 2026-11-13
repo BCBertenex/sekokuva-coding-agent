@@ -5,19 +5,19 @@ import {
 	type PluginMcpOAuthCandidate,
 	type PluginUninstallOptions,
 	uninstallPlugin,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 export type {
 	PluginInstallOptions,
 	PluginInstallResult,
 	PluginMcpOAuthCandidate,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 export {
 	collectPluginMcpOAuthCandidates,
 	installPlugin,
 	isOfficialPluginSlug,
 	parsePluginSource,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 export interface PluginInstallMcpOAuthOptions {
 	interactive?: boolean;

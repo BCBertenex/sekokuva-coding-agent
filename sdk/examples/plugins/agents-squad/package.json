@@ -25,10 +25,10 @@
 		]
 	},
 	"peerDependencies": {
-		"@cline/core": "*"
+		"@sekokuva-ca/core": "*"
 	},
 	"peerDependenciesMeta": {
-		"@cline/core": {
+		"@sekokuva-ca/core": {
 			"optional": true
 		}
 	},

@@ -1,4 +1,4 @@
-import type { AvailableRuntimeCommand } from "@cline/core"
+import type { AvailableRuntimeCommand } from "@sekokuva-ca/core"
 import { describe, expect, it } from "vitest"
 import { buildDisabledWorkflowNames, expandSlashCommands } from "./slash-command-expansion"
 

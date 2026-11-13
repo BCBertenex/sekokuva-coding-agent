@@ -2,7 +2,7 @@
 
 Use `core.pluginCommands` on an existing `ClineCore` (local or hub-backed), or
 `client.pluginCommands` on an existing `HubSessionClient`. Hosts with a
-`NodeHubClient` can use `createHubPluginCommandsApi(client)` from `@cline/core`.
+`NodeHubClient` can use `createHubPluginCommandsApi(client)` from `@sekokuva-ca/core`.
 These APIs reuse the runtime and connection; clients do not load plugins or own
 a separate command sandbox. Pass the active `sessionId` so a command runs in
 that session's plugin instance and retains the state and context shared with
@@ -60,9 +60,9 @@ Entries expire after five further model iterations without a cache read, across 
 
 ## Shared agent review UI
 
-`@cline/ui` exports presentation-only components for showing a session's changed
+`@sekokuva-ca/ui` exports presentation-only components for showing a session's changed
 files and pull-request status. Configure Tailwind v4 and a token entry point before
-importing `@cline/ui/components.css`, following the
+importing `@sekokuva-ca/ui/components.css`, following the
 [complete styling setup](./packages/ui/ADOPTION.md#option-2-tailwind-mappings-without-base-styles).
 Then import the components from the package root:
 
@@ -71,7 +71,7 @@ import {
   AgentChangedFile,
   AgentChangesPanel,
   AgentPullRequestBar,
-} from "@cline/ui";
+} from "@sekokuva-ca/ui";
 ```
 
 `AgentChangesPanel` owns the Changes header, count, close action, empty state,
@@ -90,7 +90,7 @@ host presentation.
 
 ## Fork metadata
 
-`createForkSessionMetadata` from `@cline/core` copies metadata, replaces fork ancestry, and removes inherited handoff markers. Callers supply the source ID, timestamp, source, and optional `beforeRunCount`; titles and session creation remain caller-owned.
+`createForkSessionMetadata` from `@sekokuva-ca/core` copies metadata, replaces fork ancestry, and removes inherited handoff markers. Callers supply the source ID, timestamp, source, and optional `beforeRunCount`; titles and session creation remain caller-owned.
 
 ## Starting a runtime from saved Hub history
 
@@ -102,7 +102,7 @@ Only `unsupported_command` permits falling back to `session.messages` followed b
 
 ## Cloud sessions (experimental)
 
-`summarizeConversation({ messages, config, signal? })` from `@cline/core` returns
+`summarizeConversation({ messages, config, signal? })` from `@sekokuva-ca/core` returns
 a continuation note without changing session history or compaction state.
 Top-level credentials in `config` override those in `providerConfig`.
 The request retains the prior summary, latest instruction, and its most recent
@@ -111,13 +111,13 @@ requests if the retained context cannot fit. It also rejects
 empty, incomplete, failed, or cancelled output. Claude Code, Codex CLI, OpenCode,
 and Dify are unsupported because they may execute their own tools.
 
-`CloudSessionApi` and `CloudSessionController` are exported from `@cline/core/cloud`.
+`CloudSessionApi` and `CloudSessionController` are exported from `@sekokuva-ca/core/cloud`.
 The API handles REST requests; the controller handles remote Hub connections,
 session lifecycle, transcript reconciliation, and approvals. Hosts provide API
 URLs and a fresh-token callback; feature gating and account selection stay in the
 host. Importing this subpath does not start a local agent.
 
-`createPublishArtifactsTool({ publish })` from `@cline/core` creates the opt-in
+`createPublishArtifactsTool({ publish })` from `@sekokuva-ca/core` creates the opt-in
 `publish_artifacts` tool. It validates batches and local file paths, defaults IDs
 to the filename including its extension, and returns ordered per-file IDs or errors.
 Reusing an ID replaces the session's file; use distinct filenames to preserve
@@ -128,7 +128,7 @@ and persistence belong to the publisher; constructing the tool does not register
 it in default local tools. Hosts control tool approval and which local paths may
 be published; the tool itself does not restrict paths to a workspace.
 
-`createUxVerificationReportTool()` from `@cline/core` creates the opt-in
+`createUxVerificationReportTool()` from `@sekokuva-ca/core` creates the opt-in
 `report_ux_verification` tool. It returns a UX verification report with captions,
 observed passed/failed/blocked results, and screenshot references (`artifactId`,
 `mediaType`). Passed and failed checks require a screenshot; blocked checks may
@@ -156,7 +156,7 @@ report blocked checks. Computer/browser tooling must be available in the child
 environment; this feature does not install it or add tools to the child.
 
 SDK hosts can opt into the same worker separately with
-`createUxVerifierTool(spawnTool)` from `@cline/core`, or use the exported
+`createUxVerifierTool(spawnTool)` from `@sekokuva-ca/core`, or use the exported
 `UX_VERIFIER_INSTRUCTIONS` with their own existing delegation setup. Cancellation,
 child tools, hooks, telemetry, and lifecycle callbacks remain owned by that
 delegation implementation. Oversized findings use Core's existing result cache;
@@ -164,12 +164,12 @@ the main agent can recover omitted text with `read_files` rather than repeating
 UI actions. The worker is independent of the report schema and renderer.
 
 For cloud sessions, inject `createArtifactPublisher({ request, cloudSessionId })`
-from `@cline/core/cloud`. The host provides authenticated transport and the owning
+from `@sekokuva-ca/core/cloud`. The host provides authenticated transport and the owning
 session ID. The publisher uploads directly with one signed policy per batch,
 refreshes expired policies, and retries transient failures with the same IDs.
 The service remains responsible for upload authorization and limits.
 
-`createArtifactFetcher({ request, cloudSessionId })` from `@cline/core/cloud`
+`createArtifactFetcher({ request, cloudSessionId })` from `@sekokuva-ca/core/cloud`
 returns `fetchArtifact({ artifactId, signal? })`, which downloads a streaming
 `Response`. Each fetcher caches up to 128 signed URLs, refreshing 30 seconds before
 expiry or once after a storage HTTP 403. Missing files and file bytes are not cached.
@@ -231,15 +231,15 @@ authorizes recreation of a missing established task.
 
 ### Hub-owned cloud viewers
 
-`HubCloudSessionClient` from `@cline/core/cloud` uses an authenticated,
-registered `NodeHubClient` from `@cline/core/hub`. Reuse the host's existing
+`HubCloudSessionClient` from `@sekokuva-ca/core/cloud` uses an authenticated,
+registered `NodeHubClient` from `@sekokuva-ca/core/hub`. Reuse the host's existing
 Hub connection, or create and connect a `NodeHubClient` with the Hub URL,
 auth token, client ID, and workspace root. The cloud client accepts an async
 connection factory and connects lazily; `connect()` explicitly hydrates it.
 
 ```ts
-import { HubCloudSessionClient } from "@cline/core/cloud";
-import type { NodeHubClient } from "@cline/core/hub";
+import { HubCloudSessionClient } from "@sekokuva-ca/core/cloud";
+import type { NodeHubClient } from "@sekokuva-ca/core/hub";
 
 async function openCloudSession(hub: NodeHubClient, sessionId: string) {
   const viewer = new HubCloudSessionClient(async () => {
@@ -297,7 +297,7 @@ unreachable without interrupting existing cloud work.
 `loadCloudModels` and `CloudSessionController.listModels()` provide eligible cloud
 models. Handoff requires the selected model; it never substitutes another.
 
-`publishCloudHandoff({ controller, input, assertCurrent })` from `@cline/core/cloud`
+`publishCloudHandoff({ controller, input, assertCurrent })` from `@sekokuva-ca/core/cloud`
 publishes a confirmed Git snapshot and creates the cloud task with its initial
 message, defaulting to a resumable sandbox. Hosts prevent duplicate confirmation
 and supply `assertCurrent`, which throws if the account changes or the host is
@@ -314,14 +314,14 @@ Callback errors preserve their original type; they do not prove an earlier POST 
 
 ## Voice input models
 
-`getLocalTranscriptionModels(providerId, config?)` from `@cline/core` returns the
+`getLocalTranscriptionModels(providerId, config?)` from `@sekokuva-ca/core` returns the
 voice models supported by a provider's transcription transport. Use it to build
 voice pickers rather than filtering the bundled chat catalog. Vercel uses its live
 model list and advertised streaming tags; unavailable or malformed responses fail
 discovery rather than restoring stale bundled models. Voice selection saves and
 both batch and streaming execution revalidate through the same service.
 
-`isTranscriptionModel` from `@cline/shared` (also exported for browsers) accepts
+`isTranscriptionModel` from `@sekokuva-ca/shared` (also exported for browsers) accepts
 exact audio-only input and text-only output modalities. An explicit transcription
 label does not override additional input or output modalities. Multimodal live
 models are classified as `realtime`, which currently has no built-in transport
@@ -336,7 +336,7 @@ ElevenLabs exposes batch `scribe_v2` and live `scribe_v2_realtime` separately.
 
 ## SSH remote environments
 
-`RemoteEnvironmentService` (exported by `@cline/core` and `@cline/sdk`) owns SSH
+`RemoteEnvironmentService` (exported by `@sekokuva-ca/core` and `@sekokuva-ca/sdk`) owns SSH
 profiles, connection testing, helper installation, authenticated loopback tunnels,
 remote commands, status changes, and cleanup. It runs in the client's Node host;
 browser clients expose this API through their host transport. No desktop code is
@@ -347,7 +347,7 @@ fingerprint through a trusted channel and enroll it using your SSH client. Unkno
 or changed keys are rejected before inspection, upload, or execution.
 
 ```ts
-import { ClineCore, RemoteEnvironmentService } from "@cline/core";
+import { ClineCore, RemoteEnvironmentService } from "@sekokuva-ca/core";
 
 const environments = new RemoteEnvironmentService({
   helperBinaryDirectory: "/opt/my-client/remote-helpers",
@@ -413,7 +413,7 @@ The hub `/health` endpoint includes `hubId`, the instance identity also returned
 
 ### Hub provider and model management
 
-Use `createHubProvidersApi(client)` from `@cline/core` or `@cline/core/hub`
+Use `createHubProvidersApi(client)` from `@sekokuva-ca/core` or `@sekokuva-ca/core/hub`
 with an existing registered `NodeHubClient`. Provider settings belong to the
 machine running that Hub; Desktop uses its local connection even while viewing
 an SSH environment.
@@ -493,11 +493,11 @@ participates in drain/replacement checks; shutdown aborts it and waits for clean
 
 ### Provider authentication metadata for host UIs
 
-`@cline/shared` (including its browser entry point) exports `ProviderAuthInfo`,
+`@sekokuva-ca/shared` (including its browser entry point) exports `ProviderAuthInfo`,
 `ProviderLocalCli`, `resolveProviderLocalCli(provider)`, and
 `resolveProviderApiKeyOptional(provider)`. The resolvers accept provider data
 (`metadata.localCliCommand` with optional `docsUrl`, and `metadata.apiKeyOptional`);
-they perform no registry lookup. Hosts resolve providers through `@cline/llms` and
+they perform no registry lookup. Hosts resolve providers through `@sekokuva-ca/llms` and
 then pass that data to the shared helpers. `listLocalProviders` includes the
 resulting facts in each `ProviderListItem.auth` (`localCli`, and `apiKeyOptional`
 for local inference servers and cloud-credential providers that run without a
@@ -565,7 +565,7 @@ capability overrides continue to take precedence after refreshes.
 
 ## Shared UI session rows
 
-`@cline/ui` exports `AgentSessionRow`, `AgentSessionRowEditor`, and
+`@sekokuva-ca/ui` exports `AgentSessionRow`, `AgentSessionRowEditor`, and
 `AgentSessionOverview`, together with their public props types. These are
 presentation primitives for session navigation, rename, and metadata content;
 the host retains session data, routing, menus, permissions, formatting, and
@@ -593,7 +593,7 @@ metadata rows; the host owns the hover-card lifecycle, positioning, and
 metadata formatting. See the [session-row adoption guide](./packages/ui/ADOPTION.md#session-rows)
 for the import, slot, and trigger/ref examples.
 
-## Shared context usage presentation (`@cline/ui`)
+## Shared context usage presentation (`@sekokuva-ca/ui`)
 
 `AgentContextUsage` exposes desktop's context ring and token breakdown through
 its `children` render callback. It adds no wrapper: the host receives
@@ -611,10 +611,10 @@ are part of input usage, not additional context consumption.
 `costLabel` is a separate host-formatted cost. Numeric zero is displayed;
 previously hidden falsy values remain omitted. Desktop retains its existing
 cost formatter and usage source. Import the component and all three public
-types from `@cline/ui`; see [UI adoption guidance](packages/ui/ADOPTION.md) for
+types from `@sekokuva-ca/ui`; see [UI adoption guidance](packages/ui/ADOPTION.md) for
 theme setup, styling, and composition examples.
 
-## Shared command output and image presentation (`@cline/ui`)
+## Shared command output and image presentation (`@sekokuva-ca/ui`)
 
 `AgentCommandOutput` renders `output` with a running cursor controlled by
 `isRunning`. Optional `children` let the host retain ANSI rendering or normalize
@@ -634,7 +634,7 @@ or its inline-byte validation.
 ## Shell executor errors
 
 The executor returned by `createShellExecutor` rejects on execution failure.
-The following error classes are exported from `@cline/core` so hosts can
+The following error classes are exported from `@sekokuva-ca/core` so hosts can
 distinguish process outcomes without parsing messages. They are not an exhaustive
 list of rejections: cancellation, timeout, and stdin-write failures can reject
 with other errors.
@@ -759,7 +759,7 @@ own MCP manager.
 
 ## Run stall telemetry
 
-`@cline/core` measures stalls with a `RunHealthObserver`
+`@sekokuva-ca/core` measures stalls with a `RunHealthObserver`
 (`packages/core/src/services/telemetry/run-health.ts`). `SessionRuntime`
 creates one per run, for root agents and subagents, when telemetry is
 configured. It watches only the run's runtime events and is disposed when the
@@ -784,9 +784,9 @@ No message text leaves the client: `textSignature` and `session.input_sent`'s
 
 ### UX verification report renderer
 
-`@cline/shared/browser` exports `UxVerificationReportSchema`, `UxVerificationCheckSchema`, `UxScreenshotSchema` and their types. A report contains a title, environment subtitle and ordered checks with unique IDs, passed/failed/blocked statuses, observations and optional action labels. Passed/failed checks require screenshot evidence. This contract describes presentation independently of how checks are run.
+`@sekokuva-ca/shared/browser` exports `UxVerificationReportSchema`, `UxVerificationCheckSchema`, `UxScreenshotSchema` and their types. A report contains a title, environment subtitle and ordered checks with unique IDs, passed/failed/blocked statuses, observations and optional action labels. Passed/failed checks require screenshot evidence. This contract describes presentation independently of how checks are run.
 
-`@cline/ui` exports `AgentUxVerification` with `output` and `state` (`running`, `completed`, `error`). It validates the report and renders screenshot evidence, derived status counts, titles, observations, thumbnails and optional slideshow. Left/Right switch slides and pause playback; Space toggles playback while the carousel itself has focus. Import `@cline/ui/components.css` for styling.
+`@sekokuva-ca/ui` exports `AgentUxVerification` with `output` and `state` (`running`, `completed`, `error`). It validates the report and renders screenshot evidence, derived status counts, titles, observations, thumbnails and optional slideshow. Left/Right switch slides and pause playback; Space toggles playback while the carousel itself has focus. Import `@sekokuva-ca/ui/components.css` for styling.
 
 Native inline screenshots use validated browser-owned Blob URLs and show a fallback on load errors. Hosts supply `renderScreenshot(check, className, presentation)` for trusted remote or authenticated asset references, including retrying signed URLs only after a fetch error; the renderer performs no URL refresh or transport. Hosts supply `onExpandScreenshot(check)` to open their own image viewer. No producer tool, subagent lifecycle, storage format, CLI projection or product transcript policy is part of this component.
 

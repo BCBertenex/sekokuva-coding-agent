@@ -5,7 +5,7 @@ import {
 	isClineProvider,
 	type ModelReasoningOption,
 	resolveReasoningBudgetFromRatio,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	getModelReasoningControls,
 	isClaudeFableModelId,

@@ -1,11 +1,11 @@
-import { agentComposerTokenClassName } from "@cline/ui";
+import { agentComposerTokenClassName } from "@sekokuva-ca/ui";
 import {
 	agentMarkdownControls,
 	DIAGRAM_LINK_HREF_ATTRIBUTE,
 	markdownCodeHighlighter,
-} from "@cline/ui/components/markdown";
-import { createMermaidRenderer } from "@cline/ui/components/mermaid-block";
-import type { MermaidModuleLoader } from "@cline/ui/components/mermaid-diagram";
+} from "@sekokuva-ca/ui/components/markdown";
+import { createMermaidRenderer } from "@sekokuva-ca/ui/components/mermaid-block";
+import type { MermaidModuleLoader } from "@sekokuva-ca/ui/components/mermaid-diagram";
 import { cjk } from "@streamdown/cjk";
 import type {
 	ComponentProps,
@@ -320,7 +320,7 @@ const markdownComponents = {
 /**
  * Diagram links never reach {@link SafeMarkdownLink}: Streamdown injects the
  * rendered Mermaid SVG with `dangerouslySetInnerHTML`, so React component
- * overrides do not apply inside it. `@cline/ui` strips the navigable href from
+ * overrides do not apply inside it. `@sekokuva-ca/ui` strips the navigable href from
  * those anchors and leaves the destination on
  * {@link DIAGRAM_LINK_HREF_ATTRIBUTE}, so they cannot navigate the webview on
  * their own. Re-attach them here to the same confirmation the deceptive-link

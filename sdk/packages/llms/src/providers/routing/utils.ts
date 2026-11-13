@@ -1,4 +1,4 @@
-import { isClineProvider } from "@cline/shared";
+import { isClineProvider } from "@sekokuva-ca/shared";
 import { inferProviderOptionsTarget } from "./provider-options-types";
 
 export type ProviderOptionsPatch = Record<string, Record<string, unknown>>;

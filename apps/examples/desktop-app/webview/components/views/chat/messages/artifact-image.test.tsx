@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import type { GeneratedMedia } from "@cline/shared/browser";
+import type { GeneratedMedia } from "@sekokuva-ca/shared/browser";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";

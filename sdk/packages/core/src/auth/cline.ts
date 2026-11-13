@@ -3,7 +3,7 @@ import {
 	decodeJwtPayload,
 	getClineEnvironmentConfig,
 	type ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { hashSecret, sdkDebug } from "../logging/early-logger";
 import {
 	captureAuthFailed,

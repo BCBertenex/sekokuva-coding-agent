@@ -1,5 +1,5 @@
-import { type CoreSettingsItem, createCoreSettingsService } from "@cline/core"
 import { parseRemoteSkillEntries } from "@core/context/instructions/user-instructions/skills"
+import { type CoreSettingsItem, createCoreSettingsService } from "@sekokuva-ca/core"
 import { RefreshedSkills, SkillInfo } from "@shared/proto/cline/file"
 import { HostProvider } from "@/hosts/host-provider"
 import { Controller } from ".."

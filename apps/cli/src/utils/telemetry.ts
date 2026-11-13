@@ -7,7 +7,7 @@ import {
 	identifyAccount,
 	registerDisposable,
 	TelemetryLoggerSink,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { getCliBuildInfo } from "./common";
 import { identifyFeatureFlagsAccount } from "./feature-flags";
 import {

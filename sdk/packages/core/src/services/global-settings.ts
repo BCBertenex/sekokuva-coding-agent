@@ -7,8 +7,8 @@ import {
 	type ConfigurableModelToolName,
 	type ITelemetryService,
 	type ModelToolSettings,
-} from "@cline/shared";
-import { resolveGlobalSettingsPath } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { resolveGlobalSettingsPath } from "@sekokuva-ca/shared/storage";
 import { z } from "zod";
 import { captureTelemetryOptOut } from "./telemetry/core-events";
 

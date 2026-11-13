@@ -1,14 +1,14 @@
 import { spawnSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { isMainThread } from "node:worker_threads";
-import { getAllProviders } from "@cline/llms/browser";
+import { getAllProviders } from "@sekokuva-ca/llms/browser";
 import {
 	type AgentPlugin,
 	createTool,
 	resolvePluginRuntimeDirectory,
-} from "@cline/sdk";
-import { CLINE_DEFAULT_MODEL_ID } from "@cline/shared/browser";
-import { AUTH_ERROR_PATTERNS, isLikelyAuthError } from "@cline/shared/types";
+} from "@sekokuva-ca/sdk";
+import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
+import { AUTH_ERROR_PATTERNS, isLikelyAuthError } from "@sekokuva-ca/shared/types";
 
 export default {
 	name: "embedded-smoke",

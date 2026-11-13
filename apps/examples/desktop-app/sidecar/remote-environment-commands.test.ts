@@ -13,7 +13,7 @@ import type {
 	RemoteEnvironmentProfile,
 	RemoteEnvironmentService,
 	RemoteEnvironmentStatus,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionRuntimeBinding, SidecarContext } from "./types";
 
@@ -26,9 +26,9 @@ const sessionStoreGetMock = vi.hoisted(() => vi.fn());
 const sessionStoreDeleteMock = vi.hoisted(() => vi.fn());
 const sessionStoreRunMock = vi.hoisted(() => vi.fn());
 
-vi.mock("@cline/core", async () => {
+vi.mock("@sekokuva-ca/core", async () => {
 	const actual =
-		await vi.importActual<typeof import("@cline/core")>("@cline/core");
+		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
 		ClineCore: {

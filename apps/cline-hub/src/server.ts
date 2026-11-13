@@ -1,4 +1,4 @@
-import { CORE_BUILD_VERSION } from "@cline/core";
+import { CORE_BUILD_VERSION } from "@sekokuva-ca/core";
 import { isNonLocalBindHost } from "./options";
 import {
 	handleToolApprovalResponse,

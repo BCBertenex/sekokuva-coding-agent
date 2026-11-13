@@ -1,4 +1,4 @@
-import type { HubUINotifyPayload } from "@cline/shared";
+import type { HubUINotifyPayload } from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it } from "vitest";
 import corePackage from "../../../package.json";
 import { SessionSource } from "../../types/common";

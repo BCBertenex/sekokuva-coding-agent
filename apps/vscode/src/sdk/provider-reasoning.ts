@@ -1,4 +1,4 @@
-import type { CoreSessionConfig, ProviderSettings } from "@cline/core"
+import type { CoreSessionConfig, ProviderSettings } from "@sekokuva-ca/core"
 import { reasoningEffortFromThinkingBudget } from "@shared/utils/reasoning-support"
 
 export type ReasoningEffort = NonNullable<CoreSessionConfig["reasoningEffort"]>

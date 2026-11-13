@@ -1,5 +1,5 @@
-import { createMcpTools, type McpResourceReadResult } from "@cline/core"
-import type { AgentTool, AgentToolContext } from "@cline/shared"
+import { createMcpTools, type McpResourceReadResult } from "@sekokuva-ca/core"
+import type { AgentTool, AgentToolContext } from "@sekokuva-ca/shared"
 import type { VscodeTerminalManager } from "@/hosts/vscode/terminal/VscodeTerminalManager"
 import type { McpHub } from "@/services/mcp/McpHub"
 import { resolveMcpServerTimeoutMs } from "@/services/mcp/timeout"

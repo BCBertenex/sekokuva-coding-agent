@@ -1,8 +1,8 @@
 import { copyFileSync, existsSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type * as LlmsProviders from "@cline/llms";
-import { loadSqliteDb, type SqliteDb } from "@cline/shared/db";
+import type * as LlmsProviders from "@sekokuva-ca/llms";
+import { loadSqliteDb, type SqliteDb } from "@sekokuva-ca/shared/db";
 import { nanoid } from "nanoid";
 import { opencodeDataDir } from "./paths";
 import {

@@ -9,14 +9,14 @@ import {
 	ProviderSettingsManager,
 	stopLocalHubServerGracefully,
 	toHubStatusUrl,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	claimHubDaemonProcess,
 	ensureLoopbackProxyBypass,
 	type HubUINotifyPayload,
 	isBunEmbeddedModulePath,
 	type SessionRecord,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { configureMenubarConnectorCliLaunch } from "./connector-cli-launch";
 
 interface TrackedClient {
@@ -957,7 +957,7 @@ async function main(): Promise<void> {
 ensureLoopbackProxyBypass();
 const claimedDaemonSentinel = claimHubDaemonProcess();
 if (claimedDaemonSentinel || isBundledDaemonEntryInvocation()) {
-	await import("@cline/core/hub/daemon-entry");
+	await import("@sekokuva-ca/core/hub/daemon-entry");
 } else {
 	main().catch((err) => {
 		const msg = err instanceof Error ? err.message : String(err);

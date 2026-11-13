@@ -2,8 +2,13 @@ import { execFile } from "node:child_process"
 import { createHmac, randomBytes, randomUUID } from "node:crypto"
 import { resolve } from "node:path"
 import { isDeepStrictEqual, promisify } from "node:util"
-import { type ClineCoreStartInput, captureGitSnapshot, type GitSnapshotProperties, type ITelemetryService } from "@cline/core"
-import type { AgentAfterModelContext } from "@cline/shared"
+import {
+	type ClineCoreStartInput,
+	captureGitSnapshot,
+	type GitSnapshotProperties,
+	type ITelemetryService,
+} from "@sekokuva-ca/core"
+import type { AgentAfterModelContext } from "@sekokuva-ca/shared"
 import { workspace } from "vscode"
 
 const execFileAsync = promisify(execFile)

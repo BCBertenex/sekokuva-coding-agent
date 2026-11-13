@@ -17,7 +17,7 @@ import {
 	relative,
 	resolve,
 } from "node:path";
-import type { HubMcpApi } from "@cline/core";
+import type { HubMcpApi } from "@sekokuva-ca/core";
 import {
 	installPlugin as installCorePlugin,
 	type MarketplaceActionResult,
@@ -27,11 +27,11 @@ import {
 	SKILLS_CLI_PACKAGE,
 	uninstallMarketplaceEntry as uninstallCoreMarketplaceEntry,
 	uninstallPlugin as uninstallLocalPlugin,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	discoverPluginModulePaths,
 	resolveClineDir,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import type { JsonRecord } from "./types";
 
 type McpActions = Pick<HubMcpApi, "install" | "delete">;

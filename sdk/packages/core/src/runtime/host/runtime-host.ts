@@ -1,9 +1,9 @@
-import type * as LlmsProviders from "@cline/llms";
+import type * as LlmsProviders from "@sekokuva-ca/llms";
 import type {
 	AgentMode,
 	AgentResult,
 	RuntimeConfigExtensionKind,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type {
 	McpAppResourceReadRequest,
 	McpAppToolBinding,
@@ -175,13 +175,13 @@ export interface StartSessionInput {
 	 */
 	localRuntime?: LocalRuntimeStartOptions;
 	capabilities?: RuntimeCapabilities;
-	toolPolicies?: import("@cline/shared").AgentConfig["toolPolicies"];
+	toolPolicies?: import("@sekokuva-ca/shared").AgentConfig["toolPolicies"];
 	/**
 	 * Which plugins this session uses, shaped like `toolPolicies`:
 	 * `{ "*": { enabled: true }, "my-plugin": { enabled: false } }`. Plugins
 	 * are enabled by default. Plugin tools still go through `toolPolicies`.
 	 */
-	plugins?: import("@cline/shared").PluginPolicies;
+	plugins?: import("@sekokuva-ca/shared").PluginPolicies;
 }
 
 /** Session input after the execution host has resolved a concrete workspace. */
@@ -262,7 +262,7 @@ export interface StartSessionResult {
 	 * Plugins the session asked for but does not have because they failed or
 	 * are disabled. Clients should show these to the user.
 	 */
-	pluginIssues?: import("@cline/shared").SessionPluginIssue[];
+	pluginIssues?: import("@sekokuva-ca/shared").SessionPluginIssue[];
 }
 
 export interface SendSessionInput {

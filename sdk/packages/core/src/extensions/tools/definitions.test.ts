@@ -1,10 +1,10 @@
-import { Agent } from "@cline/agents";
+import { Agent } from "@sekokuva-ca/agents";
 import type {
 	AgentMessage,
 	AgentModel,
 	AgentToolContext,
 	ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import {
 	buildRunCommandsDescription,

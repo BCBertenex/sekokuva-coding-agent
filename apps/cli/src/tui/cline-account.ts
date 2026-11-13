@@ -15,8 +15,8 @@ import {
 	resolveClineAccountTelemetryIdentity,
 	saveLocalProviderOAuthCredentials,
 	type UserCurrentPlan,
-} from "@cline/core";
-import { getClineEnvironmentConfig, resolveClineAppUrl } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { getClineEnvironmentConfig, resolveClineAppUrl } from "@sekokuva-ca/shared";
 import { formatCreditBalance, normalizeCreditBalance } from "../utils/output";
 import { identifyTelemetryAccount } from "../utils/telemetry";
 import type { Config } from "../utils/types";

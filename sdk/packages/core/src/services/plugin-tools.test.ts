@@ -1,8 +1,8 @@
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { AgentTool } from "@cline/shared";
-import { setHomeDir } from "@cline/shared/storage";
+import type { AgentTool } from "@sekokuva-ca/shared";
+import { setHomeDir } from "@sekokuva-ca/shared/storage";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
 	PluginRegistry,

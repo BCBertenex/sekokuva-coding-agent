@@ -58,7 +58,7 @@ function shouldBuildHubWebview(): boolean {
 
 if (shouldBuildHubWebview()) {
 	console.log("Building Cline Hub webview...");
-	await $`bun -F @cline/cline-hub build:webview`.cwd(repoRoot);
+	await $`bun -F @sekokuva-ca/cline-hub build:webview`.cwd(repoRoot);
 }
 
 const result = await Bun.build({
@@ -67,7 +67,7 @@ const result = await Bun.build({
 	target: "node",
 	format: "esm",
 	sourcemap,
-	packages: "bundle", // Keep private workspace packages bundled so npm consumers do not need @cline/* at runtime.
+	packages: "bundle", // Keep private workspace packages bundled so npm consumers do not need @sekokuva-ca/* at runtime.
 	external: [
 		// OpenTUI resolves a platform-specific native package at runtime.
 		// Bundling through that resolution path rewrites the import in a way that

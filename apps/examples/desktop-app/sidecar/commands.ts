@@ -31,7 +31,7 @@ import type {
 	RemoteEnvironmentConnection,
 	RemoteEnvironmentInput,
 	SaveProviderSettingsActionRequest,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	ClineAccountService,
 	type ClineAccountUser,
@@ -66,9 +66,9 @@ import {
 	setTelemetryOptOutGlobally,
 	transcribeConfiguredVoiceInput,
 	upgradeManagedHub,
-} from "@cline/core";
-import { CloudSessionApi } from "@cline/core/cloud";
-import { resolveAudioTranscriptionRoute } from "@cline/llms";
+} from "@sekokuva-ca/core";
+import { CloudSessionApi } from "@sekokuva-ca/core/cloud";
+import { resolveAudioTranscriptionRoute } from "@sekokuva-ca/llms";
 import {
 	CLINE_DEFAULT_MODEL_ID,
 	formatSessionSearchPreview,
@@ -78,9 +78,9 @@ import {
 	ONE_TIME_SCHEDULE_CRON_PATTERN,
 	ONE_TIME_SCHEDULE_RUN_AT_METADATA_KEY,
 	readHubScheduleMode,
-} from "@cline/shared";
-import { readFileSyncStrippingUtf8Bom } from "@cline/shared/node";
-import { resolveClineDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { readFileSyncStrippingUtf8Bom } from "@sekokuva-ca/shared/node";
+import { resolveClineDir } from "@sekokuva-ca/shared/storage";
 import { z } from "zod";
 import packageJson from "../package.json";
 import { CLINE_ACCOUNT_NOT_AUTHENTICATED_RESULT } from "../webview/lib/cline-account-state";
@@ -3424,7 +3424,7 @@ export async function handleCommand(
 	if (command === "upsert_mcp_server") {
 		const input = args?.input ?? args;
 		return createHubMcpApi(await ensureSharedHubClient(ctx)).upsert(
-			input as import("@cline/shared").McpServerConfigInput,
+			input as import("@sekokuva-ca/shared").McpServerConfigInput,
 		);
 	}
 	if (command === "delete_mcp_server") {

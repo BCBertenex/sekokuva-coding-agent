@@ -308,7 +308,7 @@ describe("deferred auto update", () => {
 			createLocalHubScheduleRuntimeHandlers,
 			NodeHubClient,
 			startHubWebSocketServer,
-		} = await import("@cline/core");
+		} = await import("@sekokuva-ca/core");
 		const server = await startHubWebSocketServer({
 			host: "127.0.0.1",
 			port: 0,

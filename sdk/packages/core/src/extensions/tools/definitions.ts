@@ -14,7 +14,7 @@ import {
 	type ITelemetryService,
 	validateWithZod,
 	zodToJsonSchema,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { captureRunCommandsTimeout } from "../../services/telemetry/core-events";
 import { CommandExitError, CommandTerminationError } from "./executors/bash";
 import {
@@ -923,7 +923,7 @@ export function createSubmitAndExitTool(
  *
  * @example
  * ```typescript
- * import { Agent, createDefaultTools } from "@cline/core"
+ * import { Agent, createDefaultTools } from "@sekokuva-ca/core"
  * import * as fs from "fs/promises"
  * import { exec } from "child_process"
  *

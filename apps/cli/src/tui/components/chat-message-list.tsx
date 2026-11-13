@@ -1,5 +1,5 @@
 import "opentui-spinner/react";
-import type { AgentMode, ClineSubscriptionPlan } from "@cline/core";
+import type { AgentMode, ClineSubscriptionPlan } from "@sekokuva-ca/core";
 import type { ScrollBoxRenderable } from "@opentui/core";
 import {
 	forwardRef,

@@ -1,5 +1,5 @@
-import { MODEL_COLLECTIONS_BY_PROVIDER_ID } from "@cline/llms";
-import { modelSupportsImageInput } from "@cline/shared";
+import { MODEL_COLLECTIONS_BY_PROVIDER_ID } from "@sekokuva-ca/llms";
+import { modelSupportsImageInput } from "@sekokuva-ca/shared";
 
 /** Lets local development enable cloud computer use without the rollout flag. */
 export const CLOUD_COMPUTER_USE_ENV = "CLINE_CLOUD_COMPUTER_USE";

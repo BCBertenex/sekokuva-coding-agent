@@ -4,8 +4,8 @@ import type {
 	McpServerConfigView as McpServer,
 	McpServersResponse,
 	McpServerConfigInput as McpServerUpsertInput,
-} from "@cline/shared";
-import { Switch } from "@cline/ui";
+} from "@sekokuva-ca/shared";
+import { Switch } from "@sekokuva-ca/ui";
 import {
 	ChevronRight,
 	Circle,

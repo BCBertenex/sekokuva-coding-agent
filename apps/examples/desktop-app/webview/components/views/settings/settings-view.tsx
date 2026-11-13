@@ -1,4 +1,4 @@
-import { Switch } from "@cline/ui";
+import { Switch } from "@sekokuva-ca/ui";
 import { Minus, Plus, RotateCcw } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";

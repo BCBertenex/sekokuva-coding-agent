@@ -2,7 +2,7 @@ import type {
 	HubCommandEnvelope,
 	HubEventEnvelope,
 	HubReplyEnvelope,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type {
 	HubCommandTransport,
 	HubConnectionAuthority,

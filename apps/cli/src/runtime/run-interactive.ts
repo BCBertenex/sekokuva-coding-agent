@@ -6,8 +6,8 @@ import {
 	setPlanActModeGlobally,
 	setToolAutoApproveGlobally,
 	type UserInstructionConfigService,
-} from "@cline/core";
-import { formatModeSwitchNotice } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { formatModeSwitchNotice } from "@sekokuva-ca/shared";
 import type { CliMigrationNotice } from "../kanban-migration/notice";
 import { logCliError } from "../logging/errors";
 import { exportHistorySession } from "../session/history-export";

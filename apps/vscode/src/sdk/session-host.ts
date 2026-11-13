@@ -19,8 +19,8 @@ import type {
 	SessionRecord,
 	StartSessionInput,
 	StartSessionResult,
-} from "@cline/core"
-import type { AgentResult } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import type { AgentResult } from "@sekokuva-ca/shared"
 
 export interface SdkSessionHost {
 	readonly runtimeAddress: string | undefined

@@ -55,7 +55,7 @@ git log <last-desktop-tag>..HEAD --oneline --no-merges -- apps/examples/desktop-
 git log <last-desktop-tag>..origin/desktop-experimental --oneline --no-merges -- apps/examples/desktop-app apps/cli sdk/packages .github/workflows/desktop-publish.yml
 ```
 
-The desktop backend and the bundled Cline CLI (which runs the Hub) are built from the monorepo's `@cline/core` and friends, so SDK and CLI changes ship inside the desktop app too. Fold user-visible SDK changes (providers, models, behavior fixes) into the notes; skip purely internal ones.
+The desktop backend and the bundled Cline CLI (which runs the Hub) are built from the monorepo's `@sekokuva-ca/core` and friends, so SDK and CLI changes ship inside the desktop app too. Fold user-visible SDK changes (providers, models, behavior fixes) into the notes; skip purely internal ones.
 
 3. Draft user-facing release notes.
 
@@ -80,7 +80,7 @@ Beta: apply the versioning rule — base = next stable version, increment `N` (`
 6. Verify before committing.
 
 ```sh
-bun -F @cline/code typecheck
+bun -F @sekokuva-ca/code typecheck
 bun test apps/examples/desktop-app/scripts/generate-update-manifest.test.ts
 ```
 

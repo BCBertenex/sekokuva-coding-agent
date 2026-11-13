@@ -12,9 +12,9 @@ import {
 	isClineOrgIndividualInferenceSubscriptionMessage,
 	isClinePassLimitError,
 	isClinePassLimitMessage,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
-import { getClineEnvironmentConfig } from "@cline/shared";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 
 export { getClineOrgIndividualInferenceSubscriptionMessage };
 

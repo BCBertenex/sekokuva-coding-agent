@@ -1,5 +1,5 @@
 // @jsxImportSource @opentui/react
-import { describeOutdatedHubSessions } from "@cline/shared";
+import { describeOutdatedHubSessions } from "@sekokuva-ca/shared";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";
 import { useDialogPalette } from "../../hooks/use-theme";

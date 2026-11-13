@@ -6,9 +6,9 @@ import {
 	type StoredModelEntry,
 	syncStoredProviderRegistration,
 	writeModelsFileSync,
-} from "@cline/core"
-import { getGeneratedModelsForProvider, MODEL_COLLECTIONS_BY_PROVIDER_ID } from "@cline/llms"
-import { ModelCapabilitySchema } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import { getGeneratedModelsForProvider, MODEL_COLLECTIONS_BY_PROVIDER_ID } from "@sekokuva-ca/llms"
+import { ModelCapabilitySchema } from "@sekokuva-ca/shared"
 import { type ApiConfiguration, type ApiProvider, type ModelInfo, openAiModelInfoSafeDefaults } from "@shared/api"
 import { Logger } from "@shared/services/Logger"
 import { getProviderModelIdKey } from "@shared/storage/provider-keys"

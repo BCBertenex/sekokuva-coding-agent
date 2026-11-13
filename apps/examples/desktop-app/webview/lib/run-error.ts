@@ -1,4 +1,4 @@
-import type { ProviderAuthInfo } from "@cline/shared/browser";
+import type { ProviderAuthInfo } from "@sekokuva-ca/shared/browser";
 import {
 	isCredentialFailure,
 	resolveCredentialFailureHint,

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { GeneratedMedia } from "@cline/shared";
+import type { GeneratedMedia } from "@sekokuva-ca/shared";
 
 export interface MaterializedGeneratedMedia {
 	path: string;

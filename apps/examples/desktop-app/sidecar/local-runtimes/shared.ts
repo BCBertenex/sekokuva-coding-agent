@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 import { constants as fsConstants } from "node:fs";
 import { access } from "node:fs/promises";
-import { ProviderSettingsManager } from "@cline/core";
+import { ProviderSettingsManager } from "@sekokuva-ca/core";
 import type {
 	LocalModelDetails,
 	LocalModelsStatus,

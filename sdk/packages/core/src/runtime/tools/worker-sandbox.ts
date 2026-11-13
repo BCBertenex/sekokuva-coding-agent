@@ -1,5 +1,5 @@
 import { Worker } from "node:worker_threads";
-import { withResolvedClineBuildEnv } from "@cline/shared";
+import { withResolvedClineBuildEnv } from "@sekokuva-ca/shared";
 import type { SandboxCallOptions } from "./subprocess-sandbox";
 import {
 	MAX_NODE_TIMER_DELAY_MS,

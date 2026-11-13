@@ -7,14 +7,14 @@ import {
 	setHomeDirIfUnset,
 	setModelToolEnabledGlobally,
 	watchManagedHubBuildMismatch,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	buildTelemetrySelfcheckReport,
 	captureSdkError,
 	disableCurrentDirectoryExecutableSearch,
 	ensureLoopbackProxyBypass,
 	setClineClientIdentity,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { prewarmWorkspaceMetadata } from "./chat-session";
 import { adoptDesktopCliRuntime, ensureHubWithDesktopCli } from "./cli-runtime";
 import { DESKTOP_CLIENT_CONTEXT } from "./client-context";

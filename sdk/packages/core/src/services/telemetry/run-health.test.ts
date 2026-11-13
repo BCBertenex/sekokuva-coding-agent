@@ -1,4 +1,4 @@
-import type { AgentMessage, AgentRuntimeEvent } from "@cline/shared";
+import type { AgentMessage, AgentRuntimeEvent } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { RUN_IDLE_REPORT_MS, RunHealthObserver } from "./run-health";
 

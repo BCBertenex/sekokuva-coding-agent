@@ -1,6 +1,6 @@
 "use client";
 
-import { AgentConversationHeader, SessionStatus } from "@cline/ui";
+import { AgentConversationHeader, SessionStatus } from "@sekokuva-ca/ui";
 import {
 	AlertCircle,
 	Bot,

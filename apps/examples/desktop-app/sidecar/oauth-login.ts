@@ -1,4 +1,4 @@
-import type { ProviderSettingsManager } from "@cline/core";
+import type { ProviderSettingsManager } from "@sekokuva-ca/core";
 import {
 	completeClineDeviceAuth,
 	getProviderAuthStorageId,
@@ -6,8 +6,8 @@ import {
 	markLocalProviderEnabled,
 	saveLocalProviderOAuthCredentials,
 	startClineDeviceAuth,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 
 export class OAuthLoginCancelledError extends Error {
 	constructor(providerId: string) {

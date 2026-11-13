@@ -2,7 +2,7 @@ import type {
 	HubCommandInput,
 	HubCommandOutputMap,
 	HubProviderCommandName,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { HubCommandError, type NodeHubClient } from "./index";
 
 /** Uses the caller's registered local Hub connection; mutations are never retried after dispatch. */

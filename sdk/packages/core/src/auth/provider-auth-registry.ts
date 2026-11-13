@@ -2,7 +2,7 @@ import {
 	decodeJwtPayload,
 	getClineEnvironmentConfig,
 	type ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { ProviderSettingsManager } from "../services/storage/provider-settings-manager";
 import type { ProviderSettings } from "../types/provider-settings";
 import {

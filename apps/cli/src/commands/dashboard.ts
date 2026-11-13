@@ -114,7 +114,7 @@ function resolveDefaultWebviewDistDir(): string | undefined {
 }
 
 async function startDefaultDashboardServer(): Promise<DashboardServerHandle> {
-	const { startClineHubDashboardServer } = await import("@cline/cline-hub");
+	const { startClineHubDashboardServer } = await import("@sekokuva-ca/cline-hub");
 	return await startClineHubDashboardServer();
 }
 

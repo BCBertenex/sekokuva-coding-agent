@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { resolveClineDataDir } from "@cline/shared/storage";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 import { getCliSubscriptionUrl } from "../utils/cline-pass-errors";
 
 export const CLINE_PASS_NOTICE_ID = "cline-cli-cline-pass-intro";

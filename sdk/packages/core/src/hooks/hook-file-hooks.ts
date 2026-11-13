@@ -11,9 +11,9 @@ import type {
 	HookControl,
 	HookSessionContext,
 	WorkspaceInfo,
-} from "@cline/shared";
-import { augmentNodeCommandForDebug } from "@cline/shared";
-import { ensureHookLogDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { augmentNodeCommandForDebug } from "@sekokuva-ca/shared";
+import { ensureHookLogDir } from "@sekokuva-ca/shared/storage";
 import { createAgentHooksExtension } from "./hook-extension";
 import { listHookConfigFiles } from "./hook-file-config";
 import {

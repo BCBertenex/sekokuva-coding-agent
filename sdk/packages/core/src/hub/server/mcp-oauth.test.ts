@@ -1,7 +1,7 @@
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { HubReplyEnvelope } from "@cline/shared";
+import type { HubReplyEnvelope } from "@sekokuva-ca/shared";
 import WebSocket from "ws";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { updateMcpServerOAuthStateAsync } from "../../extensions/mcp/config-loader";

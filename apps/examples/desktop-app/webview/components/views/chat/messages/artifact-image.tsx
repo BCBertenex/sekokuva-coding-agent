@@ -1,10 +1,10 @@
 "use client";
 
-import { SUPPORTED_IMAGE_MEDIA_TYPES } from "@cline/shared/browser";
+import { SUPPORTED_IMAGE_MEDIA_TYPES } from "@sekokuva-ca/shared/browser";
 import {
 	GeneratedMediaContent,
 	type GeneratedMediaContentProps,
-} from "@cline/ui";
+} from "@sekokuva-ca/ui";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {

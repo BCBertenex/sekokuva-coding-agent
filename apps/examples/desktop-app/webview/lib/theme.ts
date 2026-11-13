@@ -91,7 +91,7 @@ export const HUB_ACCENT_STORAGE_KEY = "cline.code.accent.v1";
 
 /**
  * Accent palettes selectable in Settings. "violet" is the built-in brand
- * accent from @cline/ui tokens; the others override the interactive tokens
+ * accent from @sekokuva-ca/ui tokens; the others override the interactive tokens
  * via `[data-cline-accent]` blocks in globals.css.
  */
 export const HUB_ACCENTS = [

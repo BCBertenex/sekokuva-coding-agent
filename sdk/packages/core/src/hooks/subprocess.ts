@@ -32,7 +32,7 @@ import {
 	type ToolResultHookPayload,
 	type UserPromptSubmitData,
 	type WorkspaceInfo,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { z } from "zod";
 import {
 	type RunSubprocessEventResult,

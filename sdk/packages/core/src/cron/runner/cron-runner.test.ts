@@ -12,7 +12,7 @@ import type {
 	ChatStartSessionRequest,
 	CronOneOffSpec,
 	ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DefaultToolNames } from "../../extensions/tools/constants";
 import type {

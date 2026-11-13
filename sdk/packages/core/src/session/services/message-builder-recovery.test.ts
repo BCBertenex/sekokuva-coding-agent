@@ -1,4 +1,4 @@
-import type { ImageContent, Message, ToolResultContent } from "@cline/shared";
+import type { ImageContent, Message, ToolResultContent } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { MessageBuilder } from "./message-builder";
 

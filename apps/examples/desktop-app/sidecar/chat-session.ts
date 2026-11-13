@@ -28,18 +28,18 @@ import {
 	summarizeConversation,
 	toProviderConfig,
 	trimMessagesBeforeUserRun,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	getGeneratedModelsForRuntimeProvider,
 	type MessageWithMetadata,
-} from "@cline/llms";
+} from "@sekokuva-ca/llms";
 import {
 	buildClineSystemPrompt,
 	type ConsecutiveMistakeLimitContext,
 	type ConsecutiveMistakeLimitDecision,
 	formatUserCommandBlock,
 	type SessionPluginIssue,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	deleteMaterializedAttachments,
 	discardAllTrackedAttachments,
@@ -708,7 +708,7 @@ export function buildSessionConnectionUpdate(
 ): SessionConnectionUpdate {
 	// Coerce the untrusted webview JSON (snake_case aliases, blank strings)
 	// into typed fields; the thinking/reasoning transition rules live in the
-	// shared @cline/core builder.
+	// shared @sekokuva-ca/core builder.
 	const providerId = String(config.provider ?? config.providerId ?? "").trim();
 	const modelId = String(config.model ?? config.modelId ?? "").trim();
 	const rawApiKey =

@@ -1,8 +1,8 @@
-import type { SqliteDb } from "@cline/shared/db";
+import type { SqliteDb } from "@sekokuva-ca/shared/db";
 
 /**
- * Bootstrap the dedicated cron.db schema. Unlike @cline/shared's
- * `ensureSessionSchema`, this schema is fully owned by @cline/core
+ * Bootstrap the dedicated cron.db schema. Unlike @sekokuva-ca/shared's
+ * `ensureSessionSchema`, this schema is fully owned by @sekokuva-ca/core
  * because cron lifecycle (specs, runs, reports) is a core concern and
  * should not be coupled to session storage.
  */

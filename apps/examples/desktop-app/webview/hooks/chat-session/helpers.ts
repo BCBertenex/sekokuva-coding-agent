@@ -3,7 +3,7 @@ import {
 	type GeneratedMedia,
 	isGeneratedMedia,
 	type ProviderAuthInfo,
-} from "@cline/shared/browser";
+} from "@sekokuva-ca/shared/browser";
 import type {
 	ChatMessage,
 	ChatSessionConfig,

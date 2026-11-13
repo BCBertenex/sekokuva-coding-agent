@@ -6,7 +6,7 @@ import {
 	installPlugin,
 	parseMcpInstallArgs,
 	SKILLS_CLI_PACKAGE,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	getOfficialPluginInstallPath,
@@ -17,10 +17,10 @@ import {
 } from "./marketplace";
 import type { JsonRecord } from "./types";
 
-// Marketplace plugin installs run in-process through @cline/core (spawning a
+// Marketplace plugin installs run in-process through @sekokuva-ca/core (spawning a
 // `cline` binary fails with 'Executable not found in $PATH: "cline"' in the
 // packaged app). Stub only installPlugin; everything else stays real.
-vi.mock(import("@cline/core"), async (importOriginal) => ({
+vi.mock(import("@sekokuva-ca/core"), async (importOriginal) => ({
 	...(await importOriginal()),
 	installPlugin: vi.fn(),
 }));
@@ -75,7 +75,7 @@ function goalInstallDir(): string {
 }
 
 describe("official plugin install detection", () => {
-	it("installs plugins in-process through @cline/core", async () => {
+	it("installs plugins in-process through @sekokuva-ca/core", async () => {
 		const result = await installMarketplaceEntry({ entry: GOAL_ENTRY });
 
 		expect(result).toMatchObject({

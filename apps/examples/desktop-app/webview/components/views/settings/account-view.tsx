@@ -9,11 +9,11 @@ import type {
 	ClineAccountUsageTransaction,
 	ClineAccountUser,
 	UserCurrentPlan,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	getClineEnvironmentConfig,
 	resolveClineAppUrl,
-} from "@cline/shared/browser";
+} from "@sekokuva-ca/shared/browser";
 import {
 	AlertCircle,
 	Building,
