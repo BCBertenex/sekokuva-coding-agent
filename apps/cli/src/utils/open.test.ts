@@ -1,4 +1,4 @@
-import { dirname, join } from "node:path";
+import { delimiter, dirname, join, sep } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const hoisted = vi.hoisted(() => ({
@@ -67,7 +67,12 @@ afterEach(() => {
 describe("open wrapper (linux)", () => {
 	it("passes through untouched when xdg-open is on PATH", async () => {
 		usePlatform("linux");
-		mockExecutables("/usr/bin/xdg-open");
+		// The wrapper splits PATH with `delimiter` and joins with `join`, so the
+		// fixture must use the same platform primitives to be host-agnostic.
+		const binDir = join(sep, "usr", "bin");
+		const xdgOpen = join(binDir, "xdg-open");
+		process.env.PATH = [join(sep, "usr", "local", "bin"), binDir].join(delimiter);
+		mockExecutables(xdgOpen);
 		await open("https://example.com", { wait: false });
 		expect(hoisted.realOpenMock).toHaveBeenCalledWith("https://example.com", {
 			wait: false,

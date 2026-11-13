@@ -1,5 +1,5 @@
 import { readFileSync, rmSync } from "node:fs";
-import { dirname } from "node:path";
+import { dirname, sep } from "node:path";
 import type { AgentEvent, TeamEvent } from "@sekokuva-ca/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
@@ -139,7 +139,8 @@ describe("handleEvent text formatting", () => {
 		);
 
 		expect(output).toContain("[generated image]");
-		const suffix = "/generated.png";
+		// The path is built with `path.join`, so the separator is platform-specific.
+		const suffix = `${sep}generated.png`;
 		const pathEnd = output.indexOf(suffix);
 		const pathStart = output.lastIndexOf(" ", pathEnd);
 		const path =
