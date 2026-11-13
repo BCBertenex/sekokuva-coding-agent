@@ -3,8 +3,8 @@ import {
 	type NodeHubClient,
 	probeHubServer,
 	requestHubShutdown,
-} from "@cline/core";
-import type { HubClientRecord } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { HubClientRecord } from "@sekokuva-ca/shared";
 import type { HubActivity, HubStatus } from "../webview/lib/hub-status";
 import type { SidecarContext } from "./types";
 

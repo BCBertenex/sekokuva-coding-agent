@@ -108,7 +108,7 @@ describe("resolveCredentialError", () => {
 
 	it("allows a provider whose metadata declares the API key optional", () => {
 		// Local OpenAI-compatible endpoints (LM Studio, vLLM, ...) and Ollama
-		// have no key; the catalog carries the declaration from `@cline/llms`.
+		// have no key; the catalog carries the declaration from `@sekokuva-ca/llms`.
 		expect(
 			resolveCredentialError(
 				makeConfig({

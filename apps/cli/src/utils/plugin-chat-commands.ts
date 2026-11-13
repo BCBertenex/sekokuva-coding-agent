@@ -2,7 +2,7 @@ import type {
 	BasicLogger,
 	PluginCommandCatalog,
 	PluginCommandsApi,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { chatCommandHost } from "./chat-commands";
 
 export async function createWorkspaceChatCommandHost(input: {

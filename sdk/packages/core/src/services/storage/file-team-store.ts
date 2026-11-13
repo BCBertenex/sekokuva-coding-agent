@@ -9,8 +9,8 @@ import {
 	writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
-import type { TeamRuntimeState, TeamTeammateSpec } from "@cline/shared";
-import { resolveTeamDataDir } from "@cline/shared/storage";
+import type { TeamRuntimeState, TeamTeammateSpec } from "@sekokuva-ca/shared";
+import { resolveTeamDataDir } from "@sekokuva-ca/shared/storage";
 import type { TeamEvent } from "../../extensions/tools/team";
 import {
 	isDurableTeamEvent,

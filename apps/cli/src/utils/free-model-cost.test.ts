@@ -1,5 +1,5 @@
-import type { AgentEvent } from "@cline/core";
-import { setClineClientIdentity } from "@cline/shared";
+import type { AgentEvent } from "@sekokuva-ca/core";
+import { setClineClientIdentity } from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { registerClineClientIdentity } from "./cline-client-identity";
 import {

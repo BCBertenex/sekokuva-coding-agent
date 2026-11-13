@@ -4,9 +4,9 @@ import {
 	type ModelCatalogConfig,
 	resolveClineDefaultModelId,
 	resolveProviderConfig,
-} from "@cline/core"
-import { type ProviderConfig, resolveProviderUsageCostDisplay } from "@cline/llms"
-import { type ProviderListItem } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import { type ProviderConfig, resolveProviderUsageCostDisplay } from "@sekokuva-ca/llms"
+import { type ProviderListItem } from "@sekokuva-ca/shared"
 import { getProviderSettingsManager } from "../provider-migration"
 import type {
 	CatalogError,

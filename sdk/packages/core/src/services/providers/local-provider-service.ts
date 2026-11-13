@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import { isDeepStrictEqual } from "node:util";
-import * as LlmsModels from "@cline/llms";
+import * as LlmsModels from "@sekokuva-ca/llms";
 import type {
 	AddProviderActionRequest,
 	ITelemetryService,
@@ -11,13 +11,13 @@ import type {
 	ProviderModel,
 	SaveProviderSettingsActionRequest,
 	VoiceInputSelection,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	isTranscriptionModel,
 	MODEL_TOOL_NAMES,
 	resolveProviderApiKeyOptional,
 	resolveProviderLocalCli,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { createOAuthClientCallbacks } from "../../auth/client";
 import {
 	getProviderAuthHandler,

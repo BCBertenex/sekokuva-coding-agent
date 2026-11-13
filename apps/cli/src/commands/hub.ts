@@ -10,12 +10,12 @@ import {
 	resolveProductionHubOwnerContext,
 	resolveSharedHubOwnerContext,
 	stopLocalHubServerGracefully,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	formatUptime,
 	type PluginStatusRecord,
 	resolveClineBuildEnv,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { Command, InvalidArgumentError } from "commander";
 import { version as cliVersion } from "../../package.json";
 import { createDashboardCommand } from "./dashboard-command";

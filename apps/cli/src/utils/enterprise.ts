@@ -10,12 +10,12 @@ import {
 	registerRemoteConfigSessionBlobUpload,
 	resolveLocalClineAuthToken,
 	type SessionMessagesArtifactUploader,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	getClineEnvironmentConfig,
 	type RemoteConfigBundle,
 	RemoteConfigSchema,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { getCliTelemetryService } from "./telemetry";
 
 const initializedRemoteConfigKeys = new Set<string>();

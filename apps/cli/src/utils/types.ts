@@ -7,8 +7,8 @@ import type {
 	SessionLineage,
 	SessionManifest,
 	ToolPolicy,
-} from "@cline/core";
-import type { Message } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { Message } from "@sekokuva-ca/shared";
 
 export type CliOutputMode = "text" | "json";
 export type CliAgentMode = AgentMode;
@@ -96,6 +96,11 @@ export interface ParsedArgs {
 	invalidRetries?: string;
 	cwd?: string;
 	teamName?: string;
+	/**
+	 * Whether agent-team tools are enabled. `undefined` means "not specified",
+	 * so the caller applies the mode-based default.
+	 */
+	enableAgentTeams?: boolean;
 	defaultToolAutoApprove: boolean;
 	autoApproveOverride?: boolean;
 }

@@ -4,8 +4,8 @@ import type {
 	McpServerConfigInput,
 	McpServerInspection,
 	McpServersResponse,
-} from "@cline/shared";
-import { resolveMcpSettingsPath } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { resolveMcpSettingsPath } from "@sekokuva-ca/shared/storage";
 import {
 	createDefaultMcpServerClientFactory,
 	probeMcpServerConnection,

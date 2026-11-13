@@ -6,7 +6,7 @@ import {
 	CloudSessionApi,
 	CloudSessionError as CoreCloudSessionError,
 	type CloudSessionRecord as CoreCloudSessionRecord,
-} from "@cline/core/cloud"
+} from "@sekokuva-ca/core/cloud"
 import { ClineEnv } from "@/config"
 import { fetch } from "@/shared/net"
 import { Logger } from "@/shared/services/Logger"

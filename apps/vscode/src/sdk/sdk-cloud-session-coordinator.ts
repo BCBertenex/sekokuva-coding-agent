@@ -13,10 +13,10 @@
 //      shape) so History, the home screen and the running-now strip list cloud
 //      tasks next to local ones.
 
-import type { ITelemetryService, SessionAccumulatedUsage, SessionHistoryRecord, StartSessionInput } from "@cline/core"
-import { CloudCreationUnconfirmedError, type CloudModel } from "@cline/core/cloud"
-import type { MessageWithMetadata as SdkMessage } from "@cline/llms"
-import { CLINE_DEFAULT_MODEL_ID, type ToolApprovalRequest, type ToolApprovalResult } from "@cline/shared"
+import type { ITelemetryService, SessionAccumulatedUsage, SessionHistoryRecord, StartSessionInput } from "@sekokuva-ca/core"
+import { CloudCreationUnconfirmedError, type CloudModel } from "@sekokuva-ca/core/cloud"
+import type { MessageWithMetadata as SdkMessage } from "@sekokuva-ca/llms"
+import { CLINE_DEFAULT_MODEL_ID, type ToolApprovalRequest, type ToolApprovalResult } from "@sekokuva-ca/shared"
 import {
 	ACTIVE_CLOUD_STATUSES,
 	CLOUD_CREATION_UNCONFIRMED_ERROR_CODE,

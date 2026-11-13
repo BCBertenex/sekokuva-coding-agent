@@ -1,11 +1,11 @@
-# Sidecar Architecture — @cline/code
+# Sidecar Architecture — @sekokuva-ca/code
 
 ## Overview
 
 The sidecar is a Bun process that adapts the desktop UI and native operations to
 the shared Cline Hub.
 
-It imports `@cline/core`, discovers or starts the canonical shared Hub, registers
+It imports `@sekokuva-ca/core`, discovers or starts the canonical shared Hub, registers
 as a Hub client, and serves the Next.js frontend over HTTP + WebSocket. The
 sidecar does not own a private agent runtime Hub.
 
@@ -151,7 +151,7 @@ connections.
 ### 4. Session Storage — Direct SqliteSessionStore
 
 ```typescript
-import { SqliteSessionStore, resolveSessionBackend } from "@cline/core";
+import { SqliteSessionStore, resolveSessionBackend } from "@sekokuva-ca/core";
 const store = new SqliteSessionStore();
 ```
 

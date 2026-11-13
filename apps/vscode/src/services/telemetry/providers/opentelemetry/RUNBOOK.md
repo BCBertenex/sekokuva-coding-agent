@@ -121,7 +121,7 @@ scope on every span. Regenerate the infra OTLP JSON fixture from the SDK root:
 
 ```sh
 CLINE_RELAY_FIXTURE_PATH=/tmp/cline-relay-fixture.json \
-  bun -F @cline/llms test src/services/langfuse-telemetry.integration.test.ts
+  bun -F @sekokuva-ca/llms test src/services/langfuse-telemetry.integration.test.ts
 ```
 
 Copy the output to `cline/infra`'s `tests/fixtures/langfuse-relay-spans.json` and

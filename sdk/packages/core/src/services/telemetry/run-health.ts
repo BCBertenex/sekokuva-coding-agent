@@ -4,7 +4,7 @@ import type {
 	AgentRuntimeEvent,
 	ITelemetryService,
 	TelemetryProperties,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { captureRunIdle } from "./core-events";
 import { classifyFinalTurnText } from "./stall-signals";
 

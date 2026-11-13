@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { resolveClineDataDir } from "@cline/shared/storage";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 
 /**
  * Legacy VS Code extension secrets.json keys that the legacy import in

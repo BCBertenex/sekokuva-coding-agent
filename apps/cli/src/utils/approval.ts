@@ -3,7 +3,7 @@ import {
 	type ToolApprovalRequest,
 	type ToolApprovalResult,
 	USER_REJECTED_TOOL_REASON,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { truncate } from "./helpers";
 import { c, getActiveCliSession, write } from "./output";
 
@@ -29,7 +29,7 @@ async function requestDesktopToolApprovalFromCore(
 	request: ToolApprovalRequest,
 ): Promise<ToolApprovalResult> {
 	if (!cachedDesktopApprovalRequester) {
-		cachedDesktopApprovalRequester = import("@cline/core")
+		cachedDesktopApprovalRequester = import("@sekokuva-ca/core")
 			.then((module) => {
 				const fn = (
 					module as {
@@ -44,7 +44,7 @@ async function requestDesktopToolApprovalFromCore(
 				).requestDesktopToolApproval;
 				if (typeof fn !== "function") {
 					throw new Error(
-						"Installed @cline/core does not expose requestDesktopToolApproval",
+						"Installed @sekokuva-ca/core does not expose requestDesktopToolApproval",
 					);
 				}
 				return fn;

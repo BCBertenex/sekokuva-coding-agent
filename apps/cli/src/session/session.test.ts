@@ -15,9 +15,9 @@ const listSessionHistoryFromBackend = vi.fn();
 const featureFlagsPoll = vi.fn(async () => {});
 const featureFlagsDispose = vi.fn(async () => {});
 
-vi.mock("@cline/core", async () => {
+vi.mock("@sekokuva-ca/core", async () => {
 	const actual =
-		await vi.importActual<typeof import("@cline/core")>("@cline/core");
+		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
 		ClineCore: {

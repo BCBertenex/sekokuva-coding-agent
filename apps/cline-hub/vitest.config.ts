@@ -13,19 +13,19 @@ export default defineConfig({
 				replacement: resolve(rootDir, "src/webview/src/$1"),
 			},
 			{
-				find: /^@cline\/core$/,
+				find: /^@sekokuva-ca\/core$/,
 				replacement: resolve(rootDir, "../../sdk/packages/core/src/index.ts"),
 			},
 			{
-				find: /^@cline\/core\/(.+)$/,
+				find: /^@sekokuva-ca\/core\/(.+)$/,
 				replacement: resolve(rootDir, "../../sdk/packages/core/src/$1"),
 			},
 			{
-				find: /^@cline\/shared$/,
+				find: /^@sekokuva-ca\/shared$/,
 				replacement: resolve(rootDir, "../../sdk/packages/shared/src/index.ts"),
 			},
 			{
-				find: /^@cline\/shared\/(.+)$/,
+				find: /^@sekokuva-ca\/shared\/(.+)$/,
 				replacement: resolve(rootDir, "../../sdk/packages/shared/src/$1"),
 			},
 		],

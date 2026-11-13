@@ -185,7 +185,7 @@ jobs:
             - name: Install workspace dependencies
               run: bun install --frozen-lockfile
 
-            # @cline/* are local workspace symlinks to source packages; apps/vscode's
+            # @sekokuva-ca/* are local workspace symlinks to source packages; apps/vscode's
             # `package` script does NOT build them, so without this the esbuild step
             # fails on a fresh checkout.
             - name: Build SDK packages
@@ -232,7 +232,7 @@ jobs:
                   trap 'node scripts/marketplace-readme.mjs restore' EXIT
 
                   # --no-dependencies: the extension is fully esbuild-bundled, and
-                  # under the bun workspace the @cline/* deps are symlinks pointing
+                  # under the bun workspace the @sekokuva-ca/* deps are symlinks pointing
                   # outside the package, so without this vsce would walk them and
                   # pull the whole monorepo into the .vsix.
                   # --allow-package-secrets sendgrid: narrowly scoped scanner

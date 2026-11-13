@@ -8,7 +8,7 @@ import type {
 	AgentTool,
 	AgentToolContext,
 	Message,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	afterAll,
 	beforeAll,
@@ -293,14 +293,14 @@ describe.each([
 			dir,
 			"sdk-plugin",
 			"node_modules",
-			"@cline",
+			"@sekokuva-ca",
 			"shared",
 		);
 		await mkdir(sdkDepDir, { recursive: true });
 		await writeFile(
 			join(sdkDepDir, "package.json"),
 			JSON.stringify({
-				name: "@cline/shared",
+				name: "@sekokuva-ca/shared",
 				type: "module",
 				exports: "./index.js",
 			}),
@@ -314,7 +314,7 @@ describe.each([
 		await writeFile(
 			join(dir, "sdk-plugin", "plugin-sdk.ts"),
 			[
-				"import { sdkMarker } from '@cline/shared';",
+				"import { sdkMarker } from '@sekokuva-ca/shared';",
 				"export default {",
 				"  name: sdkMarker,",
 				"  manifest: { capabilities: ['tools'] },",
@@ -326,7 +326,7 @@ describe.each([
 		await writeFile(
 			join(dir, "plugin-host-dep.ts"),
 			[
-				"import { resolveClineDataDir } from '@cline/shared/storage';",
+				"import { resolveClineDataDir } from '@sekokuva-ca/shared/storage';",
 				"import YAML from 'yaml';",
 				"export default {",
 				"  name: YAML.stringify({ host: !!resolveClineDataDir() }).trim(),",
@@ -339,7 +339,7 @@ describe.each([
 		await writeFile(
 			join(dir, "plugin-create-tool.ts"),
 			[
-				"import { createTool } from '@cline/agents';",
+				"import { createTool } from '@sekokuva-ca/agents';",
 				"export default {",
 				"  name: 'sandbox-create-tool',",
 				"  manifest: { capabilities: ['tools'] },",
@@ -808,7 +808,7 @@ describe.each([
 		const packageRoot = join(
 			wrapperRoot,
 			"node_modules",
-			"@cline",
+			"@sekokuva-ca",
 			`cli-${platform}-${process.arch}`,
 		);
 		const wrapperBinDir = join(wrapperRoot, "bin");
@@ -827,7 +827,7 @@ describe.each([
 			await writeFile(
 				join(packageRoot, "package.json"),
 				JSON.stringify({
-					name: `@cline/cli-${platform}-${process.arch}`,
+					name: `@sekokuva-ca/cli-${platform}-${process.arch}`,
 					version: "0.0.0-test",
 					type: "module",
 				}),
@@ -867,13 +867,13 @@ describe.each([
 			const corePackageDirectory = join(
 				runtimeDirectory,
 				"node_modules",
-				"@cline",
+				"@sekokuva-ca",
 				"core",
 			);
 			await mkdir(corePackageDirectory, { recursive: true });
 			await writeFile(
 				join(corePackageDirectory, "package.json"),
-				JSON.stringify({ name: "@cline/core" }),
+				JSON.stringify({ name: "@sekokuva-ca/core" }),
 			);
 			await writeFile(
 				join(runtimeDirectory, "package.json"),

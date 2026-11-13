@@ -1,4 +1,4 @@
-import type { HubCommandEnvelope } from "@cline/shared";
+import type { HubCommandEnvelope } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import {
 	SESSION_NOT_FOUND_ERROR_CODE,

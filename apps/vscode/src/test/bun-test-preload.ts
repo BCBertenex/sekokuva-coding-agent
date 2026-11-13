@@ -3,7 +3,7 @@
 // API and module aliases — run under `bun test`.
 //
 // TODO: migrate these suites to native `bun:test` (use `mock.module` / `spyOn`
-// directly and stub `vscode`/`@cline/core` per-file) and delete this preload's
+// directly and stub `vscode`/`@sekokuva-ca/core` per-file) and delete this preload's
 // `vi` shim. Until then the detail below documents exactly why the shim is shaped
 // the way it is.
 //
@@ -11,29 +11,29 @@
 // lightweight stubs in unit tests:
 //
 //   vscode       -> src/test/vscode-vitest-stub.ts     (no VS Code host under bun)
-//   @cline/core  -> src/test/cline-core-vitest-stub.ts (lightweight SDK stub)
+//   @sekokuva-ca/core  -> src/test/cline-core-vitest-stub.ts (lightweight SDK stub)
 //
 // bun's runtime plugin `onResolve` hook does NOT intercept these (`vscode` is
-// host/builtin-like and `@cline/core` is a symlinked workspace package — both
+// host/builtin-like and `@sekokuva-ca/core` is a symlinked workspace package — both
 // resolve below the JS plugin resolver). `mock.module()` is what works: it
 // registers an in-memory override that takes precedence for the whole test
-// process. (Other workspace packages — @cline/llms, @cline/shared,
-// @cline/shared/storage — and the tsconfig `paths` aliases resolve on their own.)
+// process. (Other workspace packages — @sekokuva-ca/llms, @sekokuva-ca/shared,
+// @sekokuva-ca/shared/storage — and the tsconfig `paths` aliases resolve on their own.)
 //
 // bun's ESM linker statically validates every named import against the names on
-// the mock namespace. The stub only implements the @cline/core exports these
+// the mock namespace. The stub only implements the @sekokuva-ca/core exports these
 // tests exercise, but other modules in the import graph statically import
 // additional names (e.g. `prepareRemoteConfigCoreIntegration`, `ClineCore`,
 // `createMcpTools`); a missing name is a hard "Export named 'X' not found" link
-// error. So we seed the mock namespace with every name the real @cline/core
+// error. So we seed the mock namespace with every name the real @sekokuva-ca/core
 // exports (value `undefined`) and overlay the stub on top: stub names keep stub
 // behavior, every other valid import links as `undefined`.
 //
 // The real package must never be loaded in this process before it is mocked.
 // Mocking an already-loaded module makes bun re-link the module graph, and
-// that re-link leaves a slice of `@cline/shared`'s source-tree exports
+// that re-link leaves a slice of `@sekokuva-ca/shared`'s source-tree exports
 // undefined (`stripUtf8Bom` among them) for everything under
-// sdk/packages/core, which resolves `@cline/shared` to shared/src through
+// sdk/packages/core, which resolves `@sekokuva-ca/shared` to shared/src through
 // core's tsconfig `paths`. Real SDK functions re-exported by the stub then
 // throw. So the export names come from a child process (cached on the built
 // package's mtime), the mock is registered first, and everything that might
@@ -60,11 +60,11 @@ function readRealClineCoreExportNames(): string[] {
 		// No usable cache; read the names below.
 	}
 	const result = Bun.spawnSync({
-		cmd: ["bun", "-e", "console.log(JSON.stringify(Object.keys(await import('@cline/core'))))"],
+		cmd: ["bun", "-e", "console.log(JSON.stringify(Object.keys(await import('@sekokuva-ca/core'))))"],
 		cwd: import.meta.dir,
 	})
 	if (result.exitCode !== 0) {
-		throw new Error(`Could not read @cline/core export names: ${result.stderr.toString()}`)
+		throw new Error(`Could not read @sekokuva-ca/core export names: ${result.stderr.toString()}`)
 	}
 	const names = JSON.parse(result.stdout.toString()) as string[]
 	try {
@@ -80,16 +80,16 @@ const clineCoreNamespace: Record<string, unknown> = {}
 for (const name of readRealClineCoreExportNames()) {
 	clineCoreNamespace[name] = undefined
 }
-mock.module("@cline/core", () => clineCoreNamespace)
+mock.module("@sekokuva-ca/core", () => clineCoreNamespace)
 
 const clineCoreStub = await import("./cline-core-vitest-stub")
 Object.assign(clineCoreNamespace, clineCoreStub)
-const LlmsModels = await import("@cline/llms")
+const LlmsModels = await import("@sekokuva-ca/llms")
 
 bunBeforeEach(() => {
 	clineCoreStub.resetModelsFileState()
 	// The stub's syncStoredProviderRegistration mutates the real shared
-	// @cline/llms registry; reset it so registrations never leak across tests.
+	// @sekokuva-ca/llms registry; reset it so registrations never leak across tests.
 	LlmsModels.resetRegistry()
 })
 
@@ -118,7 +118,7 @@ mock.module("vscode", () => ({ ...vscodeStub, default: vscodeStub.default }))
 //   • vi.importActual(s)  — the module as resolved by vitest's `resolve.alias`
 //                           BEFORE `vi.mock` is layered on. For specifiers we
 //                           substitute via `mock.module` in this preload
-//                           (@cline/core, vscode), calling bun's `import()` from
+//                           (@sekokuva-ca/core, vscode), calling bun's `import()` from
 //                           inside a `vi.mock(sameSpecifier)` factory re-enters
 //                           the in-flight mock and DEADLOCKS. So we serve those
 //                           from a registry of the pre-built "actual" namespaces
@@ -157,7 +157,7 @@ const viWaitFor = async <T>(predicate: () => T | Promise<T>, options?: { timeout
 // substitutes. `importActual` serves these directly to avoid the re-entrant
 // mock-factory deadlock described above.
 const actualNamespaceRegistry: Record<string, unknown> = {
-	"@cline/core": clineCoreNamespace,
+	"@sekokuva-ca/core": clineCoreNamespace,
 	vscode: { ...vscodeStub, default: vscodeStub.default },
 }
 

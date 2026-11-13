@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { SqliteSessionStore } from "@cline/core";
+import { SqliteSessionStore } from "@sekokuva-ca/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { handleCommand } from "./commands";
 import type { SidecarContext } from "./types";

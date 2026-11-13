@@ -2,7 +2,7 @@ import {
 	type AgentResult,
 	type LegacyAgentUsage,
 	TeamMessageType,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { TeamEvent } from "./multi-agent";
 
 /**

@@ -1,6 +1,6 @@
 "use client";
 
-import { Kbd, KbdGroup } from "@cline/ui";
+import { Kbd, KbdGroup } from "@sekokuva-ca/ui";
 import { useEffect, useRef, useState } from "react";
 import { desktopClient, isTauriAvailable } from "@/lib/desktop-client";
 import {

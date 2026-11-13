@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { type FileHandle, mkdtemp, open, readdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { HubCommandEnvelope, HubReplyEnvelope } from "@cline/shared";
+import type { HubCommandEnvelope, HubReplyEnvelope } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { HistoryTransferPool } from "./history-transfer";
 

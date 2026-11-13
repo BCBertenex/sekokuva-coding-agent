@@ -1,4 +1,4 @@
-import type { AgentExtension } from "@cline/shared";
+import type { AgentExtension } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import type { RuleConfig } from "../../extensions/config/user-instruction-config-loader";
 import {

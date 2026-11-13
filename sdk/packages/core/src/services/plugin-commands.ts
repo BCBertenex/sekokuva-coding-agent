@@ -7,7 +7,7 @@ import {
 	createContributionRegistry,
 	type ITelemetryService,
 	type Message,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	resolveAgentPluginPaths,
 	resolveAndLoadAgentPlugins,

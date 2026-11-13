@@ -14,7 +14,7 @@ description: |
 
 [tuistory](https://github.com/remorses/tuistory) wraps any terminal command in a named background PTY session backed by a Ghostty terminal emulator. Agents interact with the session via short CLI calls that return instantly; humans can `tuistory attach` to the same session to watch or intervene. No real terminal or display (`DISPLAY`) is needed — it works fully headless, which makes it the preferred way for cloud agents to exercise the Cline TUI.
 
-It is installed as a devDependency of `@cline/cli`, so the pinned binary resolves when you run from `apps/cli`:
+It is installed as a devDependency of `@sekokuva-ca/cli`, so the pinned binary resolves when you run from `apps/cli`:
 
 ```bash
 cd apps/cli

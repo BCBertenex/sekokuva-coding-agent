@@ -1,5 +1,5 @@
-import type { ProviderSettingsManager } from "@cline/core";
-import { loginAndSaveProviderOAuthCredentials } from "@cline/core";
+import type { ProviderSettingsManager } from "@sekokuva-ca/core";
+import { loginAndSaveProviderOAuthCredentials } from "@sekokuva-ca/core";
 import { getPersistedProviderApiKey } from "../commands/auth";
 import { writeDiagnostic } from "../utils/output";
 
@@ -34,7 +34,7 @@ async function performOAuthLogin(input: {
 	providerSettingsManager: ProviderSettingsManager;
 }): Promise<string> {
 	const [{ createOAuthClientCallbacks }, { default: open }] = await Promise.all(
-		[import("@cline/core"), import("../utils/open")],
+		[import("@sekokuva-ca/core"), import("../utils/open")],
 	);
 
 	const callbacks = createOAuthClientCallbacks({

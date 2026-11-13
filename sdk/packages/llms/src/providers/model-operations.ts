@@ -7,7 +7,7 @@ import type {
 	ModelModalities,
 	ModelOperation,
 	ModelOperationMode,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { modelRouteMatches } from "./model-facts";
 
 const IMAGE_LANGUAGE_OPERATION: GatewayModelOperationCapability = {

@@ -2,7 +2,7 @@ import {
 	getProviderAuthStorageId,
 	type ProviderSettingsManager,
 	saveLocalProviderSettings,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	type DialogDismissKey,
 	isAnyKeyDismiss,

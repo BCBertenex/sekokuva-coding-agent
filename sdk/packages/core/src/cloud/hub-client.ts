@@ -1,4 +1,4 @@
-import type { HubEventEnvelope, HubReplyEnvelope } from "@cline/shared";
+import type { HubEventEnvelope, HubReplyEnvelope } from "@sekokuva-ca/shared";
 import type { NodeHubClient } from "../hub/client";
 import { CloudSessionError, type CloudSessionRecord } from "./api";
 import type {

@@ -3,6 +3,10 @@ import { createHash } from "node:crypto"
 import { existsSync } from "node:fs"
 import { homedir, platform } from "node:os"
 import { isAbsolute, join, relative, resolve } from "node:path"
+import { deleteSkillFile } from "@core/controller/file/deleteSkillFile"
+import { refreshSkills } from "@core/controller/file/refreshSkills"
+import { toggleSkill } from "@core/controller/file/toggleSkill"
+import { resolveActiveModelIdFromApiConfiguration } from "@core/controller/models/taskApiModel"
 import {
 	disablePluginMcpServersInSettings,
 	discoverPluginModulePaths,
@@ -21,11 +25,7 @@ import {
 	syncPluginMcpServersToSettings,
 	uninstallMarketplaceEntry as uninstallCoreMarketplaceEntry,
 	uninstallPlugin,
-} from "@cline/core"
-import { deleteSkillFile } from "@core/controller/file/deleteSkillFile"
-import { refreshSkills } from "@core/controller/file/refreshSkills"
-import { toggleSkill } from "@core/controller/file/toggleSkill"
-import { resolveActiveModelIdFromApiConfiguration } from "@core/controller/models/taskApiModel"
+} from "@sekokuva-ca/core"
 import { DeleteSkillRequest, ToggleSkillRequest } from "@shared/proto/cline/file"
 import {
 	MarketplaceCatalog,

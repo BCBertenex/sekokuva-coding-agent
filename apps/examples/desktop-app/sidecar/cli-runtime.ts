@@ -1,6 +1,6 @@
 import { execFile } from "node:child_process";
-import { setHubDaemonLauncher, setPluginSandboxLauncher } from "@cline/core";
-import { withHubLauncherIdentity } from "@cline/shared";
+import { setHubDaemonLauncher, setPluginSandboxLauncher } from "@sekokuva-ca/core";
+import { withHubLauncherIdentity } from "@sekokuva-ca/shared";
 import { DESKTOP_CLIENT_CONTEXT } from "./client-context";
 
 /** Absolute path of the Cline CLI binary the desktop shell bundles and launched us with. */

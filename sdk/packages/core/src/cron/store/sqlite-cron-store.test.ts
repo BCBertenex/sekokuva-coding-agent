@@ -8,8 +8,8 @@ import {
 	type CronScheduleSpec,
 	ONE_TIME_SCHEDULE_CRON_PATTERN,
 	ONE_TIME_SCHEDULE_RUN_AT_METADATA_KEY,
-} from "@cline/shared";
-import { loadSqliteDb } from "@cline/shared/db";
+} from "@sekokuva-ca/shared";
+import { loadSqliteDb } from "@sekokuva-ca/shared/db";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { SqliteCronStore } from "./sqlite-cron-store";
 

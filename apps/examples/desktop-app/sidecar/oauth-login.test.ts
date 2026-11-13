@@ -1,4 +1,4 @@
-import type { ProviderSettingsManager } from "@cline/core";
+import type { ProviderSettingsManager } from "@sekokuva-ca/core";
 import { describe, expect, it, vi } from "vitest";
 import {
 	cancelProviderOAuthLogin,

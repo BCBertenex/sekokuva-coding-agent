@@ -1,7 +1,7 @@
 import type {
 	ClineRecommendedModel,
 	ClineRecommendedModelsData,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 export type ClineModelPickerTier = "recommended" | "subscribed" | "free";
 

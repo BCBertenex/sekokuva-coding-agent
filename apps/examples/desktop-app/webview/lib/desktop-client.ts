@@ -8,7 +8,7 @@ import type {
 	DesktopDebugLogPayload,
 	HubTaskCreateInput,
 	HubTaskUpdateInput,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type {
 	DesktopTransportEvent,
 	DesktopTransportMessage,

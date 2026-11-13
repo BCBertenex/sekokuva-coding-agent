@@ -1,4 +1,4 @@
-import { isTranscriptionModel } from "@cline/shared";
+import { isTranscriptionModel } from "@sekokuva-ca/shared";
 import type { ModelOperation, ModelOperationMode } from "./types";
 
 interface CatalogOperationDescriptor {

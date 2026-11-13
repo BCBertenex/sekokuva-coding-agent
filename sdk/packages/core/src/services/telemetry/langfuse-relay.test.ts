@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { withLangfuseTraceAttributes } from "@cline/llms";
+import { withLangfuseTraceAttributes } from "@sekokuva-ca/llms";
 import { context, trace } from "@opentelemetry/api";
 import { expect, it } from "vitest";
 import { OpenTelemetryProvider } from "./OpenTelemetryProvider";

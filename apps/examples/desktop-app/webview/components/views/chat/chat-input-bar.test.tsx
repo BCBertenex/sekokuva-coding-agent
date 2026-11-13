@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { CLINE_DEFAULT_MODEL_ID } from "@cline/shared/browser";
+import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
 import {
 	act,
 	Fragment,

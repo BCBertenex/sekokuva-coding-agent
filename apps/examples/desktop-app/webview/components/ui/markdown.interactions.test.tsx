@@ -521,13 +521,13 @@ describe("MemoizedMarkdown interactions", () => {
 	});
 
 	// Desktop webview tests colocate beside the component under test (unlike
-	// `@cline/ui`, which keeps a package-level `tests/` directory), so this
+	// `@sekokuva-ca/ui`, which keeps a package-level `tests/` directory), so this
 	// coverage lives next to `markdown.tsx`.
 	//
 	// Mermaid renders `click <node> "https://…"` directives as live anchors
 	// inside the SVG, and Streamdown injects that SVG with
 	// `dangerouslySetInnerHTML` — so those anchors never pass through
-	// SafeMarkdownLink. @cline/ui strips the navigable href; these assert the
+	// SafeMarkdownLink. @sekokuva-ca/ui strips the navigable href; these assert the
 	// desktop surface reattaches them to the confirmation flow instead of
 	// letting a diagram click navigate the webview away from the app.
 	async function renderDiagramWithLink(
@@ -823,7 +823,7 @@ describe("MemoizedMarkdown interactions", () => {
 
 	// With lineNumbers off, Streamdown emits one bare inline <span> per Shiki
 	// token line with no newline text between non-empty lines; the shared
-	// @cline/ui markdown.css turns those direct line spans into blocks. This
+	// @sekokuva-ca/ui markdown.css turns those direct line spans into blocks. This
 	// asserts the one-span-per-line structure that CSS contract depends on,
 	// after the async Shiki highlight replaces the raw fallback render (the
 	// SSR tests never exercise that client-side path).

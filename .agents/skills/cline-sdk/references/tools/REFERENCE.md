@@ -4,10 +4,10 @@ Tools are how agents interact with the world. The Cline SDK supports both built-
 
 ## Creating Custom Tools
 
-Use `createTool()` from `@cline/sdk` (or `@cline/shared`):
+Use `createTool()` from `@sekokuva-ca/sdk` (or `@sekokuva-ca/shared`):
 
 ```typescript
-import { createTool } from "@cline/sdk"
+import { createTool } from "@sekokuva-ca/sdk"
 
 const myTool = createTool({
   name: "search_issues",
@@ -30,7 +30,7 @@ const myTool = createTool({
 ### With Zod Schema
 
 ```typescript
-import { createTool } from "@cline/sdk"
+import { createTool } from "@sekokuva-ca/sdk"
 import { z } from "zod"
 
 const deployTool = createTool({

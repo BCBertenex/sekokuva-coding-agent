@@ -21,8 +21,8 @@ const telemetryMocks = vi.hoisted(() => ({
 	identifyTelemetryAccount: vi.fn(),
 }));
 
-vi.mock("@cline/core", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@cline/core")>();
+vi.mock("@sekokuva-ca/core", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@sekokuva-ca/core")>();
 	return {
 		...actual,
 		ClineAccountService: class {

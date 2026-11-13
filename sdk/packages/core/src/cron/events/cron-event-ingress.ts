@@ -1,4 +1,4 @@
-import type { AutomationEventEnvelope, BasicLogger } from "@cline/shared";
+import type { AutomationEventEnvelope, BasicLogger } from "@sekokuva-ca/shared";
 import type {
 	CronEventLogRecord,
 	CronRunRecord,

@@ -1,4 +1,4 @@
-import type { ClientContext } from "@cline/shared";
+import type { ClientContext } from "@sekokuva-ca/shared";
 import {
 	SessionSource,
 	type SessionSource as SessionSourceValue,

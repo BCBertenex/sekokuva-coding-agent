@@ -243,7 +243,7 @@ jobs:
               working-directory: next-src
               run: bun install --frozen-lockfile
 
-            # @cline/* are local workspace symlinks to source packages; apps/vscode's
+            # @sekokuva-ca/* are local workspace symlinks to source packages; apps/vscode's
             # `package` script does NOT build them, so without this the esbuild step
             # fails on a fresh checkout. (The nightly workflow already does this.)
             - name: Build SDK packages

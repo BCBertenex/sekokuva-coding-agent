@@ -1,8 +1,8 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { BasicLogger } from "@cline/shared";
-import { isOtlpTraceRelayProvider } from "@cline/shared";
+import type { BasicLogger } from "@sekokuva-ca/shared";
+import { isOtlpTraceRelayProvider } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { writeGlobalSettings } from "../global-settings";
 import {

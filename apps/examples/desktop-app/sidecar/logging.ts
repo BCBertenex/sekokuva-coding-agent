@@ -10,7 +10,7 @@ import {
 	type BasicLogger,
 	type RuntimeLoggerConfig,
 	resolveClineDataDir,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import pino, {
 	type DestinationStream,
 	type LevelWithSilent,

@@ -11,10 +11,10 @@ Use the Cline SDK to run agents from CI/CD pipelines, create automations for end
 ## Install
 
 ```bash
-npm install @cline/sdk
+npm install @sekokuva-ca/sdk
 ```
 
-`@cline/sdk` exports all SDK packages: `@cline/core` for the full agent harness, `@cline/agents` for the stateless agent loop, `@cline/llms` for control over the model gateway, and `@cline/shared` for common utilities.
+`@sekokuva-ca/sdk` exports all SDK packages: `@sekokuva-ca/core` for the full agent harness, `@sekokuva-ca/agents` for the stateless agent loop, `@sekokuva-ca/llms` for control over the model gateway, and `@sekokuva-ca/shared` for common utilities.
 
 Requires Node.js 22 or later.
 
@@ -31,7 +31,7 @@ Prompt it to scaffold agents, create custom tools, wire up plugins, configure pr
 ## Your First Agent
 
 ```typescript
-import { Agent } from "@cline/sdk"
+import { Agent } from "@sekokuva-ca/sdk"
 
 const agent = new Agent({
   providerId: "anthropic",
@@ -57,11 +57,11 @@ const result = await agent.run("Explain what an SDK is in two sentences.")
 
 | Package | Purpose |
 |---------|---------|
-| `@cline/sdk` | Public SDK surface (re-exports `@cline/core`) |
-| `@cline/core` | Node runtime for sessions, built-in tools, persistence, hub support, automation |
-| `@cline/agents` | Browser-compatible stateless agent execution loop |
-| `@cline/llms` | Provider gateway and model catalogs |
-| `@cline/shared` | Types, schemas, tool helpers, hooks, storage helpers |
+| `@sekokuva-ca/sdk` | Public SDK surface (re-exports `@sekokuva-ca/core`) |
+| `@sekokuva-ca/core` | Node runtime for sessions, built-in tools, persistence, hub support, automation |
+| `@sekokuva-ca/agents` | Browser-compatible stateless agent execution loop |
+| `@sekokuva-ca/llms` | Provider gateway and model catalogs |
+| `@sekokuva-ca/shared` | Types, schemas, tool helpers, hooks, storage helpers |
 
 
 

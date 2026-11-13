@@ -10,7 +10,7 @@ import type {
 	ProviderConfig,
 	ProviderInfo,
 	ProviderProtocol,
-} from "@cline/llms";
+} from "@sekokuva-ca/llms";
 import type { ProviderCapability } from "./provider-settings";
 
 export type ProviderConfigDefaults = Omit<

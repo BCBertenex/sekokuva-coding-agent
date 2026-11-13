@@ -25,8 +25,8 @@ import {
 	SKILLS_CLI_PACKAGE,
 	uninstallMarketplaceEntry as uninstallCoreMarketplaceEntry,
 	uninstallPlugin as uninstallLocalPlugin,
-} from "@cline/core";
-import { resolveClineDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/core";
+import { resolveClineDir } from "@sekokuva-ca/shared/storage";
 import { deleteMcpServer, readMcpServersResponse } from "./mcp";
 import type { JsonRecord } from "./types";
 

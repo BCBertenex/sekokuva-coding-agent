@@ -1,8 +1,8 @@
-import { getProviderCollectionSync, normalizeProviderId } from "@cline/llms";
+import { getProviderCollectionSync, normalizeProviderId } from "@sekokuva-ca/llms";
 import {
 	createImageAwareReplacer,
 	type MessageWithMetadata,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	type ConnectionConfig,
 	resolveConnectionProviderConfig,

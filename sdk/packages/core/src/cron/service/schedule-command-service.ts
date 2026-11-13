@@ -5,8 +5,8 @@ import type {
 	HubScheduleCreateInput,
 	HubScheduleUpdateInput,
 	ScheduleRecord,
-} from "@cline/shared";
-import { createSessionId, readHubScheduleMode } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { createSessionId, readHubScheduleMode } from "@sekokuva-ca/shared";
 import type { HubConnectionAuthority } from "../../hub/server/command-transport";
 import type { HubScheduleService } from "./schedule-service";
 

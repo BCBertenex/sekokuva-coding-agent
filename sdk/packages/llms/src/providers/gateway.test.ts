@@ -11,7 +11,7 @@ import {
 	IMAGE_UNSUPPORTED_PLACEHOLDER,
 	type ITelemetryService,
 	resetSdkErrorRateLimiterForTests,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { APICallError } from "ai";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { normalizeModelsDevProviderModels } from "../catalog/catalog-live";

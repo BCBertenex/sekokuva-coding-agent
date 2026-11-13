@@ -33,7 +33,7 @@ const {
 	mockStartHubWebSocketServer: vi.fn(),
 }));
 
-vi.mock("@cline/shared", () => ({
+vi.mock("@sekokuva-ca/shared", () => ({
 	resolveClineBuildEnv: mockResolveClineBuildEnv,
 }));
 

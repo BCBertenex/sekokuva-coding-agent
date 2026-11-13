@@ -1,14 +1,14 @@
-import { isUserRunMessage, resolveMessageDisplayRole } from "@cline/core";
+import { isUserRunMessage, resolveMessageDisplayRole } from "@sekokuva-ca/core";
 import {
 	normalizeSessionTitle,
 	stringifyMessageContent,
-} from "@cline/core/cloud";
+} from "@sekokuva-ca/core/cloud";
 
 export {
 	normalizeSessionTitle,
 	resolveSessionListTitle,
 	stringifyMessageContent,
-} from "@cline/core/cloud";
+} from "@sekokuva-ca/core/cloud";
 
 import { readSessionManifest } from "../paths";
 import type { JsonRecord } from "../types";

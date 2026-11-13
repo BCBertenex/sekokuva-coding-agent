@@ -1,4 +1,4 @@
-import type { ToolApprovalRequest, ToolApprovalResult } from "@cline/shared";
+import type { ToolApprovalRequest, ToolApprovalResult } from "@sekokuva-ca/shared";
 import type { WebviewInboundMessage } from "../webview-protocol";
 import type { HubContext } from "./state";
 import { broadcastHubState } from "./state-payloads";

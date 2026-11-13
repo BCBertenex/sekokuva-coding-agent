@@ -9,7 +9,7 @@
 // - workos: prefix handling
 
 import path from "node:path"
-import { getValidClineCredentials, type ITelemetryService, type OAuthCredentials } from "@cline/core"
+import { getValidClineCredentials, type ITelemetryService, type OAuthCredentials } from "@sekokuva-ca/core"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { AuthService, type ClineAuthInfo, LogoutReason } from "./auth-service"
 
@@ -109,8 +109,8 @@ vi.mock("axios", () => ({
 
 const mockLoginClineOAuth = vi.hoisted(() => vi.fn())
 
-// Mock @cline/core OAuth functions
-vi.mock("@cline/core", async () => ({
+// Mock @sekokuva-ca/core OAuth functions
+vi.mock("@sekokuva-ca/core", async () => ({
 	sdkDebug: () => {},
 	hashSecret: () => "hashed",
 	createOAuthClientCallbacks: (opts: {
@@ -746,7 +746,7 @@ describe("AuthService", () => {
 			// mock normally hides its telemetry) so a reintroduced adapter-side
 			// emission would surface as a second event here. The specifier is a
 			// variable so tsc doesn't pull the SDK sources into this project's
-			// program (same reason the @cline/core vitest stub is tsc-excluded);
+			// program (same reason the @sekokuva-ca/core vitest stub is tsc-excluded);
 			// vitest resolves it at runtime.
 			const realClineAuthModulePath = path.resolve(import.meta.dirname, "../../../../sdk/packages/core/src/auth/cline.ts")
 			const { getValidClineCredentials: realGetValidClineCredentials } = (await import(

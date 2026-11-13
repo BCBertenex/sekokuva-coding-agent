@@ -1,4 +1,4 @@
-import type { BasicLogger } from "@cline/shared";
+import type { BasicLogger } from "@sekokuva-ca/shared";
 import { countUserRunMessages } from "../../session/user-run-messages";
 import type {
 	CoreCompactionContext,

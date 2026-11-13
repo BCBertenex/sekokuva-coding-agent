@@ -1,5 +1,5 @@
 import { type SpawnOptions, spawn } from "node:child_process";
-import { SKILLS_CLI_PACKAGE } from "@cline/core";
+import { SKILLS_CLI_PACKAGE } from "@sekokuva-ca/core";
 
 export interface SkillCommandIo {
 	writeln: (text?: string) => void;
@@ -8,7 +8,7 @@ export interface SkillCommandIo {
 
 // `cline skill` is a thin wrapper around the open skills CLI
 // (https://www.npmjs.com/package/skills). We run it through `npx` so users
-// don't need a separate global install. The release is pinned in @cline/core
+// don't need a separate global install. The release is pinned in @sekokuva-ca/core
 // (sdk/packages/core/package.json) and bumped by Dependabot.
 const SKILLS_PACKAGE = SKILLS_CLI_PACKAGE;
 

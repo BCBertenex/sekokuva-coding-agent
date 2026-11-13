@@ -3,7 +3,7 @@
 // catalog fact says `interleavedReasoningField: "reasoning_content"` (Beam,
 // DeepSeek thinking mode, ...) reject assistant history without a non-empty
 // `reasoning_content`, so history that lost its reasoning gets a placeholder.
-import type { AgentMessage, GatewayModelDefinition } from "@cline/shared";
+import type { AgentMessage, GatewayModelDefinition } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { createGateway } from "../gateway";
 

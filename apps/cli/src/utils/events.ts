@@ -1,4 +1,4 @@
-import type { AgentEvent, TeamEvent } from "@cline/core";
+import type { AgentEvent, TeamEvent } from "@sekokuva-ca/core";
 import {
 	formatCompactionDividerLabel,
 	parseCompactionNoticeMetadata,

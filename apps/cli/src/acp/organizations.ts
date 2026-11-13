@@ -5,8 +5,8 @@ import {
 	getPersistedProviderApiKey,
 	type ProviderSettingsManager,
 	RuntimeOAuthTokenManager,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 
 export const PERSONAL_ACCOUNT_VALUE = "personal";
 

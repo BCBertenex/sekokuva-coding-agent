@@ -1,5 +1,5 @@
 import * as p from "@clack/prompts";
-import { parseMcpHeaders } from "@cline/core";
+import { parseMcpHeaders } from "@sekokuva-ca/core";
 import { authorizeMcpServerOAuthWithBrowser as authorizeOAuth } from "./oauth";
 import {
 	addServer,

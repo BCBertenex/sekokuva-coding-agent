@@ -1,4 +1,4 @@
-import { setClineClientIdentity } from "@cline/shared";
+import { setClineClientIdentity } from "@sekokuva-ca/shared";
 import { getCliBuildInfo } from "./common";
 
 export function registerClineClientIdentity(name: string): void {

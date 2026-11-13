@@ -1,4 +1,4 @@
-import { formatDisplayUserInput } from "@cline/shared";
+import { formatDisplayUserInput } from "@sekokuva-ca/shared";
 
 export type MessageDisplayRole =
 	| "user"

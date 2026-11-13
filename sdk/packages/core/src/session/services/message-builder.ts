@@ -23,7 +23,7 @@ import {
 	type TextContent,
 	type ToolResultContent,
 	validateAndReserveImageMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { prepareToolResultPreview } from "./tool-result-cache";
 
 export const DEFAULT_MAX_TOOL_RESULT_CHARS = 8_000;

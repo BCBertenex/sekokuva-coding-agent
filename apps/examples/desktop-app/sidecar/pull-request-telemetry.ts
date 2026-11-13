@@ -1,4 +1,4 @@
-import type { ITelemetryService } from "@cline/shared";
+import type { ITelemetryService } from "@sekokuva-ca/shared";
 import { pullRequestTelemetrySchema } from "../webview/lib/pull-request-telemetry-schema";
 
 export function capturePullRequestEvent(

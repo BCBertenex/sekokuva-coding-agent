@@ -1,8 +1,8 @@
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { HubCommandEnvelope, ITelemetryService } from "@cline/shared";
-import { setClineDir, setHomeDir } from "@cline/shared/storage";
+import type { HubCommandEnvelope, ITelemetryService } from "@sekokuva-ca/shared";
+import { setClineDir, setHomeDir } from "@sekokuva-ca/shared/storage";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LocalRuntimeHost } from "../../runtime/host/local-runtime-host";
 import { splitCoreSessionConfig } from "../../runtime/host/runtime-host";

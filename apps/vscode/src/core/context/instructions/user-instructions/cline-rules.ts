@@ -1,6 +1,6 @@
-import { resolveGlobalRulesConfigPaths, resolveWorkspaceRulesConfigPaths } from "@cline/shared/storage"
 import { combineRuleToggles, synchronizeRuleToggles } from "@core/context/instructions/user-instructions/rule-helpers"
 import { ensureRulesDirectoryExists, GlobalFileNames } from "@core/storage/disk"
+import { resolveGlobalRulesConfigPaths, resolveWorkspaceRulesConfigPaths } from "@sekokuva-ca/shared/storage"
 import { ClineRulesToggles } from "@shared/cline-rules"
 import { getCwd, getDesktopDir } from "@utils/path"
 import * as fs from "fs/promises"

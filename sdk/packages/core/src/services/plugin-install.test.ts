@@ -14,7 +14,7 @@ import {
 	resolvePluginConfigSearchPaths,
 	setClineDir,
 	setHomeDir,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	installPlugin,

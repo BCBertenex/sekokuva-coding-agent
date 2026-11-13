@@ -4,8 +4,8 @@ import {
 	summarizeUsageFromMessages,
 	upgradeManagedHub,
 	watchManagedHubBuildMismatch,
-} from "@cline/core";
-import { formatDisplayUserInput } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { formatDisplayUserInput } from "@sekokuva-ca/shared";
 import type { KeyEvent } from "@opentui/core";
 import { useRenderer, useTerminalDimensions } from "@opentui/react";
 import type { ChoiceContext } from "@opentui-ui/dialog";

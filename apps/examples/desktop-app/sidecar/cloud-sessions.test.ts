@@ -1,4 +1,4 @@
-import type { HubEventEnvelope } from "@cline/shared";
+import type { HubEventEnvelope } from "@sekokuva-ca/shared";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { handleChatSessionCommand } from "./chat-session";
 import {

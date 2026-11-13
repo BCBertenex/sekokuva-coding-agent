@@ -1,4 +1,4 @@
-import type { BasicLogger } from "@cline/core";
+import type { BasicLogger } from "@sekokuva-ca/core";
 import { createCliLoggerAdapter, flushCliLoggerAdapters } from "./adapter";
 
 export function logCliError(

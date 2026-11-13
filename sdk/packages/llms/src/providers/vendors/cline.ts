@@ -8,11 +8,11 @@ import { createProviderDefinedToolFactory } from "@ai-sdk/provider-utils";
 import type {
 	GatewayProviderContext,
 	GatewayResolvedProviderConfig,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	modelProducesImages,
 	usesImageGenerationOperation,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { wrapLanguageModel } from "ai";
 import { z } from "zod";

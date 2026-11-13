@@ -17,8 +17,8 @@
  * to the current request and snapshot.
  */
 
-import type { AgentPlugin } from "@cline/core";
-import { estimateTokens as estimateTokensFromChars } from "@cline/shared";
+import type { AgentPlugin } from "@sekokuva-ca/core";
+import { estimateTokens as estimateTokensFromChars } from "@sekokuva-ca/shared";
 
 type PluginHooks = NonNullable<AgentPlugin["hooks"]>;
 type BeforeModelHook = NonNullable<PluginHooks["beforeModel"]>;

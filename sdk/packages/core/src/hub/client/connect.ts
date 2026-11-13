@@ -2,8 +2,8 @@ import type {
 	HubCommandEnvelope,
 	HubReplyEnvelope,
 	HubTransportFrame,
-} from "@cline/shared";
-import { resolveClineBuildEnv } from "@cline/shared";
+} from "@sekokuva-ca/shared";
+import { resolveClineBuildEnv } from "@sekokuva-ca/shared";
 import { createHubServerUrl, readHubDiscovery } from "../discovery";
 import {
 	type HubEndpointOverrides,

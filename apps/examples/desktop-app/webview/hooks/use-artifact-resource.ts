@@ -1,7 +1,7 @@
 "use client";
 
-import type { CloudArtifactDownload } from "@cline/core/cloud";
-import type { GeneratedMediaSource } from "@cline/shared/browser";
+import type { CloudArtifactDownload } from "@sekokuva-ca/core/cloud";
+import type { GeneratedMediaSource } from "@sekokuva-ca/shared/browser";
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useAccount } from "@/contexts/account-context";
 import {

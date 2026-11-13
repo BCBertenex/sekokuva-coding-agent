@@ -1,5 +1,5 @@
-import type { AgentExtension, AgentTool } from "@cline/shared";
-import { createTool, zodToJsonSchema } from "@cline/shared";
+import type { AgentExtension, AgentTool } from "@sekokuva-ca/shared";
+import { createTool, zodToJsonSchema } from "@sekokuva-ca/shared";
 import { z } from "zod";
 import {
 	executeScheduleOperation,

@@ -1,13 +1,13 @@
 import {
 	projectSessionMessagesForDisplay,
 	resolveMessageDisplayRole,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	formatDisplayUserInput,
 	isGeneratedMedia,
 	type MessageWithMetadata,
 	validateImageMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type {
 	WebviewActionSessionSummary,
 	WebviewChatMessage,

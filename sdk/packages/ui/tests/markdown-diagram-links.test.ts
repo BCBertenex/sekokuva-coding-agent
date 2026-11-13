@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 //
-// `@cline/ui` keeps its tests in this package-level `tests/` directory (see
+// `@sekokuva-ca/ui` keeps its tests in this package-level `tests/` directory (see
 // `vitest.config.ts`'s `include`), unlike the product webviews, which colocate
 // test files beside their source. jsdom is requested per-file because the
 // package default is `node`; that default exercises the pattern-based fallback

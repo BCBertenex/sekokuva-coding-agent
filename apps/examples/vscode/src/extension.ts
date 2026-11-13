@@ -21,7 +21,7 @@ import {
 	rememberRecoverableLocalHubUrl,
 	resolveSharedHubOwnerContext,
 	type ToolPolicy,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	type AgentTool,
 	buildClineSystemPrompt,
@@ -31,7 +31,7 @@ import {
 	isGeneratedMedia,
 	type MessageWithMetadata,
 	validateImageMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import * as vscode from "vscode";
 import { displayName, version } from "../package.json";
 import { createVsCodeRuntimeCapabilities } from "./runtime-capabilities";
@@ -162,7 +162,7 @@ type StartConfig = {
 	apiKey: string;
 	autoApproveTools?: boolean;
 	logger: BasicLogger;
-	extensionContext?: import("@cline/shared").ExtensionContext;
+	extensionContext?: import("@sekokuva-ca/shared").ExtensionContext;
 	extraTools?: AgentTool[];
 };
 

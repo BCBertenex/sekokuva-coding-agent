@@ -7,8 +7,8 @@ import {
 	truncateSync,
 } from "node:fs";
 import { dirname } from "node:path";
-import type { BasicLogger, RuntimeLoggerConfig } from "@cline/core";
-import { registerDisposable } from "@cline/shared";
+import type { BasicLogger, RuntimeLoggerConfig } from "@sekokuva-ca/core";
+import { registerDisposable } from "@sekokuva-ca/shared";
 import pino, {
 	type DestinationStream,
 	type LevelWithSilent,
@@ -16,6 +16,33 @@ import pino, {
 } from "pino";
 import { getCliBuildInfo } from "../utils/common";
 import { resolveCliLogPath } from "./log-path";
+
+/**
+ * Returns true when `destinationPath` can be used as a log file.
+ *
+ * `openSync(path, "a")` is not a sufficient probe: on Windows it succeeds for
+ * a directory, so the failure only surfaces later inside `pino.destination`,
+ * where it is asynchronous and cannot be caught by the caller. Check the
+ * existing entry's type first, then confirm the file is actually openable.
+ */
+function isWritableLogFile(destinationPath: string): boolean {
+	if (existsSync(destinationPath)) {
+		try {
+			if (!statSync(destinationPath).isFile()) {
+				return false;
+			}
+		} catch {
+			return false;
+		}
+	}
+	try {
+		const fd = openSync(destinationPath, "a");
+		closeSync(fd);
+		return true;
+	} catch {
+		return false;
+	}
+}
 
 const loggerCache = new Map<
 	string,
@@ -127,8 +154,9 @@ function createWritableDestination(
 ): DestinationStream | undefined {
 	try {
 		mkdirSync(dirname(destinationPath), { recursive: true });
-		const fd = openSync(destinationPath, "a");
-		closeSync(fd);
+		if (!isWritableLogFile(destinationPath)) {
+			return undefined;
+		}
 		const dest = pino.destination({
 			dest: destinationPath,
 			mkdir: true,

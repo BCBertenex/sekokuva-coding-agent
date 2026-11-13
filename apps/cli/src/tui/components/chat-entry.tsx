@@ -1,7 +1,7 @@
 import {
 	type ClineSubscriptionPlan,
 	extractClineFreeModelLimitResetTime,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { useTerminalDimensions } from "@opentui/react";
 import type React from "react";
 import { useEffect, useState } from "react";

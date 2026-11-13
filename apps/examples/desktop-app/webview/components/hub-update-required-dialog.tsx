@@ -1,6 +1,6 @@
 "use client";
 
-import { describeOutdatedHubSessions } from "@cline/shared/browser";
+import { describeOutdatedHubSessions } from "@sekokuva-ca/shared/browser";
 import { useCallback, useEffect, useState } from "react";
 import {
 	AlertDialog,

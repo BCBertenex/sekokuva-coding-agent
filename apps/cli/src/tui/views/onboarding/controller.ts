@@ -8,8 +8,8 @@ import {
 	refreshProviderModelsFromSource,
 	resolveProviderConfig,
 	saveLocalProviderSettings,
-} from "@cline/core";
-import { isClineProvider } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { isClineProvider } from "@sekokuva-ca/shared";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isChatProviderModel } from "../../../utils/chat-models";
 import {

@@ -6,26 +6,26 @@
 		"moduleResolution": "Bundler",
 		"target": "ESNext",
 		"paths": {
-			"@cline/agents": ["../../../sdk/packages/agents/src/index.ts"],
-			"@cline/agents/*": [
+			"@sekokuva-ca/agents": ["../../../sdk/packages/agents/src/index.ts"],
+			"@sekokuva-ca/agents/*": [
 				"../../../sdk/packages/agents/src/*",
 				"../../../sdk/packages/agents/src/*/index.ts"
 			],
-			"@cline/core": ["../../../sdk/packages/core/src/index.ts"],
-			"@cline/core/hub/daemon-entry": [
+			"@sekokuva-ca/core": ["../../../sdk/packages/core/src/index.ts"],
+			"@sekokuva-ca/core/hub/daemon-entry": [
 				"../../../sdk/packages/core/src/hub/daemon/entry.ts"
 			],
-			"@cline/core/*": [
+			"@sekokuva-ca/core/*": [
 				"../../../sdk/packages/core/src/*",
 				"../../../sdk/packages/core/src/*/index.ts"
 			],
-			"@cline/llms": ["../../../sdk/packages/llms/src/index.ts"],
-			"@cline/shared": ["../../../sdk/packages/shared/src/index.ts"],
-			"@cline/shared/storage": [
+			"@sekokuva-ca/llms": ["../../../sdk/packages/llms/src/index.ts"],
+			"@sekokuva-ca/shared": ["../../../sdk/packages/shared/src/index.ts"],
+			"@sekokuva-ca/shared/storage": [
 				"../../../sdk/packages/shared/src/storage/index.ts"
 			],
-			"@cline/shared/db": ["../../../sdk/packages/shared/src/db/index.ts"],
-			"@cline/shared/*": [
+			"@sekokuva-ca/shared/db": ["../../../sdk/packages/shared/src/db/index.ts"],
+			"@sekokuva-ca/shared/*": [
 				"../../../sdk/packages/shared/src/*",
 				"../../../sdk/packages/shared/src/*/index.ts"
 			]

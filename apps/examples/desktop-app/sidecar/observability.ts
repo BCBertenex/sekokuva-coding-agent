@@ -6,8 +6,8 @@ import {
 	identifyAccount,
 	ProviderSettingsManager,
 	setSdkLogger,
-} from "@cline/core";
-import type { UserContext } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { UserContext } from "@sekokuva-ca/shared";
 import {
 	DESKTOP_TELEMETRY_METADATA,
 	resolveDesktopTelemetryUser,

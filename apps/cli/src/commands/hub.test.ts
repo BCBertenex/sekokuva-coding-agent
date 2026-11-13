@@ -30,7 +30,7 @@ const {
 	mockStopLocalHubServerGracefully: vi.fn(),
 }));
 
-vi.mock("@cline/core", () => ({
+vi.mock("@sekokuva-ca/core", () => ({
 	clearHubDiscovery: mockClearHubDiscovery,
 	ensureDetachedHubServer: mockEnsureDetachedHubServer,
 	ensureLoginShellPath: mockEnsureLoginShellPath,

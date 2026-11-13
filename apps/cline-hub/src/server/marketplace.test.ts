@@ -9,7 +9,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { SKILLS_CLI_PACKAGE } from "@cline/core";
+import { SKILLS_CLI_PACKAGE } from "@sekokuva-ca/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
 	buildMarketplaceMcpInput,

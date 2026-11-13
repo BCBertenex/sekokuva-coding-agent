@@ -23,7 +23,7 @@ import {
 	type AgentToolContext,
 	getDefaultShell,
 	getShellInvocation,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	type ProcessStartTokenProbeResult,
 	probeProcessStartTokenAsync,

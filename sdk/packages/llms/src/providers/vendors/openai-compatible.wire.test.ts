@@ -18,7 +18,7 @@ import type {
 	GatewayStreamRequest,
 	ModelInfo,
 	ModelReasoningOption,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { createGateway } from "../gateway";
 

@@ -1,4 +1,4 @@
-import { zodToJsonSchema } from "@cline/shared";
+import { zodToJsonSchema } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { normalizeRunCommandsInput } from "./helpers";
 import { RunCommandsInputSchema } from "./schemas";

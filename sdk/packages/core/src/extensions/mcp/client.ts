@@ -5,7 +5,7 @@ import {
 	type AgentToolContext,
 	formatMcpTimeoutErrorMessage,
 	isMcpTimeoutConfigured,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import type { FetchLike } from "@modelcontextprotocol/sdk/shared/transport.js";
 import { ReadResourceResultSchema } from "@modelcontextprotocol/sdk/types.js";
@@ -258,7 +258,7 @@ class StdioMcpClient implements McpServerClient {
 		const initializeParams = {
 			protocolVersion: MCP_PROTOCOL_VERSION,
 			capabilities: this.mcpApps ? createMcpAppsClientCapabilities() : {},
-			clientInfo: { name: "@cline/core", version: "0.0.0" },
+			clientInfo: { name: "@sekokuva-ca/core", version: "0.0.0" },
 		};
 		await this.ensureAgentPluginDataDirectory();
 		this.spawnProcess("newline");
@@ -827,7 +827,7 @@ class SdkUrlMcpClient implements McpServerClient {
 		try {
 			client = new Client(
 				{
-					name: this.options.clientName?.trim() || "@cline/core",
+					name: this.options.clientName?.trim() || "@sekokuva-ca/core",
 					version: this.options.clientVersion?.trim() || "0.0.0",
 				},
 				this.options.mcpApps

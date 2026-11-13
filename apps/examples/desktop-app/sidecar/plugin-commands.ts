@@ -2,7 +2,7 @@ import {
 	createHubPluginCommandsApi,
 	type PluginCommandResult,
 	parsePluginCommand,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { getSessionRuntimeBinding } from "./context";
 import type { SidecarContext } from "./types";
 

@@ -1,4 +1,4 @@
-import type { GlobalSettings } from "@cline/core";
+import type { GlobalSettings } from "@sekokuva-ca/core";
 import type { CliAgentMode, CliCompactionMode, ParsedArgs } from "./types";
 
 /**

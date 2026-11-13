@@ -1,4 +1,4 @@
-import { CommandExitError, CommandSpawnError, CommandTerminationError, type ShellExecutor } from "@cline/core"
+import { CommandExitError, CommandSpawnError, CommandTerminationError, type ShellExecutor } from "@sekokuva-ca/core"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import type { ITelemetryProvider } from "@/services/telemetry/providers/ITelemetryProvider"
 import { createVscodeRunCommandsTool } from "./vscode-run-commands-tool"
@@ -9,8 +9,8 @@ const mocks = vi.hoisted(() => ({
 	log: vi.fn<ITelemetryProvider["log"]>(),
 }))
 
-vi.mock("@cline/core", async (importOriginal) => ({
-	...(await importOriginal<typeof import("@cline/core")>()),
+vi.mock("@sekokuva-ca/core", async (importOriginal) => ({
+	...(await importOriginal<typeof import("@sekokuva-ca/core")>()),
 	createShellExecutor: () => mocks.executeBackground,
 }))
 

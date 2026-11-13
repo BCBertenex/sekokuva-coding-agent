@@ -3,13 +3,13 @@ import tailwindcss from "@tailwindcss/postcss";
 import postcss from "postcss";
 import { describe, expect, it } from "vitest";
 
-describe("@cline/ui theme integration", () => {
+describe("@sekokuva-ca/ui theme integration", () => {
 	it("compiles the shared theme and standard Tailwind utilities", async () => {
 		const from = fileURLToPath(new URL("./theme-fixture.css", import.meta.url));
 		const result = await postcss([tailwindcss()]).process(
 			[
 				'@import "tailwindcss";',
-				'@import "@cline/ui/theme/index.css";',
+				'@import "@sekokuva-ca/ui/theme/index.css";',
 				'@source inline("bg-background bg-primary-emphasis font-sans text-xs");',
 			].join("\n"),
 			{ from },

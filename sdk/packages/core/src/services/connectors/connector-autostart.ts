@@ -1,7 +1,7 @@
 import {
 	type ConnectorConnectionRecord,
 	withConnectorStore,
-} from "@cline/shared/db";
+} from "@sekokuva-ca/shared/db";
 
 const INTERACTIVE_FLAGS = new Set(["-i", "--interactive"]);
 

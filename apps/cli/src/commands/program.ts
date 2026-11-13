@@ -87,6 +87,11 @@ export function addRootOptions(cmd: Command): Command {
 			)
 			.option("--update", "Check for updates and install if available")
 			.option("--kanban", "Run the kanban app")
+			.option(
+				"--teams",
+				"Enable agent-team tools (default: on, except in zen mode)",
+			)
+			.option("--no-teams", "Disable agent-team tools")
 			.option("-v, --verbose", "Show verbose output")
 			// HIDDEN/LEGACY OPTIONS BELOW
 			.addOption(
@@ -158,6 +163,15 @@ export function commanderToParsedArgs(program: Command): ParsedArgs {
 	if (opts.yolo) {
 		result.defaultToolAutoApprove = true;
 		result.autoApproveOverride = true;
+	}
+
+	// Agent teams: `--teams` / `--no-teams` are explicit user intent. When
+	// neither is passed, leave it undefined so the mode-based default applies
+	// (on everywhere except zen, where no human is present to stop an
+	// unbounded fan-out).
+	const teamsValueSource = program.getOptionValueSource("teams");
+	if (teamsValueSource === "cli") {
+		result.enableAgentTeams = opts.teams !== false;
 	}
 
 	// Timeout validation

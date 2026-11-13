@@ -4,7 +4,7 @@ import {
 	type ResolveCronSpecsDirOptions,
 	resolveCronReportsDir,
 	resolveCronSpecsDir,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import type {
 	CronEventLogRecord,
 	CronRunRecord,

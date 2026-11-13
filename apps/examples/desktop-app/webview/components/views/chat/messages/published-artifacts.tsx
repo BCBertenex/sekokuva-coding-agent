@@ -1,13 +1,13 @@
 "use client";
 
-import { SUPPORTED_IMAGE_MEDIA_TYPES } from "@cline/shared/browser";
+import { SUPPORTED_IMAGE_MEDIA_TYPES } from "@sekokuva-ca/shared/browser";
 import {
 	Carousel,
 	CarouselContent,
 	CarouselItem,
 	CarouselNext,
 	CarouselPrevious,
-} from "@cline/ui";
+} from "@sekokuva-ca/ui";
 import type { ReactNode } from "react";
 import { imageAttachmentMediaType } from "@/lib/image-attachments";
 import { ArtifactDownload } from "./artifact-download";

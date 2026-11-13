@@ -1,4 +1,4 @@
-import { SKILLS_CLI_PACKAGE } from "@cline/core";
+import { SKILLS_CLI_PACKAGE } from "@sekokuva-ca/core";
 import { describe, expect, it } from "vitest";
 import { buildSkillsArgs } from "./skill";
 

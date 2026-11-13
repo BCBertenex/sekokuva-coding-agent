@@ -27,7 +27,7 @@ const mocks = vi.hoisted(() => ({
 	validate: vi.fn(),
 }));
 
-vi.mock("@cline/core", () => ({
+vi.mock("@sekokuva-ca/core", () => ({
 	disableConnectorAutostart: mocks.disableConnectorAutostart,
 	getPersistedConnectorConnection: mocks.getPersistedConnectorConnection,
 	getProcessStartToken: mocks.getProcessStartToken,

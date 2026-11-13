@@ -1,4 +1,4 @@
-import { listActiveConnectors } from "@cline/core";
+import { listActiveConnectors } from "@sekokuva-ca/core";
 import type { WebviewHubState } from "../webview-protocol";
 import {
 	clientSummariesPayload,

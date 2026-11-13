@@ -1,4 +1,4 @@
-import type { NodeHubClient } from "@cline/core";
+import type { NodeHubClient } from "@sekokuva-ca/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SidecarContext } from "./types";
 
@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => ({
 	probe: vi.fn(),
 	shutdown: vi.fn(),
 }));
-vi.mock("@cline/core", () => ({
+vi.mock("@sekokuva-ca/core", () => ({
 	ensureDetachedHubServer: mocks.ensure,
 	probeHubServer: mocks.probe,
 	requestHubShutdown: mocks.shutdown,

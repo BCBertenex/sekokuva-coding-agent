@@ -3,7 +3,7 @@
 ## Creating ClineCore
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { ClineCore } from "@sekokuva-ca/sdk"
 
 const cline = await ClineCore.create(options: ClineCoreOptions)
 ```

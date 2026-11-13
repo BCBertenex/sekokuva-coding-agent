@@ -2,7 +2,7 @@ import type {
 	RuntimeCapabilities,
 	ToolApprovalRequest,
 	ToolApprovalResult,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 type QuickPickOptions = {
 	placeHolder?: string;

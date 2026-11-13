@@ -1,4 +1,4 @@
-import { createLazyMermaidPlugin } from "@cline/ui/components/markdown";
+import { createLazyMermaidPlugin } from "@sekokuva-ca/ui/components/markdown";
 import { cjk } from "@streamdown/cjk";
 import type { ComponentProps, ReactNode } from "react";
 import { isValidElement, memo } from "react";

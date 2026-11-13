@@ -1,7 +1,7 @@
 import { readdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { isAbsolute, join, resolve } from "node:path";
-import type * as LlmsProviders from "@cline/llms";
+import type * as LlmsProviders from "@sekokuva-ca/llms";
 import {
 	type AgentConfig,
 	type AgentEvent,
@@ -12,8 +12,8 @@ import {
 	type ITelemetryService,
 	isLikelyAuthError,
 	normalizeUserInput,
-} from "@cline/shared";
-import { setHomeDirIfUnset } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { setHomeDirIfUnset } from "@sekokuva-ca/shared/storage";
 import { isOAuthProvider } from "../../auth/provider-auth-registry";
 import type { ConnectorsRequest } from "../../extensions/composio/composio-meta-tools";
 import {

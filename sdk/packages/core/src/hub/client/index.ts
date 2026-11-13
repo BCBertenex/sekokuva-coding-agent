@@ -9,7 +9,7 @@ import {
 	isHubProtocolCompatible,
 	resolveClineBuildEnv,
 	resolveHubCommandTimeoutMs,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { HttpProxyAgent } from "http-proxy-agent";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import { getProxyForUrl } from "proxy-from-env";
@@ -204,7 +204,7 @@ export interface HubClientOptions {
 	clientId?: string;
 	clientType?: string;
 	displayName?: string;
-	/** Version reported to the hub; defaults to the @cline/core version. */
+	/** Version reported to the hub; defaults to the @sekokuva-ca/core version. */
 	clientVersion?: string;
 	/** Additional registration metadata; version and pid are owned by the client. */
 	metadata?: Record<string, unknown>;

@@ -3,7 +3,7 @@ import {
 	type AgentMode,
 	decodeJwtPayload,
 	type MessageWithMetadata,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	ArtifactDownloadSchema,
 	artifactDownloadPath,

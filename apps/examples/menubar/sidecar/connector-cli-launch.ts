@@ -4,7 +4,7 @@ import process from "node:process";
 import {
 	type ConnectorCliLaunchSpec,
 	setConnectorCliLaunchSpec,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 
 const CLINE_CLI_PATH_ENV = "CLINE_CLI_PATH";
 

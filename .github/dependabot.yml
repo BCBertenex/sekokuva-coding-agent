@@ -35,7 +35,7 @@ updates:
                 - "version-update:semver-minor"
                 - "version-update:semver-patch"
 
-    # Pinned skills CLI release (devDependency of @cline/core). `cline skill`
+    # Pinned skills CLI release (devDependency of @sekokuva-ca/core). `cline skill`
     # and the marketplace skill fallback run this exact version through npx,
     # so version updates are wanted here, unlike the entries above: each bump
     # goes through CI and review before it reaches users.

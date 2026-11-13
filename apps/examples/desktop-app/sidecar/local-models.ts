@@ -2,7 +2,7 @@ import { execFile } from "node:child_process";
 import { statfs } from "node:fs/promises";
 import os from "node:os";
 import { promisify } from "node:util";
-import { clearPublicModelsCatalogCache } from "@cline/core";
+import { clearPublicModelsCatalogCache } from "@sekokuva-ca/core";
 import {
 	isLocalRuntime,
 	LOCAL_MODEL_PULL_PROGRESS_EVENT,

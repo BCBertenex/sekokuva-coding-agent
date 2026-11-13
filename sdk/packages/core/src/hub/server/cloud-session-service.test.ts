@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { HubEventEnvelope } from "@cline/shared";
+import type { HubEventEnvelope } from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ClineAccountService } from "../../account";
 import { getProviderAuthHandler } from "../../auth/provider-auth-registry";

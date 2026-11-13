@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { isAbsolute } from "node:path";
-import type { BasicLogger, ITelemetryService } from "@cline/shared";
-import { FeatureFlag, getClineEnvironmentConfig } from "@cline/shared";
+import type { BasicLogger, ITelemetryService } from "@sekokuva-ca/shared";
+import { FeatureFlag, getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 import { z } from "zod";
 import { ClineAccountService } from "../../account";
 import { getProviderAuthHandler } from "../../auth/provider-auth-registry";

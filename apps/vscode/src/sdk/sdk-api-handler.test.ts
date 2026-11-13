@@ -1,4 +1,4 @@
-import { CORE_BUILD_VERSION } from "@cline/core"
+import { CORE_BUILD_VERSION } from "@sekokuva-ca/core"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { version as extensionVersion } from "../../package.json"
 import { buildSdkProviderConfig } from "./sdk-api-handler"

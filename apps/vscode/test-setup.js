@@ -72,9 +72,9 @@ Module.prototype.require = function (id) {
 
 	// The SDK packages are ESM-only and expose only an `import` condition.
 	// Integration tests run the tsc-built `out/` tree as CommonJS in VS Code's
-	// extension host, so `require("@cline/core")` fails before tests start.
+	// extension host, so `require("@sekokuva-ca/core")` fails before tests start.
 	// Mock the small surface needed by legacy VS Code integration tests.
-	if (id === "@cline/core") {
+	if (id === "@sekokuva-ca/core") {
 		const createNoopTelemetry = () => ({
 			setDistinctId() {},
 			setMetadata() {},
@@ -236,7 +236,7 @@ Module.prototype.require = function (id) {
 		}
 	}
 
-	if (id === "@cline/core/cloud") {
+	if (id === "@sekokuva-ca/core/cloud") {
 		class CloudSessionError extends Error {}
 		class CloudCreationUnconfirmedError extends CloudSessionError {}
 		return {
@@ -251,7 +251,7 @@ Module.prototype.require = function (id) {
 		}
 	}
 
-	if (id === "@cline/shared") {
+	if (id === "@sekokuva-ca/shared") {
 		// Mirrors USER_REJECTED_TOOL_REASON / TOOL_REJECTION_SUFFIX in
 		// sdk/packages/shared/src/llms/tools.ts (the ESM-only real package
 		// cannot be required from this CommonJS test host).
@@ -264,13 +264,13 @@ Module.prototype.require = function (id) {
 		}
 	}
 
-	if (id === "@cline/shared/storage") {
+	if (id === "@sekokuva-ca/shared/storage") {
 		return {
 			resolveGlobalSettingsPath: () => path.join(baseUrl, ".vscode-test", "shared-global-settings.json"),
 		}
 	}
 
-	if (id === "@cline/llms") {
+	if (id === "@sekokuva-ca/llms") {
 		return {
 			getAllProviders: async () => [],
 			getGeneratedModelsForProvider: () => ({}),

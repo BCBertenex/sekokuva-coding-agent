@@ -4,13 +4,13 @@ import type {
 	CheckpointEntry,
 	ClineSubscriptionPlan,
 	TeamEvent,
-} from "@cline/core";
-import type { HubCloudSessionClient } from "@cline/core/cloud";
+} from "@sekokuva-ca/core";
+import type { HubCloudSessionClient } from "@sekokuva-ca/core/cloud";
 import type {
 	MessageWithMetadata,
 	ToolApprovalRequest,
 	ToolApprovalResult,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { CliMigrationNotice } from "../kanban-migration/notice";
 import type {
 	PendingPromptSnapshot,

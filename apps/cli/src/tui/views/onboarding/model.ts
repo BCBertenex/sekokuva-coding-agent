@@ -2,7 +2,7 @@ import type {
 	ChatModelModalities,
 	ModelModality,
 	ModelOperation,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { isChatProviderModel } from "../../../utils/chat-models";
 import type {
 	LocalCliStatus,

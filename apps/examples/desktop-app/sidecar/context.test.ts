@@ -1,8 +1,8 @@
 import { existsSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { RuntimeCapabilities } from "@cline/core";
-import { HubCloudSessionService } from "@cline/core/hub";
+import type { RuntimeCapabilities } from "@sekokuva-ca/core";
+import { HubCloudSessionService } from "@sekokuva-ca/core/hub";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { materializeUserFiles } from "./attachments";
 import * as clineAuth from "./cline-auth";
@@ -25,9 +25,9 @@ vi.mock("@ai-sdk/provider-utils", () => ({
 	createProviderDefinedToolFactory: vi.fn(() => vi.fn()),
 }));
 
-vi.mock("@cline/core", async () => {
+vi.mock("@sekokuva-ca/core", async () => {
 	const actual =
-		await vi.importActual<typeof import("@cline/core")>("@cline/core");
+		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
 		ClineCore: {

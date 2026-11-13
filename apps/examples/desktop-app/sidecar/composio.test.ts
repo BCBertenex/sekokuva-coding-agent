@@ -25,8 +25,8 @@ vi.mock("./cline-auth", async () => ({
 }));
 
 const beta = vi.hoisted(() => ({ enabled: true }));
-vi.mock("@cline/core", async () => ({
-	...(await vi.importActual<typeof import("@cline/core")>("@cline/core")),
+vi.mock("@sekokuva-ca/core", async () => ({
+	...(await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core")),
 	isClineAccountFeatureEnabled: async () => beta.enabled,
 }));
 

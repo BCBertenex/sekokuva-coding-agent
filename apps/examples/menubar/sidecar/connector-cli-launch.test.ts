@@ -1,7 +1,7 @@
 import {
 	CLINE_CONNECTOR_CLI_LAUNCH_ENV,
 	readConnectorCliLaunchSpec,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import {
 	configureMenubarConnectorCliLaunch,

@@ -5,7 +5,7 @@ import type {
 	ConnectorPlatformDef,
 	HubCommandEnvelope,
 	HubReplyEnvelope,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	buildConnectorConnectArgs,
 	CONNECTOR_PLATFORMS,
@@ -13,8 +13,8 @@ import {
 	listConnectorCatalog,
 	mergeConnectorConnectArgs,
 	shouldIncludeConnectorField,
-} from "@cline/shared";
-import { withConnectorStore } from "@cline/shared/db";
+} from "@sekokuva-ca/shared";
+import { withConnectorStore } from "@sekokuva-ca/shared/db";
 import { listActiveConnectors } from "../../../services/connectors/active-connectors";
 import { getActiveConnectorSupervisor } from "../../../services/connectors/connector-supervisor";
 import { captureToolUsage } from "../../../services/telemetry/core-events";

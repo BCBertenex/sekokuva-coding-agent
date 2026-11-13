@@ -1,4 +1,4 @@
-import { type AgentTool, createTool } from "@cline/shared";
+import { type AgentTool, createTool } from "@sekokuva-ca/shared";
 import { isMcpToolVisibleToModel } from "./apps";
 import { defaultMcpToolNameTransform } from "./name-transform";
 import type { CreateMcpToolsOptions, McpToolDescriptor } from "./types";

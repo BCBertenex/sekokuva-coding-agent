@@ -1,6 +1,6 @@
 import { isDeepStrictEqual } from "node:util"
-import { parseRuleConfigFromMarkdown, parseSkillConfigFromMarkdown } from "@cline/core"
-import { stripUtf8Bom } from "@cline/shared"
+import { parseRuleConfigFromMarkdown, parseSkillConfigFromMarkdown } from "@sekokuva-ca/core"
+import { stripUtf8Bom } from "@sekokuva-ca/shared"
 import * as yaml from "js-yaml"
 import { isMap, isScalar, parseDocument } from "yaml"
 

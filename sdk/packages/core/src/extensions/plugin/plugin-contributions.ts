@@ -9,7 +9,7 @@ import type {
 	Message,
 	PluginStatusRecord,
 	SessionPluginIssue,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	type PluginExecutionMode,
 	resolvePluginExecutionMode,

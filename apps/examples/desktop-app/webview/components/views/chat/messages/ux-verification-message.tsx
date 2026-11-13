@@ -1,7 +1,7 @@
 "use client";
 
-import type { UxVerificationCheck } from "@cline/shared/browser";
-import { AgentUxVerification } from "@cline/ui";
+import type { UxVerificationCheck } from "@sekokuva-ca/shared/browser";
+import { AgentUxVerification } from "@sekokuva-ca/ui";
 import { type ReactNode, useRef, useState } from "react";
 import {
 	Dialog,

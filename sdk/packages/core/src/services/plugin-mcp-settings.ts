@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, isAbsolute, relative, resolve } from "node:path";
-import type { AgentExtensionMcpServer } from "@cline/shared";
+import type { AgentExtensionMcpServer } from "@sekokuva-ca/shared";
 import {
 	type McpServerRegistration,
 	resolveDefaultMcpSettingsPath,

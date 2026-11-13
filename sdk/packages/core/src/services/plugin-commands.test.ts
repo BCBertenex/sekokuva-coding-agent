@@ -6,8 +6,8 @@ import type {
 	AgentTool,
 	ITelemetryService,
 	Message,
-} from "@cline/shared";
-import { setClineDir, setHomeDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { setClineDir, setHomeDir } from "@sekokuva-ca/shared/storage";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getProcessPluginRegistry } from "../extensions/plugin/plugin-registry";
 import { writeGlobalSettings } from "./global-settings";

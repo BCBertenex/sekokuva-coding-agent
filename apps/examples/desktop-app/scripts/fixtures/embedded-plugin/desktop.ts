@@ -1,5 +1,5 @@
-import type { AgentPlugin } from "@cline/sdk";
-import { CLINE_DEFAULT_MODEL_ID } from "@cline/shared/browser";
+import type { AgentPlugin } from "@sekokuva-ca/sdk";
+import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
 
 export default {
 	name: "packaged-backend-smoke",

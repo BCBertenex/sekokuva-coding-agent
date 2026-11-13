@@ -34,9 +34,9 @@ import {
 	type SessionRecord,
 	type StartSessionInput,
 	type StartSessionResult,
-} from "@cline/core"
-import { buildCloudSessionSystemPrompt } from "@cline/core/cloud"
-import type { AgentResult, ToolApprovalRequest, ToolApprovalResult } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import { buildCloudSessionSystemPrompt } from "@sekokuva-ca/core/cloud"
+import type { AgentResult, ToolApprovalRequest, ToolApprovalResult } from "@sekokuva-ca/shared"
 import { CLOUD_SESSION_MODE, CLOUD_WORKSPACE_ROOT, type CloudSessionStatus } from "@shared/cloud/cloud-sessions"
 import { Logger } from "@/shared/services/Logger"
 import type { SdkInitialMessages, SdkSessionHost } from "./session-host"

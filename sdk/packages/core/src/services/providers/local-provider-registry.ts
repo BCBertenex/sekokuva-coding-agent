@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import * as LlmsModels from "@cline/llms";
+import * as LlmsModels from "@sekokuva-ca/llms";
 import {
 	ApiFormatSchema,
 	type ModelCapability,
@@ -24,7 +24,7 @@ import {
 	type ProviderModel,
 	type ProviderProtocol,
 	ProviderProtocolSchema,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { z } from "zod";
 import { sdkDebug } from "../../logging/early-logger";
 import type {
@@ -644,7 +644,7 @@ export function registerCustomProvider(
 }
 
 /**
- * Apply a single provider's updated models.json entry to the live @cline/llms
+ * Apply a single provider's updated models.json entry to the live @sekokuva-ca/llms
  * registry. Unlike {@link ensureCustomProvidersLoadedSync}, which loads a
  * models.json path at most once per process, this applies on every call so
  * writes made after startup are reflected immediately: models removed from the
@@ -692,7 +692,7 @@ export function syncStoredProviderRegistration(
 }
 
 /**
- * Load models.json into the @cline/llms registry at most once per path per
+ * Load models.json into the @sekokuva-ca/llms registry at most once per path per
  * process; subsequent calls are no-ops. It does NOT re-read the file after
  * writes — use {@link syncStoredProviderRegistration} to reflect a write in
  * the live registry.

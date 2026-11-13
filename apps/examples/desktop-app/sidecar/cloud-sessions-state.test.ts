@@ -2,8 +2,8 @@ import {
 	HubCommandError,
 	HubTransportError,
 	type NodeHubClient,
-} from "@cline/core";
-import type { HubEventEnvelope } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { HubEventEnvelope } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import {
 	createCloudSessionTestRuntime,

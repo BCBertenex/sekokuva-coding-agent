@@ -50,7 +50,7 @@ import {
 	type BasicLogger,
 	createTool,
 	type ITelemetryService,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 // ---------------------------------------------------------------------------
 // Plugin-level state

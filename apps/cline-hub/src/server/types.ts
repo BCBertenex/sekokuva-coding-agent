@@ -1,5 +1,5 @@
-import type { SaveProviderSettingsActionRequest } from "@cline/core";
-import type { ToolApprovalResult } from "@cline/shared";
+import type { SaveProviderSettingsActionRequest } from "@sekokuva-ca/core";
+import type { ToolApprovalResult } from "@sekokuva-ca/shared";
 import type {
 	WebviewInboundMessage,
 	WebviewReasonLevel,

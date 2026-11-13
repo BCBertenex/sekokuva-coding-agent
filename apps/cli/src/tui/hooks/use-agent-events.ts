@@ -1,5 +1,5 @@
-import type { AgentEvent, TeamEvent } from "@cline/core";
-import { formatDisplayUserInput } from "@cline/shared";
+import type { AgentEvent, TeamEvent } from "@sekokuva-ca/core";
+import { formatDisplayUserInput } from "@sekokuva-ca/shared";
 import { useCallback, useRef } from "react";
 import type {
 	PendingPromptSnapshot,

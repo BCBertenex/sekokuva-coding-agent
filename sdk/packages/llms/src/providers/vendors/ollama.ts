@@ -12,7 +12,7 @@
 import type {
 	GatewayProviderContext,
 	GatewayResolvedProviderConfig,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { wrapLanguageModel } from "ai";
 // The installed package is patched (see
 // `patches/ollama-ai-provider-v2@4.0.1.patch`) to preserve four native wire

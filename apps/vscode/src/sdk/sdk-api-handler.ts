@@ -1,14 +1,14 @@
 // Replaces classic src/core/api buildApiHandler (see origin/main).
 //
-// Builds an SDK ApiHandler (from `@cline/llms`) directly from the extension's
+// Builds an SDK ApiHandler (from `@sekokuva-ca/llms`) directly from the extension's
 // legacy ApiConfiguration. This is the single inference path: the main task
 // loop runs through ClineCore (see cline-session-factory.ts), and standalone
 // utility callers (commit message generation) use the handler
 // returned here. Both share the same provider/model/key/baseUrl resolution so
 // there is no second source of truth.
 
-import { CORE_BUILD_VERSION, SessionSource } from "@cline/core"
-import { type ApiHandler, createHandler, type ProviderConfig, resolveProviderRequestHeaders } from "@cline/llms"
+import { CORE_BUILD_VERSION, SessionSource } from "@sekokuva-ca/core"
+import { type ApiHandler, createHandler, type ProviderConfig, resolveProviderRequestHeaders } from "@sekokuva-ca/llms"
 import type { ApiConfiguration } from "@shared/api"
 import { ClineClient } from "@shared/cline"
 import { Logger } from "@shared/services/Logger"
@@ -33,7 +33,7 @@ import { getProviderSettingsManager } from "./provider-migration"
  * Resolve the request headers for a standalone handler.
  *
  * Delegates to the same `resolveProviderRequestHeaders` policy the session path
- * uses (see `local-runtime-bootstrap.ts` in `@cline/core`), so the Cline surface
+ * uses (see `local-runtime-bootstrap.ts` in `@sekokuva-ca/core`), so the Cline surface
  * identity headers — `X-CLIENT-TYPE`, `X-CLIENT-VERSION`, `X-PLATFORM`,
  * `User-Agent`, … — are identical whether a request comes from a task or from a
  * one-shot utility caller. Without them the Cline gateway rejects requests for

@@ -3,7 +3,7 @@ import { copyFile, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { promisify } from "node:util";
-import type { CheckpointEntry } from "@cline/core";
+import type { CheckpointEntry } from "@sekokuva-ca/core";
 
 // What the agent changed in the last turn and across the session, from the
 // git checkpoints Core records before each turn's first model call: the

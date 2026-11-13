@@ -2,8 +2,8 @@ import type {
 	AutomationEventEnvelope,
 	BasicLogger,
 	ITelemetryService,
-} from "@cline/shared";
-import type { ResolveCronSpecsDirOptions } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import type { ResolveCronSpecsDirOptions } from "@sekokuva-ca/shared/storage";
 import {
 	CronEventIngress,
 	type CronEventIngressResult,

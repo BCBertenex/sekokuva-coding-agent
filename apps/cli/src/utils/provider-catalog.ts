@@ -1,7 +1,7 @@
 import {
 	listLocalProviders as internalListLocalProviders,
 	type ProviderSettingsManager,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 export async function listLocalProviders(
 	manager: ProviderSettingsManager,

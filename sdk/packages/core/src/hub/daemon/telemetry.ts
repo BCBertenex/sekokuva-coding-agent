@@ -5,7 +5,7 @@ import {
 	type HubLauncherIdentity,
 	type ITelemetryService,
 	readHubLauncherIdentity,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { AuthSettings } from "../../services/llms/provider-settings";
 import { ProviderSettingsManager } from "../../services/storage/provider-settings-manager";
 import {

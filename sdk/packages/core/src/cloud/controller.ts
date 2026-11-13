@@ -5,7 +5,7 @@ import type {
 	HubEventEnvelope,
 	MessageWithMetadata,
 	ToolApprovalResult,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { HubCommandError, NodeHubClient } from "../hub/client/index";
 import { isSessionNotFoundError } from "../runtime/host/runtime-host";
 import {
@@ -195,7 +195,7 @@ export class CloudQueueUnconfirmedError extends CloudSessionError {
 export class CloudHandoffSeedUnsupportedError extends Error {
 	constructor() {
 		super(
-			"The cloud session was created, but its transcript was not persisted. This cloud runtime cannot durably seed handoff transcripts and must use @cline/core 0.0.72 or newer. Updating the cloud runtime or pod is required; retrying /cloud against this same pod will not help.",
+			"The cloud session was created, but its transcript was not persisted. This cloud runtime cannot durably seed handoff transcripts and must use @sekokuva-ca/core 0.0.72 or newer. Updating the cloud runtime or pod is required; retrying /cloud against this same pod will not help.",
 		);
 		this.name = "CloudHandoffSeedUnsupportedError";
 	}

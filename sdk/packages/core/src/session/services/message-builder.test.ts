@@ -3,7 +3,7 @@ import {
 	formatMessagesForAiSdk,
 	type Message,
 	type ToolResultContent,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { MAX_READ_OUTPUT_CHARS } from "../../extensions/tools/executors/output-limits";
 import {

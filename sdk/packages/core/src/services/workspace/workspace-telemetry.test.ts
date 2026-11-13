@@ -1,4 +1,4 @@
-import type { ITelemetryService } from "@cline/shared";
+import type { ITelemetryService } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import {
 	emitWorkspaceLifecycleTelemetry,

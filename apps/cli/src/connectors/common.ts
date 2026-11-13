@@ -12,16 +12,16 @@ import {
 	writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
-import type { HubSessionClient, HubSessionRow } from "@cline/core";
+import type { HubSessionClient, HubSessionRow } from "@sekokuva-ca/core";
 import {
 	ensureParentDir,
 	getProcessStartToken,
 	resolveClineDataDir,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	CLINE_RUN_AS_HUB_DAEMON_ENV,
 	withResolvedClineBuildEnv,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { createCliLoggerAdapter } from "../logging/adapter";
 import { logSpawnedProcess } from "../logging/process";
 import { resolveCliLaunchSpec } from "../utils/internal-launch";

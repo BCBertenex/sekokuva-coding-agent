@@ -30,6 +30,12 @@ mock.module("node:fs", fsMock)
 
 import { getShell, getShellForProfile } from "@utils/shell"
 
+/**
+ * Env vars the tests assign. Cleared case-insensitively before each test so a
+ * lowercase assignment cannot be shadowed by an inherited uppercase key.
+ */
+const CLEARED_ENV_KEYS = new Set(["shell", "comspec", "windir", "path", "localappdata", "programw6432"])
+
 describe("Shell Detection Tests", () => {
 	let originalPlatform: string
 	let originalEnv: NodeJS.ProcessEnv
@@ -63,9 +69,19 @@ describe("Shell Detection Tests", () => {
 		originalExistsSync = existsSyncImpl
 		originalLstatSync = lstatSyncImpl
 
-		// Clear environment variables for a clean test
-		delete process.env.SHELL
-		delete process.env.COMSPEC
+		// Clear environment variables for a clean test.
+		//
+		// Windows env var names are case-insensitive at the OS level but not in
+		// the JS object, so a test that assigns `process.env.windir` while the
+		// inherited key is `WINDIR` leaves BOTH present. The SUT's
+		// case-insensitive lookup uses `.find()`, which returns the first match
+		// and would therefore read the stale inherited value. Delete every
+		// casing before each test so assignments are authoritative.
+		for (const key of Object.keys(process.env)) {
+			if (CLEARED_ENV_KEYS.has(key.toLowerCase())) {
+				delete process.env[key]
+			}
+		}
 
 		// Default userInfo() mock
 		userInfoImpl = (() => ({ shell: null })) as any

@@ -1,8 +1,8 @@
 import fs from "node:fs"
 import os from "node:os"
 import path from "node:path"
-import type { CoreSessionConfig } from "@cline/core"
-import * as LlmsModels from "@cline/llms"
+import type { CoreSessionConfig } from "@sekokuva-ca/core"
+import * as LlmsModels from "@sekokuva-ca/llms"
 import { ApiFormat } from "@shared/proto/cline/models"
 import { Logger } from "@shared/services/Logger"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
@@ -684,11 +684,11 @@ describe("buildSessionConfig", () => {
 		// The mocked-manager tests above cannot catch a mirror payload that the
 		// real ProviderSettingsSchema.parse would reject (the resolver swallows
 		// save failures), so exercise the real manager against a temp file.
-		// Import the built package by file path: the bare "@cline/core"
+		// Import the built package by file path: the bare "@sekokuva-ca/core"
 		// specifier is aliased to an in-memory stub in vitest.config.ts (which
 		// validates nothing), and importing SDK *source* would pull it into
 		// this project's tsc program (TS6059: outside rootDir).
-		const { ProviderSettingsManager } = await import("../../node_modules/@cline/core/dist/index.js")
+		const { ProviderSettingsManager } = await import("../../node_modules/@sekokuva-ca/core/dist/index.js")
 		const realManager = new ProviderSettingsManager({
 			filePath: path.join(tempDir, "settings", "providers.json"),
 		})
@@ -729,7 +729,7 @@ describe("buildSessionConfig", () => {
 		// what is shown for every pick, including after clearing back to the
 		// provider default. Uses the real manager so the schema round-trip of
 		// each saved shape is exercised (see the Azure round-trip test above).
-		const { ProviderSettingsManager } = await import("../../node_modules/@cline/core/dist/index.js")
+		const { ProviderSettingsManager } = await import("../../node_modules/@sekokuva-ca/core/dist/index.js")
 		const realManager = new ProviderSettingsManager({
 			filePath: path.join(tempDir, "settings", "providers.json"),
 		})
@@ -785,7 +785,7 @@ describe("buildSessionConfig", () => {
 		// reasoning disable for a model whose capability list lacks it. Goes
 		// through the real ProviderSettingsManager and registry, like
 		// production.
-		const { ProviderSettingsManager } = await import("../../node_modules/@cline/core/dist/index.js")
+		const { ProviderSettingsManager } = await import("../../node_modules/@sekokuva-ca/core/dist/index.js")
 		const realManager = new ProviderSettingsManager({
 			filePath: path.join(tempDir, "settings", "providers.json"),
 		})

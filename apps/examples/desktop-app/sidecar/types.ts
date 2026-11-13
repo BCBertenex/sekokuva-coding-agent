@@ -8,9 +8,9 @@ import type {
 	RemoteEnvironmentConnection,
 	RemoteEnvironmentService,
 	ToolApprovalResult,
-} from "@cline/core";
-import type { MessageWithMetadata } from "@cline/llms";
-import type { UserContext } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { MessageWithMetadata } from "@sekokuva-ca/llms";
+import type { UserContext } from "@sekokuva-ca/shared";
 import type { HubStartup } from "./hub-startup";
 
 export const LOCAL_ENVIRONMENT_ID = "local";

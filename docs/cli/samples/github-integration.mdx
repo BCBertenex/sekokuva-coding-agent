@@ -3,7 +3,7 @@ title: "GitHub Actions Integration"
 description: "Automatically respond to GitHub issues by mentioning @cline in comments using Cline CLI in GitHub Actions."
 ---
 
-Automate GitHub issue analysis with AI. Mention `@cline` in any issue comment to trigger an autonomous investigation that reads files, analyzes code, and provides actionable insights - all running automatically in GitHub Actions.
+Automate GitHub issue analysis with AI. Mention `@sekokuva-ca` in any issue comment to trigger an autonomous investigation that reads files, analyzes code, and provides actionable insights - all running automatically in GitHub Actions.
 
 
 <Note>
@@ -12,7 +12,7 @@ Automate GitHub issue analysis with AI. Mention `@cline` in any issue comment to
 
 ## The Workflow
 
-Trigger Cline by mentioning `@cline` in any issue comment:
+Trigger Cline by mentioning `@sekokuva-ca` in any issue comment:
 
 <Frame>
   <img src="https://storage.googleapis.com/cline_public_images/ss0a-comment.png" alt="Issue comment with @cline mention" width="600" />
@@ -60,7 +60,7 @@ jobs:
   authorize:
     # Runs for @cline mentions on issues, not pull requests.
     if: |
-      contains(github.event.comment.body, '@cline') &&
+      contains(github.event.comment.body, '@sekokuva-ca') &&
       !github.event.issue.pull_request
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -164,7 +164,7 @@ jobs:
 
 The workflow has three jobs, so that only people who can write to the repository can start Cline, and the job that runs Cline can't change your repository or your issues:
 
-1. **`authorize`** runs when someone mentions `@cline` in an issue comment. It looks up the comment author's permission on the repository, and the workflow stops unless they can write to it. GitHub reports the maintain role as write.
+1. **`authorize`** runs when someone mentions `@sekokuva-ca` in an issue comment. It looks up the comment author's permission on the repository, and the workflow stops unless they can write to it. GitHub reports the maintain role as write.
 2. **`analyze`** gets a read-only token, runs the analysis script from your repository, and saves Cline's answer to a file.
 3. **`post`** gets permission to write issues, but doesn't check out code or run Cline. It posts the file as a comment on the issue.
 
@@ -253,7 +253,7 @@ git push
 
 ## Usage
 
-Once set up, simply mention `@cline` in any issue comment:
+Once set up, simply mention `@sekokuva-ca` in any issue comment:
 
 ```text
 @cline what's causing this error?
@@ -270,7 +270,7 @@ comments, and only for comments from people with write access to the repository.
 
 The workflow (`cline-responder.yml`):
 
-1. **Triggers** on issue comments (created or edited) that mention `@cline`
+1. **Triggers** on issue comments (created or edited) that mention `@sekokuva-ca`
 2. **Checks** that the comment's author can write to the repository
 3. **Installs** Cline CLI globally using npm
 4. **Configures** authentication using `cline auth --provider openrouter --apikey ... --modelid ...`

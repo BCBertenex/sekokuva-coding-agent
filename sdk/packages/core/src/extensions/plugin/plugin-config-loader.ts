@@ -6,14 +6,14 @@ import type {
 	PluginSetupContext,
 	SessionPluginIssue,
 	WorkspaceInfo,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	discoverPluginModulePaths as discoverPluginModulePathsFromShared,
 	getPluginDisplayName,
 	resolveConfiguredPluginModulePaths,
 	resolvePluginConfigSearchPaths as resolvePluginConfigSearchPathsFromShared,
 	SKILLS_CONFIG_DIRECTORY_NAME,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import { filterDisabledPluginPaths } from "../../services/global-settings";
 import type { PluginLoadDiagnostics } from "./plugin-load-report";
 import {

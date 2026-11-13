@@ -1,6 +1,6 @@
 "use client";
 
-import type { SearchComboboxOption, SearchComboboxSection } from "@cline/ui";
+import type { SearchComboboxOption, SearchComboboxSection } from "@sekokuva-ca/ui";
 import type {
 	ProviderModel,
 	ProviderModelFeaturedTier,
@@ -62,7 +62,7 @@ function tierOptions(
 
 /**
  * Builds the sectioned model picker for a provider from the tier data the SDK
- * stamps onto `ProviderModel.featured` (see @cline/core's
+ * stamps onto `ProviderModel.featured` (see @sekokuva-ca/core's
  * applyClineFeaturedModels). The `cline` provider gets Recommended / Free /
  * All models; `cline-pass` gets Subscribed / Free only — its offer is exactly
  * those tiers, and stale catalog leftovers must not be advertised (the full

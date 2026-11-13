@@ -9,7 +9,7 @@ import type {
 	AgentTool,
 	GatewayModelSelection,
 	ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { z } from "zod";
 import { captureToolUsage } from "../services/telemetry/core-events";
 import type { AgendaTaskManagerApi } from "./agenda-task-api";

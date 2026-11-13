@@ -73,7 +73,7 @@ vi.mock("node:child_process", () => ({
 	spawnSync: mockSpawnSync,
 }));
 
-vi.mock("@cline/core", () => ({
+vi.mock("@sekokuva-ca/core", () => ({
 	resolveClineDataDir: mockResolveClineDataDir,
 	resolveProductionHubOwnerContext: mockResolveProductionHubOwnerContext,
 	resolveSharedHubOwnerContext: mockResolveSharedHubOwnerContext,
@@ -398,6 +398,12 @@ describe("runDoctorCommand", () => {
 			"60123 /Applications/Cline.app/Contents/MacOS/cline-cli run --no-env-file /Applications/Cline.app/Contents/Resources/bin/desktop-backend/index.js\n",
 		],
 	])("doctor --fix kills stale desktop backend processes matching %s", async (pattern, pgrepOutput) => {
+		// `listMatchingProcesses` returns [] on win32: it relies on `pgrep`,
+		// which does not exist there. The product intentionally skips this
+		// cleanup on Windows, so there is nothing to assert.
+		if (process.platform === "win32") {
+			return;
+		}
 		const cwd = "/workspace";
 		mockReadHubDiscovery.mockResolvedValue(undefined);
 		mockProbeHubServer.mockResolvedValue(undefined);

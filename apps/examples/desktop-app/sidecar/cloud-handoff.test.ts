@@ -1,9 +1,9 @@
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { summarizeConversation } from "@cline/core";
-import * as gitPreparation from "@cline/core/cloud";
-import { DEFAULT_MAX_IMAGE_DECODED_BYTES } from "@cline/shared";
+import { summarizeConversation } from "@sekokuva-ca/core";
+import * as gitPreparation from "@sekokuva-ca/core/cloud";
+import { DEFAULT_MAX_IMAGE_DECODED_BYTES } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { handleChatSessionCommand } from "./chat-session";
 import {
@@ -33,15 +33,15 @@ import type {
 	SidecarWebSocketClient,
 } from "./types";
 
-vi.mock("@cline/core", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@cline/core")>();
+vi.mock("@sekokuva-ca/core", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@sekokuva-ca/core")>();
 	return {
 		...actual,
 		summarizeConversation: vi.fn(),
 	};
 });
-vi.mock("@cline/core/cloud", async (importOriginal) => ({
-	...(await importOriginal<typeof import("@cline/core/cloud")>()),
+vi.mock("@sekokuva-ca/core/cloud", async (importOriginal) => ({
+	...(await importOriginal<typeof import("@sekokuva-ca/core/cloud")>()),
 	inspectHandoffGit: vi.fn(),
 }));
 

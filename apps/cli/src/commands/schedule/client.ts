@@ -3,7 +3,7 @@ import {
 	HubScheduleCommandService,
 	HubScheduleService,
 	NodeHubClient,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	ensureCliHubServer,
 	parseHubEndpointOverride,

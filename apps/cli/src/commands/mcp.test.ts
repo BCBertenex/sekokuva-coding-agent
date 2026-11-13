@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { TextOptions } from "@clack/prompts";
 import * as p from "@clack/prompts";
-import { installMcpServer } from "@cline/core";
+import { installMcpServer } from "@sekokuva-ca/core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	buildMcpInstallDefaults,
@@ -73,8 +73,8 @@ function addRemoteServerInWizard(headers: string[]): Promise<number> {
 	});
 }
 
-vi.mock("@cline/core", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@cline/core")>();
+vi.mock("@sekokuva-ca/core", async (importOriginal) => {
+	const actual = await importOriginal<typeof import("@sekokuva-ca/core")>();
 	return {
 		...actual,
 		installMcpServer: vi.fn((options) => {

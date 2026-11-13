@@ -3,17 +3,17 @@ import {
 	GENERATED_CLINE_RECOMMENDED_MODELS,
 	getGeneratedProviderModels,
 	VERCEL_OPENROUTER_MODEL_ID_ALIAS_RULES,
-} from "@cline/llms";
+} from "@sekokuva-ca/llms";
 import type {
 	ClineRecommendedModel,
 	ClineRecommendedModelsData,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	CLINE_DEFAULT_MODEL_ID,
 	getClineEnvironmentConfig,
 	type ProviderModel,
 	type ProviderModelFeaturedTier,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { ProviderSettingsManager } from "../storage/provider-settings-manager";
 import { getLiveModelsCatalog } from "./provider-defaults";
 import type { ModelInfo } from "./provider-settings";
@@ -21,7 +21,7 @@ import type { ModelInfo } from "./provider-settings";
 export type {
 	ClineRecommendedModel,
 	ClineRecommendedModelsData,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 
 type ModelsCatalog = Record<string, Record<string, ModelInfo>>;
 

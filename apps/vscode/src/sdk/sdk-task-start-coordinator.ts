@@ -1,5 +1,5 @@
-import { getProviderAuthStorageId } from "@cline/core"
-import { createSessionId } from "@cline/shared"
+import { getProviderAuthStorageId } from "@sekokuva-ca/core"
+import { createSessionId } from "@sekokuva-ca/shared"
 import { CLINE_ACCOUNT_AUTH_ERROR_MESSAGE } from "@shared/ClineAccount"
 import type { ClineMessage } from "@shared/ExtensionMessage"
 import type { HistoryItem } from "@shared/HistoryItem"

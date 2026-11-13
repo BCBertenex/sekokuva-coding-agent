@@ -3,7 +3,7 @@
 import {
 	formatDisplayUserInput,
 	type ProviderAuthInfo,
-} from "@cline/shared/browser";
+} from "@sekokuva-ca/shared/browser";
 import {
 	createElement,
 	useCallback,

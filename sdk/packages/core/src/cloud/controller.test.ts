@@ -2,7 +2,7 @@ import type {
 	HubEventEnvelope,
 	HubReplyEnvelope,
 	MessageWithMetadata,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import { HubCommandError } from "../hub/client/index";
 import { toHubSessionRecord } from "../hub/server/hub-session-records";

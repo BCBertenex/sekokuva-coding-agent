@@ -1,6 +1,10 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs"
-import { GENERATED_CLINE_RECOMMENDED_MODELS, getGeneratedModelsForProvider, MODEL_COLLECTIONS_BY_PROVIDER_ID } from "@cline/llms"
-import { CLINE_DEFAULT_MODEL_ID, type CoreSpawnReason } from "@cline/shared"
+import {
+	GENERATED_CLINE_RECOMMENDED_MODELS,
+	getGeneratedModelsForProvider,
+	MODEL_COLLECTIONS_BY_PROVIDER_ID,
+} from "@sekokuva-ca/llms"
+import { CLINE_DEFAULT_MODEL_ID, type CoreSpawnReason } from "@sekokuva-ca/shared"
 import { createFileReadExecutor } from "../../../../sdk/packages/core/src/extensions/tools/executors/file-read"
 
 export interface OAuthCredentials {
@@ -65,7 +69,7 @@ export {
 export { isPrivateModelCatalogProvider } from "../../../../sdk/packages/core/src/services/llms/provider-defaults"
 // Real implementation re-exported from the sdk source (same pattern as the
 // apply-patch executors below) so store writes are reflected in the live
-// @cline/llms registry exactly as in production. Tests that touch it must
+// @sekokuva-ca/llms registry exactly as in production. Tests that touch it must
 // reset the registry (LlmsModels.resetRegistry()) between tests.
 export {
 	StoredModelEntrySchema,
@@ -159,7 +163,7 @@ export { projectSessionMessagesForDisplay } from "../../../../sdk/packages/core/
 export { SessionSource } from "../../../../sdk/packages/core/src/types/common"
 export { CORE_BUILD_VERSION } from "../../../../sdk/packages/core/src/version"
 
-// Real file-read executor (dependency-light: node:fs/node:path + @cline/shared/storage)
+// Real file-read executor (dependency-light: node:fs/node:path + @sekokuva-ca/shared/storage)
 // so the workspace read override and its tests exercise the actual read semantics.
 // Only the readFile executor is provided; the heavy executors are not needed in tests.
 export function createDefaultExecutors() {
@@ -236,7 +240,7 @@ export interface CheckpointWorkspaceCompareResult {
 }
 
 export async function compareCheckpointToWorkspace(): Promise<CheckpointWorkspaceCompareResult> {
-	throw new Error("compareCheckpointToWorkspace is not implemented in the Vitest @cline/core stub")
+	throw new Error("compareCheckpointToWorkspace is not implemented in the Vitest @sekokuva-ca/core stub")
 }
 
 export type CoreSessionEvent = { type: string; payload?: unknown }

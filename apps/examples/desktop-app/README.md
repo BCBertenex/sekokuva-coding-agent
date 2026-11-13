@@ -20,7 +20,7 @@ From `apps/examples/desktop-app/`:
 
 ### Checking webview changes
 
-Run `bun run build:web` from this directory when changing webview imports or shared browser APIs. Type checking and Vitest do not check the production browser bundle: a valid TypeScript import can still pull Node-only modules into a client chunk. Use `@cline/shared/browser` for runtime imports in the webview; the bare `@cline/shared` source alias points to the Node entry point.
+Run `bun run build:web` from this directory when changing webview imports or shared browser APIs. Type checking and Vitest do not check the production browser bundle: a valid TypeScript import can still pull Node-only modules into a client chunk. Use `@sekokuva-ca/shared/browser` for runtime imports in the webview; the bare `@sekokuva-ca/shared` source alias points to the Node entry point.
 
 ## Pull Requests
 
@@ -144,7 +144,7 @@ authenticated Cline Hub protocol is forwarded through SSH. Agent tools,
 workspace discovery, Git metadata, and session persistence therefore run on the
 SSH host, while approvals and live session events return to the desktop.
 
-The shared `@cline/core` `RemoteEnvironmentService` owns this feature; other
+The shared `@sekokuva-ca/core` `RemoteEnvironmentService` owns this feature; other
 clients can use the same service and `ClineCore` remote backend (see `sdk/DOC.md`).
 Desktop owns the settings UI and packaged helper resource lookup.
 
@@ -191,7 +191,7 @@ that its messages can be read back.
 ## Web Visual System
 
 The framework-neutral color, typography, radius, and navigation contract lives
-in the internal [`@cline/ui`](../../../sdk/packages/ui/README.md) workspace
+in the internal [`@sekokuva-ca/ui`](../../../sdk/packages/ui/README.md) workspace
 package. Other Cline web surfaces can take only its tokens or opt into the
 Tailwind adapter and shared base styles without depending on the desktop
 runtime. See [`webview/styles/README.md`](./webview/styles/README.md) for the

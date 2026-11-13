@@ -4,13 +4,13 @@
 		"noEmit": true,
 		"types": ["bun", "node"],
 		"paths": {
-			"@cline/core": ["../../sdk/packages/core/src/index.ts"],
-			"@cline/core/*": [
+			"@sekokuva-ca/core": ["../../sdk/packages/core/src/index.ts"],
+			"@sekokuva-ca/core/*": [
 				"../../sdk/packages/core/src/*",
 				"../../sdk/packages/core/src/*/index.ts"
 			],
-			"@cline/shared": ["../../sdk/packages/shared/src/index.ts"],
-			"@cline/shared/*": [
+			"@sekokuva-ca/shared": ["../../sdk/packages/shared/src/index.ts"],
+			"@sekokuva-ca/shared/*": [
 				"../../sdk/packages/shared/src/*",
 				"../../sdk/packages/shared/src/*/index.ts"
 			]

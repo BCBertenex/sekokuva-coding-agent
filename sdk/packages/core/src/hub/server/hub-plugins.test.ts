@@ -5,7 +5,7 @@ import type {
 	HubEventEnvelope,
 	PluginStatusRecord,
 	SessionPluginIssue,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	PluginRegistry,

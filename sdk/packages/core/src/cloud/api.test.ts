@@ -1,4 +1,4 @@
-import type { MessageWithMetadata } from "@cline/shared";
+import type { MessageWithMetadata } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import {
 	CloudCreationUnconfirmedError,

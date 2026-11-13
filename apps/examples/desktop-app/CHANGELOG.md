@@ -40,7 +40,7 @@
 
 ## 0.0.47
 
-- Marketplace plugins such as goal load again. In 0.0.46 they failed with `Cannot find module '@cline/sdk'` because the packaged app didn't include the SDK packages plugins import
+- Marketplace plugins such as goal load again. In 0.0.46 they failed with `Cannot find module '@sekokuva-ca/sdk'` because the packaged app didn't include the SDK packages plugins import
 - The Cloud sessions toggle is gone from Settings. Cloud sessions are on wherever they are available
 - When a provider error interrupts a response mid-stream, Cline retries it up to 3 times before failing the turn
 - The Cline provider's default model is now Gemini 4 Argon, the new first model in Cline's recommended list

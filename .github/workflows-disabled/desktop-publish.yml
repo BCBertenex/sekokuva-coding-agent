@@ -499,7 +499,7 @@ jobs:
       # OS they will run on — against an isolated Hub started by
       # `cline hub ensure`, and require the backend's ready line plus a
       # healthy /health. Desktop 0.0.31 shipped a backend whose Hub daemon loaded a
-      # second copy of @cline/core with a different build id, so the app
+      # second copy of @sekokuva-ca/core with a different build id, so the app
       # retired its own Hub on every launch and never got past "backend
       # unavailable". PR CI runs this same test on ubuntu against a plain
       # build from source, which catches that resolution class but not a

@@ -1,4 +1,4 @@
-import type { ProviderSettings } from "@cline/core";
+import type { ProviderSettings } from "@sekokuva-ca/core";
 import type { CliReasoningEffort } from "./types";
 
 type ActiveCliReasoningEffort = Exclude<CliReasoningEffort, "none">;

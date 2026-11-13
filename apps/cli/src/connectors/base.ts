@@ -7,8 +7,8 @@ import {
 	statSync,
 } from "node:fs";
 import { basename, join } from "node:path";
-import { resolveClineDataDir } from "@cline/core";
-import { isSupervisedConnectorProcess } from "@cline/shared";
+import { resolveClineDataDir } from "@sekokuva-ca/core";
+import { isSupervisedConnectorProcess } from "@sekokuva-ca/shared";
 import { Command, CommanderError } from "commander";
 import {
 	CONNECT_ALREADY_RUNNING_EXIT_CODE,

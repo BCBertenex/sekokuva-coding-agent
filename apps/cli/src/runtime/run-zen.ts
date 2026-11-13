@@ -1,6 +1,6 @@
-import type { UserInstructionConfigService } from "@cline/core";
-import { HubSessionClient } from "@cline/core";
-import type { ChatStartSessionRequest } from "@cline/shared";
+import type { UserInstructionConfigService } from "@sekokuva-ca/core";
+import { HubSessionClient } from "@sekokuva-ca/core";
+import type { ChatStartSessionRequest } from "@sekokuva-ca/shared";
 import { resolveCliSessionMetadata } from "../utils/enterprise";
 import { ensureCliHubServer } from "../utils/hub-runtime";
 import { c, emitJsonLine, writeErr, writeln } from "../utils/output";

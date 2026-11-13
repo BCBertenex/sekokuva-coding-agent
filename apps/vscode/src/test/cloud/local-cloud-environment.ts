@@ -11,8 +11,8 @@ import {
 	LocalRuntimeHost,
 	SqliteSessionStore,
 	startHubWebSocketServer,
-} from "@cline/core"
-import type { MessageWithMetadata as SdkMessage } from "@cline/llms"
+} from "@sekokuva-ca/core"
+import type { MessageWithMetadata as SdkMessage } from "@sekokuva-ca/llms"
 import WebSocket, { type RawData, WebSocketServer } from "ws"
 import type { UserResponse } from "@/shared/ClineAccount"
 

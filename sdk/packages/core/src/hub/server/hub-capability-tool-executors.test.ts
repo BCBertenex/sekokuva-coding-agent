@@ -1,5 +1,5 @@
-import { AgentRuntime } from "@cline/agents";
-import type { AgentModel } from "@cline/shared";
+import { AgentRuntime } from "@sekokuva-ca/agents";
+import type { AgentModel } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import { handleCapabilityProgress } from "./handlers/capability-handlers";
 import type { HubTransportContext } from "./handlers/context";

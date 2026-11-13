@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { resolveClineDataDir } from "@cline/core";
+import { resolveClineDataDir } from "@sekokuva-ca/core";
 import { getCliBuildInfo } from "../utils/common";
 
 /**

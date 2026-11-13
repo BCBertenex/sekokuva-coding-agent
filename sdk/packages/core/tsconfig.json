@@ -4,17 +4,17 @@
 		"rootDir": "..",
 		"noEmit": true,
 		"paths": {
-			"@cline/agents": ["../agents/src/index.ts"],
-			"@cline/agents/*": ["../agents/src/*", "../agents/src/*/index.ts"],
-			"@cline/llms": ["../llms/src/index.ts"],
-			"@cline/llms/browser": ["../llms/src/index.browser.ts"],
-			"@cline/shared": ["../shared/src/index.ts"],
-			"@cline/shared/automation": ["../shared/src/automation/index.ts"],
-			"@cline/shared/browser": ["../shared/src/index.browser.ts"],
-			"@cline/shared/db": ["../shared/src/db/index.ts"],
-			"@cline/shared/storage": ["../shared/src/storage/index.ts"],
-			"@cline/shared/types": ["../shared/src/types/index.ts"],
-			"@cline/shared/*": ["../shared/src/*", "../shared/src/*/index.ts"]
+			"@sekokuva-ca/agents": ["../agents/src/index.ts"],
+			"@sekokuva-ca/agents/*": ["../agents/src/*", "../agents/src/*/index.ts"],
+			"@sekokuva-ca/llms": ["../llms/src/index.ts"],
+			"@sekokuva-ca/llms/browser": ["../llms/src/index.browser.ts"],
+			"@sekokuva-ca/shared": ["../shared/src/index.ts"],
+			"@sekokuva-ca/shared/automation": ["../shared/src/automation/index.ts"],
+			"@sekokuva-ca/shared/browser": ["../shared/src/index.browser.ts"],
+			"@sekokuva-ca/shared/db": ["../shared/src/db/index.ts"],
+			"@sekokuva-ca/shared/storage": ["../shared/src/storage/index.ts"],
+			"@sekokuva-ca/shared/types": ["../shared/src/types/index.ts"],
+			"@sekokuva-ca/shared/*": ["../shared/src/*", "../shared/src/*/index.ts"]
 		}
 	},
 	"include": ["src/**/*"],

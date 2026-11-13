@@ -1,6 +1,6 @@
 ---
 name: cline-sdk
-description: Comprehensive Cline SDK skill for building AI agents. Covers the Agent runtime, ClineCore sessions, custom tools, plugins, events, LLM providers, scheduling, multi-agent teams, and production deployment. Use for any task involving @cline/sdk or its sub-packages.
+description: Comprehensive Cline SDK skill for building AI agents. Covers the Agent runtime, ClineCore sessions, custom tools, plugins, events, LLM providers, scheduling, multi-agent teams, and production deployment. Use for any task involving @sekokuva-ca/sdk or its sub-packages.
 metadata:
    references: agent, clinecore
 ---
@@ -13,9 +13,9 @@ Consolidated skill for building AI agents with the Cline SDK. Use the decision t
 
 Follow these rules in all Cline SDK code:
 
-1. Install with `npm install @cline/sdk`. The `@cline/sdk` package re-exports everything from `@cline/core`, `@cline/agents`, `@cline/llms`, and `@cline/shared`.
+1. Install with `npm install @sekokuva-ca/sdk`. The `@sekokuva-ca/sdk` package re-exports everything from `@sekokuva-ca/core`, `@sekokuva-ca/agents`, `@sekokuva-ca/llms`, and `@sekokuva-ca/shared`.
 2. Requires Node.js 22 or later.
-3. Use `createTool()` from `@cline/sdk` (or `@cline/shared`) to define tools. Tool names must be `snake_case`.
+3. Use `createTool()` from `@sekokuva-ca/sdk` (or `@sekokuva-ca/shared`) to define tools. Tool names must be `snake_case`.
 4. Return errors as structured data from tool `execute` functions. Throwing counts as a "mistake" against the agent's mistake limit.
 5. Use `lifecycle: { completesRun: true }` on tools that should end the agent loop (e.g. a "submit answer" tool).
 6. When using `ClineCore`, always call `dispose()` when done to clean up resources.
@@ -71,9 +71,9 @@ Cross-cutting concepts in `./references/<concept>/` have `REFERENCE.md` as the e
 ```
 Which API?
 +-- I want a simple, stateless agent with custom tools
-|   +-- agent/ (Agent class from @cline/agents)
+|   +-- agent/ (Agent class from @sekokuva-ca/agents)
 +-- I need session persistence, built-in tools, config discovery
-|   +-- clinecore/ (ClineCore from @cline/core)
+|   +-- clinecore/ (ClineCore from @sekokuva-ca/core)
 +-- I want built-in file/shell/search/web tools
 |   +-- clinecore/ (has built-in tools; Agent does not)
 +-- I want scheduled or recurring agents
@@ -194,11 +194,11 @@ Production?
 ### Package Map
 | Package | Purpose |
 |---------|---------|
-| `@cline/sdk` | Everything you need, install this one |
-| `@cline/core` | Sessions, persistence, built-in tools, config, hub |
-| `@cline/agents` | Stateless agent loop, tool orchestration, streaming |
-| `@cline/llms` | LLM provider gateway |
-| `@cline/shared` | Types, tool helpers, hook engine |
+| `@sekokuva-ca/sdk` | Everything you need, install this one |
+| `@sekokuva-ca/core` | Sessions, persistence, built-in tools, config, hub |
+| `@sekokuva-ca/agents` | Stateless agent loop, tool orchestration, streaming |
+| `@sekokuva-ca/llms` | LLM provider gateway |
+| `@sekokuva-ca/shared` | Types, tool helpers, hook engine |
 
 ## Resources
 

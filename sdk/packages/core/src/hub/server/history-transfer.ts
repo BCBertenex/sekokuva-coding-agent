@@ -3,8 +3,8 @@ import { EventEmitter, once } from "node:events";
 import { type FileHandle, mkdir, open, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import { TextDecoder } from "node:util";
-import type { HubCommandEnvelope, HubReplyEnvelope } from "@cline/shared";
-import { resolveClineDataDir } from "@cline/shared/storage";
+import type { HubCommandEnvelope, HubReplyEnvelope } from "@sekokuva-ca/shared";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 import { errorReply, extractSessionId, okReply } from "./handlers/context";
 import { logHubMessage } from "./hub-server-logging";
 

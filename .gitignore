@@ -94,3 +94,12 @@ apps/examples/desktop-app/webview/.next
 # Next.js generated type shim (churns between dev and build)
 apps/examples/desktop-app/webview/next-env.d.ts
 apps/examples/desktop-app/.cursor/settings.json
+
+# Bun runtime downloads (manual installs, e.g. inside WSL). These are
+# platform-specific binaries and archives, never part of the source tree.
+bun-linux-*/
+bun-linux-*.zip
+bun-darwin-*/
+bun-darwin-*.zip
+bun-windows-*/
+bun-windows-*.zip

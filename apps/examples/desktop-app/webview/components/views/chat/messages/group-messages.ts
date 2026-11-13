@@ -1,4 +1,4 @@
-import type { AgentMessageRole } from "@cline/ui/components/agent-chat";
+import type { AgentMessageRole } from "@sekokuva-ca/ui/components/agent-chat";
 import type { ChatMessage } from "@/lib/chat-schema";
 import {
 	getPublishedArtifacts,
@@ -131,7 +131,7 @@ export function getThoughtDurationMilliseconds(
 	return thinkingTimestamp - previousTimestamp;
 }
 
-export { formatThoughtLabel } from "@cline/ui/components/agent-chat";
+export { formatThoughtLabel } from "@sekokuva-ca/ui/components/agent-chat";
 
 export type CollapseWorkOptions = {
 	/**

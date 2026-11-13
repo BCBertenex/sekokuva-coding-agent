@@ -1,5 +1,5 @@
-import { AgentRuntime } from "@cline/agents";
-import type { AgentModel, ToolPolicy } from "@cline/shared";
+import { AgentRuntime } from "@sekokuva-ca/agents";
+import type { AgentModel, ToolPolicy } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import { createUxVerifierTool } from "./ux-verification";
 

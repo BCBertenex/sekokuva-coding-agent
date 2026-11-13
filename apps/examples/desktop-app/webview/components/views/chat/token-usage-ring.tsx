@@ -1,6 +1,6 @@
 "use client";
 
-import { AgentContextUsage, type AgentContextUsageData } from "@cline/ui";
+import { AgentContextUsage, type AgentContextUsageData } from "@sekokuva-ca/ui";
 import { Button } from "@/components/ui/button";
 import {
 	Popover,

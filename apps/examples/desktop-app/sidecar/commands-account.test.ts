@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { HubCloudSessionClient } from "@cline/core/cloud";
+import { HubCloudSessionClient } from "@sekokuva-ca/core/cloud";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { isClineAccountNotAuthenticatedResult } from "../webview/lib/cline-account-state";
 import type { SidecarContext } from "./types";
@@ -25,9 +25,9 @@ vi.mock("./context", async () => ({
 	ensureSharedHubClient: vi.fn().mockResolvedValue({}),
 }));
 
-vi.mock("@cline/core", async () => {
+vi.mock("@sekokuva-ca/core", async () => {
 	const actual =
-		await vi.importActual<typeof import("@cline/core")>("@cline/core");
+		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
 		ClineAccountService: class {
@@ -295,7 +295,7 @@ describe("cline_account command auth states", () => {
 		// which rendered an error card whose Retry failed the same way.
 		const { ctx } = createContext();
 		const { OAuthReauthRequiredError } =
-			await vi.importActual<typeof import("@cline/core")>("@cline/core");
+			await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 		resolveProviderApiKeyMock.mockRejectedValue(
 			new OAuthReauthRequiredError("cline"),
 		);

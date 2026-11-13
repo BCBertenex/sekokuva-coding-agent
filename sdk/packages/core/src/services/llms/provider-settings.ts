@@ -1,5 +1,5 @@
-import * as Llms from "@cline/llms";
-import { ReasoningLevelSchema } from "@cline/shared";
+import * as Llms from "@sekokuva-ca/llms";
+import { ReasoningLevelSchema } from "@sekokuva-ca/shared";
 import { z } from "zod";
 import {
 	DEFAULT_EXTERNAL_OCA_BASE_URL,

@@ -1,4 +1,4 @@
-import { readStartingConnectorInstance } from "@cline/shared";
+import { readStartingConnectorInstance } from "@sekokuva-ca/shared";
 import {
 	type ReconnectAttempt,
 	reconnectPersistedConnectors,

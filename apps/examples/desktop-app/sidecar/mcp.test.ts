@@ -13,8 +13,8 @@ const { api, client } = vi.hoisted(() => ({
 		inspect: vi.fn(),
 	},
 }));
-vi.mock("@cline/core", async (original) => ({
-	...(await original<typeof import("@cline/core")>()),
+vi.mock("@sekokuva-ca/core", async (original) => ({
+	...(await original<typeof import("@sekokuva-ca/core")>()),
 	createHubMcpApi: (actual: unknown) => {
 		expect(actual).toBe(client);
 		return api;

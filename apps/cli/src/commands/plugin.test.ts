@@ -8,13 +8,13 @@ import {
 } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, sep } from "node:path";
 import {
 	discoverPluginModulePaths,
 	resolvePluginConfigSearchPaths,
 	setClineDir,
 	setHomeDir,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	collectPluginMcpOAuthCandidates,
@@ -55,6 +55,39 @@ describe("plugin install command", () => {
 
 	function runGitCommand(cwd: string, args: string[]): void {
 		execFileSync("git", args, { cwd, stdio: "ignore" });
+	}
+
+	/**
+	 * Writes a fake `npm` executable and returns its path.
+	 *
+	 * POSIX gets a `#!/bin/sh` script. Windows cannot spawn a `.cmd`/`.bat`
+	 * shim without a shell, so it gets a `.cmd` file; `runCommand` passes
+	 * `shell: true` on win32, which makes that work.
+	 *
+	 * `body` is the shell body without a shebang. `$*` and `$PWD` are POSIX
+	 * spellings; on Windows the body is wrapped so `%*`/`%CD%` are used
+	 * instead. Callers that need richer behavior pass `windowsBody`.
+	 */
+	function writeFakeNpm(
+		baseName: string,
+		body: string,
+		windowsBody?: string,
+	): string {
+		if (process.platform === "win32") {
+			const cmdPath = join(root, `${baseName}.cmd`);
+			writeFileSync(
+				cmdPath,
+				`@echo off\r\n${windowsBody ?? body}\r\nexit /b 0\r\n`,
+				{ encoding: "utf8" },
+			);
+			return cmdPath;
+		}
+		const shPath = join(root, `${baseName}.sh`);
+		writeFileSync(shPath, `#!/bin/sh\n${body}\n`, {
+			encoding: "utf8",
+			mode: 0o755,
+		});
+		return shPath;
 	}
 
 	async function createOfficialPluginsRepo(
@@ -282,11 +315,10 @@ describe("plugin install command", () => {
 			},
 		});
 		const npmLogPath = join(root, "official-npm-install.log");
-		const npmCommandPath = join(root, "official-fake-npm.sh");
-		writeFileSync(
-			npmCommandPath,
-			`#!/bin/sh\nprintf '%s\\n' "$PWD $*" >> "${npmLogPath}"\nexit 0\n`,
-			{ encoding: "utf8", mode: 0o755 },
+		const npmCommandPath = writeFakeNpm(
+			"official-fake-npm",
+			`printf '%s\\n' "$PWD $*" >> "${npmLogPath}"`,
+			`echo %CD% %*>> "${npmLogPath}"`,
 		);
 
 		const result = await installPlugin({
@@ -415,11 +447,10 @@ describe("plugin install command", () => {
 	it("installs into cwd plugin root when cwd is provided", async () => {
 		const source = join(root, "plugin-package");
 		const npmLogPath = join(root, "npm-install.log");
-		const npmCommandPath = join(root, "fake-npm.sh");
-		writeFileSync(
-			npmCommandPath,
-			`#!/bin/sh\nprintf '%s\\n' "$PWD $*" >> "${npmLogPath}"\nexit 0\n`,
-			{ encoding: "utf8", mode: 0o755 },
+		const npmCommandPath = writeFakeNpm(
+			"fake-npm",
+			`printf '%s\\n' "$PWD $*" >> "${npmLogPath}"`,
+			`echo %CD% %*>> "${npmLogPath}"`,
 		);
 		await mkdir(join(source, "node_modules", "dependency"), {
 			recursive: true,
@@ -433,15 +464,15 @@ describe("plugin install command", () => {
 						plugins: [{ paths: ["./index.ts"], capabilities: ["tools"] }],
 					},
 					dependencies: {
-						"@cline/core": "latest",
+						"@sekokuva-ca/core": "latest",
 						yaml: "^2.8.1",
 					},
 					peerDependencies: {
-						"@cline/shared": "*",
+						"@sekokuva-ca/shared": "*",
 						bun: ">=1.0.0",
 					},
 					peerDependenciesMeta: {
-						"@cline/shared": {
+						"@sekokuva-ca/shared": {
 							optional: true,
 						},
 					},
@@ -489,7 +520,8 @@ describe("plugin install command", () => {
 		expect(packageManifest.peerDependencies).toEqual({ bun: ">=1.0.0" });
 		expect(packageManifest.peerDependenciesMeta).toBeUndefined();
 		const npmLog = readFileSync(npmLogPath, "utf8");
-		expect(npmLog).toContain(`${join(".tmp")}/`);
+		// The log records the staging cwd, which is built with `path.join`.
+		expect(npmLog).toContain(`${join(".tmp")}${sep}`);
 		expect(npmLog).toContain(
 			"package install --omit=dev --omit=peer --legacy-peer-deps --no-audit --no-fund --package-lock=false",
 		);
@@ -506,11 +538,9 @@ describe("plugin install command", () => {
 
 	it("omits and removes host SDK packages from npm-sourced installs", async () => {
 		const npmLogPath = join(root, "npm-source-install.log");
-		const npmCommandPath = join(root, "fake-npm-source.sh");
-		writeFileSync(
-			npmCommandPath,
+		const npmCommandPath = writeFakeNpm(
+			"fake-npm-source",
 			[
-				"#!/bin/sh",
 				`printf '%s\\n' "$*" >> "${npmLogPath}"`,
 				"prefix=''",
 				"while [ $# -gt 0 ]; do",
@@ -521,13 +551,29 @@ describe("plugin install command", () => {
 				"  shift",
 				"done",
 				'mkdir -p "$prefix/node_modules/published-plugin"',
-				'mkdir -p "$prefix/node_modules/@cline/core"',
+				'mkdir -p "$prefix/node_modules/@sekokuva-ca/core"',
 				'printf \'%s\\n\' \'{"name":"published-plugin","type":"module","cline":{"plugins":["index.ts"]}}\' > "$prefix/node_modules/published-plugin/package.json"',
 				"printf '%s\\n' \"export default { name: 'published-plugin', manifest: { capabilities: ['tools'] } };\" > \"$prefix/node_modules/published-plugin/index.ts\"",
-				'printf \'%s\\n\' \'{"name":"@cline/core"}\' > "$prefix/node_modules/@cline/core/package.json"',
-				"exit 0",
+				'printf \'%s\\n\' \'{"name":"@sekokuva-ca/core"}\' > "$prefix/node_modules/@sekokuva-ca/core/package.json"',
 			].join("\n"),
-			{ encoding: "utf8", mode: 0o755 },
+			[
+				`echo %*>> "${npmLogPath}"`,
+				"set prefix=",
+				":loop",
+				"if \"%~1\"==\"\" goto done",
+				"if \"%~1\"==\"--prefix\" (",
+				"  set prefix=%~2",
+				"  shift",
+				")",
+				"shift",
+				"goto loop",
+				":done",
+				'mkdir "%prefix%\\node_modules\\published-plugin" 2>nul',
+				'mkdir "%prefix%\\node_modules\\@sekokuva-ca\\core" 2>nul',
+				'echo {"name":"published-plugin","type":"module","cline":{"plugins":["index.ts"]}}> "%prefix%\\node_modules\\published-plugin\\package.json"',
+				'echo export default { name: \'published-plugin\', manifest: { capabilities: [\'tools\'] } };> "%prefix%\\node_modules\\published-plugin\\index.ts"',
+				'echo {"name":"@sekokuva-ca/core"}> "%prefix%\\node_modules\\@sekokuva-ca\\core\\package.json"',
+			].join("\r\n"),
 		);
 
 		const result = await installPlugin({
@@ -541,7 +587,7 @@ describe("plugin install command", () => {
 		expect(npmLog).toContain("--legacy-peer-deps");
 		expect(
 			existsSync(
-				join(result.installPath, "package", "node_modules", "@cline", "core"),
+				join(result.installPath, "package", "node_modules", "@sekokuva-ca", "core"),
 			),
 		).toBe(false);
 		expect(existsSync(result.entryPaths[0] ?? "")).toBe(true);
@@ -564,7 +610,7 @@ describe("plugin install command", () => {
 
 	it("keeps an existing install when a forced replacement fails during staging", async () => {
 		const source = join(root, "replace-package");
-		const npmCommandPath = join(root, "fake-npm.sh");
+		const npmCommandPath = writeFakeNpm("fake-npm", "exit 0", "exit /b 0");
 		await mkdir(source, { recursive: true });
 		await writeFile(
 			join(source, "package.json"),
@@ -585,10 +631,7 @@ describe("plugin install command", () => {
 			"export default { name: 'installed-v1', manifest: { capabilities: ['tools'] } };",
 			"utf8",
 		);
-		writeFileSync(npmCommandPath, "#!/bin/sh\nexit 0\n", {
-			encoding: "utf8",
-			mode: 0o755,
-		});
+		writeFakeNpm("fake-npm", "exit 0", "exit /b 0");
 
 		const first = await installPlugin({ source, npmCommand: npmCommandPath });
 		await writeFile(
@@ -596,10 +639,7 @@ describe("plugin install command", () => {
 			"export default { name: 'installed-v2', manifest: { capabilities: ['tools'] } };",
 			"utf8",
 		);
-		writeFileSync(npmCommandPath, "#!/bin/sh\nprintf 'offline' >&2\nexit 1\n", {
-			encoding: "utf8",
-			mode: 0o755,
-		});
+		writeFakeNpm("fake-npm", "printf 'offline' >&2\nexit 1", "echo offline 1>&2\r\nexit /b 1");
 
 		await expect(
 			installPlugin({ source, force: true, npmCommand: npmCommandPath }),
@@ -613,7 +653,7 @@ describe("plugin install command", () => {
 
 	it("uninstalls a package plugin by package name", async () => {
 		const source = join(root, "uninstall-package");
-		const npmCommandPath = join(root, "fake-npm.sh");
+		const npmCommandPath = writeFakeNpm("fake-npm", "exit 0", "exit /b 0");
 		await mkdir(source, { recursive: true });
 		await writeFile(
 			join(source, "package.json"),
@@ -634,10 +674,7 @@ describe("plugin install command", () => {
 			"export default { name: 'cli-uninstall-plugin', manifest: { capabilities: ['tools'] } };",
 			"utf8",
 		);
-		writeFileSync(npmCommandPath, "#!/bin/sh\nexit 0\n", {
-			encoding: "utf8",
-			mode: 0o755,
-		});
+		writeFakeNpm("fake-npm", "exit 0", "exit /b 0");
 
 		const installed = await installPlugin({
 			source,

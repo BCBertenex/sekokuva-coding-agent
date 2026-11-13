@@ -9,7 +9,7 @@ const hoisted = vi.hoisted(() => ({
 	openMock: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock("@cline/core", () => ({
+vi.mock("@sekokuva-ca/core", () => ({
 	loginLocalProvider: hoisted.loginLocalProvider,
 	startClineDeviceAuth: hoisted.startClineDeviceAuth,
 	completeClineDeviceAuth: hoisted.completeClineDeviceAuth,
@@ -17,7 +17,7 @@ vi.mock("@cline/core", () => ({
 	ProviderSettingsManager: class {},
 }));
 
-vi.mock("@cline/shared", () => ({
+vi.mock("@sekokuva-ca/shared", () => ({
 	getClineEnvironmentConfig: () => ({ apiBaseUrl: "https://api.example" }),
 }));
 

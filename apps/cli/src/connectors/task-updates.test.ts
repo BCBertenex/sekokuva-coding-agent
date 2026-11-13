@@ -1,4 +1,4 @@
-import type { TeamProgressProjectionEvent } from "@cline/shared";
+import type { TeamProgressProjectionEvent } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import {
 	createTaskUpdateFingerprint,

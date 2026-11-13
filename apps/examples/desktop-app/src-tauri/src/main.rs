@@ -727,7 +727,7 @@ fn non_empty_env(name: &str) -> Option<String> {
         .filter(|value| !value.is_empty())
 }
 
-/// Mirrors `resolveMcpSettingsPath()` in `@cline/shared/storage` (the resolver
+/// Mirrors `resolveMcpSettingsPath()` in `@sekokuva-ca/shared/storage` (the resolver
 /// the sidecar and the hub runtime use): explicit path override, then the data
 /// dir override, then the cline dir override, then `~/.cline/data`. Keeping the
 /// same precedence here means the "Open MCP settings" window action opens the

@@ -2,7 +2,7 @@ import {
 	type AgentMode,
 	type AgentResult,
 	formatUserInputBlock,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { TeamEvent } from "../../extensions/tools/team";
 import {
 	buildTeamProgressSummary,

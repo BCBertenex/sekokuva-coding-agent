@@ -15,7 +15,7 @@
 //   3. the families the adapter does classify keep their native shapes from
 //      the id alone even when the catalog does not list the model, so a
 //      catalog that lags a model launch never switches thinking off.
-import type { GatewayStreamRequest, ModelReasoningOption } from "@cline/shared";
+import type { GatewayStreamRequest, ModelReasoningOption } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import { createGateway } from "../gateway";
 

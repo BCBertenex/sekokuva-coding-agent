@@ -8,7 +8,7 @@ import type {
 	GatewayProviderRegistration,
 	GatewayResolvedModel,
 	GatewayResolvedProviderConfig,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 
 interface ProviderRecord {
 	manifest: GatewayProviderManifest;

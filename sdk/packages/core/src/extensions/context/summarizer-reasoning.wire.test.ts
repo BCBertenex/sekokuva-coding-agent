@@ -3,8 +3,8 @@
 // thinking off; the gateway must send `reasoning_effort: "none"` only to a
 // model whose catalog entry says it accepts one, since endpoints serving
 // models the catalog does not list may reject it and the summary then fails.
-import { createHandlerAsync } from "@cline/llms";
-import type { ModelReasoningOption } from "@cline/shared";
+import { createHandlerAsync } from "@sekokuva-ca/llms";
+import type { ModelReasoningOption } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import type { ProviderConfig } from "../../types/provider-settings";
 import { resolveSummarizerConfig } from "./compaction-shared";

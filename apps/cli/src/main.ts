@@ -1,9 +1,9 @@
 import { fstatSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename } from "node:path";
-import type { ToolPolicy } from "@cline/core";
+import type { ToolPolicy } from "@sekokuva-ca/core";
 
-import { CLINE_DEFAULT_MODEL_ID, registerDisposable } from "@cline/shared";
+import { CLINE_DEFAULT_MODEL_ID, registerDisposable } from "@sekokuva-ca/shared";
 import type { Command } from "commander";
 import { createDashboardCommand } from "./commands/dashboard-command";
 import { registerHistoryCommand } from "./commands/history-command";
@@ -75,13 +75,13 @@ export function stdinHasPipedInput(): boolean {
 }
 
 async function createProviderSettingsManager() {
-	const { ProviderSettingsManager } = await import("@cline/core");
+	const { ProviderSettingsManager } = await import("@sekokuva-ca/core");
 	return new ProviderSettingsManager();
 }
 
 async function loadCliRuntimeModules() {
 	const [coreServer, prompt, runAgentModule] = await Promise.all([
-		import("@cline/core"),
+		import("@sekokuva-ca/core"),
 		import("./runtime/prompt"),
 		import("./runtime/run-agent"),
 	]);
@@ -156,7 +156,7 @@ export async function runCli(): Promise<void> {
 	const isFullTTY =
 		process.stdin.isTTY === true && process.stdout.isTTY === true;
 	const configDir = resolveConfigDirArg(cliArgs);
-	const { setClineDir, setHomeDir } = await import("@cline/shared/storage");
+	const { setClineDir, setHomeDir } = await import("@sekokuva-ca/shared/storage");
 	if (configDir) {
 		setClineDir(configDir);
 	}
@@ -229,7 +229,7 @@ export async function runCli(): Promise<void> {
 			// --config=<dir> form) is always respected before any provider
 			// settings manager is constructed against ~/.cline.
 			if (opts.config?.trim()) {
-				const { setClineDir } = await import("@cline/shared/storage");
+				const { setClineDir } = await import("@sekokuva-ca/shared/storage");
 				setClineDir(opts.config.trim());
 			}
 			// Honor --data-dir before constructing the provider settings manager
@@ -1099,8 +1099,11 @@ export async function runCli(): Promise<void> {
 			telemetry: getCliTelemetryService(loggerAdapter.core),
 			defaultToolAutoApprove,
 			toolPolicies,
-			enableSpawnAgent: !isYoloMode,
-			enableAgentTeams: !isYoloMode,
+			enableSpawnAgent: !isZenMode,
+			// Explicit `--teams` / `--no-teams` wins; otherwise teams are on
+			// everywhere except zen, where the CLI exits before the work starts
+			// and nobody can stop an unbounded fan-out of teammates.
+			enableAgentTeams: args.enableAgentTeams ?? !isZenMode,
 			enableTools: true,
 			cwd,
 			workspaceRoot,

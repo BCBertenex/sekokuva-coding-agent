@@ -1,4 +1,4 @@
-import type { AgentExtensionCommand } from "@cline/shared";
+import type { AgentExtensionCommand } from "@sekokuva-ca/shared";
 
 const pluginCommands = new WeakSet<AgentExtensionCommand>();
 

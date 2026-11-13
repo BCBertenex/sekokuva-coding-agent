@@ -16,7 +16,7 @@ import {
 	type ITelemetryService,
 	Llms,
 	stripUtf8Bom,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import YAML from "yaml";
 import { z } from "zod";
 

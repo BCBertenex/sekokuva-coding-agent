@@ -1,4 +1,4 @@
-import type { ProviderConfigFieldKey } from "@cline/core";
+import type { ProviderConfigFieldKey } from "@sekokuva-ca/core";
 import { useKeyboard } from "@opentui/react";
 import type { Dispatch, SetStateAction } from "react";
 import type { ClineModelPickerEntry } from "../../components/model-selector/cline-model-picker";

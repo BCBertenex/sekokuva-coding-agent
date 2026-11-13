@@ -1,14 +1,14 @@
 import type {
 	CloudBranchListOptions,
 	CloudBranchListResult,
-} from "@cline/core/cloud";
+} from "@sekokuva-ca/core/cloud";
 
 export type {
 	CloudBranchListOptions,
 	CloudBranchListResult,
 	CloudRepositoryListResult,
 	CloudRepositoryOption,
-} from "@cline/core/cloud";
+} from "@sekokuva-ca/core/cloud";
 
 type CloudRepositorySelection = { repoUrl: string; branch: string };
 const SELECTION_KEY = "cline.code.cloud-repository.v1:";

@@ -1,4 +1,4 @@
-import type { GatewayProviderManifest } from "@cline/shared";
+import type { GatewayProviderManifest } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import {
 	providerManifestSupportsModelTool,

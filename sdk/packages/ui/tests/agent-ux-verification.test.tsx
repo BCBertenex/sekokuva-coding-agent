@@ -6,7 +6,7 @@ import {
 	AgentUxVerification,
 	type UxScreenshotRenderer,
 } from "../components/agent-ux-verification.js";
-import type { UxVerificationReport } from "@cline/shared/browser";
+import type { UxVerificationReport } from "@sekokuva-ca/shared/browser";
 
 const report: UxVerificationReport = {
 	kind: "ux_verification",

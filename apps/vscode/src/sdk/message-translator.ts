@@ -26,10 +26,15 @@
 // - SDK "agent_event" usage → ClineMessage say="api_req_started" with ClineApiReqInfo JSON
 // - SDK "ended" event → finalizes the session
 
-import type { CoreSessionEvent } from "@cline/core"
-import { PATCH_MARKERS, projectSessionMessagesForDisplay, resolveMessageDisplayRole, truncateCommandOutput } from "@cline/core"
-import type { MessageWithMetadata as SdkMessage } from "@cline/llms"
-import { type AgentEvent, formatDisplayUserInput, type ProviderErrorClass } from "@cline/shared"
+import type { CoreSessionEvent } from "@sekokuva-ca/core"
+import {
+	PATCH_MARKERS,
+	projectSessionMessagesForDisplay,
+	resolveMessageDisplayRole,
+	truncateCommandOutput,
+} from "@sekokuva-ca/core"
+import type { MessageWithMetadata as SdkMessage } from "@sekokuva-ca/llms"
+import { type AgentEvent, formatDisplayUserInput, type ProviderErrorClass } from "@sekokuva-ca/shared"
 import { COMMAND_OUTPUT_STRING } from "@shared/combineCommandSequences"
 import type {
 	ClineApiReqInfo,

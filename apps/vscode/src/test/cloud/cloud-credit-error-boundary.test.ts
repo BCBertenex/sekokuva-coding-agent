@@ -1,4 +1,4 @@
-import { type CoreSessionEvent, SessionSource } from "@cline/core"
+import { type CoreSessionEvent, SessionSource } from "@sekokuva-ca/core"
 import { afterEach, describe, expect, it } from "vitest"
 import { CloudSessionHost } from "@/sdk/cloud-session-host"
 import { MessageTranslatorState, translateSessionEvent } from "@/sdk/message-translator"

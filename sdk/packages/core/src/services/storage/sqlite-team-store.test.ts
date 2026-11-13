@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { loadSqliteDb } from "@cline/shared/db";
+import { loadSqliteDb } from "@sekokuva-ca/shared/db";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { SqliteTeamStore } from "./sqlite-team-store";
 import {

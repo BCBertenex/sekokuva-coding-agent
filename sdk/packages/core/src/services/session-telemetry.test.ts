@@ -1,5 +1,5 @@
-import type { ITelemetryService } from "@cline/shared";
-import * as storage from "@cline/shared/storage";
+import type { ITelemetryService } from "@sekokuva-ca/shared";
+import * as storage from "@sekokuva-ca/shared/storage";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as hookConfig from "../hooks/hook-file-config";
 import { captureHookDiscoveryTelemetry } from "./session-telemetry";

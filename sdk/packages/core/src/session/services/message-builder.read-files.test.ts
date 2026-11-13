@@ -1,7 +1,7 @@
 import * as fs from "node:fs/promises";
 import * as os from "node:os";
 import * as path from "node:path";
-import type { Message, ToolResultContent } from "@cline/shared";
+import type { Message, ToolResultContent } from "@sekokuva-ca/shared";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createReadFilesTool } from "../../extensions/tools/definitions";
 import { createFileReadExecutor } from "../../extensions/tools/executors/file-read";

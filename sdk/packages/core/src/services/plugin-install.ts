@@ -13,12 +13,12 @@ import {
 import { cp, mkdir, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
-import { toPosixSeparators } from "@cline/shared";
+import { toPosixSeparators } from "@sekokuva-ca/shared";
 import {
 	isPluginModulePath,
 	resolveClineDir,
 	resolvePluginModuleEntries,
-} from "@cline/shared/storage";
+} from "@sekokuva-ca/shared/storage";
 import {
 	type McpServerRegistration,
 	resolveDefaultMcpSettingsPath,
@@ -99,7 +99,7 @@ const PACKAGE_DIRECTORY_NAME = "package";
 const OFFICIAL_PLUGINS_REPO = "https://github.com/cline/plugins.git";
 const REMOTE_PLUGIN_FETCH_TIMEOUT_MS = 30_000;
 const REMOTE_PLUGIN_MAX_BYTES = 10 * 1024 * 1024;
-const HOST_PROVIDED_SDK_PREFIX = "@cline/";
+const HOST_PROVIDED_SDK_PREFIX = "@sekokuva-ca/";
 const DEPENDENCY_FIELDS = [
 	"dependencies",
 	"devDependencies",
@@ -539,6 +539,10 @@ async function runCommand(
 			env: process.env,
 			// Prevent a console window from flashing on Windows.
 			windowsHide: true,
+			// Windows cannot spawn a `.cmd`/`.bat` shim (npm, yarn, pnpm) without
+			// a shell; `spawn` fails with EINVAL. Matches the MCP client's
+			// platform handling.
+			...(process.platform === "win32" ? { shell: true } : {}),
 		});
 		let stderr = "";
 		child.stderr.on("data", (chunk) => {
@@ -641,12 +645,12 @@ function removeInstalledHostProvidedSdkDependencies(
 	packageRoot: string,
 	preservePackageName?: string,
 ): void {
-	const clineScopeDir = join(packageRoot, "node_modules", "@cline");
+	const clineScopeDir = join(packageRoot, "node_modules", "@sekokuva-ca");
 	if (!existsSync(clineScopeDir)) {
 		return;
 	}
 	for (const entry of statSafeReadDir(clineScopeDir)) {
-		const packageName = `@cline/${entry.name}`;
+		const packageName = `@sekokuva-ca/${entry.name}`;
 		if (packageName === preservePackageName) {
 			continue;
 		}

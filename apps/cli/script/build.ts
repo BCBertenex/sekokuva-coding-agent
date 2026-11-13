@@ -23,7 +23,7 @@ const pkg = JSON.parse(readFileSync(join(cliDir, "package.json"), "utf-8"));
 const version: string = pkg.version;
 const repository: unknown = pkg.repository;
 
-console.log(`Building @cline/cli v${version}`);
+console.log(`Building @sekokuva-ca/cli v${version}`);
 
 const buildOptions = parseBuildOptions(process.argv.slice(2));
 
@@ -71,7 +71,7 @@ if (!buildOptions.skipSdkBuild) {
 	await $`bun run build:sdk`.cwd(rootDir);
 
 	console.log("Building CLI bundle...");
-	await $`bun -F @cline/cli build`.cwd(rootDir);
+	await $`bun -F @sekokuva-ca/cli build`.cwd(rootDir);
 }
 
 const binaries: Record<string, string> = {};
@@ -97,7 +97,7 @@ function getBunTarget(
 for (const item of targets) {
 	// npm treats "win32" specially in os field, but for package naming use "windows"
 	const displayOs = item.os === "win32" ? "windows" : item.os;
-	const name = `@cline/cli-${displayOs}-${item.arch}`;
+	const name = `@sekokuva-ca/cli-${displayOs}-${item.arch}`;
 	const dirName = `cli-${displayOs}-${item.arch}`;
 	const binaryName = item.os === "win32" ? "cline.exe" : "cline";
 	const bunTarget = getBunTarget(item);

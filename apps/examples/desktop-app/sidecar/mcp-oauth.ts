@@ -1,4 +1,4 @@
-import { createHubMcpApi } from "@cline/core";
+import { createHubMcpApi } from "@sekokuva-ca/core";
 import { ensureSharedHubClient } from "./context";
 import type { SidecarContext } from "./types";
 

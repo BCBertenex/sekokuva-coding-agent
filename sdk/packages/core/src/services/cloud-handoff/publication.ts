@@ -1,7 +1,7 @@
 import {
 	createMediaBudgetState,
 	validateAndReserveImageMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type { CloudSessionController } from "../../cloud/controller";
 import {
 	applyHandoffGit,

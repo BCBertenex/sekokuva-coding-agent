@@ -29,12 +29,12 @@ import {
 	type SkillConfig,
 	type UserInstructionConfigService,
 	type WorkflowConfig,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	isMcpTimeoutConfigured,
 	resolveMcpTimeoutSeconds,
-} from "@cline/shared";
-import { readFileSyncStrippingUtf8Bom } from "@cline/shared/node";
+} from "@sekokuva-ca/shared";
+import { readFileSyncStrippingUtf8Bom } from "@sekokuva-ca/shared/node";
 import { getToolCatalog } from "../runtime/tools";
 import {
 	type InteractiveSlashCommand,

@@ -4,7 +4,7 @@ import type {
 	ModelOperationMode,
 	ModelToolName,
 	ProviderAuthInfo,
-} from "@cline/shared/browser";
+} from "@sekokuva-ca/shared/browser";
 
 /** Which tier of the Cline recommended-models feed featured a model. */
 export type ProviderModelFeaturedTier = "recommended" | "free" | "subscribed";

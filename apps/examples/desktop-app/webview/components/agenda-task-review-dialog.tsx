@@ -1,6 +1,6 @@
 "use client";
 
-import type { AgendaTaskRecord } from "@cline/shared";
+import type { AgendaTaskRecord } from "@sekokuva-ca/shared";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {

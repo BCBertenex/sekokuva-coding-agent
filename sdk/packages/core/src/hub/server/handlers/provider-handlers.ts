@@ -6,7 +6,7 @@ import {
 	ProviderClientSchema,
 	ProviderProtocolSchema,
 	type ProviderSettingsObjectPatch,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { z } from "zod";
 import { getProviderAuthHandler } from "../../../auth/provider-auth-registry";
 import { fetchClineRecommendedModels } from "../../../services/llms/cline-recommended-models";

@@ -1,13 +1,13 @@
 "use client";
 
-import type { AgendaTaskRecord } from "@cline/shared";
-import { getClineEnvironmentConfig } from "@cline/shared/browser";
+import type { AgendaTaskRecord } from "@sekokuva-ca/shared";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared/browser";
 import {
 	AgentConversationLayout,
 	type AgentQuickAction,
 	AgentQuickActions,
 	AgentWelcomeHero,
-} from "@cline/ui";
+} from "@sekokuva-ca/ui";
 import { Cloud } from "lucide-react";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";

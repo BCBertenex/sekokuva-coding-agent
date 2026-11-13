@@ -1,9 +1,9 @@
 import {
 	CloudSessionController,
 	type CloudSessionControllerOptions,
-} from "@cline/core/cloud";
-import { HubCloudSessionService, HubCommandError } from "@cline/core/hub";
-import type { HubEventEnvelope } from "@cline/shared";
+} from "@sekokuva-ca/core/cloud";
+import { HubCloudSessionService, HubCommandError } from "@sekokuva-ca/core/hub";
+import type { HubEventEnvelope } from "@sekokuva-ca/shared";
 import { afterEach } from "vitest";
 import { CloudSessionManager } from "./cloud-sessions";
 import type { SidecarContext } from "./types";

@@ -3,7 +3,7 @@ import {
 	type AgentToolContext,
 	createTool,
 	zodToJsonSchema,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { z } from "zod";
 import type { SpawnAgentInput } from "./spawn-agent-tool";
 

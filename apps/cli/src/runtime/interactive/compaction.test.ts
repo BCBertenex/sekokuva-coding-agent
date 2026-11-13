@@ -4,7 +4,7 @@ import { join } from "node:path";
 import {
 	type CoreCompactionContext,
 	ProviderSettingsManager,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Config } from "../../utils/types";
 import {
@@ -16,10 +16,10 @@ const createHandlerMock = vi.fn();
 
 // Core defaults to the agentic compaction strategy, which summarizes via a
 // real LLM handler. Stub only `createHandlerAsync` so no network call (or API
-// key) is needed; every other `@cline/llms` export stays real because
-// `@cline/core` re-exports them.
-vi.mock("@cline/llms", async (importOriginal) => ({
-	...(await importOriginal<typeof import("@cline/llms")>()),
+// key) is needed; every other `@sekokuva-ca/llms` export stays real because
+// `@sekokuva-ca/core` re-exports them.
+vi.mock("@sekokuva-ca/llms", async (importOriginal) => ({
+	...(await importOriginal<typeof import("@sekokuva-ca/llms")>()),
 	createHandlerAsync: (config: unknown) => createHandlerMock(config),
 }));
 

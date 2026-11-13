@@ -1,10 +1,10 @@
-import { normalizeProviderId } from "@cline/llms";
+import { normalizeProviderId } from "@sekokuva-ca/llms";
 import type {
 	ChatRunTurnRequest,
 	ChatStartSessionRequest,
 	ChatTurnResult,
 	ITelemetryService,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import type {
 	HubScheduleRuntimeHandlers,
 	HubScheduleServiceOptions,

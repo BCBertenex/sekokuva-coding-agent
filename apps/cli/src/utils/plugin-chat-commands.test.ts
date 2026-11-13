@@ -1,7 +1,7 @@
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { ClineCore, type PluginCommandsApi } from "@cline/core";
+import { ClineCore, type PluginCommandsApi } from "@sekokuva-ca/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createWorkspaceChatCommandHost } from "./plugin-chat-commands";
 

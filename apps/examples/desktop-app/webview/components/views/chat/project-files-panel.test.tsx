@@ -85,7 +85,7 @@ vi.mock("@/lib/desktop-client", () => ({
 
 // Plain rendering keeps shiki out of jsdom; highlighted-code.test.tsx covers
 // the highlighter wiring.
-vi.mock("@cline/ui/components/markdown", () => ({
+vi.mock("@sekokuva-ca/ui/components/markdown", () => ({
 	markdownCodeHighlighter: {
 		supportsLanguage: () => false,
 		getThemes: () => ["github-light", "github-dark"],

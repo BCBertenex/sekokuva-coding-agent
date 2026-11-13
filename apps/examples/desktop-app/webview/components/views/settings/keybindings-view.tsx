@@ -1,6 +1,6 @@
 "use client";
 
-import { Kbd, KbdGroup } from "@cline/ui";
+import { Kbd, KbdGroup } from "@sekokuva-ca/ui";
 import { Keyboard } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";

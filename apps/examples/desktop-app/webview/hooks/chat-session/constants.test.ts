@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { GENERATED_CLINE_RECOMMENDED_MODELS } from "@cline/llms/browser";
+import { GENERATED_CLINE_RECOMMENDED_MODELS } from "@sekokuva-ca/llms/browser";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const invoke = vi.hoisted(() => vi.fn());

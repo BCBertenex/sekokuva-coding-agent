@@ -1,7 +1,7 @@
 "use client";
 
-import { isChatWorkspacePath } from "@cline/shared/browser";
-import { Switch } from "@cline/ui";
+import { isChatWorkspacePath } from "@sekokuva-ca/shared/browser";
+import { Switch } from "@sekokuva-ca/ui";
 import {
 	Check,
 	FilePlus2,

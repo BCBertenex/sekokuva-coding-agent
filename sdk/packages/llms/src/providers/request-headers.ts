@@ -1,4 +1,4 @@
-import { decodeJwtPayload } from "@cline/shared";
+import { decodeJwtPayload } from "@sekokuva-ca/shared";
 
 export interface ProviderRequestHeaderClientContext {
 	name?: string;

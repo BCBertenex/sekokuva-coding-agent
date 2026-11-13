@@ -1,5 +1,5 @@
-import type { SessionAccumulatedUsage, SessionRecord } from "@cline/core";
-import type { Message } from "@cline/shared";
+import type { SessionAccumulatedUsage, SessionRecord } from "@sekokuva-ca/core";
+import type { Message } from "@sekokuva-ca/shared";
 import { c, formatUsd } from "../../utils/output";
 import { shouldShowCliUsageCost } from "../../utils/usage-cost-display";
 

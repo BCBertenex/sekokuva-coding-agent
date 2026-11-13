@@ -15,13 +15,13 @@ import {
 	type ITelemetryService,
 	NoOpFeatureFlagsProvider,
 	resolveCoreDistinctId,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import {
 	buildClinePostHogClient,
 	PostHogFeatureFlagsProvider,
-} from "@cline/core/services/feature-flags/posthog";
-import { FeatureFlag as SharedFeatureFlag } from "@cline/shared";
-import { resolveClineDataDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/core/services/feature-flags/posthog";
+import { FeatureFlag as SharedFeatureFlag } from "@sekokuva-ca/shared";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 
 const FEATURE_FLAG_CODE_CLOUD_AGENTS = SharedFeatureFlag.CODE_CLOUD_AGENTS;
 

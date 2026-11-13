@@ -1,6 +1,6 @@
 "use client";
 
-import { GitHubIcon } from "@cline/ui";
+import { GitHubIcon } from "@sekokuva-ca/ui";
 import {
 	ArrowUpRight,
 	ChevronDown,

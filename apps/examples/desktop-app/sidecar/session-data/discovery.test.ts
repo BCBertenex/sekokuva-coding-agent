@@ -1,8 +1,8 @@
-import { cloudSessionToDiscoveryRecord } from "@cline/core/cloud";
+import { cloudSessionToDiscoveryRecord } from "@sekokuva-ca/core/cloud";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@cline/core", async (importOriginal) => ({
-	...(await importOriginal<typeof import("@cline/core")>()),
+vi.mock("@sekokuva-ca/core", async (importOriginal) => ({
+	...(await importOriginal<typeof import("@sekokuva-ca/core")>()),
 	SqliteSessionStore: class {
 		get() {
 			return { metadata: {} };

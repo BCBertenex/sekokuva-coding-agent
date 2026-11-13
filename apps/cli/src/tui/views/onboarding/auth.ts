@@ -6,8 +6,8 @@ import {
 	type ProviderSettingsManager,
 	saveLocalProviderOAuthCredentials,
 	startClineDeviceAuth,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 import { identifyFeatureFlagsAccount } from "../../../utils/feature-flags";
 import open from "../../../utils/open";
 

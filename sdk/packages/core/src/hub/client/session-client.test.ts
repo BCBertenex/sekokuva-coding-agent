@@ -4,7 +4,7 @@ import type {
 	AgendaTaskRecord,
 	AgendaTaskRunRecord,
 	AgendaTaskUpdateInput,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { HubSessionClient } from "./session-client";
 

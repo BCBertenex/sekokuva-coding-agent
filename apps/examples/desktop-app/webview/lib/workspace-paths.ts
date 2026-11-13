@@ -1,4 +1,4 @@
-import { isChatWorkspacePath } from "@cline/shared/browser";
+import { isChatWorkspacePath } from "@sekokuva-ca/shared/browser";
 
 export const WORKSPACE_SELECTION_STORAGE_KEY =
 	"cline.code.workspace-selection.v2";

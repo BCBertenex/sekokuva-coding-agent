@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { truncateSplit } from "@cline/shared";
+import { truncateSplit } from "@sekokuva-ca/shared";
 import type {
 	SkillConfig,
 	UserInstructionConfigWatcher,

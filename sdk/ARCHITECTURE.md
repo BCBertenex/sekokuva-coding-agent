@@ -4,7 +4,7 @@ This document is the architecture source of truth for the Cline SDK repository. 
 
 **Who should read this?**
 - SDK contributors working across multiple packages
-- Developers building integrations or host applications using `@cline/core`
+- Developers building integrations or host applications using `@sekokuva-ca/core`
 - Plugin authors understanding the runtime and extension systems
 
 **What this covers:**
@@ -25,10 +25,10 @@ The workspace is organized as a layered runtime stack.
 
 ```mermaid
 flowchart LR
-  shared["@cline/shared"]
-  llms["@cline/llms"]
-  agents["@cline/agents"]
-  core["@cline/core"]
+  shared["@sekokuva-ca/shared"]
+  llms["@sekokuva-ca/llms"]
+  agents["@sekokuva-ca/agents"]
+  core["@sekokuva-ca/core"]
   apps["Host Apps"]
 
   llms --> shared
@@ -42,7 +42,7 @@ flowchart LR
 
 ## Package Responsibilities
 
-### `@cline/shared`
+### `@sekokuva-ca/shared`
 
 Owns reusable low-level contracts and infrastructure:
 
@@ -58,7 +58,7 @@ Design rule:
 
 - `shared` should not depend on higher-level runtime packages.
 
-### `@cline/llms`
+### `@sekokuva-ca/llms`
 
 Owns model/provider runtime concerns:
 
@@ -99,7 +99,7 @@ Design rule:
   The field-level contract is `GitSnapshotProperties` in
   `packages/core/src/services/telemetry/core-events.ts`.
 
-### `@cline/agents`
+### `@sekokuva-ca/agents`
 
 Owns the stateless runtime loop:
 
@@ -114,7 +114,7 @@ Design rule:
 
 - `agents` should not own persistent storage or host lifecycle concerns.
 
-### `@cline/core`
+### `@sekokuva-ca/core`
 
 Owns stateful orchestration:
 
@@ -128,15 +128,15 @@ Owns stateful orchestration:
 - default context compaction policy
 - telemetry integration
 - hub server and scheduled-runtime services under `src/hub/`
-- hub discovery, the detached hub daemon, and the `@cline/core/hub/daemon-entry` subpath
-- host-side hub client adapters (`NodeHubClient`, `HubSessionClient`, `HubUIClient`, `connectToHub`) exported from `@cline/core/hub`
-- the experimental cloud-session client exported from `@cline/core/cloud`: cloud API access, remote session lifecycle, and transcript reconciliation
+- hub discovery, the detached hub daemon, and the `@sekokuva-ca/core/hub/daemon-entry` subpath
+- host-side hub client adapters (`NodeHubClient`, `HubSessionClient`, `HubUIClient`, `connectToHub`) exported from `@sekokuva-ca/core/hub`
+- the experimental cloud-session client exported from `@sekokuva-ca/core/cloud`: cloud API access, remote session lifecycle, and transcript reconciliation
 
 Design rules:
 
 - `core` is the app-facing orchestration layer over `agents`.
 - `session/fork-metadata` owns fork ancestry and removal of inherited handoff markers; hosts retain title, transcript, and workspace-restore policies.
-- `@cline/core/cloud` owns remote cloud-session state and emits immutable snapshots and events. Viewers hydrating active runs with `readMessages` reconcile canonical history at completion even if they missed the run start. Desktop uses `HubCloudSessionClient` over its existing shared Hub connection. `HubCloudSessionService` in the daemon owns its account-scoped controller, refresh-aware credentials, organization lookup, provisioning, sandbox connections, queues, approvals, and transcript reconciliation. Desktop projects the snapshots into its UI; feature gating and host persistence remain in the app. Direct controller hosts (including handoff flows) can still supply authentication. Importing this subpath does not initialize a local agent.
+- `@sekokuva-ca/core/cloud` owns remote cloud-session state and emits immutable snapshots and events. Viewers hydrating active runs with `readMessages` reconcile canonical history at completion even if they missed the run start. Desktop uses `HubCloudSessionClient` over its existing shared Hub connection. `HubCloudSessionService` in the daemon owns its account-scoped controller, refresh-aware credentials, organization lookup, provisioning, sandbox connections, queues, approvals, and transcript reconciliation. Desktop projects the snapshots into its UI; feature gating and host persistence remain in the app. Direct controller hosts (including handoff flows) can still supply authentication. Importing this subpath does not initialize a local agent.
 - While a cloud connection is retained, discovery uses existing Hub session `updatedAt` and original run-event timestamps rather than proxy API timestamps or local hydration end times. After connection disposal, discovery preserves known activity and accepts API activity only above the API clock recorded at disposal. Accepted API activity advances the retained clock so a later failed open cannot rewind it. An API bump first received after disposal remains indistinguishable from real activity. Rows without Hub evidence use API activity with creation-time fallback. Hub record times can also reflect metadata writes and some session-reconstruction paths.
 - `artifacts/publish` owns the opt-in publication tool, file preparation, and batch/result contract. Hosts inject a publisher; `artifacts/cloud` owns cloud upload policies, storage transfers, and signed-URL retrieval. Default local tool catalogs do not include publication.
 - `CloudSessionApi` and `HubCloudSessionClient` expose signed artifact download URLs without resuming the sandbox. The Hub binds requests to the viewer’s account scope; hosts keep signed URLs transient and retrieve file bytes directly from storage.
@@ -163,13 +163,13 @@ Design rules:
 
 ### Local In-Process Runtime
 
-1. Host constructs a `RuntimeHost` through `@cline/core`.
-2. `@cline/core` selects `LocalRuntimeHost` through `packages/core/src/runtime/host.ts`.
+1. Host constructs a `RuntimeHost` through `@sekokuva-ca/core`.
+2. `@sekokuva-ca/core` selects `LocalRuntimeHost` through `packages/core/src/runtime/host.ts`.
 3. Hosts normalize broad local config into `RuntimeSessionConfig` plus `localRuntime` overrides before calling `RuntimeHost.start(...)`.
-4. `@cline/core` prepares a local bootstrap artifact from `localRuntime`, then builds the runtime from it.
-5. `@cline/core` creates an `Agent` from `@cline/agents`.
-6. `@cline/agents` runs the loop using `@cline/llms` handlers.
-7. `@cline/core` persists state, artifacts, and metadata.
+4. `@sekokuva-ca/core` prepares a local bootstrap artifact from `localRuntime`, then builds the runtime from it.
+5. `@sekokuva-ca/core` creates an `Agent` from `@sekokuva-ca/agents`.
+6. `@sekokuva-ca/agents` runs the loop using `@sekokuva-ca/llms` handlers.
+7. `@sekokuva-ca/core` persists state, artifacts, and metadata.
 
 Completion telemetry is anchored to the assistant's explicit completion
 declaration, not session shutdown. After each agent turn, the local
@@ -190,15 +190,15 @@ field.
 
 The hub health endpoint includes its `hubId`. Restart callers compare this instance identity while waiting for shutdown, so a replacement started by reconnecting clients at the same address counts as retirement of the original hub. Desktop local activity is recorded only at its local hub observer subscription; cloud session projection does not write to that activity list.
 
-1. Host constructs a `RuntimeHost` through `@cline/core`.
-2. `@cline/core` selects `HubRuntimeHost` or `RemoteRuntimeHost` through `packages/core/src/runtime/host.ts`.
-3. When no compatible local hub is already discovered, `@cline/core` can spawn a detached hub daemon and reconnect through discovery. The spawner waits up to 15s for the daemon to publish a usable discovery record (cold starts of the compiled binary on Windows regularly need more than the previous 8s). If the daemon still fails to come up, the runtime host's `No compatible hub runtime is available` error carries the underlying reason, and the daemon reports its own startup failure to telemetry (`hub.daemon.startup`) before exiting.
+1. Host constructs a `RuntimeHost` through `@sekokuva-ca/core`.
+2. `@sekokuva-ca/core` selects `HubRuntimeHost` or `RemoteRuntimeHost` through `packages/core/src/runtime/host.ts`.
+3. When no compatible local hub is already discovered, `@sekokuva-ca/core` can spawn a detached hub daemon and reconnect through discovery. The spawner waits up to 15s for the daemon to publish a usable discovery record (cold starts of the compiled binary on Windows regularly need more than the previous 8s). If the daemon still fails to come up, the runtime host's `No compatible hub runtime is available` error carries the underlying reason, and the daemon reports its own startup failure to telemetry (`hub.daemon.startup`) before exiting.
 4. Hosts attach and detach from shared sessions without stopping the authority runtime, so another client can keep streaming or resume the same session later.
-   One daemon serves every Cline client on the machine, and a hub-hosted session's telemetry carries only its own client (`clientName`/`clientVersion`), so the daemon also records *whose build started it*. The spawner stamps `CLINE_HUB_LAUNCHER_CLIENT`, `CLINE_HUB_LAUNCHER_VERSION`, and `CLINE_HUB_LAUNCHER_TRANSPORT` on the daemon environment (`withHubLauncherIdentity` in `@cline/shared`), defaulting to the spawning process's `ClineClientIdentity` and `local`. An embedding host that starts the hub through the CLI (the desktop app running `cline-cli hub ensure`) stamps itself first, and a stamp already present is kept as a whole, so the CLI that performs the spawn never records its own name or fills in its version next to the host's name. SSH remote hubs are stamped by the client over the `env` prefix of the remote `hub ensure` command with `transport=ssh`. The daemon claims the stamp out of its environment at startup (`claimHubLauncherIdentity`, same hazard as the daemon sentinel: hosted sessions spawn processes that inherit the environment, and a hub one of them starts must record itself) and publishes it with its build id and executable name as OTel resource attributes: `cline.hub.launcher.client`, `cline.hub.launcher.version`, `cline.hub.launcher.transport`, `cline.hub.build_id`, `cline.hub.runtime`. Collectors and Langfuse surface these as `resourceAttributes.*`, so a desktop session hosted by a CLI-started hub is attributable to that CLI build.
-5. The hub-hosted runtime executes the agent loop using `@cline/agents` and `@cline/llms`.
-6. `@cline/core` hub services broker sessions, events, approvals, schedules, and client-owned runtime capabilities such as session-local tool executors.
+   One daemon serves every Cline client on the machine, and a hub-hosted session's telemetry carries only its own client (`clientName`/`clientVersion`), so the daemon also records *whose build started it*. The spawner stamps `CLINE_HUB_LAUNCHER_CLIENT`, `CLINE_HUB_LAUNCHER_VERSION`, and `CLINE_HUB_LAUNCHER_TRANSPORT` on the daemon environment (`withHubLauncherIdentity` in `@sekokuva-ca/shared`), defaulting to the spawning process's `ClineClientIdentity` and `local`. An embedding host that starts the hub through the CLI (the desktop app running `cline-cli hub ensure`) stamps itself first, and a stamp already present is kept as a whole, so the CLI that performs the spawn never records its own name or fills in its version next to the host's name. SSH remote hubs are stamped by the client over the `env` prefix of the remote `hub ensure` command with `transport=ssh`. The daemon claims the stamp out of its environment at startup (`claimHubLauncherIdentity`, same hazard as the daemon sentinel: hosted sessions spawn processes that inherit the environment, and a hub one of them starts must record itself) and publishes it with its build id and executable name as OTel resource attributes: `cline.hub.launcher.client`, `cline.hub.launcher.version`, `cline.hub.launcher.transport`, `cline.hub.build_id`, `cline.hub.runtime`. Collectors and Langfuse surface these as `resourceAttributes.*`, so a desktop session hosted by a CLI-started hub is attributable to that CLI build.
+5. The hub-hosted runtime executes the agent loop using `@sekokuva-ca/agents` and `@sekokuva-ca/llms`.
+6. `@sekokuva-ca/core` hub services broker sessions, events, approvals, schedules, and client-owned runtime capabilities such as session-local tool executors.
 7. Hub event forwarding preserves structured streaming lifecycle boundaries: text/reasoning deltas, final text/reasoning completion, tool start/update/finish, and agent done events are translated across the hub transport so host UIs can reliably close loading/streaming state. `run.started` is emitted only after the target session is resolved and carries the originating command's `requestId` and `clientId`, allowing multi-client hosts to correlate delivery acknowledgments.
-8. Hub client adapters exported from `@cline/core/hub` (`NodeHubClient`, `HubSessionClient`, `HubUIClient`, `connectToHub`) translate command/reply and event streams into host-facing APIs. Node clients register their version and PID together with caller metadata on every connection; `HubSessionClient` passes metadata through at registration so client events, refreshed lists, and reconnects retain the same details.
+8. Hub client adapters exported from `@sekokuva-ca/core/hub` (`NodeHubClient`, `HubSessionClient`, `HubUIClient`, `connectToHub`) translate command/reply and event streams into host-facing APIs. Node clients register their version and PID together with caller metadata on every connection; `HubSessionClient` passes metadata through at registration so client events, refreshed lists, and reconnects retain the same details.
 9. Hub `session.get` records include both canonical root-session usage and explicit aggregate usage from the hub-owned `RuntimeHost`, so attached clients can intentionally render either root-only or root-plus-teammate costs without replaying event streams.
 
 `HubRuntimeHost.deleteSession()` retains local event subscriptions and approval
@@ -307,7 +307,7 @@ image, audio, transcription, or video endpoint.
 
 Generated media crosses package boundaries as follows:
 
-1. `@cline/llms` validates provider output once and creates canonical
+1. `@sekokuva-ca/llms` validates provider output once and creates canonical
    `GeneratedMedia` values. The contract carries a stable ID, modality, MIME type,
    and a discriminated base64, HTTP(S), or artifact source. Current producers emit
    images; audio, video, and large artifact-backed files use the same contract.
@@ -316,13 +316,13 @@ Generated media crosses package boundaries as follows:
    coalesces preliminary or repeated results, enforces the per-turn media budget,
    and persists only a compact activity summary rather than duplicating base64 in
    model-tool metadata.
-3. `@cline/agents` appends media events at their exact stream position in the
+3. `@sekokuva-ca/agents` appends media events at their exact stream position in the
    assistant message. That message is the canonical replay and persistence source;
    observational provider-tool activity remains display-only metadata.
-4. `@cline/core` projects live media as `content_end(media)`. The hub publishes
+4. `@sekokuva-ca/core` projects live media as `content_end(media)`. The hub publishes
    `assistant.media`, preserving the same media ID, and clients deduplicate live
    and hydrated content by that ID.
-5. Web clients share `GeneratedMediaContent` from `@cline/ui` for image, audio,
+5. Web clients share `GeneratedMediaContent` from `@sekokuva-ca/ui` for image, audio,
    video, file, and unavailable-source rendering. Inline bytes are exposed only
    through short-lived browser-owned object URLs; remote and artifact sources
    require a client-owned trusted resolver. CLI and ACP clients provide
@@ -442,9 +442,9 @@ Cache eviction releases cache-owned text only; original output remains under ord
 
 ### Connector Persistence and Recovery
 
-1. `@cline/shared/db` owns the low-level SQLite connector store and the one-time legacy JSON import.
+1. `@sekokuva-ca/shared/db` owns the low-level SQLite connector store and the one-time legacy JSON import.
 2. Dashboard configuration and CLI connection state are recorded separately. Configuration edits replace only dashboard-owned connector and security flags in stored reconnect arguments, preserving CLI-only runtime options, and refresh arguments only for connectors that have previously started successfully.
-3. `@cline/core` owns connector autostart persistence and reconnect orchestration. The detached hub daemon is the sole startup reconnect owner, preventing dashboard startup from racing it and launching duplicate processes.
+3. `@sekokuva-ca/core` owns connector autostart persistence and reconnect orchestration. The detached hub daemon is the sole startup reconnect owner, preventing dashboard startup from racing it and launching duplicate processes.
 4. Detached connector starts are persisted only after a child process is created. Internal detached children preserve that state when they exit, while a clean user-interactive exit disables autostart.
 5. CLI and dashboard hosts pass their connector CLI launch specification through the detached process environment. The package-owned daemon entrypoint uses that specification to start connector reconnect wrappers without importing application code.
 6. The detached hub entrypoint exposes `hubDaemonReady`, which resolves only after the WebSocket server is listening. It begins reconnect attempts after signaling readiness, and reconnect failures remain best-effort rather than taking down the hub.
@@ -452,11 +452,11 @@ Cache eviction releases cache-owned text only; original output remains under ord
 ### Remote-Config Managed Runtime
 
 1. A host or core wrapper fetches a normalized `RemoteConfigBundle`.
-2. `@cline/shared/remote-config` caches the bundle when configured.
+2. `@sekokuva-ca/shared/remote-config` caches the bundle when configured.
 3. Shared remote-config materializes managed rules/workflows/skills under workspace-local `.cline/<plugin>/`.
 4. Shared remote-config derives generic OpenTelemetry config and session blob upload metadata from the bundle.
-5. `@cline/core` exposes the app-facing integration wrapper that applies extensions, telemetry, and session metadata to `StartSessionInput`.
-6. `@cline/core` consumes the prepared local overrides during local bootstrap.
+5. `@sekokuva-ca/core` exposes the app-facing integration wrapper that applies extensions, telemetry, and session metadata to `StartSessionInput`.
+6. `@sekokuva-ca/core` consumes the prepared local overrides during local bootstrap.
 
 This keeps reusable remote-config behavior in `shared` while the session-specific bridge remains in `core`.
 
@@ -564,7 +564,7 @@ Design implication:
 
 ### 6. Logging
 
-Cross-package logging uses a small injected interface exported from `@cline/shared`:
+Cross-package logging uses a small injected interface exported from `@sekokuva-ca/shared`:
 
 - **`BasicLogger`** — required `debug` and `log`; optional `error`. Hosts map these to their backend (Pino, VS Code `OutputChannel`, etc.). Many runtime options take `logger?: BasicLogger`; when omitted, components skip logging or use `noopBasicLogger` where a full object is required.
 - **`BasicLogMetadata`** — optional structured fields (`sessionId`, `runId`, `providerId`, `toolName`, `durationMs`, …) plus `severity` on `log` when a single method must represent both informational and warning-style messages (for example the CLI Pino bridge maps `severity: "warn"` to Pino `warn`).
@@ -572,7 +572,7 @@ Cross-package logging uses a small injected interface exported from `@cline/shar
 Naming clarity:
 
 - **`CliLoggerAdapter` (CLI)** — a **host bundle**: holds the raw `pino` logger (for file paths, rotation, and CLI-only concerns) and exposes `.core: BasicLogger` for anything that consumes the SDK contract. It is not an `ITelemetryAdapter`.
-- **`TelemetryLoggerSink` (`@cline/core`)** — an **`ITelemetryAdapter`** that mirrors telemetry events and metrics into a `BasicLogger`. It is a telemetry sink, not a host logging implementation.
+- **`TelemetryLoggerSink` (`@sekokuva-ca/core`)** — an **`ITelemetryAdapter`** that mirrors telemetry events and metrics into a `BasicLogger`. It is a telemetry sink, not a host logging implementation.
 
 The agent and other call sites route former `info` / `warn` semantics through `log` (warnings include `severity: "warn"` in metadata). Errors prefer `error` when implemented; otherwise `log` with `severity: "error"` is used as a fallback.
 
@@ -583,8 +583,8 @@ Design implication:
 
 ### 6.1 Langfuse telemetry ownership
 
-`@cline/llms` owns Langfuse instrumentation, trace attribute propagation, and
-the `LangfuseAttributesSpanProcessor`. `@cline/core` owns the host OpenTelemetry
+`@sekokuva-ca/llms` owns Langfuse instrumentation, trace attribute propagation, and
+the `LangfuseAttributesSpanProcessor`. `@sekokuva-ca/core` owns the host OpenTelemetry
 provider and installs that processor when constructing an OTLP trace pipeline.
 The processor copies context attributes onto `cline-provider-langfuse` spans;
 it does not create an exporter or require Langfuse credentials. User and session
@@ -644,11 +644,11 @@ Design implication:
 
 Context compaction is owned by `core`.
 
-- `@cline/agents` owns the generic turn-preparation seam:
+- `@sekokuva-ca/agents` owns the generic turn-preparation seam:
   - run normal lifecycle hooks
   - allow hosts to project message history or system prompt before the provider call
   - keep its canonical runtime transcript append-only when a projection is returned
-- `@cline/core` owns compaction policy:
+- `@sekokuva-ca/core` owns compaction policy:
   - inject a prepare-turn pipeline for root sessions
   - choose between built-in strategies through a registry map
   - persist the latest compacted working context as a session compaction artifact
@@ -809,7 +809,7 @@ Because no plugin code runs on the daemon's thread, its `uncaughtException` /
 Both transports share one RPC protocol and one bootstrap
 (`plugin-sandbox-bootstrap.ts`). After SDK compilation, Core builds
 `dist/plugin-runtime/`, containing the self-contained bootstrap and the complete
-SDK import graph under `node_modules/@cline`. Package exports come from the SDK
+SDK import graph under `node_modules/@sekokuva-ca`. Package exports come from the SDK
 manifests, including browser subpaths. Hosts ship this directory as one artifact:
 
 - `WorkerSandbox` (worker mode): structured clone over the worker's message
@@ -895,7 +895,7 @@ Design implications:
 
 ### Keep `agents` Stateless
 
-Do not move these concerns into `@cline/agents`:
+Do not move these concerns into `@sekokuva-ca/agents`:
 
 - session persistence
 - provider settings storage
@@ -909,9 +909,9 @@ merges host-supplied properties through `runEndTelemetryProperties`.
 
 ### Keep `core` Generic
 
-Do not make `@cline/core` organization- or provider-specific.
+Do not make `@sekokuva-ca/core` organization- or provider-specific.
 
-If a capability is truly generic and app-facing, add a generic core seam. Reusable remote-config parsing, materialization, and upload primitives belong in `@cline/shared/remote-config`.
+If a capability is truly generic and app-facing, add a generic core seam. Reusable remote-config parsing, materialization, and upload primitives belong in `@sekokuva-ca/shared/remote-config`.
 
 ### Use One-Way Optional Layers
 
@@ -926,7 +926,7 @@ Agenda tasks are durable proposals for future work. They are intentionally
 separate from cron specs, queued prompts inside an existing session, and the
 agent-team task board. Shared, browser-safe contracts use `AgendaTaskRecord`
 and `AgendaTaskRunRecord`; orchestration and persistence remain in
-`@cline/core`.
+`@sekokuva-ca/core`.
 
 > **Status:** the agent-facing `kind: "todo"` half of the `tasks` tool and the
 > desktop Agenda UI are temporarily disabled while the Agenda UX is reworked
@@ -1044,7 +1044,7 @@ and `AgendaTaskRunRecord`; orchestration and persistence remain in
 
 ## File-Based And Event-Driven Automation (`ClineCore` / `CronService`)
 
-`@cline/core` ships a file-based automation subsystem under
+`@sekokuva-ca/core` ships a file-based automation subsystem under
 `packages/core/src/cron/`. It lets operators author recurring and one-off
 tasks as Markdown files under global `~/.cline/cron/` by default, and
 event-driven tasks as `events/*.event.md` specs. All trigger kinds run
@@ -1056,7 +1056,7 @@ orchestrator used by core and hub layers.
 
 1. **Spec parser** (`cron/specs/cron-spec-parser.ts`): parses YAML frontmatter + body
    into a `CronSpec` discriminated union (`one_off | schedule | event`).
-   Types live in `@cline/shared` under `src/cron/cron-spec-types.ts`
+   Types live in `@sekokuva-ca/shared` under `src/cron/cron-spec-types.ts`
    so other packages can consume them without the YAML parser. Schedule
    expressions and timezones are validated before a spec can become
    runnable.
@@ -1213,11 +1213,11 @@ Architectural consequence:
 
 The following packages are published to npm:
 
-- `@cline/shared` — shared types, contracts, and low-level utilities
-- `@cline/llms` — provider integrations and model manifests
-- `@cline/agents` — the agent loop and tool orchestration
-- `@cline/core` — the main SDK with session management, hub, and configuration
-- `@cline/ui` — shared web theme and reusable agent UI React components
+- `@sekokuva-ca/shared` — shared types, contracts, and low-level utilities
+- `@sekokuva-ca/llms` — provider integrations and model manifests
+- `@sekokuva-ca/agents` — the agent loop and tool orchestration
+- `@sekokuva-ca/core` — the main SDK with session management, hub, and configuration
+- `@sekokuva-ca/ui` — shared web theme and reusable agent UI React components
 
 ### Internal Apps
 
@@ -1340,7 +1340,7 @@ effect when constructing child tools. Inherited runtime hooks are unchanged.
 
 ### UX verification presentation boundary
 
-The reusable `@cline/ui` UX verification carousel consumes a report contract owned by `@cline/shared`. It handles report validation, screenshot presentation, native inline image load failures and navigation. It does not depend on a verification tool, subagent executor, transcript grouping, persistence changes or a particular host. Web, Desktop and IDE consumers can supply image renderers and expanded-image callbacks.
+The reusable `@sekokuva-ca/ui` UX verification carousel consumes a report contract owned by `@sekokuva-ca/shared`. It handles report validation, screenshot presentation, native inline image load failures and navigation. It does not depend on a verification tool, subagent executor, transcript grouping, persistence changes or a particular host. Web, Desktop and IDE consumers can supply image renderers and expanded-image callbacks.
 
 Hosts own remote-image authorization, fetch-error-driven signed URL recovery and focus-managed expanded-image dialogs. Report production, product integration, CLI text rendering and transcript reshaping remain independent concerns.
 

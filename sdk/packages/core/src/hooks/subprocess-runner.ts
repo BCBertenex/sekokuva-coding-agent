@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import {
 	augmentNodeCommandForDebug,
 	withResolvedClineBuildEnv,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 
 /**
  * How long to watch a detached hook before recording it as still running.

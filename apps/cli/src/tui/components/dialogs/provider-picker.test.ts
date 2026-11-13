@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { ProviderSettingsManager } from "@cline/core";
+import { ProviderSettingsManager } from "@sekokuva-ca/core";
 import { afterEach, describe, expect, it } from "vitest";
 import {
 	getPersistedProviderApiKey,

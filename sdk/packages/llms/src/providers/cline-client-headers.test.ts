@@ -1,4 +1,4 @@
-import { getClineClientIdentity, setClineClientIdentity } from "@cline/shared";
+import { getClineClientIdentity, setClineClientIdentity } from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it } from "vitest";
 import { buildClineClientHeaders } from "./cline-client-headers";
 

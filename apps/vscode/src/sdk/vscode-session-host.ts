@@ -33,8 +33,13 @@ import {
 	type StartSessionResult,
 	type ToolExecutors,
 	toClineCoreStartInput,
-} from "@cline/core"
-import { RUNTIME_CONFIG_EXTENSION_KINDS, type ToolApprovalRequest, type ToolApprovalResult, type ToolPolicy } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import {
+	RUNTIME_CONFIG_EXTENSION_KINDS,
+	type ToolApprovalRequest,
+	type ToolApprovalResult,
+	type ToolPolicy,
+} from "@sekokuva-ca/shared"
 import { StateManager } from "@/core/storage/StateManager"
 import type { VscodeTerminalManager } from "@/hosts/vscode/terminal/VscodeTerminalManager"
 import { getDistinctId } from "@/services/logging/distinctId"

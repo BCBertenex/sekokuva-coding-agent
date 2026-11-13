@@ -19,8 +19,8 @@ import {
 	type ShellExecutor,
 	type StructuredCommandInput,
 	truncateCommandOutput,
-} from "@cline/core"
-import type { AgentTool } from "@cline/shared"
+} from "@sekokuva-ca/core"
+import type { AgentTool } from "@sekokuva-ca/shared"
 import { TerminalUserInterventionAction, telemetryService } from "@services/telemetry"
 import { ClineTempManager } from "@services/temp"
 import * as fs from "fs"

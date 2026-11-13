@@ -1,6 +1,6 @@
 "use client";
 
-import { isChatWorkspacePath } from "@cline/shared/browser";
+import { isChatWorkspacePath } from "@sekokuva-ca/shared/browser";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { normalizeTitle } from "@/components/utils";
 import { toast } from "@/hooks/use-toast";

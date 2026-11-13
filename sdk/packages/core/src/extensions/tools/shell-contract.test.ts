@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { AgentToolContext } from "@cline/shared";
+import type { AgentToolContext } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
 import {
 	CommandSpawnError,

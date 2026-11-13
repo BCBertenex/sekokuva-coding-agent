@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { builtinModules, createRequire } from "node:module";
 import { dirname, extname, isAbsolute, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PLUGIN_FILE_EXTENSIONS } from "@cline/shared";
+import { PLUGIN_FILE_EXTENSIONS } from "@sekokuva-ca/shared";
 
 import { resolvePluginRuntimeDirectory } from "./plugin-runtime";
 
@@ -13,20 +13,20 @@ const HOST_REQUIRE = createRequire(import.meta.url);
 const WORKSPACE_ROOT = resolve(MODULE_DIR, "..", "..", "..", "..", "..");
 const WORKSPACE_ALIASES = collectWorkspaceAliases(WORKSPACE_ROOT);
 const HOST_PROVIDED_SDK_SPECIFIERS = [
-	"@cline/sdk",
-	"@cline/agents",
-	"@cline/core",
-	"@cline/core/hub",
-	"@cline/core/hub/daemon-entry",
-	"@cline/core/telemetry",
-	"@cline/llms",
-	"@cline/llms/browser",
-	"@cline/shared",
-	"@cline/shared/automation",
-	"@cline/shared/browser",
-	"@cline/shared/storage",
-	"@cline/shared/db",
-	"@cline/shared/types",
+	"@sekokuva-ca/sdk",
+	"@sekokuva-ca/agents",
+	"@sekokuva-ca/core",
+	"@sekokuva-ca/core/hub",
+	"@sekokuva-ca/core/hub/daemon-entry",
+	"@sekokuva-ca/core/telemetry",
+	"@sekokuva-ca/llms",
+	"@sekokuva-ca/llms/browser",
+	"@sekokuva-ca/shared",
+	"@sekokuva-ca/shared/automation",
+	"@sekokuva-ca/shared/browser",
+	"@sekokuva-ca/shared/storage",
+	"@sekokuva-ca/shared/db",
+	"@sekokuva-ca/shared/types",
 ];
 const BUILTIN_MODULES = new Set(
 	builtinModules.flatMap((id) => [id, id.replace(/^node:/, "")]),
@@ -52,16 +52,16 @@ export interface ImportPluginModuleOptions {
 function collectWorkspaceAliases(root: string): Record<string, string> {
 	const aliases: Record<string, string> = {};
 	const candidates: Record<string, string> = {
-		"@cline/sdk": resolve(root, "packages/sdk/src/index.ts"),
-		"@cline/agents": resolve(root, "packages/agents/src/index.ts"),
-		"@cline/core": resolve(root, "packages/core/src/index.ts"),
-		"@cline/llms": resolve(root, "packages/llms/src/index.ts"),
-		"@cline/shared": resolve(root, "packages/shared/src/index.ts"),
-		"@cline/shared/storage": resolve(
+		"@sekokuva-ca/sdk": resolve(root, "packages/sdk/src/index.ts"),
+		"@sekokuva-ca/agents": resolve(root, "packages/agents/src/index.ts"),
+		"@sekokuva-ca/core": resolve(root, "packages/core/src/index.ts"),
+		"@sekokuva-ca/llms": resolve(root, "packages/llms/src/index.ts"),
+		"@sekokuva-ca/shared": resolve(root, "packages/shared/src/index.ts"),
+		"@sekokuva-ca/shared/storage": resolve(
 			root,
 			"packages/shared/src/storage/index.ts",
 		),
-		"@cline/shared/db": resolve(root, "packages/shared/src/db/index.ts"),
+		"@sekokuva-ca/shared/db": resolve(root, "packages/shared/src/db/index.ts"),
 	};
 	for (const [key, value] of Object.entries(candidates)) {
 		if (existsSync(value)) {
@@ -214,7 +214,7 @@ function getPackageExportPath(specifier: string): string {
 }
 
 function isClineSdkSpecifier(specifier: string): boolean {
-	return getPackageName(specifier).startsWith("@cline/");
+	return getPackageName(specifier).startsWith("@sekokuva-ca/");
 }
 
 function hasInstalledDependency(
@@ -772,7 +772,7 @@ export async function importPluginModule(
 		transformModules,
 		// On Bun (the packaged binary), tryNative defaults to true, which makes
 		// jiti hand the plugin path straight to Bun's `import()`. Bun then owns
-		// every nested import in the plugin, sees `import "@cline/core"` with no
+		// every nested import in the plugin, sees `import "@sekokuva-ca/core"` with no
 		// node_modules adjacent to the drop-in plugin. Forcing tryNative off keeps
 		// jiti in charge so bare specifiers can be rewritten through aliases first.
 		tryNative: false,

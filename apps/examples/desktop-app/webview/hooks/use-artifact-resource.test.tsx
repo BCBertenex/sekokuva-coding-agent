@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import type { CloudArtifactDownload } from "@cline/core/cloud";
+import type { CloudArtifactDownload } from "@sekokuva-ca/core/cloud";
 import { act, useEffect } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";

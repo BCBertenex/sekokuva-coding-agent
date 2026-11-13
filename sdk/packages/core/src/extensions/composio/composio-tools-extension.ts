@@ -1,12 +1,12 @@
 import { createHash } from "node:crypto";
 import { join } from "node:path";
-import type { AgentExtension, AgentTool, BasicLogger } from "@cline/shared";
+import type { AgentExtension, AgentTool, BasicLogger } from "@sekokuva-ca/shared";
 import {
 	createTool,
 	FeatureFlag,
 	getClineEnvironmentConfig,
-} from "@cline/shared";
-import { resolveClineDataDir } from "@cline/shared/storage";
+} from "@sekokuva-ca/shared";
+import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 import {
 	OAuthReauthRequiredError,
 	RuntimeOAuthTokenManager,

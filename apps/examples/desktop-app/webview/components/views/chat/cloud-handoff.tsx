@@ -1,6 +1,6 @@
 "use client";
 
-import type { HandoffGitPreview } from "@cline/core/cloud";
+import type { HandoffGitPreview } from "@sekokuva-ca/core/cloud";
 import { Cloud, ExternalLink, Loader2, X } from "lucide-react";
 import {
 	AlertDialog,

@@ -1,5 +1,5 @@
-import { GENERATED_CLINE_RECOMMENDED_MODELS } from "@cline/llms/browser";
-import { CLINE_DEFAULT_MODEL_ID, isClineProvider } from "@cline/shared/browser";
+import { GENERATED_CLINE_RECOMMENDED_MODELS } from "@sekokuva-ca/llms/browser";
+import { CLINE_DEFAULT_MODEL_ID, isClineProvider } from "@sekokuva-ca/shared/browser";
 import type { ChatSessionConfig } from "@/lib/chat-schema";
 import { desktopClient } from "@/lib/desktop-client";
 import {

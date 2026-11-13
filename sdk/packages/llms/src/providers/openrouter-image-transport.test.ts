@@ -1,4 +1,4 @@
-import type { AgentMessage, AgentModelEvent } from "@cline/shared";
+import type { AgentMessage, AgentModelEvent } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
 import { createGateway } from "./gateway";
 

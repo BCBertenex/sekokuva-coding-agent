@@ -6,15 +6,15 @@ import {
 // override ("undici": ">=7.30.1 <8") forces undici 7.x. The floor was raised
 // to 7.29.0 for CVE-2026-1525 and to 7.30.1 for CVE-2026-109869 and
 // CVE-2026-87018 (AIKIDO-2026-159850, AIKIDO-2026-393834).
-import type { ChatStartSessionRequest } from "@cline/core";
+import type { ChatStartSessionRequest } from "@sekokuva-ca/core";
 import {
 	createUserInstructionConfigService,
 	HubSessionClient,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import type {
 	ConnectDiscordOptions,
 	DiscordConnectorState,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { Chat, ConsoleLogger, type Thread, ThreadImpl } from "chat";
 import type { Command } from "commander";
 import { createCliLoggerAdapter } from "../../logging/adapter";

@@ -1,13 +1,13 @@
 import { createWhatsAppAdapter } from "@chat-adapter/whatsapp";
-import type { ChatStartSessionRequest } from "@cline/core";
+import type { ChatStartSessionRequest } from "@sekokuva-ca/core";
 import {
 	createUserInstructionConfigService,
 	HubSessionClient,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 import type {
 	ConnectWhatsAppOptions,
 	WhatsAppConnectorState,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import { Chat, ConsoleLogger, type Thread } from "chat";
 import type { Command } from "commander";
 import type { CliLoggerAdapter } from "../../logging/adapter";

@@ -4,9 +4,9 @@ import {
 	resolveDisabledToolNames,
 	resolveModelToolSettings,
 	type ToolCatalogEntry,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
-export type { ToolCatalogEntry } from "@cline/core";
+export type { ToolCatalogEntry } from "@sekokuva-ca/core";
 
 export function getToolCatalog(
 	availabilityContext?: BuiltinToolAvailabilityContext,

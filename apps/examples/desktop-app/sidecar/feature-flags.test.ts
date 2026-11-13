@@ -22,9 +22,9 @@ const mocks = vi.hoisted(() => ({
 	getFlagPayload: vi.fn((_flag: unknown): unknown => undefined),
 }));
 
-vi.mock("@cline/core", async () => {
+vi.mock("@sekokuva-ca/core", async () => {
 	const actual =
-		await vi.importActual<typeof import("@cline/core")>("@cline/core");
+		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
 		// Two known flags keep the snapshot assertions meaningful even as the
@@ -46,7 +46,7 @@ vi.mock("@cline/core", async () => {
 	};
 });
 
-vi.mock("@cline/core/services/feature-flags/posthog", () => ({
+vi.mock("@sekokuva-ca/core/services/feature-flags/posthog", () => ({
 	buildClinePostHogClient: mocks.buildClinePostHogClient,
 	PostHogFeatureFlagsProvider: mocks.PostHogFeatureFlagsProvider,
 }));

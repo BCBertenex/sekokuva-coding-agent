@@ -1,6 +1,6 @@
 import { closeSync, openSync, readdirSync, readSync, statSync } from "node:fs";
 import { isAbsolute, join, posix, relative } from "node:path";
-import type { RemoteEnvironmentService } from "@cline/core";
+import type { RemoteEnvironmentService } from "@sekokuva-ca/core";
 import type { SessionRuntimeBinding, SidecarContext } from "./types";
 
 // Project explorer backing for the desktop app: one directory level per

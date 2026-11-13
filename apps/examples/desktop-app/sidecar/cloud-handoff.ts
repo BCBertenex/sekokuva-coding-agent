@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { buildCloudHandoffDashboardUrl, type ClineCore } from "@cline/core";
+import { buildCloudHandoffDashboardUrl, type ClineCore } from "@sekokuva-ca/core";
 import {
 	type CloudCreationOptions,
 	type CloudHubScope,
@@ -7,14 +7,14 @@ import {
 	type HandoffGitPreview,
 	inspectHandoffGit,
 	previewHandoffGit,
-} from "@cline/core/cloud";
-import type { MessageWithMetadata } from "@cline/llms";
+} from "@sekokuva-ca/core/cloud";
+import type { MessageWithMetadata } from "@sekokuva-ca/llms";
 import {
 	type AgentMode,
 	createMediaBudgetState,
 	getClineEnvironmentConfig,
 	validateAndReserveImageMedia,
-} from "@cline/shared";
+} from "@sekokuva-ca/shared";
 import {
 	type CloudSessionManager,
 	getCloudSessionManager,

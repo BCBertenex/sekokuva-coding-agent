@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
-import { updateMcpSettingsFileSync } from "@cline/core";
-import { resolveMcpSettingsPath } from "@cline/shared/storage";
+import { updateMcpSettingsFileSync } from "@sekokuva-ca/core";
+import { resolveMcpSettingsPath } from "@sekokuva-ca/shared/storage";
 import type { JsonRecord } from "./types";
 
 export function readMcpServersResponse(): JsonRecord {

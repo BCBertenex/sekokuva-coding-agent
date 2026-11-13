@@ -9,7 +9,7 @@ import {
 	resolveProviderApiKeyFromSettings,
 	SessionSource,
 	toProviderConfig,
-} from "@cline/core";
+} from "@sekokuva-ca/core";
 
 const required = (name: string): string => {
 	const value = process.env[name]?.trim();

@@ -1,4 +1,4 @@
-# `@cline/ui` adoption primer
+# `@sekokuva-ca/ui` adoption primer
 
 This guide is for Cline engineering teams that want a web application to share
 the Cline visual language and agent-chat presentation without copying desktop
@@ -6,7 +6,7 @@ styles or adopting desktop product structure.
 
 ## The short version
 
-`@cline/ui` has two opt-in layers:
+`@sekokuva-ca/ui` has two opt-in layers:
 
 1. A shared CSS theme built around standard shadcn/Tailwind semantic names.
 2. Reusable React presentation primitives for common agent-chat interfaces.
@@ -44,21 +44,21 @@ Each application continues to own:
 - Product-specific animation and deliberate visual overrides
 
 This boundary gives Cline products a shared visual and interaction language
-without turning `@cline/ui` into a second agent runtime.
+without turning `@sekokuva-ca/ui` into a second agent runtime.
 
 The boundary is about runtime coupling, not about keeping the package small.
 When more than one product needs the same presentation behavior, the goal is
 to extract it here as a shared module rather than let each app grow its own
-copy — that is the direction `@cline/ui` is headed, and more shared modules
+copy — that is the direction `@sekokuva-ca/ui` is headed, and more shared modules
 are expected over time. Two exist today:
 
-- `@cline/ui/components/agent-chat/tool-summary` — pure, framework-free
+- `@sekokuva-ca/ui/components/agent-chat/tool-summary` — pure, framework-free
   functions (`buildToolSummary`, `buildGroupedToolLabel`, and the underlying
   parsers) that turn a raw `{ toolName, input, result }` payload into the
   labels, per-item details, diff counts, and before/after texts every surface
   should show. `unknown` in, data out — no React, no icons, no dependency on
-  `@cline/core` or transport events.
-- `@cline/ui/components/agent-chat/tool-diff` — `ToolFileDiff`, a thin
+  `@sekokuva-ca/core` or transport events.
+- `@sekokuva-ca/ui/components/agent-chat/tool-diff` — `ToolFileDiff`, a thin
   wrapper over [`@pierre/diffs`](https://github.com/pierrecomputer/pierre)
   (optional peer dependency) that renders a tool-summary file item as a
   syntax-highlighted, theme-aware diff with consistent defaults.
@@ -77,18 +77,18 @@ change collector, workspace paths, and conversation focus restoration.
 presentation. Hosts provide normalized data, refresh/navigation callbacks,
 and their accessible checks popover through `renderChecks`. Fetching, polling,
 authentication, and telemetry stay in the host. Import these components from
-`@cline/ui` and their styles through the existing `@cline/ui/components.css`.
+`@sekokuva-ca/ui` and their styles through the existing `@sekokuva-ca/ui/components.css`.
 
 `AgentCommandOutput` shares the desktop terminal frame and follow-output scrolling.
 Pass ANSI-rendered or normalized output as children; transport and output limits
 stay in the host. `AgentImageLightboxContent` shares the expanded image, backdrop
 close action, and close control; hosts retain their dialog, focus, keyboard, and
-image navigation. Import both from `@cline/ui` with `@cline/ui/components.css`.
+image navigation. Import both from `@sekokuva-ca/ui` with `@sekokuva-ca/ui/components.css`.
 
 ## Current status
 
-`@cline/ui` is configured for public npm publication with its own version and
-manual release workflow. Check availability with `npm view @cline/ui version`;
+`@sekokuva-ca/ui` is configured for public npm publication with its own version and
+manual release workflow. Check availability with `npm view @sekokuva-ca/ui version`;
 an `E404` means the first release is still pending. The API is pre-stable, so
 production consumers should pin exact versions and review compatibility notes
 when updating.
@@ -102,16 +102,16 @@ pass once their runtime and Markdown adapters are mapped explicitly.
 
 | Goal | Import | Tailwind required | React required |
 | --- | --- | --- | --- |
-| Use only light/dark CSS variables | `@cline/ui/theme/tokens.css` | No | No |
-| Render shared root React primitives without host resets | `scoped-tokens.css`, `components.css`, and `@cline/ui` | Tailwind v4 | React 18.3 or 19 |
+| Use only light/dark CSS variables | `@sekokuva-ca/ui/theme/tokens.css` | No | No |
+| Render shared root React primitives without host resets | `scoped-tokens.css`, `components.css`, and `@sekokuva-ca/ui` | Tailwind v4 | React 18.3 or 19 |
 | Use tokens through Tailwind utilities | `tokens.css` then `theme.css` | Tailwind v4 | No |
-| Use the complete theme and shared base behavior | `@cline/ui/theme/index.css` | Tailwind v4 | No |
-| Compose shared agent-chat presentation | `@cline/ui/components/agent-chat` plus its CSS | No, if tokens are mapped in plain CSS | React 18.3 or 19 |
+| Use the complete theme and shared base behavior | `@sekokuva-ca/ui/theme/index.css` | Tailwind v4 | No |
+| Compose shared agent-chat presentation | `@sekokuva-ca/ui/components/agent-chat` plus its CSS | No, if tokens are mapped in plain CSS | React 18.3 or 19 |
 
 The package exports `base.css` separately for consumers that want its global,
 Markdown, scrollbar, selection, cursor, and native `color-scheme` behavior.
 
-There is no `@cline/ui/theme` shorthand. Use the explicit paths documented here
+There is no `@sekokuva-ca/ui/theme` shorthand. Use the explicit paths documented here
 so dependencies remain visible.
 
 ## Install inside the Cline monorepo
@@ -121,7 +121,7 @@ Add the workspace dependency:
 ```json
 {
   "dependencies": {
-    "@cline/ui": "workspace:*"
+    "@sekokuva-ca/ui": "workspace:*"
   }
 }
 ```
@@ -135,7 +135,7 @@ After the initial release is available, install the latest production UI
 release. The `--exact` flag records the resolved version instead of a range:
 
 ```bash
-bun add --exact @cline/ui
+bun add --exact @sekokuva-ca/ui
 ```
 
 The package is ESM. Its React entry point targets browser applications. Install
@@ -158,14 +158,14 @@ resolved version. Use the package manager's update command when the team
 intentionally wants to move to a newer release:
 
 ```bash
-bun update @cline/ui
+bun update @sekokuva-ca/ui
 ```
 
-`@cline/ui` is released with the SDK packages and shares their version. For
+`@sekokuva-ca/ui` is released with the SDK packages and shares their version. For
 deliberate previews, install an unstable `nightly` build:
 
 ```bash
-bun add --exact @cline/ui@nightly
+bun add --exact @sekokuva-ca/ui@nightly
 ```
 
 Do not use `nightly` for production applications.
@@ -178,7 +178,7 @@ Import fonts and Tailwind before the complete theme:
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
-@import "@cline/ui/theme/index.css";
+@import "@sekokuva-ca/ui/theme/index.css";
 ```
 
 This supplies:
@@ -202,16 +202,16 @@ owns document, Markdown, scrollbar, or cursor behavior:
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
-@import "@cline/ui/theme/tokens.css";
-@import "@cline/ui/theme/theme.css";
+@import "@sekokuva-ca/ui/theme/tokens.css";
+@import "@sekokuva-ca/ui/theme/theme.css";
 ```
 
 For an existing Tailwind v4 surface that must preserve its host shell, keep
 Tailwind setup host-owned and add the scoped Cline imports:
 
 ```css
-@import "@cline/ui/theme/scoped-tokens.css";
-@import "@cline/ui/components.css";
+@import "@sekokuva-ca/ui/theme/scoped-tokens.css";
+@import "@sekokuva-ca/ui/components.css";
 ```
 
 Render shared components inside `.cline-ui-theme`. Dark values activate when
@@ -237,7 +237,7 @@ behavior, switch to the complete theme setup in Option 1.
 Applications without Tailwind can import only the variables:
 
 ```css
-@import "@cline/ui/theme/tokens.css";
+@import "@sekokuva-ca/ui/theme/tokens.css";
 ```
 
 Token-only consumers must provide:
@@ -262,8 +262,8 @@ For native controls that should follow the selected theme:
 
 ## Buttons
 
-Import `Button` and `IconButton` from `@cline/ui` after loading the theme and
-`@cline/ui/components.css`. Use `primary` for main actions, `secondary` for
+Import `Button` and `IconButton` from `@sekokuva-ca/ui` after loading the theme and
+`@sekokuva-ca/ui/components.css`. Use `primary` for main actions, `secondary` for
 supporting actions, and `ghost` for low-emphasis actions. Existing `fill` and
 `surface` variants remain aliases for `primary` and `secondary`.
 
@@ -284,7 +284,7 @@ Heights use 7, 8, 9, and 10 spacing units respectively. Icon buttons use the
 same dimension for width, keeping them square.
 
 ```tsx
-import { Button, IconButton } from "@cline/ui";
+import { Button, IconButton } from "@sekokuva-ca/ui";
 import { Plus, X } from "lucide-react";
 
 <Button leadingIcon={Plus}>New session</Button>
@@ -346,11 +346,11 @@ Use `interactive` for a native button with disabled behavior and a button ref.
 
 ## Switch
 
-Import `Switch` from `@cline/ui` after setting up the theme and
-`@cline/ui/components.css`.
+Import `Switch` from `@sekokuva-ca/ui` after setting up the theme and
+`@sekokuva-ca/ui/components.css`.
 
 ```tsx
-import { Switch } from "@cline/ui";
+import { Switch } from "@sekokuva-ca/ui";
 
 <div className="flex items-center gap-2">
   <Switch id="notifications" name="notifications" defaultChecked />
@@ -419,8 +419,8 @@ checkbox behavior.
 With the complete Tailwind theme, import the component styles afterward:
 
 ```css
-@import "@cline/ui/theme/index.css";
-@import "@cline/ui/components/agent-chat.css";
+@import "@sekokuva-ca/ui/theme/index.css";
+@import "@sekokuva-ca/ui/components/agent-chat.css";
 ```
 
 Without Tailwind, import the framework-neutral tokens and component styles,
@@ -428,8 +428,8 @@ then apply the shared font family at an app or chat root (tokens define font
 values but do not apply document typography):
 
 ```css
-@import "@cline/ui/theme/tokens.css";
-@import "@cline/ui/components/agent-chat.css";
+@import "@sekokuva-ca/ui/theme/tokens.css";
+@import "@sekokuva-ca/ui/components/agent-chat.css";
 
 .agent-chat-root {
   font-family: var(--font-sans);
@@ -456,7 +456,7 @@ import {
   ToolActivity,
   ToolActivityContent,
   ToolActivityTrigger,
-} from "@cline/ui/components/agent-chat";
+} from "@sekokuva-ca/ui/components/agent-chat";
 
 type ProductMessage = {
   id: string;
@@ -547,7 +547,7 @@ standardizes the surrounding presentation without silently changing those
 security and product decisions.
 
 Map runtime roles and tool states at the consumer boundary. Do not make the UI
-package depend on `@cline/core`, the Vercel AI SDK, desktop schemas, or transport
+package depend on `@sekokuva-ca/core`, the Vercel AI SDK, desktop schemas, or transport
 events.
 
 ## Explore components in Storybook
@@ -555,7 +555,7 @@ events.
 From the Cline repository root:
 
 ```bash
-bun -F @cline/ui storybook
+bun -F @sekokuva-ca/ui storybook
 ```
 
 Open `http://localhost:6006`. The toolbar switches light/dark mode and offers
@@ -571,13 +571,13 @@ representative chat and mobile viewports. Stories cover:
 In the repository's agent sandbox, bind to a forwarded host and unused port:
 
 ```bash
-bun -F @cline/ui storybook -- --host 0.0.0.0 --port 3490 --exact-port
+bun -F @sekokuva-ca/ui storybook -- --host 0.0.0.0 --port 3490 --exact-port
 ```
 
 Build the production Storybook bundle with:
 
 ```bash
-bun -F @cline/ui build-storybook
+bun -F @sekokuva-ca/ui build-storybook
 ```
 
 Storybook is the isolated component reference. Real application builds remain
@@ -636,7 +636,7 @@ resolve to the same radius values. Keep structural shapes such as
 Import the package first, then override standard semantic values:
 
 ```css
-@import "@cline/ui/theme/index.css";
+@import "@sekokuva-ca/ui/theme/index.css";
 
 :root {
   --primary: /* product-specific value */;
@@ -653,7 +653,7 @@ package upgrades.
 
 ## Consumer-owned behavior
 
-Keep the following outside `@cline/ui`:
+Keep the following outside `@sekokuva-ca/ui`:
 
 - Next, Tauri, VS Code, and runtime-specific behavior
 - `#__next`, viewport locking, and shell layout
@@ -759,7 +759,7 @@ editing, menus, native title-bar behavior, and all event handlers.
 settings primitives preserve the desktop composer's welcome/conversation
 presentation. They render the original native elements without extra wrappers;
 refs and native event/ARIA props forward to those elements. Import
-`@cline/ui/components.css` and the shared tokens as described above.
+`@sekokuva-ca/ui/components.css` and the shared tokens as described above.
 
 Compose the host's PR bar before `AgentComposerBody`. Inside the body, render
 `AgentPromptQueue`, the host's suggestion positioning wrapper and
@@ -780,7 +780,7 @@ presentation API, not a runtime composer or a form with implicit submission.
 ## Session rows
 
 `AgentSessionRow`, `AgentSessionRowEditor`, and `AgentSessionOverview` are
-exported from `@cline/ui`. Import `components.css` with the shared theme (or
+exported from `@sekokuva-ca/ui`. Import `components.css` with the shared theme (or
 scoped tokens inside `.cline-ui-theme`) as for the other root components.
 
 The row owns the desktop row geometry, selected/hover appearance, timestamp
@@ -833,7 +833,7 @@ tokens as usual. When the context limit or token usage is unavailable, it render
 nothing and does not invoke the child callback.
 
 ```tsx
-import { AgentContextUsage } from "@cline/ui";
+import { AgentContextUsage } from "@sekokuva-ca/ui";
 
 <AgentContextUsage
   usage={{ tokensIn: 1200, tokensOut: 300, cacheReadTokens: 400, contextWindow: 200000 }}
@@ -861,11 +861,11 @@ host responsibilities.
 
 ## Message scroller
 
-Use `@cline/ui/components/message-scroller` with React 19 for transcripts that
+Use `@sekokuva-ca/ui/components/message-scroller` with React 19 for transcripts that
 anchor new user turns and preserve the reader's position during streaming.
 The behavior comes from `@shadcn/react`; the shared wrapper adds Cline styles.
-Import `@cline/ui/components.css`, or import
-`@cline/ui/components/message-scroller.css` with theme tokens for a plain CSS
+Import `@sekokuva-ca/ui/components.css`, or import
+`@sekokuva-ca/ui/components/message-scroller.css` with theme tokens for a plain CSS
 host. Place the scroller in a parent with a constrained height.
 
 ```tsx
@@ -878,7 +878,7 @@ import {
   MessageScrollerViewport,
   useMessageScroller,
   useMessageScrollerVisibility,
-} from "@cline/ui/components/message-scroller";
+} from "@sekokuva-ca/ui/components/message-scroller";
 
 function Transcript({ messages }) {
   return (

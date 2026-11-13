@@ -7,8 +7,8 @@ import {
 import type { SidecarContext } from "./types";
 
 const { authorize } = vi.hoisted(() => ({ authorize: vi.fn() }));
-vi.mock("@cline/core", async (original) => ({
-	...(await original<typeof import("@cline/core")>()),
+vi.mock("@sekokuva-ca/core", async (original) => ({
+	...(await original<typeof import("@sekokuva-ca/core")>()),
 	createHubMcpApi: () => ({ authorize }),
 }));
 vi.mock("./context", () => ({ ensureSharedHubClient: async () => ({}) }));

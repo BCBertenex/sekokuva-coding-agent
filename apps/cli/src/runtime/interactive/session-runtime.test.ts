@@ -6,8 +6,8 @@ import {
 	SessionSource,
 	type ToolApprovalRequest,
 	type ToolApprovalResult,
-} from "@cline/core";
-import type { AgentTool, Message } from "@cline/shared";
+} from "@sekokuva-ca/core";
+import type { AgentTool, Message } from "@sekokuva-ca/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChatCommandState } from "../../utils/chat-commands";
 import type { Config } from "../../utils/types";

@@ -103,10 +103,10 @@ async function main(): Promise<void> {
 					private: true,
 					type: "module",
 					dependencies: {
-						"@cline/core": `file:${tarballs.core}`,
-						"@cline/agents": `file:${tarballs.agents}`,
-						"@cline/llms": `file:${tarballs.llms}`,
-						"@cline/shared": `file:${tarballs.shared}`,
+						"@sekokuva-ca/core": `file:${tarballs.core}`,
+						"@sekokuva-ca/agents": `file:${tarballs.agents}`,
+						"@sekokuva-ca/llms": `file:${tarballs.llms}`,
+						"@sekokuva-ca/shared": `file:${tarballs.shared}`,
 					},
 					...(rootPackageJson.overrides
 						? { overrides: rootPackageJson.overrides }
@@ -128,7 +128,7 @@ async function main(): Promise<void> {
 		const smokeSource =
 			nodeMajor >= 24
 				? `
-					const { SqliteSessionStore } = await import("@cline/core");
+					const { SqliteSessionStore } = await import("@sekokuva-ca/core");
 					const store = new SqliteSessionStore({ sessionsDir: process.env.CLINE_DATA_DIR });
 					try {
 						store.init();
@@ -138,7 +138,7 @@ async function main(): Promise<void> {
 					}
 				`
 				: `
-					const { resolveSessionBackend } = await import("@cline/core");
+					const { resolveSessionBackend } = await import("@sekokuva-ca/core");
 					await resolveSessionBackend({ backendMode: "local" });
 					console.log("Node compatibility smoke test passed");
 				`;
