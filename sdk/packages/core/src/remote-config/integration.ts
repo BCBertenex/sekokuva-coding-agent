@@ -14,7 +14,7 @@ import {
 	readRemoteConfigSessionBlobUploadMetadata,
 	registerRemoteConfigSessionBlobUpload,
 } from "@sekokuva-ca/shared";
-import type { ClineCoreStartInput } from "../cline-core/types";
+import type { SekoKuvaCoreStartInput } from "../sekokuva-ca-core/types";
 import { createConfiguredTelemetryService } from "../services/telemetry";
 import type { CreateOpenTelemetryTelemetryServiceOptions } from "../services/telemetry/OpenTelemetryProvider";
 import type { SessionMessagesArtifactUploader } from "../types/session";
@@ -31,7 +31,7 @@ export interface PreparedRemoteConfigCoreIntegration {
 	prepared: PreparedRemoteConfigRuntime;
 	extensions: AgentExtension[];
 	telemetry?: ITelemetryService;
-	applyToStartSessionInput(input: ClineCoreStartInput): ClineCoreStartInput;
+	applyToStartSessionInput(input: SekoKuvaCoreStartInput): SekoKuvaCoreStartInput;
 	dispose(): Promise<void>;
 }
 
@@ -82,7 +82,7 @@ export async function prepareRemoteConfigCoreIntegration(
 		prepared,
 		extensions,
 		telemetry,
-		applyToStartSessionInput(input: ClineCoreStartInput): ClineCoreStartInput {
+		applyToStartSessionInput(input: SekoKuvaCoreStartInput): SekoKuvaCoreStartInput {
 			const existingExtensions = input.config.extensions ?? [];
 			const existingTelemetry = input.config.telemetry;
 			const sessionId = blobUploadMetadataTemplate

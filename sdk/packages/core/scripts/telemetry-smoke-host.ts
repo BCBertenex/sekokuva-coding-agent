@@ -109,7 +109,7 @@ async function smokeCli() {
 	const cfg = createClineTelemetryServiceConfig({
 		metadata: {
 			extension_version: "0.0.0-smoke",
-			cline_type: "cli",
+			sekokuva_ca_type: "cli",
 			platform: "smoke-cli",
 			platform_version: process.version,
 			os_type: process.platform,
@@ -138,7 +138,7 @@ async function smokeCliAuthenticated() {
 	const cfg = createClineTelemetryServiceConfig({
 		metadata: {
 			extension_version: "0.0.0-smoke",
-			cline_type: "cli",
+			sekokuva_ca_type: "cli",
 			platform: "smoke-cli",
 			platform_version: process.version,
 			os_type: process.platform,
@@ -171,7 +171,7 @@ async function smokeVscode() {
 	const cfg = createClineTelemetryServiceConfig({
 		metadata: {
 			extension_version: "0.0.0-smoke",
-			cline_type: "VSCode Extension",
+			sekokuva_ca_type: "VSCode Extension",
 			platform: "Visual Studio Code",
 			platform_version: "1.113.0",
 			os_type: process.platform,

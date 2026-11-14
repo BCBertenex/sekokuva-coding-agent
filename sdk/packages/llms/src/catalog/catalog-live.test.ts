@@ -3,7 +3,7 @@ import {
 	getGeneratedModelsForProvider,
 	getGeneratedProviderModels,
 } from "./catalog.generated-access";
-import { normalizeClineRecommendedProviderModels } from "./catalog-cline-recommended";
+import { normalizeClineRecommendedProviderModels } from "./catalog-sekokuva-ca-recommended";
 import {
 	fetchLiveProviderModels,
 	fetchModelsDevProviderModels,
@@ -534,14 +534,14 @@ describe("models-dev-catalog", () => {
 		expect(providerModels.greenpt).not.toHaveProperty("green-s");
 	});
 
-	it("normalizes Cline recommended clinePass models as a generated provider source", () => {
+	it("normalizes Cline recommended sekokuvaCaPass models as a generated provider source", () => {
 		const result = normalizeClineRecommendedProviderModels(
 			{
 				clinePass: [
 					{
 						id: "base-model",
-						name: "ClinePass Base Model",
-						description: "Included in ClinePass",
+						name: "SekoKuvaPass Base Model",
+						description: "Included in SekoKuvaPass",
 					},
 					{
 						id: "custom-model",
@@ -574,7 +574,7 @@ describe("models-dev-catalog", () => {
 			"base-model": {
 				id: "base-model",
 				name: "OpenRouter Base Model",
-				description: "Included in ClinePass",
+				description: "Included in SekoKuvaPass",
 				contextWindow: 200_000,
 				maxInputTokens: 180_000,
 				maxTokens: 16_384,
@@ -599,7 +599,7 @@ describe("models-dev-catalog", () => {
 		});
 	});
 
-	it("matches Cline recommended clinePass models against OpenRouter model slugs", () => {
+	it("matches Cline recommended sekokuvaCaPass models against OpenRouter model slugs", () => {
 		const result = normalizeClineRecommendedProviderModels(
 			{
 				clinePass: [
@@ -633,7 +633,7 @@ describe("models-dev-catalog", () => {
 		});
 	});
 
-	it("returns no ClinePass models when clinePass is empty or missing", () => {
+	it("returns no SekoKuvaPass models when sekokuvaCaPass is empty or missing", () => {
 		expect(normalizeClineRecommendedProviderModels({}, {})).toEqual({});
 		expect(
 			normalizeClineRecommendedProviderModels({ clinePass: [] }, {}),
@@ -704,7 +704,7 @@ describe("models-dev-catalog", () => {
 		});
 	});
 
-	it("includes Cline free models alongside ClinePass models", () => {
+	it("includes Cline free models alongside SekoKuvaPass models", () => {
 		const result = normalizeClineRecommendedProviderModels(
 			{
 				clinePass: [{ id: "cline-pass/glm-5.1", name: "glm-5.1" }],
@@ -726,7 +726,7 @@ describe("models-dev-catalog", () => {
 		);
 
 		const models = result["cline-pass"] ?? {};
-		// ClinePass models stay first so the provider default remains a pass model
+		// SekoKuvaPass models stay first so the provider default remains a pass model
 		expect(Object.keys(models)).toEqual([
 			"cline-pass/glm-5.1",
 			"cline-free/kat-coder-pro",
@@ -784,7 +784,7 @@ describe("models-dev-catalog", () => {
 	it.each([
 		"cline-free/deepseek-v4-flash",
 		"deepseek/deepseek-v4-flash",
-	])("labels a free model with ID %s when its name matches a ClinePass model", (freeId) => {
+	])("labels a free model with ID %s when its name matches a SekoKuvaPass model", (freeId) => {
 		const result = normalizeClineRecommendedProviderModels(
 			{
 				clinePass: [
@@ -846,7 +846,7 @@ describe("models-dev-catalog", () => {
 		});
 
 		// free bucket alone updates the Cline provider catalog but does not rotate
-		// ClinePass away from its bundled subscription list/default.
+		// SekoKuvaPass away from its bundled subscription list/default.
 		const freeOnly = normalizeClineRecommendedProviderModels(
 			{ free: [{ id: "cline-free/kat-coder-pro" }] },
 			{},
@@ -1240,7 +1240,7 @@ describe("models-dev-catalog", () => {
 		expect(result["openai-native"]).toHaveProperty("gpt-live");
 	});
 
-	it("fetches live models from models.dev and Cline recommended clinePass models", async () => {
+	it("fetches live models from models.dev and Cline recommended sekokuvaCaPass models", async () => {
 		const fetcher = vi.fn(async (url: string) => {
 			if (url === "https://models.dev/api.json") {
 				return {
@@ -1362,7 +1362,7 @@ describe("models-dev-catalog", () => {
 		expect(result["cline-pass"]).toBeUndefined();
 	});
 
-	it("keeps Cline recommended clinePass models when models.dev fails", async () => {
+	it("keeps Cline recommended sekokuvaCaPass models when models.dev fails", async () => {
 		const fetcher = vi.fn(async (url: string) => {
 			if (url === "https://models.dev/api.json") {
 				return { ok: false, status: 503 };

@@ -394,11 +394,11 @@ export const e2e = test
 						...process.env,
 						TEMP_PROFILE: "true",
 						E2E_TEST: "true",
-						CLINE_ENVIRONMENT: "local",
+						SEKOKUVA_CA_ENVIRONMENT: "local",
 						// Prevent OAuth E2E from launching a browser that can outlive VS Code on Linux.
-						CLINE_CAPTURE_BROWSER: "true",
-						CLINE_DIR: clineTestDir, // Isolate test data from user's ~/.cline
-						CLINE_DATA_DIR: clineDataDir, // Keep SDK/shared storage off the user's real Cline data dir
+						SEKOKUVA_CA_CAPTURE_BROWSER: "true",
+						SEKOKUVA_CA_DIR: clineTestDir, // Isolate test data from user's ~/.cline
+						SEKOKUVA_CA_DATA_DIR: clineDataDir, // Keep SDK/shared storage off the user's real Cline data dir
 						GRPC_RECORDER_FILE_NAME: E2ETestHelper.generateTestFileName(testInfo.title, testInfo.project.name),
 						// GRPC_RECORDER_ENABLED: "true",
 						// GRPC_RECORDER_TESTS_FILTERS_ENABLED: "true"

@@ -58,7 +58,7 @@ import {
 import { FIELD_ORDER } from "./fields";
 import { useOnboardingKeyboard } from "./keyboard";
 import {
-	CLINE_PASS_SUBSCRIPTION_OPTIONS,
+	SEKOKUVA_CA_PASS_SUBSCRIPTION_OPTIONS,
 	type ClinePassSubscriptionStatus,
 	canContinueLocalCliSetup,
 	DEFAULT_THINKING_LEVEL_INDEX,
@@ -805,7 +805,7 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 		clineEntries,
 		clineModelSelected,
 		clinePassSubscriptionStatus,
-		clinePassSubscriptionOptions: CLINE_PASS_SUBSCRIPTION_OPTIONS,
+		clinePassSubscriptionOptions: SEKOKUVA_CA_PASS_SUBSCRIPTION_OPTIONS,
 		clinePassSubscriptionSelected,
 		thinkingSelected,
 		setStep,
@@ -867,7 +867,7 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 		clinePassPlanFeatures,
 		clinePassSubscriptionError,
 		clinePassSubscriptionOpenStatus,
-		clinePassSubscriptionOptions: CLINE_PASS_SUBSCRIPTION_OPTIONS,
+		clinePassSubscriptionOptions: SEKOKUVA_CA_PASS_SUBSCRIPTION_OPTIONS,
 		clinePassSubscriptionSelected,
 		clinePassSubscriptionStatus,
 		clinePassSubscriptionUrl,

@@ -22,9 +22,9 @@ vi.mock("@sekokuva-ca/core/services/feature-flags/posthog", () => ({
 	},
 }));
 
-import { isClineAccountFeatureEnabled } from "./cline-account-feature-flags";
+import { isClineAccountFeatureEnabled } from "./sekokuva-ca-account-feature-flags";
 
-const flag = FeatureFlag.CLINE_COMPOSIO_BETA;
+const flag = FeatureFlag.SEKOKUVA_CA_COMPOSIO_BETA;
 
 beforeEach(async () => {
 	vi.clearAllMocks();

@@ -1,7 +1,7 @@
 import type { AgentEvent, CoreSessionEvent } from "@sekokuva-ca/core"
 import { refreshClineRecommendedModels } from "@/core/controller/models/refreshClineRecommendedModels"
 import type { StateManager } from "@/core/storage/StateManager"
-import { CLINE_RECOMMENDED_MODELS_FALLBACK } from "@/shared/cline/recommended-models"
+import { SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK } from "@/shared/cline/recommended-models"
 import type { ClineApiReqInfo, TurnPhase } from "@/shared/ExtensionMessage"
 import { Logger } from "@/shared/services/Logger"
 import { isClineManagedProvider } from "@/shared/utils/cline"
@@ -271,7 +271,9 @@ export class SdkSessionEventCoordinator {
 			const models = await refreshClineRecommendedModels()
 			const freeIds = models.free.map((model) => normalizeModelId(model.id)).filter(Boolean)
 			const resolvedFreeIds =
-				freeIds.length > 0 ? freeIds : CLINE_RECOMMENDED_MODELS_FALLBACK.free.map((model) => normalizeModelId(model.id))
+				freeIds.length > 0
+					? freeIds
+					: SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK.free.map((model) => normalizeModelId(model.id))
 			return resolvedFreeIds.includes(normalizedModelId)
 		} catch (error) {
 			Logger.error("[SdkController] Failed to check Cline free model list:", error)
@@ -279,7 +281,7 @@ export class SdkSessionEventCoordinator {
 			if (!modelId) {
 				return false
 			}
-			const fallbackFreeIds = CLINE_RECOMMENDED_MODELS_FALLBACK.free.map((model) => normalizeModelId(model.id))
+			const fallbackFreeIds = SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK.free.map((model) => normalizeModelId(model.id))
 			return fallbackFreeIds.includes(normalizeModelId(modelId))
 		}
 	}

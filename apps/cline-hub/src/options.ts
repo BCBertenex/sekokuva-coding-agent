@@ -10,7 +10,7 @@ export interface ClineHubServerOptions {
 
 const DEFAULT_HOST = "127.0.0.1";
 const DEFAULT_PORT = 8787;
-const DASHBOARD_PORT_ENV = "CLINE_HUB_DASHBOARD_PORT";
+const DASHBOARD_PORT_ENV = "SEKOKUVA_CA_HUB_DASHBOARD_PORT";
 
 function parsePort(value: string | undefined): number {
 	if (!value?.trim()) return DEFAULT_PORT;

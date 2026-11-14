@@ -66,7 +66,7 @@ describe("desktop observability", () => {
 		expect(mocks.createClineTelemetryServiceConfig).toHaveBeenCalledWith({
 			metadata: expect.objectContaining({
 				extension_version: version,
-				cline_type: "desktop",
+				sekokuva_ca_type: "desktop",
 				platform: "Cline Desktop",
 				platform_version: version,
 			}),

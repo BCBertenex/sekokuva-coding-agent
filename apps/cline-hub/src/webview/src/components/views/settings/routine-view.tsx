@@ -2,7 +2,7 @@
 
 import {
 	ANTHROPIC_DEFAULT_MODEL_ID,
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	ONE_TIME_SCHEDULE_CRON_PATTERN,
 	ONE_TIME_SCHEDULE_RUN_AT_METADATA_KEY,
 } from "@sekokuva-ca/shared";
@@ -153,12 +153,12 @@ interface ProcessContext {
 }
 
 const FALLBACK_PROVIDER_MODELS: Record<string, string[]> = {
-	cline: [CLINE_DEFAULT_MODEL_ID],
+	cline: [SEKOKUVA_CA_DEFAULT_MODEL_ID],
 	// Anthropic's own API expects bare ids, so use the Anthropic-format
-	// equivalent of CLINE_DEFAULT_MODEL_ID rather than the prefixed id.
+	// equivalent of SEKOKUVA_CA_DEFAULT_MODEL_ID rather than the prefixed id.
 	anthropic: [ANTHROPIC_DEFAULT_MODEL_ID],
 	"openai-native": ["gpt-5.3-codex"],
-	openrouter: [CLINE_DEFAULT_MODEL_ID],
+	openrouter: [SEKOKUVA_CA_DEFAULT_MODEL_ID],
 	gemini: ["gemini-2.5-pro"],
 };
 
@@ -241,7 +241,7 @@ function getScheduleProviderModel(schedule: RoutineSchedule): {
 		model:
 			schedule.modelSelection?.modelId?.trim() ||
 			schedule.model?.trim() ||
-			CLINE_DEFAULT_MODEL_ID,
+			SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	};
 }
 
@@ -404,7 +404,7 @@ export function RoutineSchedulesContent() {
 		scheduleDays: ["MON", "TUE", "WED", "THU", "FRI"],
 		prompt: "Review PRs opened yesterday and summarize issues.",
 		provider: "cline",
-		model: CLINE_DEFAULT_MODEL_ID,
+		model: SEKOKUVA_CA_DEFAULT_MODEL_ID,
 		workspaceRoot: "",
 		systemPrompt: "",
 		timeoutSeconds: "",
@@ -804,7 +804,7 @@ export function RoutineSchedulesContent() {
 			const model =
 				asTrimmedFormString(createForm.model) ||
 				(visibleProviderModels[provider] ?? [])[0] ||
-				CLINE_DEFAULT_MODEL_ID;
+				SEKOKUVA_CA_DEFAULT_MODEL_ID;
 			const systemPrompt = asTrimmedFormString(createForm.systemPrompt);
 			const timeoutSeconds = parseOptionalPositiveInt(
 				createForm.timeoutSeconds,

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
 	buildSubprocessSandboxCommand,
-	CLINE_JS_RUNTIME_PATH_ENV,
+	SEKOKUVA_CA_JS_RUNTIME_PATH_ENV,
 	resolveSubprocessRuntimeExecutable,
 	SubprocessSandbox,
 } from "./subprocess-sandbox";
@@ -114,7 +114,7 @@ describe("SubprocessSandbox runtime resolution", () => {
 		expect(
 			resolveSubprocessRuntimeExecutable({
 				execPath: "/usr/local/bin/cline",
-				env: { [CLINE_JS_RUNTIME_PATH_ENV]: "/opt/runtime/js" },
+				env: { [SEKOKUVA_CA_JS_RUNTIME_PATH_ENV]: "/opt/runtime/js" },
 			}),
 		).toBe("/opt/runtime/js");
 	});
@@ -138,7 +138,7 @@ describe("SubprocessSandbox runtime resolution", () => {
 		expect(
 			buildSubprocessSandboxCommand(["-e", "console.log('ok')"], {
 				execPath: "/usr/local/bin/cline",
-				env: { CLINE_BUILD_ENV: "production" },
+				env: { SEKOKUVA_CA_BUILD_ENV: "production" },
 				name: "plugin-sandbox",
 			}),
 		).toEqual(["node", "-e", "console.log('ok')"]);
@@ -148,7 +148,7 @@ describe("SubprocessSandbox runtime resolution", () => {
 		expect(
 			buildSubprocessSandboxCommand(["bootstrap.js"], {
 				execPath: "/usr/local/bin/cline",
-				env: { CLINE_BUILD_ENV: "development" },
+				env: { SEKOKUVA_CA_BUILD_ENV: "development" },
 				name: "plugin-sandbox",
 			}),
 		).toEqual([
@@ -162,7 +162,7 @@ describe("SubprocessSandbox runtime resolution", () => {
 
 describe("SubprocessSandbox call", () => {
 	it("clears plain Bun mode for host-dispatched children without mutating the parent environment", async () => {
-		vi.stubEnv("CLINE_BUILD_ENV", "production");
+		vi.stubEnv("SEKOKUVA_CA_BUILD_ENV", "production");
 		vi.stubEnv("BUN_BE_BUN", "parent-value");
 		const sandbox = new SubprocessSandbox({
 			launcher: { command: process.execPath, argsPrefix: [] },

@@ -13,7 +13,7 @@ export type ModelPickerData = {
 
 // Section copy mirrors the CLI's featured picker so the products read the same.
 const FREE_SECTION_DESCRIPTION = "Try with limited usage at no cost";
-const CLINE_PASS_FREE_SECTION_DESCRIPTION =
+const SEKOKUVA_CA_PASS_FREE_SECTION_DESCRIPTION =
 	"Try with limited usage, separate from ClinePass quota";
 
 function displayName(model: ProviderModel): string {
@@ -131,7 +131,7 @@ export function buildModelPickerData(
 			sections: [
 				{ id: "subscribed", label: "Subscribed" },
 				{
-					description: CLINE_PASS_FREE_SECTION_DESCRIPTION,
+					description: SEKOKUVA_CA_PASS_FREE_SECTION_DESCRIPTION,
 					id: "free",
 					label: "Free",
 				},

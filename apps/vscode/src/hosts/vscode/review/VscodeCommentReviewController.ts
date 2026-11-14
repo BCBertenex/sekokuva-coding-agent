@@ -6,7 +6,7 @@ import { DIFF_VIEW_URI_SCHEME } from "../VscodeDiffContentProvider"
 /**
  * Cline's GitHub avatar URL
  */
-const CLINE_AVATAR_URL = "https://avatars.githubusercontent.com/u/184127137"
+const SEKOKUVA_CA_AVATAR_URL = "https://avatars.githubusercontent.com/u/184127137"
 
 /**
  * VS Code implementation of CommentReviewController.
@@ -65,7 +65,7 @@ export class VscodeCommentReviewController extends CommentReviewController imple
 			mode: vscode.CommentMode.Preview,
 			author: {
 				name: "Cline",
-				iconPath: vscode.Uri.parse(CLINE_AVATAR_URL),
+				iconPath: vscode.Uri.parse(SEKOKUVA_CA_AVATAR_URL),
 			},
 		}
 
@@ -110,7 +110,7 @@ export class VscodeCommentReviewController extends CommentReviewController imple
 			mode: vscode.CommentMode.Preview,
 			author: {
 				name: "Cline",
-				iconPath: vscode.Uri.parse(CLINE_AVATAR_URL),
+				iconPath: vscode.Uri.parse(SEKOKUVA_CA_AVATAR_URL),
 			},
 		}
 
@@ -180,7 +180,7 @@ export class VscodeCommentReviewController extends CommentReviewController imple
 			mode: vscode.CommentMode.Preview,
 			author: {
 				name: "Cline",
-				iconPath: vscode.Uri.parse(CLINE_AVATAR_URL),
+				iconPath: vscode.Uri.parse(SEKOKUVA_CA_AVATAR_URL),
 			},
 		}
 		// Create a new array to ensure VS Code detects the change
@@ -202,7 +202,7 @@ export class VscodeCommentReviewController extends CommentReviewController imple
 			mode: vscode.CommentMode.Preview,
 			author: {
 				name: "Cline",
-				iconPath: vscode.Uri.parse(CLINE_AVATAR_URL),
+				iconPath: vscode.Uri.parse(SEKOKUVA_CA_AVATAR_URL),
 			},
 		}
 		this.streamingThread.comments = [commentObj]

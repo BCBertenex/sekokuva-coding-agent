@@ -9,7 +9,7 @@ interface EntitlementErrorProps {
 }
 
 // Relative (no leading slash) so it appends to path-prefixed app URLs (e.g. self-hosted/proxy) instead of resetting to origin.
-const CLINE_PASS_SUBSCRIBE_PATH = "dashboard/subscription"
+const SEKOKUVA_CA_PASS_SUBSCRIBE_PATH = "dashboard/subscription"
 
 const HEADLINE = "This model requires a ClinePass subscription."
 
@@ -19,7 +19,7 @@ function buildSubscribeUrl(appBaseUrl?: string): string | undefined {
 	}
 	try {
 		const base = appBaseUrl.endsWith("/") ? appBaseUrl : `${appBaseUrl}/`
-		const url = new URL(CLINE_PASS_SUBSCRIBE_PATH, base)
+		const url = new URL(SEKOKUVA_CA_PASS_SUBSCRIBE_PATH, base)
 		url.searchParams.set("personal", "true")
 		return url.toString()
 	} catch {

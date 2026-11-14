@@ -46,7 +46,7 @@ export interface CollectPluginContributionsInput extends PluginTargeting {
 	cwd?: string;
 	workspacePath?: string;
 	registry?: PluginRegistry;
-	/** Defaults to the configured execution mode (`CLINE_PLUGIN_MODE`). */
+	/** Defaults to the configured execution mode (`SEKOKUVA_CA_PLUGIN_MODE`). */
 	mode?: PluginExecutionMode;
 }
 
@@ -95,7 +95,7 @@ function emptyContributions(
  * that list what plugins contribute without starting a session. Plugins load
  * the same way sessions load them: through the shared registry's workers, so
  * failures are recorded there like any other, or through the subprocess
- * sandbox when `CLINE_PLUGIN_MODE=sandbox`.
+ * sandbox when `SEKOKUVA_CA_PLUGIN_MODE=sandbox`.
  */
 export async function collectPluginContributions(
 	input: CollectPluginContributionsInput,

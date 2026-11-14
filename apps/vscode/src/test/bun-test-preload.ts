@@ -23,7 +23,7 @@
 // bun's ESM linker statically validates every named import against the names on
 // the mock namespace. The stub only implements the @sekokuva-ca/core exports these
 // tests exercise, but other modules in the import graph statically import
-// additional names (e.g. `prepareRemoteConfigCoreIntegration`, `ClineCore`,
+// additional names (e.g. `prepareRemoteConfigCoreIntegration`, `SekoKuvaCore`,
 // `createMcpTools`); a missing name is a hard "Export named 'X' not found" link
 // error. So we seed the mock namespace with every name the real @sekokuva-ca/core
 // exports (value `undefined`) and overlay the stub on top: stub names keep stub

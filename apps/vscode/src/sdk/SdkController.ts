@@ -26,7 +26,7 @@ import { loadCloudModels } from "@sekokuva-ca/core/cloud"
 import { formatDisplayUserInput, type RemoteConfig, type RemoteConfigBundle } from "@sekokuva-ca/shared"
 import type { ApiConfiguration } from "@shared/api"
 import type { ChatContent } from "@shared/ChatContent"
-import { CLINE_ACCOUNT_AUTH_ERROR_MESSAGE } from "@shared/ClineAccount"
+import { SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE } from "@shared/ClineAccount"
 import { CLOUD_CREATION_UNCONFIRMED_ERROR_CODE, CLOUD_SESSION_MODE, isCloudSessionId } from "@shared/cloud/cloud-sessions"
 import { mentionRegexGlobal } from "@shared/context-mentions"
 import type { ClineApiReqInfo, ClineMessage, ExtensionState } from "@shared/ExtensionMessage"
@@ -477,7 +477,7 @@ export class Controller {
 				const providerId = this.getSessionProviderId(sessionId) ?? this.getActiveProviderId()
 				const isClineAuthError =
 					isClineManagedProvider(providerId) &&
-					(errorMessage.includes(CLINE_ACCOUNT_AUTH_ERROR_MESSAGE) ||
+					(errorMessage.includes(SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE) ||
 						errorMessage.toLowerCase().includes("missing api key") ||
 						errorMessage.toLowerCase().includes("unauthorized"))
 
@@ -1386,7 +1386,7 @@ export class Controller {
 		this.emitClineAuthError(task)
 		this.captureProviderFailure({
 			sessionId: sessionId ?? this.task?.taskId,
-			error: CLINE_ACCOUNT_AUTH_ERROR_MESSAGE,
+			error: SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE,
 			providerId: this.getActiveProviderId(),
 			errorType: PROVIDER_FAILURE_ERROR_TYPE.AUTH,
 			failurePhase: PROVIDER_FAILURE_PHASE.PREFLIGHT,
@@ -1427,7 +1427,7 @@ export class Controller {
 		this.pendingStartRetry = task === undefined ? undefined : { task: this.task, prompt: task, hasConversation }
 
 		const clineError = new ClineError(
-			{ message: CLINE_ACCOUNT_AUTH_ERROR_MESSAGE, status: 401 },
+			{ message: SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE, status: 401 },
 			undefined, // modelId
 			"cline",
 		)

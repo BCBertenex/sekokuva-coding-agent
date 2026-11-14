@@ -1,11 +1,11 @@
 import { basename } from "node:path";
 
-export const CLINE_BUILD_ENV_ENV = "CLINE_BUILD_ENV";
-export const CLINE_DEBUG_HOST_ENV = "CLINE_DEBUG_HOST";
-export const CLINE_DEBUG_PORT_BASE_ENV = "CLINE_DEBUG_PORT_BASE";
+export const SEKOKUVA_CA_BUILD_ENV_ENV = "SEKOKUVA_CA_BUILD_ENV";
+export const SEKOKUVA_CA_DEBUG_HOST_ENV = "SEKOKUVA_CA_DEBUG_HOST";
+export const SEKOKUVA_CA_DEBUG_PORT_BASE_ENV = "SEKOKUVA_CA_DEBUG_PORT_BASE";
 
-export type ClineBuildEnv = "development" | "production";
-export type ClineDebugRole =
+export type SekoKuvaBuildEnv = "development" | "production";
+export type SekoKuvaDebugRole =
 	| "rpc"
 	| "hook"
 	| "plugin-sandbox"
@@ -15,12 +15,12 @@ export type ClineDebugRole =
 export interface ResolveClineBuildEnvOptions {
 	env?: NodeJS.ProcessEnv;
 	execArgv?: string[];
-	debugRole?: ClineDebugRole;
+	debugRole?: SekoKuvaDebugRole;
 }
 
 function normalizeBuildEnv(
 	value: string | undefined,
-): ClineBuildEnv | undefined {
+): SekoKuvaBuildEnv | undefined {
 	const normalized = value?.trim().toLowerCase();
 	if (normalized === "development" || normalized === "production") {
 		return normalized;
@@ -82,11 +82,11 @@ function hasSourceMapFlag(values: string[]): boolean {
 }
 
 function resolveDebugHost(env: NodeJS.ProcessEnv): string {
-	return env[CLINE_DEBUG_HOST_ENV]?.trim() || "127.0.0.1";
+	return env[SEKOKUVA_CA_DEBUG_HOST_ENV]?.trim() || "127.0.0.1";
 }
 
 function resolveDebugPortBase(env: NodeJS.ProcessEnv): number | undefined {
-	const raw = env[CLINE_DEBUG_PORT_BASE_ENV]?.trim();
+	const raw = env[SEKOKUVA_CA_DEBUG_PORT_BASE_ENV]?.trim();
 	if (!raw) {
 		return undefined;
 	}
@@ -94,7 +94,7 @@ function resolveDebugPortBase(env: NodeJS.ProcessEnv): number | undefined {
 	return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined;
 }
 
-function resolveRolePortOffset(role: ClineDebugRole | undefined): number {
+function resolveRolePortOffset(role: SekoKuvaDebugRole | undefined): number {
 	switch (role) {
 		case "rpc":
 			return 0;
@@ -113,11 +113,11 @@ function resolveRolePortOffset(role: ClineDebugRole | undefined): number {
 
 export function resolveClineBuildEnv(
 	options: ResolveClineBuildEnvOptions = {},
-): ClineBuildEnv {
+): SekoKuvaBuildEnv {
 	const env = options.env ?? process.env;
 	const execArgv = options.execArgv ?? process.execArgv;
 
-	const explicit = normalizeBuildEnv(env[CLINE_BUILD_ENV_ENV]);
+	const explicit = normalizeBuildEnv(env[SEKOKUVA_CA_BUILD_ENV_ENV]);
 	if (explicit) {
 		return explicit;
 	}
@@ -137,12 +137,12 @@ export function withResolvedClineBuildEnv(
 	env: NodeJS.ProcessEnv = process.env,
 	options: Omit<ResolveClineBuildEnvOptions, "env"> = {},
 ): NodeJS.ProcessEnv {
-	if (normalizeBuildEnv(env[CLINE_BUILD_ENV_ENV])) {
+	if (normalizeBuildEnv(env[SEKOKUVA_CA_BUILD_ENV_ENV])) {
 		return env;
 	}
 	return {
 		...env,
-		[CLINE_BUILD_ENV_ENV]: resolveClineBuildEnv({
+		[SEKOKUVA_CA_BUILD_ENV_ENV]: resolveClineBuildEnv({
 			env,
 			execArgv: options.execArgv,
 		}),

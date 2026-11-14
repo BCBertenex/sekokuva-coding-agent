@@ -3,12 +3,12 @@ import { Sparkles, XIcon } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useExtensionState } from "@/context/ExtensionStateContext"
-import { CLINE_PASS_PROVIDER_ID, useClinePassPromo } from "@/hooks/useClinePassPromo"
+import { SEKOKUVA_CA_PASS_PROVIDER_ID, useClinePassPromo } from "@/hooks/useClinePassPromo"
 import { StateServiceClient } from "@/services/grpc-client"
 import { isBannerDismissedForSession, markBannerDismissedForSession } from "@/utils/sessionBannerDismissals"
 import { useApiConfigurationHandlers } from "./utils/useApiConfigurationHandlers"
 
-const CLINE_PASS_SETTINGS_HINT_ID = "cline-pass-settings-hint-v1"
+const SEKOKUVA_CA_PASS_SETTINGS_HINT_ID = "cline-pass-settings-hint-v1"
 
 interface ClinePassHintProps {
 	selectedProvider: string
@@ -26,19 +26,19 @@ export const ClinePassHint = ({ selectedProvider, currentMode }: ClinePassHintPr
 	const { dismissedBanners } = useExtensionState()
 	const { handleModeFieldChange } = useApiConfigurationHandlers()
 	// Seeded from the session-scoped record so the dismissal survives unmounts.
-	const [locallyDismissed, setLocallyDismissed] = useState(() => isBannerDismissedForSession(CLINE_PASS_SETTINGS_HINT_ID))
+	const [locallyDismissed, setLocallyDismissed] = useState(() => isBannerDismissedForSession(SEKOKUVA_CA_PASS_SETTINGS_HINT_ID))
 
 	const isDismissed =
-		locallyDismissed || (dismissedBanners ?? []).some((dismissed) => dismissed.bannerId === CLINE_PASS_SETTINGS_HINT_ID)
+		locallyDismissed || (dismissedBanners ?? []).some((dismissed) => dismissed.bannerId === SEKOKUVA_CA_PASS_SETTINGS_HINT_ID)
 
-	if (!isClinePassEnabled || selectedProvider === CLINE_PASS_PROVIDER_ID || isDismissed) {
+	if (!isClinePassEnabled || selectedProvider === SEKOKUVA_CA_PASS_PROVIDER_ID || isDismissed) {
 		return null
 	}
 
 	const handleDismiss = () => {
-		markBannerDismissedForSession(CLINE_PASS_SETTINGS_HINT_ID)
+		markBannerDismissedForSession(SEKOKUVA_CA_PASS_SETTINGS_HINT_ID)
 		setLocallyDismissed(true)
-		StateServiceClient.dismissBanner({ value: CLINE_PASS_SETTINGS_HINT_ID }).catch(console.error)
+		StateServiceClient.dismissBanner({ value: SEKOKUVA_CA_PASS_SETTINGS_HINT_ID }).catch(console.error)
 	}
 
 	// Mirror the provider dropdown: only touch the current mode's provider when
@@ -46,7 +46,7 @@ export const ClinePassHint = ({ selectedProvider, currentMode }: ClinePassHintPr
 	const handleTryIt = () => {
 		handleModeFieldChange(
 			{ plan: "planModeApiProvider", act: "actModeApiProvider" },
-			CLINE_PASS_PROVIDER_ID,
+			SEKOKUVA_CA_PASS_PROVIDER_ID,
 			currentMode,
 		).catch((error) => console.error("Failed to switch to ClinePass provider:", error))
 	}

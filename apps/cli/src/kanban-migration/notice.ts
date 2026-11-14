@@ -3,11 +3,11 @@ import { dirname, join } from "node:path";
 import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
 import { getCliSubscriptionUrl } from "../utils/cline-pass-errors";
 
-export const CLINE_PASS_NOTICE_ID = "cline-cli-cline-pass-intro";
+export const SEKOKUVA_CA_PASS_NOTICE_ID = "cline-cli-cline-pass-intro";
 const DESKTOP_NOTICE_ID = "cline-cli-desktop-launch";
-const FORCE_NOTICE_ENV = "CLINE_FORCE_CLINE_PASS_NOTICE";
+const FORCE_NOTICE_ENV = "SEKOKUVA_CA_FORCE_CLINE_PASS_NOTICE";
 // Historically named for the ClinePass promo; disables every startup notice.
-const DISABLE_NOTICE_ENV = "CLINE_DISABLE_CLINE_PASS_NOTICE";
+const DISABLE_NOTICE_ENV = "SEKOKUVA_CA_DISABLE_CLINE_PASS_NOTICE";
 const DESKTOP_APP_URL = "https://cline.bot/desktop";
 
 export interface CliMigrationNotice {
@@ -24,7 +24,7 @@ export interface CliMigrationNoticeOptions {
 
 function getClinePassNotice(): CliMigrationNotice {
 	return {
-		id: CLINE_PASS_NOTICE_ID,
+		id: SEKOKUVA_CA_PASS_NOTICE_ID,
 		title: "Try ClinePass",
 		body: "ClinePass is a $9.99/month subscription plan to get access to the latest open-weight coding models with enough quota for day-to-day work, at a much lower cost than paying API costs directly.",
 		url: getCliSubscriptionUrl(),
@@ -125,7 +125,7 @@ export function getClineCliMigrationNotice(
 			options.activeProviderId,
 			env,
 		) &&
-		(forceNotice || !noticeState.shown[CLINE_PASS_NOTICE_ID])
+		(forceNotice || !noticeState.shown[SEKOKUVA_CA_PASS_NOTICE_ID])
 	) {
 		return getClinePassNotice();
 	}
@@ -137,7 +137,7 @@ export function getClineCliMigrationNotice(
 
 export function markClineCliMigrationNoticeShown(
 	dataDir = resolveClineDataDir(),
-	noticeId = CLINE_PASS_NOTICE_ID,
+	noticeId = SEKOKUVA_CA_PASS_NOTICE_ID,
 ): void {
 	const noticePath = resolveCliNoticeStatePath(dataDir);
 	const noticeState = readNoticeState(noticePath);

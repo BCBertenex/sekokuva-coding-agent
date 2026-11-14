@@ -606,7 +606,7 @@ export interface HubPluginsReloadInput {
 	plugin: string;
 }
 
-export interface ClineRecommendedModel {
+export interface SekoKuvaRecommendedModel {
 	id: string;
 	/** Display-ready model name resolved against the model catalog. */
 	name: string;
@@ -614,12 +614,12 @@ export interface ClineRecommendedModel {
 	tags: string[];
 }
 
-export interface ClineRecommendedModelsData {
-	recommended: ClineRecommendedModel[];
-	free: ClineRecommendedModel[];
-	clinePass: ClineRecommendedModel[];
-	/** Free models offered only to cloud sessions (ClineFree). */
-	clineCloud?: ClineRecommendedModel[];
+export interface SekoKuvaRecommendedModelsData {
+	recommended: SekoKuvaRecommendedModel[];
+	free: SekoKuvaRecommendedModel[];
+	sekokuvaCaPass: SekoKuvaRecommendedModel[];
+	/** Free models offered only to cloud sessions (SekoKuvaFree). */
+	sekokuvaCaCloud?: SekoKuvaRecommendedModel[];
 }
 
 export interface HubProviderSaveResult {
@@ -627,7 +627,7 @@ export interface HubProviderSaveResult {
 	enabled: boolean;
 	settingsPath: string;
 	/** Whether the shared Cline account credentials changed during this write. */
-	clineCredentialsChanged: boolean;
+	sekokuvaCaCredentialsChanged: boolean;
 }
 
 export interface HubProviderModelsUpdateInput {
@@ -710,7 +710,7 @@ export interface HubCommandOutputMap {
 
 	"providers.list": ProviderCatalogResponse;
 	"providers.models.list": ProviderModelsResponse;
-	"providers.models.recommended": ClineRecommendedModelsData;
+	"providers.models.recommended": SekoKuvaRecommendedModelsData;
 	"providers.settings.save": HubProviderSaveResult;
 	"providers.add": HubProviderMutationResult;
 	"providers.models.update": HubProviderMutationResult;

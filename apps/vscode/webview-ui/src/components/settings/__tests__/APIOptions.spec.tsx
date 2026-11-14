@@ -16,7 +16,7 @@ vi.mock("../providers/GenericProviderSettings", () => ({
 // ClinePassHint pulls in useClinePassPromo (auth context, grpc clients); these
 // tests exercise provider forms, so keep the promo surface inert.
 vi.mock("@/hooks/useClinePassPromo", () => ({
-	CLINE_PASS_PROVIDER_ID: "cline-pass",
+	SEKOKUVA_CA_PASS_PROVIDER_ID: "cline-pass",
 	useClinePassPromo: vi.fn(() => ({ isClinePassEnabled: false })),
 }))
 

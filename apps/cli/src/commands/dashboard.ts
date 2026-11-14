@@ -34,8 +34,8 @@ export interface RunDashboardCommandOptions {
 	waitForShutdown?: (server: DashboardServerHandle) => Promise<void>;
 }
 
-const DASHBOARD_PORT_ENV = "CLINE_HUB_DASHBOARD_PORT";
-const WEBVIEW_DIST_ENV = "CLINE_HUB_WEBVIEW_DIST_DIR";
+const DASHBOARD_PORT_ENV = "SEKOKUVA_CA_HUB_DASHBOARD_PORT";
+const WEBVIEW_DIST_ENV = "SEKOKUVA_CA_HUB_WEBVIEW_DIST_DIR";
 
 function setEnvValue(name: string, value: string | undefined): () => void {
 	const previous = process.env[name];
@@ -52,14 +52,14 @@ function setEnvValue(name: string, value: string | undefined): () => void {
 }
 
 const SANDBOX_ENV_KEYS = [
-	"CLINE_SANDBOX",
-	"CLINE_SANDBOX_DATA_DIR",
-	"CLINE_DATA_DIR",
-	"CLINE_DB_DATA_DIR",
-	"CLINE_SESSION_DATA_DIR",
-	"CLINE_TEAM_DATA_DIR",
-	"CLINE_PROVIDER_SETTINGS_PATH",
-	"CLINE_HOOKS_LOG_PATH",
+	"SEKOKUVA_CA_SANDBOX",
+	"SEKOKUVA_CA_SANDBOX_DATA_DIR",
+	"SEKOKUVA_CA_DATA_DIR",
+	"SEKOKUVA_CA_DB_DATA_DIR",
+	"SEKOKUVA_CA_SESSION_DATA_DIR",
+	"SEKOKUVA_CA_TEAM_DATA_DIR",
+	"SEKOKUVA_CA_PROVIDER_SETTINGS_PATH",
+	"SEKOKUVA_CA_HOOKS_LOG_PATH",
 ] as const;
 
 async function withDashboardEnvironment<T>(
@@ -69,7 +69,7 @@ async function withDashboardEnvironment<T>(
 	const cwd = options.cwd ? resolve(options.cwd) : process.cwd();
 	const restore = [
 		setEnvValue("WORKSPACE_ROOT", options.cwd ? cwd : undefined),
-		setEnvValue("CLINE_DIR", options.configDir?.trim() || undefined),
+		setEnvValue("SEKOKUVA_CA_DIR", options.configDir?.trim() || undefined),
 		setEnvValue("HOST", options.host),
 		setEnvValue(DASHBOARD_PORT_ENV, options.port),
 		setEnvValue("PUBLIC_URL", options.publicUrl),
@@ -77,7 +77,7 @@ async function withDashboardEnvironment<T>(
 		setEnvValue(WEBVIEW_DIST_ENV, resolveDefaultWebviewDistDir()),
 		...SANDBOX_ENV_KEYS.map((key) => setEnvValue(key, undefined)),
 	];
-	if (options.dataDir || process.env.CLINE_SANDBOX?.trim() === "1") {
+	if (options.dataDir || process.env.SEKOKUVA_CA_SANDBOX?.trim() === "1") {
 		configureSandboxEnvironment({
 			enabled: true,
 			cwd,

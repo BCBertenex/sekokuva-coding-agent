@@ -500,7 +500,7 @@ describe("createDoctorCommand log subcommand", () => {
 		);
 		tempDirs.push(dataDir);
 		mockResolveClineDataDir.mockReturnValue(dataDir);
-		vi.stubEnv("CLINE_LOG_PATH", undefined);
+		vi.stubEnv("SEKOKUVA_CA_LOG_PATH", undefined);
 
 		const { exitCode, opened, output, errors } = await runDoctorLog();
 
@@ -512,13 +512,13 @@ describe("createDoctorCommand log subcommand", () => {
 		expect(existsSync(expectedPath)).toBe(true);
 	});
 
-	it("opens the CLINE_LOG_PATH file the CLI writes to", async () => {
+	it("opens the SEKOKUVA_CA_LOG_PATH file the CLI writes to", async () => {
 		const logDir = mkdtempSync(
 			path.join(os.tmpdir(), `${commandName}-doctor-log-path-test-`),
 		);
 		tempDirs.push(logDir);
 		const logPath = path.join(logDir, "custom", "cli.log");
-		vi.stubEnv("CLINE_LOG_PATH", logPath);
+		vi.stubEnv("SEKOKUVA_CA_LOG_PATH", logPath);
 
 		const { exitCode, opened, output } = await runDoctorLog();
 
@@ -534,7 +534,7 @@ describe("createDoctorCommand log subcommand", () => {
 		);
 		tempDirs.push(dataDir);
 		mockResolveClineDataDir.mockReturnValue(dataDir);
-		vi.stubEnv("CLINE_LOG_PATH", undefined);
+		vi.stubEnv("SEKOKUVA_CA_LOG_PATH", undefined);
 
 		const errors: string[] = [];
 		let exitCode = 0;
@@ -575,14 +575,14 @@ describe("doctor recent spawned processes", () => {
 		}
 	});
 
-	it("reads them from the CLINE_LOG_PATH file the CLI logged them to", async () => {
+	it("reads them from the SEKOKUVA_CA_LOG_PATH file the CLI logged them to", async () => {
 		const logDir = mkdtempSync(
 			path.join(os.tmpdir(), "cline-doctor-spawned-test-"),
 		);
 		tempDirs.push(logDir);
-		vi.stubEnv("CLINE_LOG_PATH", path.join(logDir, "cli.log"));
-		vi.stubEnv("CLINE_LOG_ENABLED", undefined);
-		vi.stubEnv("CLINE_LOG_LEVEL", undefined);
+		vi.stubEnv("SEKOKUVA_CA_LOG_PATH", path.join(logDir, "cli.log"));
+		vi.stubEnv("SEKOKUVA_CA_LOG_ENABLED", undefined);
+		vi.stubEnv("SEKOKUVA_CA_LOG_LEVEL", undefined);
 
 		logSpawnedProcess({
 			component: "connector",

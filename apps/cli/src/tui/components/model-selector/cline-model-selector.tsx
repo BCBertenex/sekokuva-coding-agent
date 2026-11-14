@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useDialogPalette } from "../../hooks/use-theme";
 import type { DialogPalette } from "../../themes";
 import {
-	CLINE_MODEL_PICKER_TIER_LABELS,
+	SEKOKUVA_CA_MODEL_PICKER_TIER_LABELS,
 	type ClineModelPickerEntry,
 	freeTierDescriptionFor,
 } from "./cline-model-picker";
@@ -65,7 +65,7 @@ export function ClineModelSelectorContent(
 					rows.push({
 						key: `tier-${entry.tier}`,
 						kind: "header",
-						label: CLINE_MODEL_PICKER_TIER_LABELS[entry.tier],
+						label: SEKOKUVA_CA_MODEL_PICKER_TIER_LABELS[entry.tier],
 						description:
 							entry.tier === "free" ? freeTierDescription : undefined,
 						tags: [],

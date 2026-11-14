@@ -29,7 +29,7 @@ type ConfigIo = {
 };
 
 function resolveCliAgentConfigSearchPaths(cwd: string): string[] {
-	const clineDir = process.env.CLINE_DIR?.trim() || join(homedir(), ".cline");
+	const clineDir = process.env.SEKOKUVA_CA_DIR?.trim() || join(homedir(), ".cline");
 	return [join(cwd, ".cline", "agents"), join(clineDir, "agents")];
 }
 

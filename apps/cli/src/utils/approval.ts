@@ -58,7 +58,7 @@ async function requestDesktopToolApprovalFromCore(
 	}
 	const requester = await cachedDesktopApprovalRequester;
 	const sessionId = getActiveCliSession()?.manifest.session_id;
-	const approvalDir = process.env.CLINE_TOOL_APPROVAL_DIR?.trim();
+	const approvalDir = process.env.SEKOKUVA_CA_TOOL_APPROVAL_DIR?.trim();
 	return requester(request, { approvalDir, sessionId });
 }
 
@@ -106,7 +106,7 @@ async function requestTerminalToolApproval(
 export async function requestToolApproval(
 	request: ToolApprovalRequest,
 ): Promise<ToolApprovalResult> {
-	const mode = process.env.CLINE_TOOL_APPROVAL_MODE?.trim().toLowerCase();
+	const mode = process.env.SEKOKUVA_CA_TOOL_APPROVAL_MODE?.trim().toLowerCase();
 	if (mode === "desktop") {
 		return requestDesktopToolApprovalFromCore(request);
 	}

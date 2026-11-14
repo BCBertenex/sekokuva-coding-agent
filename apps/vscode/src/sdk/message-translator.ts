@@ -53,9 +53,9 @@ import * as path from "path"
 import { isClineManagedProvider } from "@/shared/utils/cline"
 import { arePathsEqual, getDesktopDir } from "@/utils/path"
 import {
-	CLINE_FREE_PROMOTION_ENDED_ERROR_CODE,
 	isClineFreePromotionEndedMessage,
 	MODEL_NOT_FOUND_GUIDANCE,
+	SEKOKUVA_CA_FREE_PROMOTION_ENDED_ERROR_CODE,
 } from "../services/error/ClineError"
 import { MessageIdMinter } from "./message-id-minter"
 import { describeCredentialRejectedError, describeMissingCredentialError } from "./provider-credential-error"
@@ -2740,11 +2740,11 @@ export function reshapeErrorForWebview(
 	if (isClineFreePromotionEndedMessage(rawMessage, modelId)) {
 		return JSON.stringify({
 			message: rawMessage,
-			code: CLINE_FREE_PROMOTION_ENDED_ERROR_CODE,
+			code: SEKOKUVA_CA_FREE_PROMOTION_ENDED_ERROR_CODE,
 			providerId: clineErrorProviderId,
 			modelId,
 			details: {
-				code: CLINE_FREE_PROMOTION_ENDED_ERROR_CODE,
+				code: SEKOKUVA_CA_FREE_PROMOTION_ENDED_ERROR_CODE,
 				message: rawMessage,
 			},
 		})

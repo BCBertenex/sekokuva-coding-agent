@@ -32,7 +32,7 @@ type SidecarServer = {
 
 // Comma-separated extra origins (e.g. a dev server on a nonstandard port when
 // the sidecar runs inside a container). Origin validation itself stays on.
-const EXTRA_TRUSTED_ORIGINS = (process.env.CLINE_SIDECAR_TRUSTED_ORIGINS ?? "")
+const EXTRA_TRUSTED_ORIGINS = (process.env.SEKOKUVA_CA_SIDECAR_TRUSTED_ORIGINS ?? "")
 	.split(",")
 	.map((origin) => origin.trim())
 	.filter(Boolean);
@@ -172,7 +172,7 @@ export function startServer(
 	ctx: SidecarContext,
 	preferredPort: number = SIDECAR_PORT,
 	onShutdown?: (reason?: string) => Promise<void>,
-	approvalToken = process.env.CLINE_SIDECAR_APPROVAL_TOKEN?.trim() ||
+	approvalToken = process.env.SEKOKUVA_CA_SIDECAR_APPROVAL_TOKEN?.trim() ||
 		randomUUID(),
 ): { port: number; approvalToken: string } {
 	if (!BunRuntime) {

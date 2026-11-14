@@ -14,6 +14,7 @@ import { cp, mkdir, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { toPosixSeparators } from "@sekokuva-ca/shared";
+import { resolveWindowsSpawnOptions } from "@sekokuva-ca/shared/node";
 import {
 	isPluginModulePath,
 	resolveClineDir,
@@ -533,16 +534,13 @@ async function runCommand(
 	options: { cwd?: string } = {},
 ): Promise<void> {
 	await new Promise<void>((resolvePromise, reject) => {
-		const child = spawn(command, args, {
+		const { command: spawnCommand, options: platformOptions } =
+			resolveWindowsSpawnOptions(command);
+		const child = spawn(spawnCommand, args, {
 			cwd: options.cwd,
 			stdio: ["ignore", "ignore", "pipe"],
 			env: process.env,
-			// Prevent a console window from flashing on Windows.
-			windowsHide: true,
-			// Windows cannot spawn a `.cmd`/`.bat` shim (npm, yarn, pnpm) without
-			// a shell; `spawn` fails with EINVAL. Matches the MCP client's
-			// platform handling.
-			...(process.platform === "win32" ? { shell: true } : {}),
+			...platformOptions,
 		});
 		let stderr = "";
 		child.stderr.on("data", (chunk) => {
@@ -645,16 +643,16 @@ function removeInstalledHostProvidedSdkDependencies(
 	packageRoot: string,
 	preservePackageName?: string,
 ): void {
-	const clineScopeDir = join(packageRoot, "node_modules", "@sekokuva-ca");
-	if (!existsSync(clineScopeDir)) {
+	const sekokuvaCaScopeDir = join(packageRoot, "node_modules", "@sekokuva-ca");
+	if (!existsSync(sekokuvaCaScopeDir)) {
 		return;
 	}
-	for (const entry of statSafeReadDir(clineScopeDir)) {
+	for (const entry of statSafeReadDir(sekokuvaCaScopeDir)) {
 		const packageName = `@sekokuva-ca/${entry.name}`;
 		if (packageName === preservePackageName) {
 			continue;
 		}
-		rmSync(join(clineScopeDir, entry.name), {
+		rmSync(join(sekokuvaCaScopeDir, entry.name), {
 			recursive: true,
 			force: true,
 		});
@@ -1141,7 +1139,7 @@ export async function installPlugin(
 		`${Date.now()}-${process.pid}-${hashSource(`${source}:${Math.random()}`)}`,
 	);
 	const npmCommand =
-		options.npmCommand ?? (process.env.CLINE_NPM_COMMAND?.trim() || "npm");
+		options.npmCommand ?? (process.env.SEKOKUVA_CA_NPM_COMMAND?.trim() || "npm");
 
 	const force = options.force === true;
 	assertCanInstall(installPath, force);

@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { buildCloudHandoffDashboardUrl, type ClineCore } from "@sekokuva-ca/core";
+import { buildCloudHandoffDashboardUrl, type SekoKuvaCore } from "@sekokuva-ca/core";
 import {
 	type CloudCreationOptions,
 	type CloudHubScope,
@@ -78,7 +78,7 @@ function assertCloudHandoffAvailable(): void {
 
 async function assertHandoffIdle(
 	ctx: SidecarContext,
-	manager: ClineCore,
+	manager: SekoKuvaCore,
 	sessionId: string,
 ): Promise<void> {
 	if (hasActiveSessionSend(ctx, sessionId))

@@ -1,11 +1,11 @@
 import {
-	CLINE_DEFAULT_MODEL_ID,
-	CLINE_ENVIRONMENT_ENV,
-	CLINE_ENVIRONMENTS,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_ENVIRONMENT_ENV,
+	SEKOKUVA_CA_ENVIRONMENTS,
 	type GatewayProviderContext,
 } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { GENERATED_CLINE_RECOMMENDED_MODELS } from "../catalog/cline-recommended.generated";
+import { GENERATED_CLINE_RECOMMENDED_MODELS } from "../catalog/sekokuva-ca-recommended.generated";
 import {
 	BUILTIN_PROVIDER_MANIFESTS_BY_ID,
 	BUILTIN_SPECS,
@@ -25,40 +25,40 @@ function findClineSpec() {
 }
 
 describe("cline builtin spec defaults.baseUrl", () => {
-	const originalEnvironment = process.env[CLINE_ENVIRONMENT_ENV];
+	const originalEnvironment = process.env[SEKOKUVA_CA_ENVIRONMENT_ENV];
 
 	beforeEach(() => {
-		delete process.env[CLINE_ENVIRONMENT_ENV];
+		delete process.env[SEKOKUVA_CA_ENVIRONMENT_ENV];
 	});
 
 	afterEach(() => {
 		if (originalEnvironment === undefined) {
-			delete process.env[CLINE_ENVIRONMENT_ENV];
+			delete process.env[SEKOKUVA_CA_ENVIRONMENT_ENV];
 		} else {
-			process.env[CLINE_ENVIRONMENT_ENV] = originalEnvironment;
+			process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = originalEnvironment;
 		}
 	});
 
-	it("re-resolves baseUrl when CLINE_ENVIRONMENT changes between reads", () => {
+	it("re-resolves baseUrl when SEKOKUVA_CA_ENVIRONMENT changes between reads", () => {
 		const spec = findClineSpec();
 
 		expect(spec.defaults?.baseUrl).toBe(
-			`${CLINE_ENVIRONMENTS.production.apiBaseUrl}/api/v1`,
+			`${SEKOKUVA_CA_ENVIRONMENTS.production.apiBaseUrl}/api/v1`,
 		);
 
-		process.env[CLINE_ENVIRONMENT_ENV] = "staging";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "staging";
 		expect(spec.defaults?.baseUrl).toBe(
-			`${CLINE_ENVIRONMENTS.staging.apiBaseUrl}/api/v1`,
+			`${SEKOKUVA_CA_ENVIRONMENTS.staging.apiBaseUrl}/api/v1`,
 		);
 
-		process.env[CLINE_ENVIRONMENT_ENV] = "local";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "local";
 		expect(spec.defaults?.baseUrl).toBe(
-			`${CLINE_ENVIRONMENTS.local.apiBaseUrl}/api/v1`,
+			`${SEKOKUVA_CA_ENVIRONMENTS.local.apiBaseUrl}/api/v1`,
 		);
 
-		delete process.env[CLINE_ENVIRONMENT_ENV];
+		delete process.env[SEKOKUVA_CA_ENVIRONMENT_ENV];
 		expect(spec.defaults?.baseUrl).toBe(
-			`${CLINE_ENVIRONMENTS.production.apiBaseUrl}/api/v1`,
+			`${SEKOKUVA_CA_ENVIRONMENTS.production.apiBaseUrl}/api/v1`,
 		);
 	});
 });
@@ -67,36 +67,36 @@ describe("cline builtin models", () => {
 	it("defaults to the first free model, falling back to the canonical id", () => {
 		expect(findClineSpec().defaultModelId).toBe(
 			GENERATED_CLINE_RECOMMENDED_MODELS.free?.[0]?.id ??
-				CLINE_DEFAULT_MODEL_ID,
+				SEKOKUVA_CA_DEFAULT_MODEL_ID,
 		);
 	});
 
 	// Drive each branch explicitly with a mocked generated list.
-	async function clineDefaultWithRecommended(
+	async function sekokuvaCaDefaultWithRecommended(
 		free: { id: string }[],
 	): Promise<string | undefined> {
 		vi.resetModules();
-		vi.doMock("../catalog/cline-recommended.generated", () => ({
+		vi.doMock("../catalog/sekokuva-ca-recommended.generated", () => ({
 			GENERATED_CLINE_RECOMMENDED_MODELS: { recommended: [], free },
 		}));
 		try {
 			const { BUILTIN_SPECS: specs } = await import("./builtins");
 			return specs.find((s) => s.id === "cline")?.defaultModelId;
 		} finally {
-			vi.doUnmock("../catalog/cline-recommended.generated");
+			vi.doUnmock("../catalog/sekokuva-ca-recommended.generated");
 			vi.resetModules();
 		}
 	}
 
 	it("tracks the first free model when it differs from the fallback", async () => {
 		await expect(
-			clineDefaultWithRecommended([{ id: "vendor/free-first" }]),
+			sekokuvaCaDefaultWithRecommended([{ id: "vendor/free-first" }]),
 		).resolves.toBe("vendor/free-first");
 	});
 
 	it("falls back to the canonical id when the free list is empty", async () => {
-		await expect(clineDefaultWithRecommended([])).resolves.toBe(
-			CLINE_DEFAULT_MODEL_ID,
+		await expect(sekokuvaCaDefaultWithRecommended([])).resolves.toBe(
+			SEKOKUVA_CA_DEFAULT_MODEL_ID,
 		);
 	});
 
@@ -127,15 +127,15 @@ describe("cline builtin models", () => {
 
 	it("excludes image-output models without changing upstream catalogs", async () => {
 		const modelId = "google/gemini-3-pro-image";
-		const [clineModels, openRouterModels, vercelModels] = await Promise.all([
+		const [sekokuvaCaModels, openRouterModels, vercelModels] = await Promise.all([
 			getModelsForProvider("cline"),
 			getModelsForProvider("openrouter"),
 			getModelsForProvider("vercel-ai-gateway"),
 		]);
 
-		expect(clineModels[modelId]).toBeUndefined();
+		expect(sekokuvaCaModels[modelId]).toBeUndefined();
 		expect(
-			Object.values(clineModels).some(
+			Object.values(sekokuvaCaModels).some(
 				(model) => model.modalities?.output.includes("image") === true,
 			),
 		).toBe(false);
@@ -261,8 +261,8 @@ describe("cline-pass builtin spec", () => {
 
 		expect(provider).toMatchObject({
 			id: "cline-pass",
-			name: "ClinePass",
-			baseUrl: `${CLINE_ENVIRONMENTS.production.apiBaseUrl}/api/v1`,
+			name: "SekoKuvaPass",
+			baseUrl: `${SEKOKUVA_CA_ENVIRONMENTS.production.apiBaseUrl}/api/v1`,
 			client: "openai-compatible",
 			capabilities: expect.arrayContaining([
 				"oauth",

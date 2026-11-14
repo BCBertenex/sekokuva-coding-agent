@@ -20,33 +20,33 @@ import {
 } from "../session/history-origin";
 import { SessionSource } from "../types/common";
 import type {
-	ClineAutomationEventIngressResult,
-	ClineAutomationEventLog,
-	ClineAutomationListEventsOptions,
-	ClineAutomationListRunsOptions,
-	ClineAutomationListSpecsOptions,
-	ClineAutomationRun,
-	ClineAutomationSpec,
-	ClineCoreAutomationApi,
-	ClineCoreAutomationOptions,
+	SekoKuvaAutomationEventIngressResult,
+	SekoKuvaAutomationEventLog,
+	SekoKuvaAutomationListEventsOptions,
+	SekoKuvaAutomationListRunsOptions,
+	SekoKuvaAutomationListSpecsOptions,
+	SekoKuvaAutomationRun,
+	SekoKuvaAutomationSpec,
+	SekoKuvaCoreAutomationApi,
+	SekoKuvaCoreAutomationOptions,
 } from "./types";
 
 export function normalizeAutomationOptions(
-	options: ClineCoreAutomationOptions | boolean | undefined,
-): ClineCoreAutomationOptions | undefined {
+	options: SekoKuvaCoreAutomationOptions | boolean | undefined,
+): SekoKuvaCoreAutomationOptions | undefined {
 	if (options === true) return {};
 	if (!options) return undefined;
 	return options;
 }
 
 export function normalizeAutomationCronScope(
-	scope: ClineCoreAutomationOptions["cronScope"],
+	scope: SekoKuvaCoreAutomationOptions["cronScope"],
 ): "global" | "workspace" | undefined {
 	if (scope === "user") return "global";
 	return scope;
 }
 
-export class ClineCoreAutomationController implements ClineCoreAutomationApi {
+export class SekoKuvaCoreAutomationController implements SekoKuvaCoreAutomationApi {
 	constructor(private readonly getService: () => CronService) {}
 
 	async start(): Promise<void> {
@@ -63,7 +63,7 @@ export class ClineCoreAutomationController implements ClineCoreAutomationApi {
 
 	ingestEvent(
 		event: AutomationEventEnvelope,
-	): ClineAutomationEventIngressResult {
+	): SekoKuvaAutomationEventIngressResult {
 		const result: CronEventIngressResult = this.getService().ingestEvent(event);
 		return {
 			event: result.event,
@@ -75,31 +75,31 @@ export class ClineCoreAutomationController implements ClineCoreAutomationApi {
 	}
 
 	listEvents(
-		options?: ClineAutomationListEventsOptions,
-	): ClineAutomationEventLog[] {
+		options?: SekoKuvaAutomationListEventsOptions,
+	): SekoKuvaAutomationEventLog[] {
 		return this.getService().listEventLogs(options);
 	}
 
-	getEvent(eventId: string): ClineAutomationEventLog | undefined {
+	getEvent(eventId: string): SekoKuvaAutomationEventLog | undefined {
 		return this.getService().getEventLog(eventId);
 	}
 
-	listSpecs(options?: ClineAutomationListSpecsOptions): ClineAutomationSpec[] {
+	listSpecs(options?: SekoKuvaAutomationListSpecsOptions): SekoKuvaAutomationSpec[] {
 		return this.getService().listSpecs(options);
 	}
 
-	listRuns(options?: ClineAutomationListRunsOptions): ClineAutomationRun[] {
+	listRuns(options?: SekoKuvaAutomationListRunsOptions): SekoKuvaAutomationRun[] {
 		return this.getService().listRuns(options);
 	}
 }
 
-export interface ClineCoreAutomationRuntimeHandlersInput {
+export interface SekoKuvaCoreAutomationRuntimeHandlersInput {
 	host: RuntimeHost;
 	getExtensionContext(): ExtensionContext | undefined;
 }
 
 export function createClineCoreAutomationRuntimeHandlers(
-	input: ClineCoreAutomationRuntimeHandlersInput,
+	input: SekoKuvaCoreAutomationRuntimeHandlersInput,
 ): HubScheduleRuntimeHandlers {
 	const { host } = input;
 	return {
@@ -167,12 +167,12 @@ export function createClineCoreAutomationRuntimeHandlers(
 				delivery: request.delivery,
 			});
 			if (!result) {
-				throw new Error("ClineCore automation runtime returned no result");
+				throw new Error("SekoKuvaCore automation runtime returned no result");
 			}
 			return { result: toChatTurnResult(result) };
 		},
 		async abortSession(sessionId) {
-			await host.abort(sessionId, new Error("ClineCore automation abort"));
+			await host.abort(sessionId, new Error("SekoKuvaCore automation abort"));
 			return { applied: true };
 		},
 		async stopSession(sessionId) {
@@ -182,9 +182,9 @@ export function createClineCoreAutomationRuntimeHandlers(
 	};
 }
 
-export interface ClineCoreAutomationExtensionContextInput {
+export interface SekoKuvaCoreAutomationExtensionContextInput {
 	automationService?: CronService;
-	automation: ClineCoreAutomationApi;
+	automation: SekoKuvaCoreAutomationApi;
 	context?: ExtensionContext;
 	clientName?: string;
 	distinctId?: string;
@@ -193,7 +193,7 @@ export interface ClineCoreAutomationExtensionContextInput {
 }
 
 export function createClineCoreAutomationExtensionContext(
-	input: ClineCoreAutomationExtensionContextInput,
+	input: SekoKuvaCoreAutomationExtensionContextInput,
 ): ExtensionContext | undefined {
 	const automation = createAutomationPluginContext(
 		input.automationService,
@@ -222,7 +222,7 @@ export function createClineCoreAutomationExtensionContext(
 
 function createAutomationPluginContext(
 	automationService: CronService | undefined,
-	automation: ClineCoreAutomationApi,
+	automation: SekoKuvaCoreAutomationApi,
 ): AgentExtensionAutomationContext | undefined {
 	if (!automationService) {
 		return undefined;

@@ -392,7 +392,7 @@ export async function runScheduleWizard(): Promise<number> {
 	const s = p.spinner();
 	s.start("Connecting to hub server...");
 
-	const address = resolveAddress(process.env.CLINE_HUB_ADDRESS);
+	const address = resolveAddress(process.env.SEKOKUVA_CA_HUB_ADDRESS);
 	const ensured = await ensureSchedulerHub(address, process.cwd(), {
 		writeln: (text?: string) => {
 			process.stdout.write(`${text ?? ""}\n`);

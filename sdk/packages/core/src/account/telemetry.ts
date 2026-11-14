@@ -1,8 +1,8 @@
 import type { ProviderSettingsManager } from "../services/storage/provider-settings-manager";
-import type { ClineAccountUser } from "./types";
+import type { SekoKuvaAccountUser } from "./types";
 
 /** Account identity shared by telemetry and feature-flag integrations. */
-export interface ClineAccountTelemetryIdentity {
+export interface SekoKuvaAccountTelemetryIdentity {
 	id: string;
 	email?: string;
 	provider: "cline";
@@ -16,8 +16,8 @@ export interface ClineAccountTelemetryIdentity {
  * applies the same cross-surface account dimensions.
  */
 export function resolveClineAccountTelemetryIdentity(
-	user: ClineAccountUser,
-): ClineAccountTelemetryIdentity {
+	user: SekoKuvaAccountUser,
+): SekoKuvaAccountTelemetryIdentity {
 	const activeOrganization = user.organizations?.find(
 		(organization) => organization.active,
 	);
@@ -41,7 +41,7 @@ export function persistClineAccountTelemetryIdentity(
 		ProviderSettingsManager,
 		"getProviderSettings" | "saveProviderSettings"
 	>,
-	identity: ClineAccountTelemetryIdentity,
+	identity: SekoKuvaAccountTelemetryIdentity,
 ): boolean {
 	try {
 		const persisted = manager.getProviderSettings("cline");

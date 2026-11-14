@@ -20,7 +20,7 @@ vi.mock("@sekokuva-ca/core", async () => {
 		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
-		ClineCore: {
+		SekoKuvaCore: {
 			create: createCore,
 		},
 		resolveSessionBackend,
@@ -35,9 +35,9 @@ vi.mock("../utils/telemetry", () => ({
 describe("createCliCore", () => {
 	let sessionModule: typeof import("./session");
 	const envSnapshot = {
-		CLINE_RPC_ADDRESS: process.env.CLINE_RPC_ADDRESS,
-		CLINE_SESSION_BACKEND_MODE: process.env.CLINE_SESSION_BACKEND_MODE,
-		CLINE_VCR: process.env.CLINE_VCR,
+		SEKOKUVA_CA_RPC_ADDRESS: process.env.SEKOKUVA_CA_RPC_ADDRESS,
+		SEKOKUVA_CA_SESSION_BACKEND_MODE: process.env.SEKOKUVA_CA_SESSION_BACKEND_MODE,
+		SEKOKUVA_CA_VCR: process.env.SEKOKUVA_CA_VCR,
 	};
 
 	beforeAll(async () => {
@@ -71,22 +71,22 @@ describe("createCliCore", () => {
 			subscribe: vi.fn(),
 			updateSessionModel: vi.fn(),
 		});
-		delete process.env.CLINE_RPC_ADDRESS;
-		delete process.env.CLINE_SESSION_BACKEND_MODE;
-		delete process.env.CLINE_VCR;
+		delete process.env.SEKOKUVA_CA_RPC_ADDRESS;
+		delete process.env.SEKOKUVA_CA_SESSION_BACKEND_MODE;
+		delete process.env.SEKOKUVA_CA_VCR;
 		featureFlagsPoll.mockClear();
 		featureFlagsDispose.mockClear();
 	});
 
 	afterEach(() => {
-		process.env.CLINE_RPC_ADDRESS = envSnapshot.CLINE_RPC_ADDRESS;
-		process.env.CLINE_SESSION_BACKEND_MODE =
-			envSnapshot.CLINE_SESSION_BACKEND_MODE;
-		process.env.CLINE_VCR = envSnapshot.CLINE_VCR;
+		process.env.SEKOKUVA_CA_RPC_ADDRESS = envSnapshot.SEKOKUVA_CA_RPC_ADDRESS;
+		process.env.SEKOKUVA_CA_SESSION_BACKEND_MODE =
+			envSnapshot.SEKOKUVA_CA_SESSION_BACKEND_MODE;
+		process.env.SEKOKUVA_CA_VCR = envSnapshot.SEKOKUVA_CA_VCR;
 	});
 
 	it("passes hub client metadata through without forcing hub mode", async () => {
-		process.env.CLINE_RPC_ADDRESS = "127.0.0.1:5001";
+		process.env.SEKOKUVA_CA_RPC_ADDRESS = "127.0.0.1:5001";
 
 		await sessionModule.createCliCore();
 
@@ -220,7 +220,7 @@ describe("createCliCore", () => {
 	});
 
 	it("passes env-managed routing through to core when local is requested via env", async () => {
-		process.env.CLINE_SESSION_BACKEND_MODE = "local";
+		process.env.SEKOKUVA_CA_SESSION_BACKEND_MODE = "local";
 
 		await sessionModule.createCliCore();
 
@@ -232,7 +232,7 @@ describe("createCliCore", () => {
 	});
 
 	it("passes env-managed routing through to core when vcr is enabled", async () => {
-		process.env.CLINE_VCR = "1";
+		process.env.SEKOKUVA_CA_VCR = "1";
 
 		await sessionModule.createCliCore();
 

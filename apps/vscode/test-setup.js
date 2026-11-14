@@ -149,7 +149,7 @@ Module.prototype.require = function (id) {
 				enabled: false,
 				metadata: {
 					extension_version: "test",
-					cline_type: "test",
+					sekokuva_ca_type: "test",
 					platform: "test",
 					platform_version: "test",
 					os_type: "test",

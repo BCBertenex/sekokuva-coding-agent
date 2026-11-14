@@ -30,7 +30,7 @@ vi.mock("@sekokuva-ca/core", async () => {
 		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
-		ClineAccountService: class {
+		SekoKuvaAccountService: class {
 			constructor(options: unknown) {
 				clineAccountServiceCtorMock(options);
 			}
@@ -78,8 +78,8 @@ beforeEach(() => {
 	// Account context is persisted across launches; never hydrate the developer's
 	// signed-in identity when a test expects an anonymous device identity.
 	testDataDir = mkdtempSync(join(tmpdir(), "commands-account-test-"));
-	vi.stubEnv("CLINE_DATA_DIR", testDataDir);
-	vi.stubEnv("CLINE_DIR", testDataDir);
+	vi.stubEnv("SEKOKUVA_CA_DATA_DIR", testDataDir);
+	vi.stubEnv("SEKOKUVA_CA_DIR", testDataDir);
 	clineAccountServiceCtorMock.mockReset();
 	executeClineAccountActionMock.mockReset();
 	getProviderSettingsMock.mockReset();
@@ -346,7 +346,7 @@ describe("cline_account keeps feature-flag identity in sync", () => {
 		"cloud disabled",
 	])("keeps a successful account switch and desktop cleanup when %s", async (failure) => {
 		vi.stubEnv(
-			"CLINE_CODE_CLOUD_AGENTS",
+			"SEKOKUVA_CA_CODE_CLOUD_AGENTS",
 			failure === "cloud disabled" ? "0" : "1",
 		);
 		const { getCloudSessionManager } = await import("./cloud-sessions");
@@ -473,7 +473,7 @@ describe("cline_account keeps feature-flag identity in sync", () => {
 	});
 
 	it("leaves the signed-in identity intact across an organization switch", async () => {
-		vi.stubEnv("CLINE_CODE_CLOUD_AGENTS", "1");
+		vi.stubEnv("SEKOKUVA_CA_CODE_CLOUD_AGENTS", "1");
 		const { ctx } = createContext();
 		resolveProviderApiKeyMock.mockResolvedValue({ apiKey: "token" });
 		getProviderSettingsMock.mockReturnValue({});

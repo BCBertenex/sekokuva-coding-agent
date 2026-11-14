@@ -1,4 +1,4 @@
-import { CLINE_CONNECTOR_STARTING_INSTANCE_ENV } from "@sekokuva-ca/shared";
+import { SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV } from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ConnectorSupervisor } from "./connector-supervisor";
 import { reconnectDaemonConnectors } from "./daemon-connector-reconnect";
@@ -68,39 +68,39 @@ function createSupervisor(
 
 describe("reconnectDaemonConnectors", () => {
 	const originalStartingInstance =
-		process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV];
+		process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV];
 
 	afterEach(() => {
 		vi.clearAllMocks();
 		if (originalStartingInstance === undefined) {
-			delete process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV];
+			delete process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV];
 		} else {
-			process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV] =
+			process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV] =
 				originalStartingInstance;
 		}
 	});
 
 	it("starts a persisted connector through the supervisor", async () => {
-		delete process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV];
+		delete process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV];
 		const { supervisor, starts } = createSupervisor();
 		mocks.reconnectPersistedConnectors.mockImplementation(async (options) => {
 			const ok = await options.start({
 				channel: "telegram",
-				instanceId: "cline_bot",
+				instanceId: "sekokuva_ca_bot",
 				args: ["-k", "token"],
 			});
-			return [{ channel: "telegram", instanceId: "cline_bot", ok }];
+			return [{ channel: "telegram", instanceId: "sekokuva_ca_bot", ok }];
 		});
 
 		await expect(
 			reconnectDaemonConnectors(vi.fn(), supervisor),
 		).resolves.toEqual([
-			{ channel: "telegram", instanceId: "cline_bot", ok: true },
+			{ channel: "telegram", instanceId: "sekokuva_ca_bot", ok: true },
 		]);
 		expect(starts).toEqual([
 			{
 				channel: "telegram",
-				instanceId: "cline_bot",
+				instanceId: "sekokuva_ca_bot",
 				args: ["-k", "token"],
 				restart: false,
 			},
@@ -108,15 +108,15 @@ describe("reconnectDaemonConnectors", () => {
 	});
 
 	it("restarts a connector that survived the previous hub", async () => {
-		delete process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV];
+		delete process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV];
 		const { supervisor, starts } = createSupervisor({
-			supervised: [{ channel: "telegram", instanceId: "cline_bot" }],
+			supervised: [{ channel: "telegram", instanceId: "sekokuva_ca_bot" }],
 		});
 		const log = vi.fn();
 		mocks.reconnectPersistedConnectors.mockImplementation(async (options) => {
 			await options.start({
 				channel: "telegram",
-				instanceId: "cline_bot",
+				instanceId: "sekokuva_ca_bot",
 				args: ["-k", "token"],
 			});
 			return [];
@@ -128,14 +128,14 @@ describe("reconnectDaemonConnectors", () => {
 		// back rather than keep running.
 		expect(starts[0]?.restart).toBe(true);
 		expect(log).toHaveBeenCalledWith(
-			"[connect] restarting surviving telegram connector cline_bot for the new hub session",
+			"[connect] restarting surviving telegram connector sekokuva_ca_bot for the new hub session",
 		);
 	});
 
 	it("does not reconnect the connector instance that is starting this daemon", async () => {
-		process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV] = JSON.stringify({
+		process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV] = JSON.stringify({
 			channel: "telegram",
-			instanceId: "cline_bot",
+			instanceId: "sekokuva_ca_bot",
 		});
 		const { supervisor } = createSupervisor();
 		let isHealthy:
@@ -148,20 +148,20 @@ describe("reconnectDaemonConnectors", () => {
 
 		await reconnectDaemonConnectors(vi.fn(), supervisor);
 
-		expect(isHealthy?.({ channel: "telegram", instanceId: "cline_bot" })).toBe(
+		expect(isHealthy?.({ channel: "telegram", instanceId: "sekokuva_ca_bot" })).toBe(
 			true,
 		);
 		// A different instance of the same channel still needs reconnecting.
 		expect(isHealthy?.({ channel: "telegram", instanceId: "other_bot" })).toBe(
 			false,
 		);
-		expect(isHealthy?.({ channel: "slack", instanceId: "cline_bot" })).toBe(
+		expect(isHealthy?.({ channel: "slack", instanceId: "sekokuva_ca_bot" })).toBe(
 			false,
 		);
 	});
 
 	it("reconnects every persisted instance when no connector is starting", async () => {
-		delete process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV];
+		delete process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV];
 		const { supervisor } = createSupervisor();
 		let isHealthy:
 			| ((target: { channel: string; instanceId: string }) => boolean)
@@ -173,13 +173,13 @@ describe("reconnectDaemonConnectors", () => {
 
 		await reconnectDaemonConnectors(vi.fn(), supervisor);
 
-		expect(isHealthy?.({ channel: "telegram", instanceId: "cline_bot" })).toBe(
+		expect(isHealthy?.({ channel: "telegram", instanceId: "sekokuva_ca_bot" })).toBe(
 			false,
 		);
 	});
 
 	it("reports an already-running instance without treating it as started", async () => {
-		delete process.env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV];
+		delete process.env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV];
 		const { supervisor } = createSupervisor({
 			started: false,
 			reason: "already_running",

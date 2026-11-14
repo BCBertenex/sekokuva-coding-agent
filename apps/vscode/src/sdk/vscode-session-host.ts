@@ -1,15 +1,12 @@
-// VscodeSessionHost — wraps ClineCore with VSCode-specific customizations
+// VscodeSessionHost — wraps SekoKuvaCore with VSCode-specific customizations
 //
-// Uses ClineCore.create() so the SDK owns session input normalization,
+// Uses SekoKuvaCore.create() so the SDK owns session input normalization,
 // lifecycle bootstrapping, and host selection while the VSCode extension
 // still provides its custom McpHub-backed runtime builder.
 
 import {
 	type ApplyPatchExecutor,
 	type AskQuestionExecutor,
-	ClineCore,
-	type ClineCoreListHistoryOptions,
-	type ClineCoreStartInput,
 	type CompareCheckpointInput,
 	type CompareCheckpointResult,
 	type CoreSessionEvent,
@@ -23,6 +20,9 @@ import {
 	type PreparedRemoteConfigCoreIntegration,
 	type RestoreInput,
 	type RestoreResult,
+	SekoKuvaCore,
+	type SekoKuvaCoreListHistoryOptions,
+	type SekoKuvaCoreStartInput,
 	type SendSessionInput,
 	type SessionAccumulatedUsage,
 	type SessionCompactionState,
@@ -99,13 +99,13 @@ export interface VscodeSessionHostOptions {
 
 export class VscodeSessionHost implements SdkSessionHost {
 	readonly runtimeAddress: string | undefined
-	private readonly inner: ClineCore
-	private readonly prepareStartSessionInput: (input: ClineCoreStartInput) => Promise<ClineCoreStartInput>
+	private readonly inner: SekoKuvaCore
+	private readonly prepareStartSessionInput: (input: SekoKuvaCoreStartInput) => Promise<SekoKuvaCoreStartInput>
 	private readonly gitTelemetry: VscodeGitTelemetryManager
 
 	private constructor(
-		inner: ClineCore,
-		prepareStartSessionInput: (input: ClineCoreStartInput) => Promise<ClineCoreStartInput>,
+		inner: SekoKuvaCore,
+		prepareStartSessionInput: (input: SekoKuvaCoreStartInput) => Promise<SekoKuvaCoreStartInput>,
 		options: VscodeSessionHostOptions,
 	) {
 		this.inner = inner
@@ -143,7 +143,7 @@ export class VscodeSessionHost implements SdkSessionHost {
 		}
 
 		// Both start and checkpoint restore use the same input preparation.
-		const prepareStartSessionInput = async (input: ClineCoreStartInput): Promise<ClineCoreStartInput> => {
+		const prepareStartSessionInput = async (input: SekoKuvaCoreStartInput): Promise<SekoKuvaCoreStartInput> => {
 			await options.beforeStartSession?.()
 			// Read only after the readiness gate: it may have atomically replaced
 			// the integration that must be captured by this session.
@@ -158,7 +158,7 @@ export class VscodeSessionHost implements SdkSessionHost {
 				vscodeTerminalExecutionMode: getEffectiveTerminalExecutionMode(requestedTerminalExecutionMode),
 				foregroundCommands: options.foregroundCommands,
 			})
-			const config: ClineCoreStartInput["config"] = {
+			const config: SekoKuvaCoreStartInput["config"] = {
 				...inputWithRemoteConfig.config,
 				telemetry: inputWithRemoteConfig.config.telemetry ?? options.telemetry,
 				extraTools: [...(inputWithRemoteConfig.config.extraTools ?? []), ...extraTools],
@@ -181,7 +181,7 @@ export class VscodeSessionHost implements SdkSessionHost {
 			}
 		}
 
-		const inner = await ClineCore.create({
+		const inner = await SekoKuvaCore.create({
 			backendMode: "local",
 			capabilities: {
 				requestToolApproval: options.requestToolApproval as
@@ -194,7 +194,7 @@ export class VscodeSessionHost implements SdkSessionHost {
 			distinctId: getDistinctId() || undefined,
 		})
 
-		Logger.log("[VscodeSessionHost] Initialized with ClineCore + VSCode extra tools")
+		Logger.log("[VscodeSessionHost] Initialized with SekoKuvaCore + VSCode extra tools")
 		if (options.getTerminalManager) {
 			Logger.log("[VscodeSessionHost] SDK run_commands suppressed; using custom foreground/background terminal tool")
 		}
@@ -202,8 +202,8 @@ export class VscodeSessionHost implements SdkSessionHost {
 	}
 
 	async start(input: StartSessionInput): Promise<StartSessionResult>
-	async start(input: ClineCoreStartInput): Promise<StartSessionResult>
-	async start(input: StartSessionInput | ClineCoreStartInput): Promise<StartSessionResult> {
+	async start(input: SekoKuvaCoreStartInput): Promise<StartSessionResult>
+	async start(input: StartSessionInput | SekoKuvaCoreStartInput): Promise<StartSessionResult> {
 		const prepared = await this.prepareStartSessionInput(toClineCoreStartInput(input))
 		const observer = this.gitTelemetry.init(prepared)
 		try {
@@ -264,11 +264,11 @@ export class VscodeSessionHost implements SdkSessionHost {
 		return this.inner.get(sessionId)
 	}
 
-	async list(limit?: number, options: Omit<ClineCoreListHistoryOptions, "limit"> = {}): Promise<SessionHistoryRecord[]> {
+	async list(limit?: number, options: Omit<SekoKuvaCoreListHistoryOptions, "limit"> = {}): Promise<SessionHistoryRecord[]> {
 		return this.inner.list(limit, options)
 	}
 
-	async listHistory(options: ClineCoreListHistoryOptions = {}): Promise<SessionHistoryRecord[]> {
+	async listHistory(options: SekoKuvaCoreListHistoryOptions = {}): Promise<SessionHistoryRecord[]> {
 		return this.inner.listHistory(options)
 	}
 

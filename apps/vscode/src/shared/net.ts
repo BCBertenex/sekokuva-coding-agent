@@ -79,7 +79,7 @@
  * 1. Verify proxy env vars: `echo $http_proxy $https_proxy`
  * 2. Check certificates: `echo $NODE_EXTRA_CA_CERTS` (should point to PEM file)
  * 3. View logs: check for network-related failures in ~/.cline/data/logs/cline.log
- *    (CLI, override with CLINE_LOG_PATH). If the hub is involved, also check
+ *    (CLI, override with SEKOKUVA_CA_LOG_PATH). If the hub is involved, also check
  *    ~/.cline/data/logs/hub-daemon.log. In JetBrains, check
  *    ~/.cline/cline-core-service.log, which every open project's core writes to.
  * 4. Test connection: Use `curl -x host:port` etc. to isolate proxy

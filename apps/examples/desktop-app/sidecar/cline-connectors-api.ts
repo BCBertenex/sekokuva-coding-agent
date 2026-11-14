@@ -20,7 +20,7 @@ export type ConnectorsRequestContext = ClineAuthTelemetryContext & {
  * so any client-held key (however permission-scoped) would allow executing
  * tools as other users. See the backend contract notes on each function.
  *
- * The backend must also enforce `CLINE_COMPOSIO_BETA` for the authenticated
+ * The backend must also enforce `SEKOKUVA_CA_COMPOSIO_BETA` for the authenticated
  * account; client-side rollout checks are not an authorization boundary.
  *
  * Every function resolves the account bearer token itself (shared
@@ -95,7 +95,7 @@ async function requestConnectorsApi<T>(
 	// Revocation remains available for cleanup after beta access is removed.
 	if (
 		method !== "DELETE" &&
-		!(await isClineAccountFeatureEnabled(FeatureFlag.CLINE_COMPOSIO_BETA))
+		!(await isClineAccountFeatureEnabled(FeatureFlag.SEKOKUVA_CA_COMPOSIO_BETA))
 	) {
 		throw new ConnectorsApiError(
 			"Composio connectors are not enabled for this account.",

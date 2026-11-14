@@ -10,7 +10,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "@microsoft/tui-test";
 import {
-	CLINE_BIN,
+	SEKOKUVA_CA_BIN,
 	EXIT_CODE_SUCCESS,
 	TERMINAL_WIDE,
 } from "../helpers/constants.js";
@@ -45,11 +45,11 @@ test.describe("cline --json persisted messages contract - authenticated @live", 
 		join(tmpdir(), "cline-headless-messages-contract-"),
 	);
 	test.use({
-		program: { file: CLINE_BIN, args: ["--json", "tell me a joke"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["--json", "tell me a joke"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-json.json",
-			CLINE_SESSION_DATA_DIR: sessionDataDir,
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-json.json",
+			SEKOKUVA_CA_SESSION_DATA_DIR: sessionDataDir,
 		}),
 	});
 

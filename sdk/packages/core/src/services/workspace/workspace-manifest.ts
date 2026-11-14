@@ -67,13 +67,18 @@ export function createWorkspaceGitReader(input: {
 			try {
 				return (await read(["rev-parse", "--is-inside-work-tree"])) === "true";
 			} catch (error) {
-				if (
-					gitCommandExitCode(error) === 128 &&
-					/not a git repository|Kein Git-Repository/i.test(
-						gitCommandErrorMessage(error),
-					)
-				) {
-					return false;
+				if (gitCommandExitCode(error) === 128) {
+					const message = gitCommandErrorMessage(error);
+					// Not a repository at all.
+					if (/not a git repository|Kein Git-Repository/i.test(message)) {
+						return false;
+					}
+					// Git 2.38+ refuses to operate inside a bare repository unless
+					// `safe.bareRepository` allows it. A bare repository has no
+					// working tree, so this is a "no" rather than a failure.
+					if (/cannot use bare repository/i.test(message)) {
+						return false;
+					}
 				}
 				throw error;
 			}

@@ -26,7 +26,7 @@ import { getSessionDismissedBannerIds, markBannerDismissedForSession } from "@/u
 import { WelcomeSectionProps } from "../../types/chatTypes"
 
 // Shares the legacy extension's banner id so a dismissal there carries over here.
-const CLINE_PASS_PROMO_BANNER_ID = "cline-pass-home-promo-v2"
+const SEKOKUVA_CA_PASS_PROMO_BANNER_ID = "cline-pass-home-promo-v2"
 
 /**
  * Welcome section shown when there's no active task
@@ -251,14 +251,14 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 		if (
 			!isClinePassEnabled ||
 			isUsingClinePass ||
-			isBannerDismissed(CLINE_PASS_PROMO_BANNER_ID) ||
-			dismissedLocalBanners.has(CLINE_PASS_PROMO_BANNER_ID)
+			isBannerDismissed(SEKOKUVA_CA_PASS_PROMO_BANNER_ID) ||
+			dismissedLocalBanners.has(SEKOKUVA_CA_PASS_PROMO_BANNER_ID)
 		) {
 			return undefined
 		}
 
 		return {
-			id: CLINE_PASS_PROMO_BANNER_ID,
+			id: SEKOKUVA_CA_PASS_PROMO_BANNER_ID,
 			icon: <Sparkles className="size-4 text-[var(--vscode-charts-yellow)]" />,
 			title: "Try ClinePass",
 			description: (
@@ -280,7 +280,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 					</button>
 				</div>
 			),
-			onDismiss: () => handleBannerDismiss(CLINE_PASS_PROMO_BANNER_ID),
+			onDismiss: () => handleBannerDismiss(SEKOKUVA_CA_PASS_PROMO_BANNER_ID),
 		}
 	}, [
 		isClinePassEnabled,

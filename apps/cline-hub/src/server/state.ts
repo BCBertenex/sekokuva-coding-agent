@@ -1,5 +1,5 @@
 import {
-	type ClineCore,
+	type SekoKuvaCore,
 	CORE_BUILD_VERSION,
 	type HubUIClient,
 } from "@sekokuva-ca/core";
@@ -27,7 +27,7 @@ export class HubContext {
 	hubUrl = "";
 	hubAuthToken = "";
 	hubHealthy = false;
-	cline: ClineCore | undefined;
+	cline: SekoKuvaCore | undefined;
 	uiClient: HubUIClient | undefined;
 	hubStartedAt: string | undefined;
 	coreVersion: string | undefined = CORE_BUILD_VERSION;

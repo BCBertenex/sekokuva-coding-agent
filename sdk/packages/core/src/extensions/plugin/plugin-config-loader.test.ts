@@ -16,19 +16,19 @@ import {
 describe("plugin-config-loader", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_GLOBAL_SETTINGS_PATH: process.env.CLINE_GLOBAL_SETTINGS_PATH,
-		CLINE_PLUGIN_MODE: process.env.CLINE_PLUGIN_MODE,
+		SEKOKUVA_CA_GLOBAL_SETTINGS_PATH: process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH,
+		SEKOKUVA_CA_PLUGIN_MODE: process.env.SEKOKUVA_CA_PLUGIN_MODE,
 	};
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		if (envSnapshot.CLINE_PLUGIN_MODE === undefined) {
-			delete process.env.CLINE_PLUGIN_MODE;
+		if (envSnapshot.SEKOKUVA_CA_PLUGIN_MODE === undefined) {
+			delete process.env.SEKOKUVA_CA_PLUGIN_MODE;
 		} else {
-			process.env.CLINE_PLUGIN_MODE = envSnapshot.CLINE_PLUGIN_MODE;
+			process.env.SEKOKUVA_CA_PLUGIN_MODE = envSnapshot.SEKOKUVA_CA_PLUGIN_MODE;
 		}
-		process.env.CLINE_GLOBAL_SETTINGS_PATH =
-			envSnapshot.CLINE_GLOBAL_SETTINGS_PATH;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH =
+			envSnapshot.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		setHomeDir(envSnapshot.HOME ?? "~");
 	});
 
@@ -375,7 +375,7 @@ describe("plugin-config-loader", () => {
 			const enabledPlugin = join(root, "enabled.js");
 			const disabledPlugin = join(root, "disabled.js");
 			const settingsPath = join(root, "global-settings.json");
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = settingsPath;
 			await writeFile(enabledPlugin, "export default {}", "utf8");
 			await writeFile(disabledPlugin, "export default {}", "utf8");
 			await writeFile(
@@ -492,16 +492,16 @@ describe("plugin-config-loader", () => {
 	});
 
 	it("runs plugins in workers by default and keeps the sandbox opt-in", () => {
-		delete process.env.CLINE_PLUGIN_MODE;
+		delete process.env.SEKOKUVA_CA_PLUGIN_MODE;
 		expect(resolvePluginExecutionMode()).toBe("worker");
 		expect(resolvePluginExecutionMode("sandbox")).toBe("sandbox");
-		process.env.CLINE_PLUGIN_MODE = "sandbox";
+		process.env.SEKOKUVA_CA_PLUGIN_MODE = "sandbox";
 		expect(resolvePluginExecutionMode()).toBe("sandbox");
 		// The removed in-process mode is not honoured: plugin code never runs
 		// on the host's main thread.
-		process.env.CLINE_PLUGIN_MODE = "in_process";
+		process.env.SEKOKUVA_CA_PLUGIN_MODE = "in_process";
 		expect(resolvePluginExecutionMode()).toBe("worker");
-		process.env.CLINE_PLUGIN_MODE = "unknown";
+		process.env.SEKOKUVA_CA_PLUGIN_MODE = "unknown";
 		expect(resolvePluginExecutionMode()).toBe("worker");
 	});
 

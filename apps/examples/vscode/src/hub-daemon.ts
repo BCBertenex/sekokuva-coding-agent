@@ -56,7 +56,7 @@ function createDaemonTelemetry(
 	const config = createClineTelemetryServiceConfig({
 		metadata: createClineTelemetryServiceMetadata({
 			extension_version: metadata.extension_version,
-			cline_type: metadata.cline_type,
+			sekokuva_ca_type: metadata.sekokuva_ca_type,
 			platform: metadata.platform,
 			platform_version: metadata.platform_version,
 			os_type: metadata.os_type ?? os.platform(),

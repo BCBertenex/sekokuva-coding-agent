@@ -7,7 +7,7 @@ import {
 	createTool,
 	resolvePluginRuntimeDirectory,
 } from "@sekokuva-ca/sdk";
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
 import { AUTH_ERROR_PATTERNS, isLikelyAuthError } from "@sekokuva-ca/shared/types";
 
 export default {
@@ -15,7 +15,7 @@ export default {
 	manifest: { capabilities: ["tools"] },
 	async setup(api) {
 		if (
-			typeof CLINE_DEFAULT_MODEL_ID !== "string" ||
+			typeof SEKOKUVA_CA_DEFAULT_MODEL_ID !== "string" ||
 			typeof getAllProviders !== "function"
 		) {
 			throw new Error("Missing browser SDK exports");
@@ -35,9 +35,9 @@ export default {
 		if (!runtime?.replaceAll("\\", "/").startsWith(bunfsRoot)) {
 			throw new Error(`Expected the embedded runtime, got ${runtime}`);
 		}
-		const marker = process.env.CLINE_TEST_PLUGIN_RESULT_PATH;
+		const marker = process.env.SEKOKUVA_CA_TEST_PLUGIN_RESULT_PATH;
 		if (!marker) {
-			throw new Error("Missing CLINE_TEST_PLUGIN_RESULT_PATH");
+			throw new Error("Missing SEKOKUVA_CA_TEST_PLUGIN_RESULT_PATH");
 		}
 		const nested = spawnSync(process.execPath, ["--telemetry-selfcheck"], {
 			env: process.env,

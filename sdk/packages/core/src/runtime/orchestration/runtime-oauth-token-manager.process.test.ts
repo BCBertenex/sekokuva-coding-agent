@@ -55,7 +55,7 @@ describe("OAuth refresh across processes", () => {
 				return Response.json({ success: true, data: {
 					accessToken: "rotated", refreshToken: "rotated-refresh", tokenType: "Bearer",
 					expiresAt: new Date(Date.now() + 3600000).toISOString(),
-					userInfo: { clineUserId: "account-a", email: "", subject: null, name: "", accounts: [] }
+					userInfo: { sekokuvaCaUserId: "account-a", email: "", subject: null, name: "", accounts: [] }
 				} });
 			};
 			const manager = new RuntimeOAuthTokenManager({
@@ -70,7 +70,7 @@ describe("OAuth refresh across processes", () => {
 				process.execPath,
 				["--input-type=module", "-e", script, path, refreshLog, release],
 				{
-					env: { ...process.env, CLINE_DATA_DIR: dir, CLINE_DIR: dir },
+					env: { ...process.env, SEKOKUVA_CA_DATA_DIR: dir, SEKOKUVA_CA_DIR: dir },
 					stdio: ["ignore", "pipe", "pipe"],
 				},
 			);

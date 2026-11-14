@@ -19,7 +19,7 @@
 
 import { expect, test } from "@microsoft/tui-test";
 import type { Terminal } from "@microsoft/tui-test/lib/terminal/term";
-import { CLINE_BIN, TERMINAL_WIDE } from "../helpers/constants.js";
+import { SEKOKUVA_CA_BIN, TERMINAL_WIDE } from "../helpers/constants.js";
 import { clineEnv } from "../helpers/env.js";
 import {
 	toggleAutoApproveAll,
@@ -33,7 +33,7 @@ import {
 
 test.describe("cline (authenticated) - shows chat view", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: [] },
+		program: { file: SEKOKUVA_CA_BIN, args: [] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default"),
 	});
@@ -45,7 +45,7 @@ test.describe("cline (authenticated) - shows chat view", () => {
 
 test.describe("Auto-approve all - Shift+Tab toggle", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: [] },
+		program: { file: SEKOKUVA_CA_BIN, args: [] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default"),
 	});
@@ -61,7 +61,7 @@ test.describe("Auto-approve all - Shift+Tab toggle", () => {
 
 test.describe("Dialog dismissal - panel is fully removed", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: [] },
+		program: { file: SEKOKUVA_CA_BIN, args: [] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default"),
 	});

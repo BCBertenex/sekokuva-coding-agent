@@ -23,21 +23,21 @@ import {
 } from "./marketplace";
 
 describe("marketplace installer", () => {
-	const originalWrapperPath = process.env.CLINE_WRAPPER_PATH;
-	const originalClineDir = process.env.CLINE_DIR;
+	const originalWrapperPath = process.env.SEKOKUVA_CA_WRAPPER_PATH;
+	const originalClineDir = process.env.SEKOKUVA_CA_DIR;
 	const originalHome = process.env.HOME;
-	const originalMcpSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+	const originalMcpSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 
 	afterEach(() => {
 		if (originalWrapperPath === undefined) {
-			delete process.env.CLINE_WRAPPER_PATH;
+			delete process.env.SEKOKUVA_CA_WRAPPER_PATH;
 		} else {
-			process.env.CLINE_WRAPPER_PATH = originalWrapperPath;
+			process.env.SEKOKUVA_CA_WRAPPER_PATH = originalWrapperPath;
 		}
 		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+			delete process.env.SEKOKUVA_CA_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.SEKOKUVA_CA_DIR = originalClineDir;
 		}
 		if (originalHome === undefined) {
 			delete process.env.HOME;
@@ -45,9 +45,9 @@ describe("marketplace installer", () => {
 			process.env.HOME = originalHome;
 		}
 		if (originalMcpSettingsPath === undefined) {
-			delete process.env.CLINE_MCP_SETTINGS_PATH;
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_MCP_SETTINGS_PATH = originalMcpSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = originalMcpSettingsPath;
 		}
 		vi.restoreAllMocks();
 	});
@@ -221,7 +221,7 @@ describe("marketplace installer", () => {
 
 	it("reports Cline global skills as marketplace-installed", () => {
 		const clineDir = mkdtempSync(join(tmpdir(), "cline-marketplace-cline-"));
-		process.env.CLINE_DIR = clineDir;
+		process.env.SEKOKUVA_CA_DIR = clineDir;
 		mkdirSync(join(clineDir, "skills", "cline-sdk"), {
 			recursive: true,
 		});
@@ -248,7 +248,7 @@ describe("marketplace installer", () => {
 		const homeDir = mkdtempSync(join(tmpdir(), "cline-marketplace-home-"));
 		const clineDir = join(homeDir, ".cline");
 		process.env.HOME = homeDir;
-		process.env.CLINE_DIR = clineDir;
+		process.env.SEKOKUVA_CA_DIR = clineDir;
 		const spawnCommand = vi.fn(async () => {
 			mkdirSync(join(clineDir, "skills", "cline-sdk"), {
 				recursive: true,
@@ -475,7 +475,7 @@ describe("marketplace installer", () => {
 	});
 
 	it("runs official plugin installs through the current Cline CLI", async () => {
-		process.env.CLINE_WRAPPER_PATH = "/usr/local/bin/cline";
+		process.env.SEKOKUVA_CA_WRAPPER_PATH = "/usr/local/bin/cline";
 		const spawnCommand = vi.fn(async () => ({
 			exitCode: 0,
 			stdout: JSON.stringify({ installPath: "/tmp/plugin" }),
@@ -503,7 +503,7 @@ describe("marketplace installer", () => {
 	});
 
 	it("runs MCP installs through the current Cline CLI without prompts", async () => {
-		process.env.CLINE_WRAPPER_PATH = "/usr/local/bin/cline";
+		process.env.SEKOKUVA_CA_WRAPPER_PATH = "/usr/local/bin/cline";
 		const spawnCommand = vi.fn(async () => ({
 			exitCode: 0,
 			stdout: JSON.stringify({
@@ -566,7 +566,7 @@ describe("marketplace installer", () => {
 
 	it("uninstalls official marketplace plugins through the shared core service", async () => {
 		const clineDir = mkdtempSync(join(tmpdir(), "cline-marketplace-plugin-"));
-		process.env.CLINE_DIR = clineDir;
+		process.env.SEKOKUVA_CA_DIR = clineDir;
 		const installPath = createInstalledOfficialPlugin(clineDir, "goal");
 		const spawnCommand = vi.fn(async () => ({
 			exitCode: 0,
@@ -596,7 +596,7 @@ describe("marketplace installer", () => {
 	});
 
 	it("resolves desktop installs from the server catalog instead of browser-sent args", async () => {
-		process.env.CLINE_WRAPPER_PATH = "/usr/local/bin/cline";
+		process.env.SEKOKUVA_CA_WRAPPER_PATH = "/usr/local/bin/cline";
 		const spawnCommand = vi.fn(async () => ({
 			exitCode: 0,
 			stdout: JSON.stringify({ installPath: "/tmp/plugin" }),
@@ -637,7 +637,7 @@ describe("marketplace installer", () => {
 
 	it("resolves desktop uninstalls from the server catalog instead of browser-sent args", async () => {
 		const clineDir = mkdtempSync(join(tmpdir(), "cline-marketplace-plugin-"));
-		process.env.CLINE_DIR = clineDir;
+		process.env.SEKOKUVA_CA_DIR = clineDir;
 		const installPath = createInstalledOfficialPlugin(clineDir, "goal");
 		const spawnCommand = vi.fn(async () => ({
 			exitCode: 0,
@@ -678,7 +678,7 @@ describe("marketplace installer", () => {
 			mkdtempSync(join(tmpdir(), "cline-marketplace-mcp-")),
 			"cline_mcp_settings.json",
 		);
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		writeFileSync(
 			settingsPath,
 			JSON.stringify(
@@ -743,7 +743,7 @@ describe("marketplace installer", () => {
 			mkdtempSync(join(tmpdir(), "cline-local-mcp-")),
 			"cline_mcp_settings.json",
 		);
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		writeFileSync(
 			settingsPath,
 			JSON.stringify(
@@ -801,7 +801,7 @@ describe("marketplace installer", () => {
 
 	it("reports official plugin marketplace entries installed from Cline home", () => {
 		const clineDir = mkdtempSync(join(tmpdir(), "cline-marketplace-test-"));
-		process.env.CLINE_DIR = clineDir;
+		process.env.SEKOKUVA_CA_DIR = clineDir;
 		const sourceKey =
 			"official:https://github.com/cline/plugins.git#plugins/goal";
 		const hash = createHash("sha256")
@@ -830,7 +830,7 @@ describe("marketplace installer", () => {
 	});
 
 	it("does not report plugin inventory substring matches as installed", () => {
-		process.env.CLINE_DIR = mkdtempSync(
+		process.env.SEKOKUVA_CA_DIR = mkdtempSync(
 			join(tmpdir(), "cline-marketplace-test-"),
 		);
 
@@ -860,7 +860,7 @@ describe("marketplace installer", () => {
 
 	it("skips invalid marketplace entries during installed-status checks", () => {
 		const clineDir = mkdtempSync(join(tmpdir(), "cline-marketplace-test-"));
-		process.env.CLINE_DIR = clineDir;
+		process.env.SEKOKUVA_CA_DIR = clineDir;
 		const sourceKey =
 			"official:https://github.com/cline/plugins.git#plugins/goal";
 		const hash = createHash("sha256")

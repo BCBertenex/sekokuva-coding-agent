@@ -17,13 +17,13 @@
  *
  * Environment Variables for Customization:
  *   PROJECT_ROOT - Override project root directory (default: parent of scripts dir)
- *   CLINE_DIST_DIR - Override distribution directory (default: PROJECT_ROOT/dist-standalone)
- *   CLINE_CORE_FILE - Override core file name (default: cline-core.js)
+ *   SEKOKUVA_CA_DIST_DIR - Override distribution directory (default: PROJECT_ROOT/dist-standalone)
+ *   SEKOKUVA_CA_CORE_FILE - Override core file name (default: cline-core.js)
  *   PROTOBUS_PORT - gRPC server port (default: 26040)
  *   HOSTBRIDGE_PORT - HostBridge server port (default: 26041)
  *   WORKSPACE_DIR - Working directory (default: current directory)
  *   E2E_TEST - Enable legacy mock auth mode (default: false)
- *   CLINE_ENVIRONMENT - Environment setting (default: local)
+ *   SEKOKUVA_CA_ENVIRONMENT - Environment setting (default: local)
  *
  * Ideal for local development, testing, or lightweight E2E scenarios.
  */
@@ -39,13 +39,13 @@ const PROTOBUS_PORT = process.env.PROTOBUS_PORT || "26040"
 const HOSTBRIDGE_PORT = process.env.HOSTBRIDGE_PORT || "26041"
 const WORKSPACE_DIR = process.env.WORKSPACE_DIR || process.cwd()
 const E2E_TEST = process.env.E2E_TEST || "false"
-const CLINE_ENVIRONMENT = process.env.CLINE_ENVIRONMENT || "local"
+const SEKOKUVA_CA_ENVIRONMENT = process.env.SEKOKUVA_CA_ENVIRONMENT || "local"
 const USE_C8 = process.env.USE_C8 === "true"
 
 // Locate the standalone build directory and core file with flexible path resolution
 const projectRoot = process.env.PROJECT_ROOT || path.resolve(__dirname, "..")
-const distDir = process.env.CLINE_DIST_DIR || path.join(projectRoot, "dist-standalone")
-const clineCoreFile = process.env.CLINE_CORE_FILE || "cline-core.js"
+const distDir = process.env.SEKOKUVA_CA_DIST_DIR || path.join(projectRoot, "dist-standalone")
+const clineCoreFile = process.env.SEKOKUVA_CA_CORE_FILE || "cline-core.js"
 const coreFile = path.join(distDir, clineCoreFile)
 
 const childProcesses: ChildProcess[] = []
@@ -63,8 +63,8 @@ async function main(): Promise<void> {
 		console.error(`Standalone build not found at: ${coreFile}`)
 		console.error("Available environment variables for customization:")
 		console.error("  PROJECT_ROOT - Override project root directory")
-		console.error("  CLINE_DIST_DIR - Override distribution directory")
-		console.error("  CLINE_CORE_FILE - Override core file name")
+		console.error("  SEKOKUVA_CA_DIST_DIR - Override distribution directory")
+		console.error("  SEKOKUVA_CA_CORE_FILE - Override core file name")
 		console.error("")
 		console.error("To build the standalone version, run: bun run compile-standalone")
 		process.exit(1)
@@ -133,8 +133,8 @@ async function main(): Promise<void> {
 			PROTOBUS_ADDRESS: `127.0.0.1:${PROTOBUS_PORT}`,
 			HOST_BRIDGE_ADDRESS: `localhost:${HOSTBRIDGE_PORT}`,
 			E2E_TEST,
-			CLINE_ENVIRONMENT,
-			CLINE_DIR: userDataDir,
+			SEKOKUVA_CA_ENVIRONMENT,
+			SEKOKUVA_CA_DIR: userDataDir,
 			INSTALL_DIR: extensionsDir,
 		},
 		stdio: "inherit",

@@ -62,7 +62,10 @@ export function formatStatusBarUsageText(input: {
 	totalCost: number;
 	providerId: string;
 }): string {
-	const tokens = `(${input.totalTokens.toLocaleString()})`;
+	// Pin the locale: the status bar is a fixed-width TUI element, and a
+	// host-locale separator (e.g. `12 345` under fi-FI) both breaks alignment
+	// and makes the rendered output depend on the user's machine.
+	const tokens = `(${input.totalTokens.toLocaleString("en-US")})`;
 	const costText = formatCostText(input.providerId, input.totalCost);
 
 	if (!costText) {

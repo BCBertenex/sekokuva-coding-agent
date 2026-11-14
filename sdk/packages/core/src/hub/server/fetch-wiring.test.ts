@@ -1,5 +1,8 @@
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
-import { describe, expect, it, vi } from "vitest";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RuntimeCapabilities } from "../../runtime/capabilities/runtime-capabilities";
 
 const localRuntimeHostMock = vi.hoisted(() =>
@@ -20,6 +23,30 @@ vi.mock("../../runtime/host/local-runtime-host", () => ({
 }));
 
 describe("hub runtime wiring", () => {
+	// Keep the suite off the developer's real `~/.cline/data/settings` MCP file:
+	// a configured stdio server there would be spawned by the runtime builder
+	// under test and hang the suite.
+	const previousMcpSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
+	let isolatedRoot: string | undefined;
+
+	beforeEach(() => {
+		isolatedRoot = mkdtempSync(join(tmpdir(), "fetch-wiring-mcp-"));
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(
+			isolatedRoot,
+			"cline_mcp_settings.json",
+		);
+	});
+
+	afterEach(() => {
+		if (previousMcpSettingsPath === undefined) {
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
+		} else {
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousMcpSettingsPath;
+		}
+		if (isolatedRoot) rmSync(isolatedRoot, { recursive: true, force: true });
+		isolatedRoot = undefined;
+	});
+
 	it("forwards observability into the internal LocalRuntimeHost", async () => {
 		localRuntimeHostMock.mockClear();
 		const { HubServerTransport } = (await import(".")) as unknown as {
@@ -170,7 +197,7 @@ describe("hub runtime wiring", () => {
 		const runtime = await new DefaultRuntimeBuilder().build({
 			config: {
 				providerId: "cline",
-				modelId: CLINE_DEFAULT_MODEL_ID,
+				modelId: SEKOKUVA_CA_DEFAULT_MODEL_ID,
 				cwd: process.cwd(),
 				workspaceRoot: process.cwd(),
 				systemPrompt: "Run unattended.",

@@ -6,10 +6,10 @@ import {
 import type { ProviderSettingsManager } from "../services/storage/provider-settings-manager";
 import type { ProviderSettings } from "../types/provider-settings";
 import {
-	type ClineOAuthCredentials,
+	type SekoKuvaOAuthCredentials,
 	getValidClineCredentials,
 	loginClineOAuth,
-} from "./cline";
+} from "./sekokuva-ca";
 import { getValidOpenAICodexCredentials, loginOpenAICodex } from "./codex";
 import { getValidOcaCredentials, loginOcaOAuth } from "./oca";
 import type { OAuthCredentials, OAuthLoginCallbacks } from "./types";
@@ -229,7 +229,7 @@ function createClineAuthHandler(input: {
 			}),
 		refresh: ({ settings, credentials, forceRefresh, telemetry }) =>
 			getValidClineCredentials(
-				credentials as ClineOAuthCredentials,
+				credentials as SekoKuvaOAuthCredentials,
 				{
 					apiBaseUrl:
 						settings.baseUrl?.trim() || getClineEnvironmentConfig().apiBaseUrl,

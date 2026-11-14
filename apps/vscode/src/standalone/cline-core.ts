@@ -40,7 +40,7 @@ async function main() {
 	// environment is logged below. Descendants must never inherit the credential;
 	// it is retained in process memory for the bridge clients and the hello.
 	const coreConnectionToken = captureHostBridgeTokenFromEnvironment()
-	const coreInstanceId = process.env.CLINE_CORE_INSTANCE_ID
+	const coreInstanceId = process.env.SEKOKUVA_CA_CORE_INSTANCE_ID
 
 	log("\n\n\nStarting cline-core service...\n\n\n")
 	log(`Environment variables: ${JSON.stringify(process.env)}`)
@@ -97,7 +97,7 @@ async function main() {
 		let instanceOwner: string
 		if (coreConnectionToken) {
 			if (!coreInstanceId) {
-				throw new Error("CLINE_CORE_INSTANCE_ID is required with CLINE_CORE_CONNECTION_TOKEN")
+				throw new Error("SEKOKUVA_CA_CORE_INSTANCE_ID is required with SEKOKUVA_CA_CORE_CONNECTION_TOKEN")
 			}
 			instanceOwner = coreInstanceId
 		} else {

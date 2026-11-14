@@ -141,7 +141,7 @@ export function buildDiagnosticsReport(
 	let text = `${JSON.stringify(report, null, 2)}\n`;
 
 	const codeLog =
-		process.env.CLINE_LOG_PATH?.trim() || join(dataDir, "logs", "code.log");
+		process.env.SEKOKUVA_CA_LOG_PATH?.trim() || join(dataDir, "logs", "code.log");
 	const codeTail = readTail(codeLog, DIAGNOSTICS_LOG_TAIL_BYTES);
 	if (codeTail !== null) text += section(`tail of ${codeLog}`, codeTail);
 	const hubLog = join(dataDir, "logs", "hub-daemon.log");

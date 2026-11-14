@@ -7,7 +7,7 @@ import { Agent, createTool, Llms } from "@sekokuva-ca/sdk";
 import { z } from "zod";
 
 const PORT = Number(process.env.PORT || 3457);
-const MODEL_ID = process.env.CLINE_MODEL_ID || Llms.CLINE_DEFAULT_MODEL_ID;
+const MODEL_ID = process.env.SEKOKUVA_CA_MODEL_ID || Llms.SEKOKUVA_CA_DEFAULT_MODEL_ID;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
 const POSTING_ENABLED =
 	process.env.ENABLE_GITHUB_REVIEW_POSTING === "1" && Boolean(GITHUB_TOKEN);
@@ -1286,7 +1286,7 @@ async function runAiReview(
 	const agent = new Agent({
 		providerId: "cline",
 		modelId: MODEL_ID,
-		apiKey: process.env.CLINE_API_KEY,
+		apiKey: process.env.SEKOKUVA_CA_API_KEY,
 		systemPrompt: `You are a senior code reviewer reviewing real GitHub pull requests.
 
 Use get_file_context when a hunk needs surrounding file context.

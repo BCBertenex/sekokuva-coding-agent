@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { isAbsolute, resolve as resolvePath } from "node:path";
 import {
 	augmentNodeCommandForDebug,
-	type ClineDebugRole,
+	type SekoKuvaDebugRole,
 	isBunEmbeddedModulePath,
 } from "@sekokuva-ca/shared";
 
@@ -12,7 +12,7 @@ export interface ResolveCliLaunchSpecOptions {
 	execArgv?: string[];
 	cwd?: string;
 	env?: NodeJS.ProcessEnv;
-	debugRole?: ClineDebugRole;
+	debugRole?: SekoKuvaDebugRole;
 }
 
 export interface CliLaunchSpec {

@@ -35,7 +35,7 @@ import { BannerService } from "@/services/banner/BannerService"
 import { buildBasicClineHeaders } from "@/services/EnvUtils"
 import { featureFlagsService } from "@/services/feature-flags"
 import { telemetryService } from "@/services/telemetry"
-import { CLINE_API_ENDPOINT } from "@/shared/cline/api"
+import { SEKOKUVA_CA_API_ENDPOINT } from "@/shared/cline/api"
 import { fetch, getAxiosSettings } from "@/shared/net"
 import { Logger } from "@/shared/services/Logger"
 import { openExternal } from "@/utils/env"
@@ -60,13 +60,13 @@ export interface ClineAccountUserInfo {
 	displayName: string
 	email: string
 	id: string
-	organizations: ClineAccountOrganization[]
+	organizations: SekoKuvaAccountOrganization[]
 	appBaseUrl?: string
 	subject?: string
 	dataPrivacyPath?: string
 }
 
-export interface ClineAccountOrganization {
+export interface SekoKuvaAccountOrganization {
 	active: boolean
 	memberId: string
 	name: string
@@ -498,7 +498,7 @@ export class AuthService {
 	/**
 	 * Gets all organizations from the authenticated user's info.
 	 */
-	getUserOrganizations(): ClineAccountOrganization[] | undefined {
+	getUserOrganizations(): SekoKuvaAccountOrganization[] | undefined {
 		return this._clineAuthInfo?.userInfo?.organizations
 	}
 
@@ -640,11 +640,11 @@ export class AuthService {
 	 */
 	private async createMockAuthRequest(): Promise<String> {
 		if (ClineEnv.config().environment !== "local") {
-			throw new Error("E2E mock auth is only available when CLINE_ENVIRONMENT=local")
+			throw new Error("E2E mock auth is only available when SEKOKUVA_CA_ENVIRONMENT=local")
 		}
 
 		const apiBaseUrl = ClineEnv.config().apiBaseUrl
-		const tokenUrl = new URL(CLINE_API_ENDPOINT.TOKEN_EXCHANGE, apiBaseUrl)
+		const tokenUrl = new URL(SEKOKUVA_CA_API_ENDPOINT.TOKEN_EXCHANGE, apiBaseUrl)
 		const response = await fetch(tokenUrl.toString(), {
 			method: "POST",
 			headers: {
@@ -876,7 +876,7 @@ export class AuthService {
 			const apiBaseUrl = ClineEnv.config().apiBaseUrl
 			const callbackUrl = await HostProvider.get().getCallbackUrl("/auth")
 
-			const tokenUrl = new URL(CLINE_API_ENDPOINT.TOKEN_EXCHANGE, apiBaseUrl)
+			const tokenUrl = new URL(SEKOKUVA_CA_API_ENDPOINT.TOKEN_EXCHANGE, apiBaseUrl)
 			const response = await fetch(tokenUrl.toString(), {
 				method: "POST",
 				headers: {

@@ -29,7 +29,7 @@ beforeEach(() => {
 	repo = join(sandbox, "my-app");
 	git(sandbox, "init", "-q", "-b", "main", repo);
 	git(repo, "commit", "-q", "--allow-empty", "-m", "init");
-	vi.stubEnv("CLINE_DIR", join(sandbox, "cline-dir"));
+	vi.stubEnv("SEKOKUVA_CA_DIR", join(sandbox, "cline-dir"));
 });
 
 afterEach(() => {
@@ -91,7 +91,7 @@ describe("create_git_worktree command", () => {
 		};
 
 		// The webview matches task worktrees against this root, so it must be
-		// the same CLINE_DIR-aware location the worktree was created under.
+		// the same SEKOKUVA_CA_DIR-aware location the worktree was created under.
 		expect(context.taskWorktreeRoot).toBe(
 			join(sandbox, "cline-dir", "worktrees"),
 		);

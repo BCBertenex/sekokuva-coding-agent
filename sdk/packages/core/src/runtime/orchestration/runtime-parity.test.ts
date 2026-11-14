@@ -72,23 +72,23 @@ function makeSpawnTool(): AgentTool {
 describe("runtime tool parity", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_DIR: process.env.CLINE_DIR,
+		SEKOKUVA_CA_DIR: process.env.SEKOKUVA_CA_DIR,
 	};
 	let isolatedHomeDir = "";
 
 	beforeEach(() => {
 		isolatedHomeDir = mkdtempSync(join(tmpdir(), "runtime-parity-home-"));
 		process.env.HOME = isolatedHomeDir;
-		process.env.CLINE_DIR = join(isolatedHomeDir, ".cline");
+		process.env.SEKOKUVA_CA_DIR = join(isolatedHomeDir, ".cline");
 		setHomeDir(isolatedHomeDir);
-		setClineDir(process.env.CLINE_DIR);
+		setClineDir(process.env.SEKOKUVA_CA_DIR);
 	});
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		process.env.CLINE_DIR = envSnapshot.CLINE_DIR;
+		process.env.SEKOKUVA_CA_DIR = envSnapshot.SEKOKUVA_CA_DIR;
 		setHomeDir(envSnapshot.HOME ?? "~");
-		setClineDir(envSnapshot.CLINE_DIR ?? join("~", ".cline"));
+		setClineDir(envSnapshot.SEKOKUVA_CA_DIR ?? join("~", ".cline"));
 	});
 
 	it("matches legacy tool list when tools+spawn are enabled", async () => {

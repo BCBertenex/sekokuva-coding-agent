@@ -1,6 +1,4 @@
 import type {
-	ClineCoreListHistoryOptions,
-	ClineCoreStartInput,
 	CompareCheckpointInput,
 	CompareCheckpointResult,
 	CoreSessionEvent,
@@ -11,6 +9,8 @@ import type {
 	PendingPromptsUpdateInput,
 	RestoreInput,
 	RestoreResult,
+	SekoKuvaCoreListHistoryOptions,
+	SekoKuvaCoreStartInput,
 	SendSessionInput,
 	SessionAccumulatedUsage,
 	SessionCompactionState,
@@ -25,15 +25,15 @@ import type { AgentResult } from "@sekokuva-ca/shared"
 export interface SdkSessionHost {
 	readonly runtimeAddress: string | undefined
 	start(input: StartSessionInput): Promise<StartSessionResult>
-	start(input: ClineCoreStartInput): Promise<StartSessionResult>
+	start(input: SekoKuvaCoreStartInput): Promise<StartSessionResult>
 	send(input: SendSessionInput): Promise<AgentResult | undefined>
 	getAccumulatedUsage(sessionId: string): Promise<SessionAccumulatedUsage | undefined>
 	abort(sessionId: string, reason?: unknown): Promise<void>
 	stop(sessionId: string): Promise<void>
 	dispose(reason?: string): Promise<void>
 	get(sessionId: string): Promise<SessionRecord | undefined>
-	list(limit?: number, options?: Omit<ClineCoreListHistoryOptions, "limit">): Promise<SessionHistoryRecord[]>
-	listHistory(options?: ClineCoreListHistoryOptions): Promise<SessionHistoryRecord[]>
+	list(limit?: number, options?: Omit<SekoKuvaCoreListHistoryOptions, "limit">): Promise<SessionHistoryRecord[]>
+	listHistory(options?: SekoKuvaCoreListHistoryOptions): Promise<SessionHistoryRecord[]>
 	delete(sessionId: string): Promise<boolean>
 	readMessages(sessionId: string): Promise<SdkInitialMessages>
 	/**

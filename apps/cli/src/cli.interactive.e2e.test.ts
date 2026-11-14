@@ -63,17 +63,17 @@ function createCliEnv(): NodeJS.ProcessEnv {
 	return {
 		...process.env,
 		HOME: homeDir,
-		CLINE_DATA_DIR: dataDir,
-		CLINE_DB_DATA_DIR: path.join(dataDir, "db"),
-		CLINE_SESSION_DATA_DIR: sessionDir,
-		CLINE_TEAM_DATA_DIR: teamDir,
-		CLINE_SESSION_BACKEND_MODE: "local",
-		CLINE_PROVIDER_SETTINGS_PATH: path.join(
+		SEKOKUVA_CA_DATA_DIR: dataDir,
+		SEKOKUVA_CA_DB_DATA_DIR: path.join(dataDir, "db"),
+		SEKOKUVA_CA_SESSION_DATA_DIR: sessionDir,
+		SEKOKUVA_CA_TEAM_DATA_DIR: teamDir,
+		SEKOKUVA_CA_SESSION_BACKEND_MODE: "local",
+		SEKOKUVA_CA_PROVIDER_SETTINGS_PATH: path.join(
 			dataDir,
 			"settings",
 			"providers.json",
 		),
-		CLINE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+		SEKOKUVA_CA_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
 	};
 }
 

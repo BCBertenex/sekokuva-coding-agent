@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { ClineEnv } from "@/config"
 import { AuthService } from "@/services/auth/AuthService"
 import { buildBasicClineHeaders } from "@/services/EnvUtils"
-import { CLINE_API_ENDPOINT } from "@/shared/cline/api"
+import { SEKOKUVA_CA_API_ENDPOINT } from "@/shared/cline/api"
 import { getAxiosSettings } from "@/shared/net"
 import { APIKeySchema, type APIKeySettings, type RemoteConfig, RemoteConfigSchema } from "@/shared/remote-config/schema"
 import { Logger } from "@/shared/services/Logger"
@@ -87,7 +87,7 @@ async function makeAuthenticatedRequest<T>(endpoint: string, organizationId: str
 async function fetchRemoteConfigForOrganization(organizationId: string): Promise<RemoteConfig | undefined> {
 	try {
 		const configData = await makeAuthenticatedRequest<{ value: string; enabled: boolean }>(
-			CLINE_API_ENDPOINT.REMOTE_CONFIG,
+			SEKOKUVA_CA_API_ENDPOINT.REMOTE_CONFIG,
 			organizationId,
 		)
 		if (!configData.enabled) {
@@ -114,7 +114,10 @@ async function fetchRemoteConfigForOrganization(organizationId: string): Promise
 
 async function fetchApiKeysForOrganization(organizationId: string): Promise<APIKeySettings> {
 	try {
-		const response = await makeAuthenticatedRequest<{ providerApiKeys: string }>(CLINE_API_ENDPOINT.API_KEYS, organizationId)
+		const response = await makeAuthenticatedRequest<{ providerApiKeys: string }>(
+			SEKOKUVA_CA_API_ENDPOINT.API_KEYS,
+			organizationId,
+		)
 		return parseApiKeys(response?.providerApiKeys)
 	} catch (error) {
 		Logger.error(`Failed to fetch API keys for organization ${organizationId}:`, error)

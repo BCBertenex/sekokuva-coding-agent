@@ -35,7 +35,7 @@ export function getCliTelemetryService(
 		const config = createClineTelemetryServiceConfig({
 			metadata: {
 				extension_version: version,
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: name,
 				platform_version: process.version,
 				os_type,

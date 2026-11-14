@@ -19,7 +19,7 @@ export const DESKTOP_CLIENT_CONTEXT = {
 
 export const DESKTOP_TELEMETRY_METADATA = {
 	extension_version: version,
-	cline_type: "desktop",
+	sekokuva_ca_type: "desktop",
 	platform: DESKTOP_CLIENT_CONTEXT.platform,
 	platform_version: DESKTOP_CLIENT_CONTEXT.platformVersion,
 	os_type: os.platform(),

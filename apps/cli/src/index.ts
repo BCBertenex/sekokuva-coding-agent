@@ -24,8 +24,8 @@ import { resolveCliLaunchSpec } from "./utils/internal-launch";
 import { writeErr } from "./utils/output";
 
 // Initialize VCR before any HTTP requests are made.
-// Set CLINE_VCR=record|playback and CLINE_VCR_CASSETTE=<path> to enable.
-initVcr(process.env.CLINE_VCR);
+// Set SEKOKUVA_CA_VCR=record|playback and SEKOKUVA_CA_VCR_CASSETTE=<path> to enable.
+initVcr(process.env.SEKOKUVA_CA_VCR);
 
 // Before any personality below can spawn a child with the workspace as cwd.
 disableCurrentDirectoryExecutableSearch();

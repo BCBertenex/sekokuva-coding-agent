@@ -16,7 +16,7 @@ export async function executeCommandInTerminal(
 			name: "Cline",
 			iconPath: new vscode.ThemeIcon("cline-icon"),
 			env: {
-				CLINE_ACTIVE: "true",
+				SEKOKUVA_CA_ACTIVE: "true",
 			},
 		}
 

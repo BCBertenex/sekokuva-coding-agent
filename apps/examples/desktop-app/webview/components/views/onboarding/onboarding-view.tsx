@@ -36,7 +36,7 @@ import {
 	writeModelSelectionStorageToWindow,
 } from "@/lib/model-selection";
 import {
-	CLINE_DASHBOARD_URL,
+	SEKOKUVA_CA_DASHBOARD_URL,
 	getProviderApiKeyUrl,
 } from "@/lib/provider-key-urls";
 import {
@@ -53,10 +53,10 @@ import {
 import { cn } from "@/lib/utils";
 
 const CREATE_ACCOUNT_URL = "https://app.cline.bot";
-const CLINE_PASS_SUBSCRIBE_URL =
+const SEKOKUVA_CA_PASS_SUBSCRIBE_URL =
 	"https://app.cline.bot/onboarding/individual-plan";
 
-const CLINE_SIGN_IN_BENEFITS = [
+const SEKOKUVA_CA_SIGN_IN_BENEFITS = [
 	"Regular free model promotions",
 	"Subscribe to ClinePass for generous usage across the best open weights models like DeepSeek, Kimi, and GLM",
 	"No API key needed",
@@ -530,7 +530,7 @@ function ConnectStep({
 						}
 						description={
 							<ul className="flex flex-col gap-1">
-								{CLINE_SIGN_IN_BENEFITS.map((benefit) => (
+								{SEKOKUVA_CA_SIGN_IN_BENEFITS.map((benefit) => (
 									<li className="flex gap-2" key={benefit}>
 										<Check
 											aria-hidden="true"
@@ -682,7 +682,7 @@ function ConnectStep({
 									<Button
 										className="self-start -ml-1 mt-1"
 										disabled={clineKeySaving}
-										onClick={() => void openExternalUrl(CLINE_DASHBOARD_URL)}
+										onClick={() => void openExternalUrl(SEKOKUVA_CA_DASHBOARD_URL)}
 										size="xs"
 										tone="neutral"
 										type="button"
@@ -1033,7 +1033,7 @@ function ClineModelsSummary() {
 					</p>
 				</div>
 				<Button
-					onClick={() => void openExternalUrl(CLINE_PASS_SUBSCRIBE_URL)}
+					onClick={() => void openExternalUrl(SEKOKUVA_CA_PASS_SUBSCRIBE_URL)}
 					size="sm"
 					tone="neutral"
 					type="button"

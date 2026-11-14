@@ -95,7 +95,7 @@ export function resolveDesktopRemoteHelper(
 	} = {},
 ): string | undefined {
 	const env = options.env ?? process.env;
-	if (env.CLINE_REMOTE_HELPER_BINARY) return env.CLINE_REMOTE_HELPER_BINARY;
+	if (env.SEKOKUVA_CA_REMOTE_HELPER_BINARY) return env.SEKOKUVA_CA_REMOTE_HELPER_BINARY;
 	const filename = remoteHelperBinaryFilename(target);
 	const execPath = options.execPath ?? process.execPath;
 	const executableDirectory = dirname(execPath);
@@ -103,8 +103,8 @@ export function resolveDesktopRemoteHelper(
 	const platform = options.platform ?? process.platform;
 	const bundledPath = join("bin", "remote-helpers", filename);
 	return [
-		...(env.CLINE_REMOTE_HELPER_DIRECTORY
-			? [join(env.CLINE_REMOTE_HELPER_DIRECTORY, filename)]
+		...(env.SEKOKUVA_CA_REMOTE_HELPER_DIRECTORY
+			? [join(env.SEKOKUVA_CA_REMOTE_HELPER_DIRECTORY, filename)]
 			: []),
 		...(target.platform === "darwin" && platform === "darwin"
 			? macCliCandidates(target, resolveDesktopCliPath(env), cwd)

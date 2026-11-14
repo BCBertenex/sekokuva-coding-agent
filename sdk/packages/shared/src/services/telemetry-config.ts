@@ -1,7 +1,7 @@
 import { parseKeyPairsIntoRecord } from "../parse/headers/utils";
 import type { OpenTelemetryClientConfig, TelemetryMetadata } from "./telemetry";
 
-export interface ClineTelemetryServiceConfig extends OpenTelemetryClientConfig {
+export interface SekoKuvaTelemetryServiceConfig extends OpenTelemetryClientConfig {
 	metadata: TelemetryMetadata;
 }
 
@@ -35,7 +35,7 @@ export function createClineTelemetryServiceMetadata(
 ): TelemetryMetadata {
 	return {
 		extension_version: "unknown",
-		cline_type: "unknown",
+		sekokuva_ca_type: "unknown",
 		platform: "terminal",
 		platform_version: process?.version || "unknown",
 		os_type: process?.platform || "unknown",
@@ -48,8 +48,8 @@ export function createClineTelemetryServiceMetadata(
 }
 
 export function createClineTelemetryServiceConfig(
-	configOverrides: Partial<ClineTelemetryServiceConfig> = {},
-): ClineTelemetryServiceConfig {
+	configOverrides: Partial<SekoKuvaTelemetryServiceConfig> = {},
+): SekoKuvaTelemetryServiceConfig {
 	return {
 		...getTelemetryBuildTimeConfig(),
 		...configOverrides,

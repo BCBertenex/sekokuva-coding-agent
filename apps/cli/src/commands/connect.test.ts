@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
-	CLINE_CONNECTOR_DETACHED_CHILD_ENV,
+	SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV,
 	CONNECT_ALREADY_RUNNING_EXIT_CODE,
 } from "../connectors/common";
 import type { ConnectIo, ConnectRunContext } from "../connectors/types";
@@ -47,7 +47,7 @@ vi.mock("./connect-via-hub", () => ({
 }));
 
 describe("runConnectAdapter", () => {
-	const previousDetachedChild = process.env[CLINE_CONNECTOR_DETACHED_CHILD_ENV];
+	const previousDetachedChild = process.env[SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV];
 	const io: ConnectIo = {
 		writeln: vi.fn(),
 		writeErr: vi.fn(),
@@ -75,9 +75,9 @@ describe("runConnectAdapter", () => {
 
 	afterEach(() => {
 		if (previousDetachedChild === undefined) {
-			delete process.env[CLINE_CONNECTOR_DETACHED_CHILD_ENV];
+			delete process.env[SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV];
 		} else {
-			process.env[CLINE_CONNECTOR_DETACHED_CHILD_ENV] = previousDetachedChild;
+			process.env[SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV] = previousDetachedChild;
 		}
 	});
 
@@ -179,7 +179,7 @@ describe("runConnectAdapter", () => {
 	});
 
 	it("leaves persistence unchanged when an internal detached child exits", async () => {
-		process.env[CLINE_CONNECTOR_DETACHED_CHILD_ENV] = "1";
+		process.env[SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV] = "1";
 
 		await expect(
 			runConnectAdapter("telegram", ["-k", "token", "-i"], io),
@@ -608,7 +608,7 @@ describe("hub-delegated connector starts", () => {
 	});
 
 	afterEach(() => {
-		delete process.env.CLINE_CONNECTOR_SUPERVISED;
+		delete process.env.SEKOKUVA_CA_CONNECTOR_SUPERVISED;
 	});
 
 	it("asks the hub to own a background connector and records the intent", async () => {
@@ -640,7 +640,7 @@ describe("hub-delegated connector starts", () => {
 	});
 
 	it("runs locally inside a supervised process instead of asking the hub again", async () => {
-		process.env.CLINE_CONNECTOR_SUPERVISED = "1";
+		process.env.SEKOKUVA_CA_CONNECTOR_SUPERVISED = "1";
 
 		await runConnectAdapter("slack", ["--bot-token", "xoxb"], io);
 

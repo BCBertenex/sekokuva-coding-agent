@@ -227,7 +227,7 @@ describe("resolveProviderConfig", () => {
 		).toBeUndefined();
 	});
 
-	it("uses only live Cline recommended models for ClinePass when live models are found", async () => {
+	it("uses only live Cline recommended models for SekoKuvaPass when live models are found", async () => {
 		const fetchMock = vi.fn(async (url: string) => {
 			if (url === "https://models.test/api.json") {
 				return new Response(
@@ -287,7 +287,7 @@ describe("resolveProviderConfig", () => {
 		expect(resolved?.knownModels?.["cline-pass/mimo-v2.5-pro"]).toBeUndefined();
 	});
 
-	it("keeps ClinePass models ahead of newer free models in the served catalog", async () => {
+	it("keeps SekoKuvaPass models ahead of newer free models in the served catalog", async () => {
 		const fetchMock = vi.fn(async (url: string) => {
 			if (url === "https://models.test/api.json") {
 				return new Response(
@@ -433,7 +433,7 @@ describe("resolveProviderConfig", () => {
 		);
 	});
 
-	it("falls back to generated ClinePass models when no live ClinePass models are found", async () => {
+	it("falls back to generated SekoKuvaPass models when no live SekoKuvaPass models are found", async () => {
 		const fetchMock = vi.fn(async (url: string) => {
 			if (url === "https://models.test/api.json") {
 				return new Response(

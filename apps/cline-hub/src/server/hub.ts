@@ -1,5 +1,5 @@
 import {
-	ClineCore,
+	SekoKuvaCore,
 	ensureDetachedHubServer,
 	type HubServerDiscoveryRecord,
 	HubUIClient,
@@ -97,7 +97,7 @@ export async function attachHub(ctx: HubContext): Promise<void> {
 	ctx.hubUrl = hub.url;
 	ctx.hubAuthToken = hub.authToken;
 
-	ctx.cline = await ClineCore.create({
+	ctx.cline = await SekoKuvaCore.create({
 		clientName: "cline-hub",
 		backendMode: "hub",
 		capabilities: {

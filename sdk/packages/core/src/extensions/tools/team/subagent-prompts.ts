@@ -11,11 +11,11 @@ export function buildTeammateSystemPrompt(
 	}
 
 	return buildClineSystemPrompt({
-		ide: config.clineIdeName?.trim() || "Terminal",
+		ide: config.sekokuvaCaIdeName?.trim() || "Terminal",
 		workspaceRoot: config.cwd?.trim() || "/",
 		providerId: config.providerId,
 		rules: `# Team Teammate Role\n${trimmedPrompt}`,
-		platform: config.clinePlatform,
+		platform: config.sekokuvaCaPlatform,
 		metadata: config.workspaceMetadata,
 	});
 }
@@ -31,11 +31,11 @@ export function buildSubAgentSystemPrompt(
 	}
 
 	return buildClineSystemPrompt({
-		ide: config.clineIdeName || "Terminal",
+		ide: config.sekokuvaCaIdeName || "Terminal",
 		workspaceRoot: config.cwd?.trim() || "/",
 		providerId: config.providerId,
 		overridePrompt: trimmedPrompt,
 		metadata: config.workspaceMetadata,
-		platform: config.clinePlatform,
+		platform: config.sekokuvaCaPlatform,
 	});
 }

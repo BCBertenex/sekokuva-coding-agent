@@ -22,23 +22,23 @@ describe("CoreSettingsService", () => {
 	const tempRoots: string[] = [];
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_GLOBAL_SETTINGS_PATH: process.env.CLINE_GLOBAL_SETTINGS_PATH,
-		CLINE_MCP_SETTINGS_PATH: process.env.CLINE_MCP_SETTINGS_PATH,
+		SEKOKUVA_CA_GLOBAL_SETTINGS_PATH: process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH,
+		SEKOKUVA_CA_MCP_SETTINGS_PATH: process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH,
 	};
 
 	afterEach(async () => {
 		process.env.HOME = envSnapshot.HOME;
 		setHomeDir(envSnapshot.HOME ?? "~");
-		if (envSnapshot.CLINE_GLOBAL_SETTINGS_PATH === undefined) {
-			delete process.env.CLINE_GLOBAL_SETTINGS_PATH;
+		if (envSnapshot.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH === undefined) {
+			delete process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_GLOBAL_SETTINGS_PATH =
-				envSnapshot.CLINE_GLOBAL_SETTINGS_PATH;
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH =
+				envSnapshot.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		}
-		if (envSnapshot.CLINE_MCP_SETTINGS_PATH === undefined) {
-			delete process.env.CLINE_MCP_SETTINGS_PATH;
+		if (envSnapshot.SEKOKUVA_CA_MCP_SETTINGS_PATH === undefined) {
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_MCP_SETTINGS_PATH = envSnapshot.CLINE_MCP_SETTINGS_PATH;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = envSnapshot.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		}
 		await Promise.all(
 			tempRoots.map((dir) => rm(dir, { recursive: true, force: true })),
@@ -192,7 +192,7 @@ Use the browser.`,
 		tempRoots.push(tempRoot);
 		process.env.HOME = tempRoot;
 		setHomeDir(tempRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			tempRoot,
 			"global-settings.json",
 		);
@@ -303,7 +303,7 @@ Review the change.`,
 		).toBe(false);
 		expect(
 			JSON.parse(
-				await readFile(process.env.CLINE_GLOBAL_SETTINGS_PATH, "utf8"),
+				await readFile(process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH, "utf8"),
 			),
 		).toMatchObject({ disabledAgentPlugins: ["portable-review"] });
 
@@ -356,7 +356,7 @@ Review the change.`,
 		tempRoots.push(tempRoot);
 		process.env.HOME = tempRoot;
 		setHomeDir(tempRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			tempRoot,
 			"global-settings.json",
 		);
@@ -426,7 +426,7 @@ Review the change.`;
 		);
 		tempRoots.push(tempRoot);
 		const settingsPath = join(tempRoot, "global-settings.json");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = settingsPath;
 		const installRoot = join(
 			tempRoot,
 			".cline",
@@ -496,7 +496,7 @@ Use the browser.`,
 		process.env.HOME = tempRoot;
 		setHomeDir(tempRoot);
 		const settingsPath = join(tempRoot, "global-settings.json");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = settingsPath;
 		const installRoot = join(
 			tempRoot,
 			".cline",
@@ -619,7 +619,7 @@ Use the browser.`,
 		tempRoots.push(tempRoot);
 		process.env.HOME = tempRoot;
 		setHomeDir(tempRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(tempRoot, "settings.json");
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(tempRoot, "settings.json");
 		const pluginRoot = join(tempRoot, ".cline", "plugins");
 		await mkdir(pluginRoot, { recursive: true });
 		const pluginPath = join(pluginRoot, "broken-setup.ts");
@@ -661,7 +661,7 @@ Use the browser.`,
 		const tempRoot = await mkdtemp(join(tmpdir(), "core-settings-"));
 		tempRoots.push(tempRoot);
 		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		await writeFile(
 			settingsPath,
 			`${JSON.stringify(
@@ -817,7 +817,7 @@ Use the browser.`,
 	it("honors explicit enabled values for plugin tool settings", async () => {
 		const tempRoot = await mkdtemp(join(tmpdir(), "core-settings-"));
 		tempRoots.push(tempRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			tempRoot,
 			"global-settings.json",
 		);
@@ -836,7 +836,7 @@ Use the browser.`,
 
 		expect(
 			JSON.parse(
-				await readFile(process.env.CLINE_GLOBAL_SETTINGS_PATH, "utf8"),
+				await readFile(process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH, "utf8"),
 			),
 		).toEqual({
 			autoUpdateEnabled: true,
@@ -848,7 +848,7 @@ Use the browser.`,
 
 		expect(
 			JSON.parse(
-				await readFile(process.env.CLINE_GLOBAL_SETTINGS_PATH, "utf8"),
+				await readFile(process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH, "utf8"),
 			),
 		).toEqual({ autoUpdateEnabled: true, telemetryOptOut: false });
 	});

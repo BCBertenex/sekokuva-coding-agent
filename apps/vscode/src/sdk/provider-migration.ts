@@ -45,7 +45,7 @@ export interface ProviderMigrationResult {
  * never overwrites existing provider entries.
  *
  * @param dataDir Override for the Cline data directory. Defaults to
- *   resolveDataDir() which checks CLINE_DATA_DIR, CLINE_DIR, then ~/.cline/data.
+ *   resolveDataDir() which checks SEKOKUVA_CA_DATA_DIR, SEKOKUVA_CA_DIR, then ~/.cline/data.
  * @returns Migration result indicating what happened
  */
 export function migrateProviders(dataDir?: string): ProviderMigrationResult {

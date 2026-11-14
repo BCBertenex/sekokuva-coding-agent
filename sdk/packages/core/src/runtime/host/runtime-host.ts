@@ -18,7 +18,7 @@ import type { SessionCompactionState } from "../../session/models/session-compac
 import type { SessionManifest } from "../../session/models/session-manifest";
 import type { SessionSource } from "../../types/common";
 import type {
-	ClineCoreStartConfig,
+	SekoKuvaCoreStartConfig,
 	CoreSessionConfig,
 } from "../../types/config";
 import type {
@@ -190,7 +190,7 @@ export interface ResolvedStartSessionInput
 	config: RuntimeSessionConfig;
 }
 
-export function splitCoreSessionConfig(config: ClineCoreStartConfig): {
+export function splitCoreSessionConfig(config: SekoKuvaCoreStartConfig): {
 	config: StartSessionConfig;
 	localRuntime?: LocalRuntimeStartOptions;
 } {

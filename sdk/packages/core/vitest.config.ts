@@ -16,6 +16,15 @@ export default defineConfig({
 		testTimeout: 20_000,
 		hookTimeout: 25_000,
 		pool: "forks",
+		// This suite mixes pure unit tests with real process, Git, and SQLite
+		// integration coverage. On Windows those child processes contend for a
+		// small number of cores, and a handful of timing-sensitive tests
+		// (MCP stdio handshakes, hub proxy tunnels, large-remote Git
+		// inspection) intermittently exceed their budgets when every worker
+		// runs at once. Cap the workers on Windows so the suite is
+		// deterministic; the budgets above stay as hang guards, not timing
+		// assertions.
+		...(process.platform === "win32" ? { maxWorkers: 4 } : {}),
 		...(process.env.CI && process.platform === "win32"
 			? {
 					// Two workers, not one: serializing the whole suite here cost ~3

@@ -6,6 +6,7 @@ import {
 	formatMcpTimeoutErrorMessage,
 	isMcpTimeoutConfigured,
 } from "@sekokuva-ca/shared";
+import { resolveWindowsSpawnOptions } from "@sekokuva-ca/shared/node";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import type { FetchLike } from "@modelcontextprotocol/sdk/shared/transport.js";
 import { ReadResourceResultSchema } from "@modelcontextprotocol/sdk/types.js";
@@ -447,14 +448,9 @@ class StdioMcpClient implements McpServerClient {
 		this.clearStdinFailureTimer();
 		this.protocolMode = protocolMode;
 
-		const platformOptions =
-			process.platform === "win32"
-				? {
-						windowsHide: true,
-						shell: true,
-					}
-				: {};
-		const child = spawn(transport.command, transport.args ?? [], {
+		const { command, options: platformOptions } =
+			resolveWindowsSpawnOptions(transport.command);
+		const child = spawn(command, transport.args ?? [], {
 			cwd: transport.cwd,
 			env: {
 				...process.env,

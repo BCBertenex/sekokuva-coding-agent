@@ -1,7 +1,7 @@
 import type {
 	AgentToolContext,
 	BasicLogger,
-	ClineCore,
+	SekoKuvaCore,
 	ITelemetryService,
 	ManagedHubBuildMismatchEvent,
 	NodeHubClient,
@@ -96,7 +96,7 @@ export type SessionRuntimeBinding = {
 	environmentId: string;
 	kind: "local" | "ssh";
 	workspaceRoot: string;
-	sessionManager: ClineCore;
+	sessionManager: SekoKuvaCore;
 	hubClient: NodeHubClient;
 	unsubscribeSessionEvents: () => void;
 	remote?: RemoteEnvironmentConnection;
@@ -186,9 +186,9 @@ export type BunRuntimeApi = {
 
 export const BunRuntime = (globalThis as { Bun?: BunRuntimeApi }).Bun;
 
-export const SIDECAR_PORT = Number(process.env.CLINE_SIDECAR_PORT) || 3126;
-// Loopback-only by default. Set CLINE_SIDECAR_HOST=0.0.0.0 to accept
+export const SIDECAR_PORT = Number(process.env.SEKOKUVA_CA_SIDECAR_PORT) || 3126;
+// Loopback-only by default. Set SEKOKUVA_CA_SIDECAR_HOST=0.0.0.0 to accept
 // connections from outside the local host (e.g. Docker port publishing).
 export const SIDECAR_HOST =
-	process.env.CLINE_SIDECAR_HOST?.trim() || "127.0.0.1";
+	process.env.SEKOKUVA_CA_SIDECAR_HOST?.trim() || "127.0.0.1";
 export const SIDECAR_MODE = "sidecar";

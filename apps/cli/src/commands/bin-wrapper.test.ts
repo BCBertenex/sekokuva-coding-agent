@@ -19,6 +19,11 @@ function createWrapperCopy(): string {
 	const dir = mkdtempSync(join(tmpdir(), "cline-bin-package-"));
 	const binDir = join(dir, "bin");
 	mkdirSync(binDir, { recursive: true });
+	// The published wrapper package has no `"type": "module"`, so `bin/cline`
+	// is CommonJS there. A temp dir under the repo would otherwise inherit
+	// `apps/cli/package.json` ("type": "module") and Node would parse the
+	// wrapper as ESM, which it is not.
+	writeFileSync(join(dir, "package.json"), '{ "name": "wrapper-fixture" }\n');
 	const wrapperPath = join(binDir, "cline");
 	copyFileSync(sourceWrapperPath, wrapperPath);
 	chmodSync(wrapperPath, 0o755);
@@ -27,6 +32,19 @@ function createWrapperCopy(): string {
 
 function createExecutableScript(contents: string): string {
 	const dir = mkdtempSync(join(tmpdir(), "cline-bin-wrapper-"));
+	// The wrapper spawns the target directly, so the target must be something
+	// the OS can execute. On Windows a shebang script is not executable, so
+	// emit a `.cmd` shim that forwards to the current Node binary instead.
+	if (process.platform === "win32") {
+		const scriptPath = join(dir, "child.js");
+		writeFileSync(scriptPath, contents);
+		const shimPath = join(dir, "child.cmd");
+		writeFileSync(
+			shimPath,
+			`@echo off\r\n"${process.execPath}" "${scriptPath}" %*\r\n`,
+		);
+		return shimPath;
+	}
 	const scriptPath = join(dir, "child.js");
 	writeFileSync(scriptPath, `#!/usr/bin/env node\n${contents}`);
 	chmodSync(scriptPath, 0o755);
@@ -38,7 +56,7 @@ function runWrapper(target: string, args: string[] = []) {
 	return spawnSync(process.execPath, [wrapperPath, ...args], {
 		env: {
 			...process.env,
-			CLINE_BIN_PATH: target,
+			SEKOKUVA_CA_BIN_PATH: target,
 		},
 		encoding: "utf8",
 	});
@@ -59,7 +77,7 @@ process.exit(Number(process.argv[2] ?? "0"));
 
 	it("passes the wrapper path to the compiled binary", () => {
 		const target = createExecutableScript(`
-console.log(process.env.CLINE_WRAPPER_PATH ?? "");
+console.log(process.env.SEKOKUVA_CA_WRAPPER_PATH ?? "");
 `);
 
 		const result = runWrapper(target);

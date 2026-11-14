@@ -15,8 +15,8 @@ import {
 const isWindows = process.platform === "win32";
 const posixTest = it.skipIf(isWindows);
 
-const MARKER_START = "__CLINE_SIDECAR_PATH_START__";
-const MARKER_END = "__CLINE_SIDECAR_PATH_END__";
+const MARKER_START = "__SEKOKUVA_CA_SIDECAR_PATH_START__";
+const MARKER_END = "__SEKOKUVA_CA_SIDECAR_PATH_END__";
 
 let tempDirs: string[] = [];
 
@@ -253,7 +253,7 @@ describe("ensureLoginShellPath", () => {
 	it("skips when the escape hatch is set", async () => {
 		const env: NodeJS.ProcessEnv = {
 			PATH: "/usr/bin",
-			CLINE_SIDECAR_SKIP_SHELL_PATH: "1",
+			SEKOKUVA_CA_SIDECAR_SKIP_SHELL_PATH: "1",
 		};
 		const result = await ensureLoginShellPath({ platform: "darwin", env });
 		expect(result.status).toBe("skipped");

@@ -1,7 +1,7 @@
 // Replaces classic task creation from src/core/task/index.ts (see origin/main)
 //
-// Creates and manages SDK sessions using ClineCore. This factory handles:
-// - Creating ClineCore instances with proper configuration
+// Creates and manages SDK sessions using SekoKuvaCore. This factory handles:
+// - Creating SekoKuvaCore instances with proper configuration
 // - Building session config from legacy state (provider, model, API key)
 // - Custom session persistence adapter reading ~/.cline/data/tasks/
 // - Mapping HistoryItem ↔ SDK session fields
@@ -11,13 +11,13 @@
 import { BlockList, isIP } from "node:net"
 import {
 	buildWorkspaceMetadata,
-	type ClineCoreStartInput,
 	type CoreSessionConfig,
 	getProviderAuthHandler,
 	type ProviderSettings,
 	readCompactionStrategyGlobally,
 	resolveClineDefaultModelId,
 	resolveProviderApiKeyFromSettings,
+	type SekoKuvaCoreStartInput,
 	type StartSessionResult,
 } from "@sekokuva-ca/core"
 import type { ProviderApiLine, ModelInfo as SdkModelInfo } from "@sekokuva-ca/llms"
@@ -1207,7 +1207,7 @@ export async function buildSessionConfig(input: SessionConfigInput): Promise<Cor
  * that same session ID before inference. This keeps initialization responsive
  * without leaving empty history entries when the user never sends a message.
  */
-export function buildStartSessionInput(config: CoreSessionConfig, input: SessionConfigInput): ClineCoreStartInput {
+export function buildStartSessionInput(config: CoreSessionConfig, input: SessionConfigInput): SekoKuvaCoreStartInput {
 	return {
 		config,
 		// Do NOT pass prompt here — start() should return immediately.

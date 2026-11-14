@@ -61,7 +61,7 @@ describe("OpenTelemetryAdapter", () => {
 				distinct_id: "user-123",
 				organization_id: "org-1",
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: "terminal",
 			}),
 		});
@@ -172,7 +172,7 @@ describe("OpenTelemetryAdapter", () => {
 function makeMetadata() {
 	return {
 		extension_version: "1.2.3",
-		cline_type: "cli",
+		sekokuva_ca_type: "cli",
 		platform: "terminal",
 		platform_version: "1.0.0",
 		os_type: "darwin",

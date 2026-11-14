@@ -2,8 +2,8 @@ import { join } from "node:path";
 import process from "node:process";
 
 const webviewHost =
-	process.env.CLINE_HUB_WEBVIEW_DEV_HOST?.trim() || "127.0.0.1";
-const webviewPort = process.env.CLINE_HUB_WEBVIEW_DEV_PORT?.trim() || "5173";
+	process.env.SEKOKUVA_CA_HUB_WEBVIEW_DEV_HOST?.trim() || "127.0.0.1";
+const webviewPort = process.env.SEKOKUVA_CA_HUB_WEBVIEW_DEV_PORT?.trim() || "5173";
 const webviewDevServerUrl =
 	process.env.VITE_DEV_SERVER_URL?.trim() ||
 	`http://${webviewHost}:${webviewPort}`;

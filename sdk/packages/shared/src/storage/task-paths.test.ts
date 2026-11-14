@@ -12,7 +12,7 @@ import {
 describe("agenda task storage paths", () => {
 	it("places task state in the shared db directory", () => {
 		expect(resolveTasksDbPath()).toBe(
-			process.env.CLINE_TASKS_DB_PATH?.trim() ||
+			process.env.SEKOKUVA_CA_TASKS_DB_PATH?.trim() ||
 				join(resolveDbDataDir(), "tasks.db"),
 		);
 	});

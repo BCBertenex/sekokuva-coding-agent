@@ -11,7 +11,7 @@ import {
 	OAuthReauthRequiredError,
 	RuntimeOAuthTokenManager,
 } from "../../runtime/orchestration/runtime-oauth-token-manager";
-import { isClineAccountFeatureEnabled } from "../../services/feature-flags/cline-account-feature-flags";
+import { isClineAccountFeatureEnabled } from "../../services/feature-flags/sekokuva-ca-account-feature-flags";
 import { resolveLocalClineAuthToken } from "../../services/providers/local-provider-service";
 import { ProviderSettingsManager } from "../../services/storage/provider-settings-manager";
 import {
@@ -96,7 +96,7 @@ async function authorizeExecution(
 			},
 		};
 	}
-	if (!(await isClineAccountFeatureEnabled(FeatureFlag.CLINE_COMPOSIO_BETA))) {
+	if (!(await isClineAccountFeatureEnabled(FeatureFlag.SEKOKUVA_CA_COMPOSIO_BETA))) {
 		return {
 			error: {
 				successful: false,
@@ -146,7 +146,7 @@ export async function createComposioToolsExtension(options?: {
 	} else {
 		if (!accountId) return undefined;
 		if (
-			!(await isClineAccountFeatureEnabled(FeatureFlag.CLINE_COMPOSIO_BETA))
+			!(await isClineAccountFeatureEnabled(FeatureFlag.SEKOKUVA_CA_COMPOSIO_BETA))
 		) {
 			return undefined;
 		}

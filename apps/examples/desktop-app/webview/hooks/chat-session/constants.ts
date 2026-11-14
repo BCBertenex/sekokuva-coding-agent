@@ -1,5 +1,5 @@
 import { GENERATED_CLINE_RECOMMENDED_MODELS } from "@sekokuva-ca/llms/browser";
-import { CLINE_DEFAULT_MODEL_ID, isClineProvider } from "@sekokuva-ca/shared/browser";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID, isClineProvider } from "@sekokuva-ca/shared/browser";
 import type { ChatSessionConfig } from "@/lib/chat-schema";
 import { desktopClient } from "@/lib/desktop-client";
 import {
@@ -23,7 +23,7 @@ export const CHAT_WS_REQUEST_TIMEOUT_MS = 120000;
 export { OAUTH_PROVIDER_IDS as OAUTH_MANAGED_PROVIDERS } from "@/lib/provider-connection";
 
 const BUNDLED_DEFAULT_MODEL_ID =
-	GENERATED_CLINE_RECOMMENDED_MODELS.free?.[0]?.id ?? CLINE_DEFAULT_MODEL_ID;
+	GENERATED_CLINE_RECOMMENDED_MODELS.free?.[0]?.id ?? SEKOKUVA_CA_DEFAULT_MODEL_ID;
 
 let liveDefaultModelId: string | undefined;
 let liveDefaultModelRequest: Promise<string | undefined> | undefined;
@@ -68,7 +68,7 @@ export const DEFAULT_CHAT_CONFIG: ChatSessionConfig = {
 	provider: "cline",
 	// New users start on the first bundled free model.
 	model: BUNDLED_DEFAULT_MODEL_ID,
-	apiKey: process.env.CLINE_API_KEY || "",
+	apiKey: process.env.SEKOKUVA_CA_API_KEY || "",
 	mode: "act",
 	systemPrompt: undefined,
 	maxIterations: undefined,
@@ -140,6 +140,6 @@ export function getInitialCloudModel(
 ): string {
 	return (
 		readModelSelectionStorageFromWindow("cloud").lastModelByProvider.cline ||
-		(isClineProvider(localProvider) ? localModel : CLINE_DEFAULT_MODEL_ID)
+		(isClineProvider(localProvider) ? localModel : SEKOKUVA_CA_DEFAULT_MODEL_ID)
 	);
 }

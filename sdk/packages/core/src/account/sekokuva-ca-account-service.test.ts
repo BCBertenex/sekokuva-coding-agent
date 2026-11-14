@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { ClineAccountService } from "./cline-account-service";
+import { SekoKuvaAccountService } from "./sekokuva-ca-account-service";
 
-describe("ClineAccountService", () => {
+describe("SekoKuvaAccountService", () => {
 	it("fetches current user balance and sends auth header", async () => {
 		const fetchImpl = vi.fn(async (input: unknown, init?: RequestInit) => {
 			expect(String(input)).toBe(
@@ -19,7 +19,7 @@ describe("ClineAccountService", () => {
 			);
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			getCurrentUserId: () => "user-1",
@@ -65,7 +65,7 @@ describe("ClineAccountService", () => {
 				),
 			);
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -103,7 +103,7 @@ describe("ClineAccountService", () => {
 			);
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -122,7 +122,7 @@ describe("ClineAccountService", () => {
 		const plansPayload = [
 			{
 				id: "plan-1",
-				displayName: "ClinePass Monthly",
+				displayName: "SekoKuvaPass Monthly",
 				interval: "Monthly",
 				features: { included: ["Major open-weights models"] },
 			},
@@ -140,7 +140,7 @@ describe("ClineAccountService", () => {
 			);
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -157,7 +157,7 @@ describe("ClineAccountService", () => {
 		const planPayload = {
 			plan: {
 				id: "plan-1",
-				displayName: "ClinePass Monthly",
+				displayName: "SekoKuvaPass Monthly",
 				interval: "Monthly",
 			},
 			planHistoryId: "history-1",
@@ -175,7 +175,7 @@ describe("ClineAccountService", () => {
 			);
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -200,7 +200,7 @@ describe("ClineAccountService", () => {
 			);
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -223,7 +223,7 @@ describe("ClineAccountService", () => {
 			});
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -238,7 +238,7 @@ describe("ClineAccountService", () => {
 			return new Response("Authentication failed", { status: 401 });
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -254,7 +254,7 @@ describe("ClineAccountService", () => {
 			return new Response("Account service unavailable", { status: 200 });
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -272,7 +272,7 @@ describe("ClineAccountService", () => {
 			return new Response(null, { status: 204 });
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,

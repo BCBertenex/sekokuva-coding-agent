@@ -23,7 +23,7 @@ const parseTelegramArgs = (rawArgs: string[]): ConnectTelegramOptions =>
 		}
 	).parseArgs(rawArgs);
 
-const originalClineDataDir = process.env.CLINE_DATA_DIR;
+const originalClineDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
 const tempDataDirs: string[] = [];
 
 beforeEach(() => {
@@ -34,16 +34,16 @@ beforeEach(() => {
 function useTempClineDataDir(): string {
 	const dataDir = mkdtempSync(join(tmpdir(), "cline-telegram-test-"));
 	tempDataDirs.push(dataDir);
-	process.env.CLINE_DATA_DIR = dataDir;
+	process.env.SEKOKUVA_CA_DATA_DIR = dataDir;
 	return dataDir;
 }
 
 afterEach(() => {
 	vi.unstubAllGlobals();
 	if (originalClineDataDir === undefined) {
-		delete process.env.CLINE_DATA_DIR;
+		delete process.env.SEKOKUVA_CA_DATA_DIR;
 	} else {
-		process.env.CLINE_DATA_DIR = originalClineDataDir;
+		process.env.SEKOKUVA_CA_DATA_DIR = originalClineDataDir;
 	}
 	for (const dir of tempDataDirs.splice(0)) {
 		rmSync(dir, { recursive: true, force: true });
@@ -122,8 +122,8 @@ describe("telegramConnector", () => {
 	});
 
 	it("rejects mixing --allowed-user-id with the hook command env var", () => {
-		const originalHookCommand = process.env.CLINE_CONNECT_HOOK_COMMAND;
-		process.env.CLINE_CONNECT_HOOK_COMMAND = "echo noop";
+		const originalHookCommand = process.env.SEKOKUVA_CA_CONNECT_HOOK_COMMAND;
+		process.env.SEKOKUVA_CA_CONNECT_HOOK_COMMAND = "echo noop";
 		try {
 			expect(() =>
 				parseTelegramArgs([
@@ -137,9 +137,9 @@ describe("telegramConnector", () => {
 			).toThrow("either --allowed-user-id or --hook-command");
 		} finally {
 			if (originalHookCommand === undefined) {
-				delete process.env.CLINE_CONNECT_HOOK_COMMAND;
+				delete process.env.SEKOKUVA_CA_CONNECT_HOOK_COMMAND;
 			} else {
-				process.env.CLINE_CONNECT_HOOK_COMMAND = originalHookCommand;
+				process.env.SEKOKUVA_CA_CONNECT_HOOK_COMMAND = originalHookCommand;
 			}
 		}
 	});

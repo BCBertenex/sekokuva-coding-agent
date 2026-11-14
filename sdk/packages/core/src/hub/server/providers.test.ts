@@ -6,7 +6,7 @@ import type { HubReplyEnvelope } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import WebSocket from "ws";
 import { LocalRuntimeHost } from "../../runtime/host/local-runtime-host";
-import { resetClineRecommendedModelsCacheForTests } from "../../services/llms/cline-recommended-models";
+import { resetClineRecommendedModelsCacheForTests } from "../../services/llms/sekokuva-ca-recommended-models";
 import { clearLiveModelsCatalogCache } from "../../services/llms/provider-defaults";
 import * as ProviderRegistry from "../../services/providers/local-provider-registry";
 import { ProviderSettingsManager } from "../../services/storage/provider-settings-manager";
@@ -46,9 +46,9 @@ function createTestRuntimeOptions() {
 beforeEach(async () => {
 	transportStopped = false;
 	root = await mkdtemp(join(tmpdir(), "hub-providers-"));
-	vi.stubEnv("CLINE_DATA_DIR", root);
-	vi.stubEnv("CLINE_DIR", root);
-	vi.stubEnv("CLINE_HOME_DIR", root);
+	vi.stubEnv("SEKOKUVA_CA_DATA_DIR", root);
+	vi.stubEnv("SEKOKUVA_CA_DIR", root);
+	vi.stubEnv("SEKOKUVA_CA_HOME_DIR", root);
 	send.mockReset();
 	vi.stubGlobal(
 		"fetch",
@@ -446,16 +446,16 @@ describe("hub provider management", () => {
 				apiKey: "old",
 				auth: { accountId: "account" },
 			}),
-		).toMatchObject({ clineCredentialsChanged: true });
+		).toMatchObject({ sekokuvaCaCredentialsChanged: true });
 		expect(
 			await api.saveSettings({
 				providerId: "cline",
 				baseUrl: "https://example.test",
 			}),
-		).toMatchObject({ clineCredentialsChanged: false });
+		).toMatchObject({ sekokuvaCaCredentialsChanged: false });
 		expect(
 			await api.saveSettings({ providerId: "cline", apiKey: "new" }),
-		).toMatchObject({ clineCredentialsChanged: true });
+		).toMatchObject({ sekokuvaCaCredentialsChanged: true });
 		await api.saveSettings({ providerId: "cline", baseUrl: "" });
 		expect(
 			new ProviderSettingsManager().getProviderSettings("cline")?.baseUrl,
@@ -494,14 +494,14 @@ describe("hub provider management", () => {
 		await writeFile(
 			join(root, "secrets.json"),
 			JSON.stringify({
-				"cline:clineAccountId": "legacy",
-				clineApiKey: "legacy-key",
+				"cline:sekokuvaCaAccountId": "legacy",
+				sekokuvaCaApiKey: "legacy-key",
 				unrelated: "keep",
 			}),
 		);
 		expect(
 			await api.saveSettings({ providerId: "cline-pass", enabled: false }),
-		).toMatchObject({ enabled: false, clineCredentialsChanged: true });
+		).toMatchObject({ enabled: false, sekokuvaCaCredentialsChanged: true });
 		expect(
 			new ProviderSettingsManager().getProviderSettings("cline"),
 		).toBeUndefined();
@@ -515,7 +515,7 @@ describe("hub provider management", () => {
 		expect(result.recommended.length).toBeGreaterThan(0);
 		expect(result).toMatchObject({
 			free: expect.any(Array),
-			clinePass: expect.any(Array),
+			sekokuvaCaPass: expect.any(Array),
 		});
 	});
 

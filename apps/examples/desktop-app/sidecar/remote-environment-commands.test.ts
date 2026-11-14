@@ -31,7 +31,7 @@ vi.mock("@sekokuva-ca/core", async () => {
 		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
-		ClineCore: {
+		SekoKuvaCore: {
 			create: coreCreateMock,
 		},
 		SqliteSessionStore: class {

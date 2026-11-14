@@ -331,7 +331,7 @@ describe("plugin-loader", () => {
 	});
 
 	it("resolves standalone plugin dependencies from the npm wrapper path", async () => {
-		const previousWrapperPath = process.env.CLINE_WRAPPER_PATH;
+		const previousWrapperPath = process.env.SEKOKUVA_CA_WRAPPER_PATH;
 		const wrapperRoot = join(dir, "wrapper-root");
 		const wrapperBinDir = join(wrapperRoot, "bin");
 		const depDir = join(wrapperRoot, "node_modules", "wrapper-host-dep");
@@ -366,14 +366,14 @@ describe("plugin-loader", () => {
 		);
 
 		try {
-			process.env.CLINE_WRAPPER_PATH = join(wrapperBinDir, "cline");
+			process.env.SEKOKUVA_CA_WRAPPER_PATH = join(wrapperBinDir, "cline");
 			const plugin = await loadAgentPluginFromPath(pluginPath);
 			expect(plugin.name).toBe("wrapper-host-dep");
 		} finally {
 			if (previousWrapperPath === undefined) {
-				delete process.env.CLINE_WRAPPER_PATH;
+				delete process.env.SEKOKUVA_CA_WRAPPER_PATH;
 			} else {
-				process.env.CLINE_WRAPPER_PATH = previousWrapperPath;
+				process.env.SEKOKUVA_CA_WRAPPER_PATH = previousWrapperPath;
 			}
 		}
 	});

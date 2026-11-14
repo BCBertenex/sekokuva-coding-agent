@@ -4,8 +4,8 @@ import { isDeepStrictEqual } from "node:util";
 import {
 	buildConnectionUpdate,
 	buildWorkspaceMetadata,
-	type ClineCore,
-	type ClineCoreStartConfig,
+	type SekoKuvaCore,
+	type SekoKuvaCoreStartConfig,
 	createContextCompactionPrepareTurn,
 	createSessionCompactionState,
 	createUserInstructionConfigService,
@@ -88,7 +88,7 @@ import type {
 } from "./types";
 
 type SessionConnectionUpdate = Parameters<
-	ClineCore["updateSessionConnection"]
+	SekoKuvaCore["updateSessionConnection"]
 >[1];
 
 type WorkspaceMetadataLoader = (cwd: string) => Promise<string>;
@@ -132,7 +132,7 @@ const COMPACT_WHILE_RUNNING_MESSAGE =
  */
 async function compactSession(
 	ctx: SidecarContext,
-	manager: ClineCore,
+	manager: SekoKuvaCore,
 	sessionId: string,
 	config: JsonRecord,
 	abortSignal: AbortSignal,
@@ -996,7 +996,7 @@ function getSessionManager(
 	ctx: SidecarContext,
 	sessionId?: string,
 	config?: JsonRecord,
-): ClineCore {
+): SekoKuvaCore {
 	return getSessionRuntimeBinding(ctx, sessionId, readEnvironmentId(config))
 		.sessionManager;
 }
@@ -1066,7 +1066,7 @@ async function handleStart(
 		modelId: String(coreConfig.modelId ?? ""),
 	});
 	const startResult = await manager.start({
-		...splitCoreSessionConfig(coreConfig as unknown as ClineCoreStartConfig),
+		...splitCoreSessionConfig(coreConfig as unknown as SekoKuvaCoreStartConfig),
 		source: SessionSource.DESKTOP,
 		interactive: true,
 		...(initialMessages ? { initialMessages } : {}),
@@ -1219,7 +1219,7 @@ async function handleAttach(
 }
 
 async function startRebuiltSession(
-	manager: ClineCore,
+	manager: SekoKuvaCore,
 	ctx: SidecarContext,
 	sessionId: string,
 	config: JsonRecord,
@@ -1240,7 +1240,7 @@ async function startRebuiltSession(
 				},
 				ctx.telemetryUser,
 				createDesktopMistakeRecovery(ctx, () => sessionId),
-			) as unknown as ClineCoreStartConfig,
+			) as unknown as SekoKuvaCoreStartConfig,
 		),
 		source: SessionSource.DESKTOP,
 		interactive: true,
@@ -1427,7 +1427,7 @@ type HubReconnectOutcome = "rebuilt" | "survived" | "failed";
  */
 async function reconnectSessionAfterHubLoss(
 	ctx: SidecarContext,
-	manager: ClineCore,
+	manager: SekoKuvaCore,
 	sessionId: string,
 	session: LiveSession | undefined,
 ): Promise<HubReconnectOutcome> {
@@ -1507,7 +1507,7 @@ function waitForHubRecovery(
 
 async function recoverSessionAfterHubLoss(
 	ctx: SidecarContext,
-	manager: ClineCore,
+	manager: SekoKuvaCore,
 	sessionId: string,
 	session: LiveSession,
 	signal: AbortSignal,
@@ -1793,7 +1793,7 @@ async function handleSendOnce(
 			request.attachments?.userFiles,
 		);
 		if (session?.attachedViaHub) {
-			// Once ClineCore sends a turn it owns the session: the attach-time
+			// Once SekoKuvaCore sends a turn it owns the session: the attach-time
 			// connection refresh above has happened and the observer projection is
 			// muted by its subscription, so the session is no longer attach-only.
 			session.attachedViaHub = false;
@@ -1860,7 +1860,7 @@ async function handleSendOnce(
 			promptLength: prompt.length,
 			delivery,
 		});
-		let result: Awaited<ReturnType<ClineCore["send"]>>;
+		let result: Awaited<ReturnType<SekoKuvaCore["send"]>>;
 		try {
 			result = await manager.send({
 				sessionId,
@@ -2171,7 +2171,7 @@ async function handleForkUnlocked(
 				},
 				ctx.telemetryUser,
 				createDesktopMistakeRecovery(ctx, () => newSessionId),
-			) as unknown as ClineCoreStartConfig,
+			) as unknown as SekoKuvaCoreStartConfig,
 		),
 		source: SessionSource.DESKTOP,
 		interactive: true,
@@ -2338,7 +2338,7 @@ async function handleRestoreCheckpoint(
 						},
 						ctx.telemetryUser,
 						createDesktopMistakeRecovery(ctx, () => restoredSessionId),
-					) as unknown as ClineCoreStartConfig,
+					) as unknown as SekoKuvaCoreStartConfig,
 				),
 				source: SessionSource.DESKTOP,
 				interactive: true,

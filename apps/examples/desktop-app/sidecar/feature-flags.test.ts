@@ -66,7 +66,7 @@ import {
 
 const originalApiKey = process.env.TELEMETRY_SERVICE_API_KEY;
 const originalIsTest = process.env.IS_TEST;
-const originalDataDir = process.env.CLINE_DATA_DIR;
+const originalDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
 let tempDataDir: string;
 
 function accountContextPath(): string {
@@ -81,7 +81,7 @@ beforeEach(() => {
 	delete process.env.E2E_TEST;
 	// Account context persists under the data dir; sandbox it per test.
 	tempDataDir = mkdtempSync(join(tmpdir(), "desktop-ff-test-"));
-	process.env.CLINE_DATA_DIR = tempDataDir;
+	process.env.SEKOKUVA_CA_DATA_DIR = tempDataDir;
 });
 
 afterEach(() => {
@@ -96,9 +96,9 @@ afterEach(() => {
 		process.env.IS_TEST = originalIsTest;
 	}
 	if (originalDataDir === undefined) {
-		delete process.env.CLINE_DATA_DIR;
+		delete process.env.SEKOKUVA_CA_DATA_DIR;
 	} else {
-		process.env.CLINE_DATA_DIR = originalDataDir;
+		process.env.SEKOKUVA_CA_DATA_DIR = originalDataDir;
 	}
 	rmSync(tempDataDir, { recursive: true, force: true });
 });
@@ -334,7 +334,7 @@ describe("disposeDesktopFeatureFlagsService", () => {
 
 describe("cloud agents gate", () => {
 	beforeEach(() => {
-		delete process.env.CLINE_CODE_CLOUD_AGENTS;
+		delete process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS;
 	});
 
 	it("is disabled while the rollout flag is off", async () => {
@@ -362,9 +362,9 @@ describe("cloud agents gate", () => {
 	it("lets the env override force the gate in both directions", async () => {
 		const { isCloudAgentsEnabled } = await import("./feature-flags");
 		mocks.getFlagPayload.mockReturnValue(undefined);
-		process.env.CLINE_CODE_CLOUD_AGENTS = "1";
+		process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "1";
 		expect(isCloudAgentsEnabled()).toBe(true);
-		process.env.CLINE_CODE_CLOUD_AGENTS = "0";
+		process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "0";
 		expect(isCloudAgentsEnabled()).toBe(false);
 	});
 });

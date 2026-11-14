@@ -71,7 +71,7 @@ const SKIP_BUILD = args.includes("--skip-build")
 const AUTO_LAUNCH = args.includes("--auto-launch")
 const BROWSER_CAPTURE = !args.includes("--no-browser-capture")
 const WORKSPACE_ARG = getArg("--workspace")
-const CLINE_DIR_ARG = getArg("--cline-dir") // Override the isolated CLINE_DIR
+const SEKOKUVA_CA_DIR_ARG = getArg("--cline-dir") // Override the isolated SEKOKUVA_CA_DIR
 
 // ============================================================
 // VLQ Sourcemap Decoder
@@ -314,7 +314,7 @@ class DebugHarness {
 	private webCdpSession: CDPSession | null = null // Playwright CDP session fallback
 	private screenshotCounter = 0
 	private extSourceMap: SourceMapJSON | null = null
-	private clineDir: string = DEFAULT_CLINE_DIR // The CLINE_DIR used for the debugee
+	private clineDir: string = DEFAULT_CLINE_DIR // The SEKOKUVA_CA_DIR used for the debugee
 
 	// Pause waiters - resolved when any debuggee hits a breakpoint
 	private pauseWaiters: { resolve: (info: any) => void; timer: NodeJS.Timeout }[] = []
@@ -369,11 +369,11 @@ class DebugHarness {
 		const executablePath = await downloadAndUnzipVSCode(vscodeVersion, undefined, new SilentReporter())
 		log(`VSCode binary: ${executablePath}`)
 
-		// Resolve the CLINE_DIR for the debugee (separate from debugger's ~/.cline)
-		this.clineDir = CLINE_DIR_ARG || DEFAULT_CLINE_DIR
+		// Resolve the SEKOKUVA_CA_DIR for the debugee (separate from debugger's ~/.cline)
+		this.clineDir = SEKOKUVA_CA_DIR_ARG || DEFAULT_CLINE_DIR
 		fs.mkdirSync(this.clineDir, { recursive: true })
 		fs.mkdirSync(path.join(this.clineDir, "data"), { recursive: true })
-		log(`Debugee CLINE_DIR: ${this.clineDir}`)
+		log(`Debugee SEKOKUVA_CA_DIR: ${this.clineDir}`)
 
 		// Clear any previously captured URLs
 		this.capturedUrls = []
@@ -418,12 +418,12 @@ class DebugHarness {
 					IS_DEV: "true",
 					TEMP_PROFILE: "true",
 					DEV_WORKSPACE_FOLDER: PROJECT_ROOT,
-					CLINE_ENVIRONMENT: "production",
+					SEKOKUVA_CA_ENVIRONMENT: "production",
 					// ── Data isolation: use separate profile from user's ~/.cline ──
-					CLINE_DIR: this.clineDir,
+					SEKOKUVA_CA_DIR: this.clineDir,
 					// ── Browser capture: intercept openExternal() for OAuth testing unless explicitly disabled ──
-					CLINE_CAPTURE_BROWSER: BROWSER_CAPTURE ? "1" : "0",
-					CLINE_DEBUG_HARNESS_PORT: String(PORT),
+					SEKOKUVA_CA_CAPTURE_BROWSER: BROWSER_CAPTURE ? "1" : "0",
+					SEKOKUVA_CA_DEBUG_HARNESS_PORT: String(PORT),
 				},
 				timeout: LAUNCH_TIMEOUT_MS,
 			})
@@ -1180,7 +1180,7 @@ class DebugHarness {
 
 	/**
 	 * Get URLs that the debugee tried to open in a browser (captured by
-	 * CLINE_CAPTURE_BROWSER). Each entry has a timestamp and URL.
+	 * SEKOKUVA_CA_CAPTURE_BROWSER). Each entry has a timestamp and URL.
 	 * Use this to inspect OAuth authorization URLs that were intercepted.
 	 *
 	 * Params:
@@ -1306,7 +1306,7 @@ class DebugHarness {
 	}
 
 	/**
-	 * Read the captured URLs JSONL file from the debugee's CLINE_DIR.
+	 * Read the captured URLs JSONL file from the debugee's SEKOKUVA_CA_DIR.
 	 * This is the on-disk log of all URLs that openExternal() captured.
 	 * Use this if the real-time POST to /captured-url was missed.
 	 */

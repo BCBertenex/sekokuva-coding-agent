@@ -281,10 +281,10 @@ export function resolveAgentPluginSkillDirectories(
 
 export type PluginExecutionMode = "sandbox" | "worker";
 
-export const CLINE_PLUGIN_MODE_ENV = "CLINE_PLUGIN_MODE";
+export const SEKOKUVA_CA_PLUGIN_MODE_ENV = "SEKOKUVA_CA_PLUGIN_MODE";
 
 /**
- * Where plugins run (`CLINE_PLUGIN_MODE`, or `mode`):
+ * Where plugins run (`SEKOKUVA_CA_PLUGIN_MODE`, or `mode`):
  * - `worker` (default): each plugin runs in its own worker thread per
  *   session, inside the host runtime. A plugin crash, `process.exit()`, or
  *   hung loop ends only its worker, and no `node`/`bun` is needed on PATH.
@@ -297,7 +297,7 @@ export const CLINE_PLUGIN_MODE_ENV = "CLINE_PLUGIN_MODE";
 export function resolvePluginExecutionMode(
 	mode?: PluginExecutionMode,
 ): PluginExecutionMode {
-	const configured = process.env[CLINE_PLUGIN_MODE_ENV]?.trim();
+	const configured = process.env[SEKOKUVA_CA_PLUGIN_MODE_ENV]?.trim();
 	return mode ?? (configured === "sandbox" ? configured : "worker");
 }
 

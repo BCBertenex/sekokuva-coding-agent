@@ -4,7 +4,7 @@ import {
 	HubScheduleService,
 } from "@sekokuva-ca/core";
 import {
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	ONE_TIME_SCHEDULE_CRON_PATTERN,
 	ONE_TIME_SCHEDULE_RUN_AT_METADATA_KEY,
 	readHubScheduleMode,
@@ -131,7 +131,7 @@ export async function handleRoutineScheduleCommand(
 			prompt,
 			modelSelection: {
 				providerId: asTrimmedString(args?.provider) ?? "cline",
-				modelId: asTrimmedString(args?.model) ?? CLINE_DEFAULT_MODEL_ID,
+				modelId: asTrimmedString(args?.model) ?? SEKOKUVA_CA_DEFAULT_MODEL_ID,
 			},
 			mode: readHubScheduleMode(args, "yolo"),
 			workspaceRoot: routineWorkspaceRoot,
@@ -166,7 +166,7 @@ export async function handleRoutineScheduleCommand(
 			prompt,
 			modelSelection: {
 				providerId: asTrimmedString(args?.provider) ?? "cline",
-				modelId: asTrimmedString(args?.model) ?? CLINE_DEFAULT_MODEL_ID,
+				modelId: asTrimmedString(args?.model) ?? SEKOKUVA_CA_DEFAULT_MODEL_ID,
 			},
 			...(mode === undefined ? {} : { mode }),
 			workspaceRoot: routineWorkspaceRoot,

@@ -49,8 +49,8 @@ export async function withLangfuseTraceAttributes<T>(
 }
 
 /**
- * Operator-supplied trace dimensions. `CLINE_LANGFUSE_TAGS` is a
- * comma-separated tag list and `CLINE_LANGFUSE_METADATA` is either a JSON
+ * Operator-supplied trace dimensions. `SEKOKUVA_CA_LANGFUSE_TAGS` is a
+ * comma-separated tag list and `SEKOKUVA_CA_LANGFUSE_METADATA` is either a JSON
  * object or comma-separated `key=value` pairs. Both are merged under the
  * runtime's own attributes, so a benchmark harness can label every trace it
  * produces (for example `benchmark-run-1`) without touching call sites.
@@ -128,11 +128,11 @@ function dedupe(values: string[]): string[] {
 	return [...new Set(values)];
 }
 
-const LANGFUSE_DEBUG_ENV = "CLINE_DEBUG_LANGFUSE";
+const LANGFUSE_DEBUG_ENV = "SEKOKUVA_CA_DEBUG_LANGFUSE";
 /** Opt-in: trace non-Cline (BYOK) providers through direct credentials. */
-const LANGFUSE_ALL_PROVIDERS_ENV = "CLINE_LANGFUSE_ALL_PROVIDERS";
-const LANGFUSE_TAGS_ENV = "CLINE_LANGFUSE_TAGS";
-const LANGFUSE_METADATA_ENV = "CLINE_LANGFUSE_METADATA";
+const LANGFUSE_ALL_PROVIDERS_ENV = "SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS";
+const LANGFUSE_TAGS_ENV = "SEKOKUVA_CA_LANGFUSE_TAGS";
+const LANGFUSE_METADATA_ENV = "SEKOKUVA_CA_LANGFUSE_METADATA";
 /** Read by `LangfuseSpanProcessor` too; passed explicitly so it keys the runtime. */
 const LANGFUSE_ENVIRONMENT_ENV = "LANGFUSE_TRACING_ENVIRONMENT";
 
@@ -186,7 +186,7 @@ const TELEMETRY_DISABLED: AiSdkTelemetryDecision = { isEnabled: false };
  * checked on every stream. Direct exports own an isolated tracer provider.
  *
  * Third-party (BYOK) providers are traced only when the operator opts in with
- * `CLINE_LANGFUSE_ALL_PROVIDERS` and supplies direct `LANGFUSE_*` credentials.
+ * `SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS` and supplies direct `LANGFUSE_*` credentials.
  * They never ride the host relay, so BYOK prompts cannot reach a collector the
  * operator did not configure themselves.
  *
@@ -256,7 +256,7 @@ export async function resolveAiSdkTelemetry(
 	// Resolve the host tracer per call so remote-config replacement cannot
 	// leave a cached integration attached to a shut-down provider.
 	const integration = new LangfuseStreamTelemetry(relayTracer);
-	const recordContent = isEnvTruthy(process.env.CLINE_TRACE_RECORD_CONTENT);
+	const recordContent = isEnvTruthy(process.env.SEKOKUVA_CA_TRACE_RECORD_CONTENT);
 	return {
 		isEnabled: true,
 		integrations: integration,
@@ -267,7 +267,7 @@ export async function resolveAiSdkTelemetry(
 
 function readTraceSamplePercent(): number {
 	// Literal env access so bundlers can inline a build-time value.
-	const raw = process.env.CLINE_TRACE_SAMPLE_PERCENT?.trim();
+	const raw = process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT?.trim();
 	if (!raw) {
 		// Registering a traces exporter is the host's opt-in; default to
 		// everything and let the env (or the collector) reduce volume.

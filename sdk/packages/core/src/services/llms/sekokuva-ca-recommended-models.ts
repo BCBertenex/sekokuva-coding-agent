@@ -5,11 +5,11 @@ import {
 	VERCEL_OPENROUTER_MODEL_ID_ALIAS_RULES,
 } from "@sekokuva-ca/llms";
 import type {
-	ClineRecommendedModel,
-	ClineRecommendedModelsData,
+	SekoKuvaRecommendedModel,
+	SekoKuvaRecommendedModelsData,
 } from "@sekokuva-ca/shared";
 import {
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	getClineEnvironmentConfig,
 	type ProviderModel,
 	type ProviderModelFeaturedTier,
@@ -19,8 +19,8 @@ import { getLiveModelsCatalog } from "./provider-defaults";
 import type { ModelInfo } from "./provider-settings";
 
 export type {
-	ClineRecommendedModel,
-	ClineRecommendedModelsData,
+	SekoKuvaRecommendedModel,
+	SekoKuvaRecommendedModelsData,
 } from "@sekokuva-ca/shared";
 
 type ModelsCatalog = Record<string, Record<string, ModelInfo>>;
@@ -42,37 +42,37 @@ export interface FetchClineRecommendedModelsOptions {
 
 const DEFAULT_REQUEST_TIMEOUT_MS = 5_000;
 
-export const FALLBACK_CLINE_RECOMMENDED_MODELS: ClineRecommendedModelsData =
+export const FALLBACK_CLINE_RECOMMENDED_MODELS: SekoKuvaRecommendedModelsData =
 	resolveCatalogDisplayNames(
 		normalizeResponse(GENERATED_CLINE_RECOMMENDED_MODELS) ?? {
 			recommended: [],
 			free: [],
-			clinePass: [],
+			sekokuvaCaPass: [],
 		},
 		getGeneratedProviderModels(),
 	);
 
 function cloneRecommendedModels(
-	data: ClineRecommendedModelsData,
-): ClineRecommendedModelsData {
+	data: SekoKuvaRecommendedModelsData,
+): SekoKuvaRecommendedModelsData {
 	return {
 		recommended: data.recommended.map((model) => ({
 			...model,
 			tags: [...model.tags],
 		})),
 		free: data.free.map((model) => ({ ...model, tags: [...model.tags] })),
-		clinePass: data.clinePass.map((model) => ({
+		sekokuvaCaPass: data.sekokuvaCaPass.map((model) => ({
 			...model,
 			tags: [...model.tags],
 		})),
-		clineCloud: data.clineCloud?.map((model) => ({
+		sekokuvaCaCloud: data.sekokuvaCaCloud?.map((model) => ({
 			...model,
 			tags: [...model.tags],
 		})),
 	};
 }
 
-function normalizeModel(raw: unknown): ClineRecommendedModel | null {
+function normalizeModel(raw: unknown): SekoKuvaRecommendedModel | null {
 	if (!raw || typeof raw !== "object") return null;
 	const data = raw as Record<string, unknown>;
 	if (typeof data.id !== "string" || data.id.length === 0) return null;
@@ -89,31 +89,31 @@ function normalizeModel(raw: unknown): ClineRecommendedModel | null {
 	};
 }
 
-function normalizeResponse(raw: unknown): ClineRecommendedModelsData | null {
+function normalizeResponse(raw: unknown): SekoKuvaRecommendedModelsData | null {
 	if (!raw || typeof raw !== "object") return null;
 	const data = raw as Record<string, unknown>;
 	const recommendedRaw = Array.isArray(data.recommended)
 		? data.recommended
 		: [];
 	const freeRaw = Array.isArray(data.free) ? data.free : [];
-	const clinePassRaw = Array.isArray(data.clinePass) ? data.clinePass : [];
+	const sekokuvaCaPassRaw = Array.isArray(data.clinePass) ? data.clinePass : [];
 	const recommended = recommendedRaw
 		.map(normalizeModel)
-		.filter((model): model is ClineRecommendedModel => model !== null);
+		.filter((model): model is SekoKuvaRecommendedModel => model !== null);
 	const free = freeRaw
 		.map(normalizeModel)
-		.filter((model): model is ClineRecommendedModel => model !== null);
-	const clinePass = clinePassRaw
+		.filter((model): model is SekoKuvaRecommendedModel => model !== null);
+	const sekokuvaCaPass = sekokuvaCaPassRaw
 		.map(normalizeModel)
-		.filter((model): model is ClineRecommendedModel => model !== null);
-	const clineCloud = (Array.isArray(data.clineCloud) ? data.clineCloud : [])
+		.filter((model): model is SekoKuvaRecommendedModel => model !== null);
+	const sekokuvaCaCloud = (Array.isArray(data.clineCloud) ? data.clineCloud : [])
 		.map(normalizeModel)
-		.filter((model): model is ClineRecommendedModel => model !== null);
-	if (recommended.length === 0 && free.length === 0 && clinePass.length === 0) {
+		.filter((model): model is SekoKuvaRecommendedModel => model !== null);
+	if (recommended.length === 0 && free.length === 0 && sekokuvaCaPass.length === 0) {
 		return null;
 	}
 
-	return { recommended, free, clinePass, clineCloud };
+	return { recommended, free, sekokuvaCaPass, sekokuvaCaCloud };
 }
 
 function getConfiguredApiBaseUrl(
@@ -176,7 +176,7 @@ function catalogLookupIds(modelId: string): string[] {
 }
 
 function resolveEntryDisplayName(
-	entry: ClineRecommendedModel,
+	entry: SekoKuvaRecommendedModel,
 	catalogs: Array<Record<string, ModelInfo> | undefined>,
 ): string {
 	for (const catalog of catalogs) {
@@ -225,20 +225,20 @@ async function loadCatalogWithTimeout(
  * name, id slug.
  */
 async function resolveDisplayNames(
-	data: ClineRecommendedModelsData,
+	data: SekoKuvaRecommendedModelsData,
 	catalogLoader: () => Promise<ModelsCatalog>,
 	timeoutMs: number,
-): Promise<ClineRecommendedModelsData> {
+): Promise<SekoKuvaRecommendedModelsData> {
 	const catalog = await loadCatalogWithTimeout(catalogLoader, timeoutMs);
 	return resolveCatalogDisplayNames(data, catalog);
 }
 
 function resolveCatalogDisplayNames(
-	data: ClineRecommendedModelsData,
+	data: SekoKuvaRecommendedModelsData,
 	catalog: ModelsCatalog | undefined,
-): ClineRecommendedModelsData {
+): SekoKuvaRecommendedModelsData {
 	const withNames = (
-		models: ClineRecommendedModel[],
+		models: SekoKuvaRecommendedModel[],
 		catalogs: Array<Record<string, ModelInfo> | undefined>,
 	) =>
 		models.map((model) => ({
@@ -249,14 +249,14 @@ function resolveCatalogDisplayNames(
 	return {
 		recommended: withNames(data.recommended, [catalog?.openrouter]),
 		free: withNames(data.free, [catalog?.cline, catalog?.openrouter]),
-		clinePass: withNames(data.clinePass, [catalog?.["cline-pass"]]),
-		clineCloud: data.clineCloud && withNames(data.clineCloud, [catalog?.cline]),
+		sekokuvaCaPass: withNames(data.sekokuvaCaPass, [catalog?.["cline-pass"]]),
+		sekokuvaCaCloud: data.sekokuvaCaCloud && withNames(data.sekokuvaCaCloud, [catalog?.cline]),
 	};
 }
 
 export async function fetchClineRecommendedModels(
 	options: FetchClineRecommendedModelsOptions = {},
-): Promise<ClineRecommendedModelsData> {
+): Promise<SekoKuvaRecommendedModelsData> {
 	const timeoutMs = options.timeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS;
 	// The feed request and the catalog lookup share one deadline so a slow
 	// endpoint plus a cold catalog cannot stack two full timeout windows. An
@@ -296,10 +296,10 @@ export async function fetchClineRecommendedModels(
 const FEED_CACHE_TTL_MS = 5 * 60_000;
 
 let feedCache: {
-	data: ClineRecommendedModelsData;
+	data: SekoKuvaRecommendedModelsData;
 	expiresAt: number;
 } | null = null;
-let feedInFlight: Promise<ClineRecommendedModelsData> | null = null;
+let feedInFlight: Promise<SekoKuvaRecommendedModelsData> | null = null;
 let feedGeneration = 0;
 
 /**
@@ -312,7 +312,7 @@ let feedGeneration = 0;
  */
 export async function getCachedClineRecommendedModels(
 	options: FetchClineRecommendedModelsOptions = {},
-): Promise<ClineRecommendedModelsData> {
+): Promise<SekoKuvaRecommendedModelsData> {
 	if (feedCache && feedCache.expiresAt > Date.now()) {
 		return cloneRecommendedModels(feedCache.data);
 	}
@@ -347,7 +347,7 @@ export async function getCachedClineRecommendedModels(
  * async `getCachedClineRecommendedModels` path refreshes the cache, after
  * which peeks serve live data for the TTL.
  */
-export function peekClineRecommendedModels(): ClineRecommendedModelsData {
+export function peekClineRecommendedModels(): SekoKuvaRecommendedModelsData {
 	if (feedCache && feedCache.expiresAt > Date.now()) {
 		return cloneRecommendedModels(feedCache.data);
 	}
@@ -366,7 +366,7 @@ export async function resolveClineDefaultModelId(
 	return (
 		live.free[0]?.id ??
 		FALLBACK_CLINE_RECOMMENDED_MODELS.free[0]?.id ??
-		CLINE_DEFAULT_MODEL_ID
+		SEKOKUVA_CA_DEFAULT_MODEL_ID
 	);
 }
 
@@ -380,17 +380,17 @@ const FEATURED_TIER_BUCKETS: Record<
 	string,
 	Array<{
 		tier: ProviderModelFeaturedTier;
-		select: (data: ClineRecommendedModelsData) => ClineRecommendedModel[];
+		select: (data: SekoKuvaRecommendedModelsData) => SekoKuvaRecommendedModel[];
 	}>
 > = {
 	cline: [
 		{ tier: "recommended", select: (data) => data.recommended },
 		{ tier: "free", select: (data) => data.free },
 	],
-	// ClinePass surfaces its subscription models plus the free models (both
+	// SekoKuvaPass surfaces its subscription models plus the free models (both
 	// ride the same Cline API; free models bill $0 outside the quota).
 	"cline-pass": [
-		{ tier: "subscribed", select: (data) => data.clinePass },
+		{ tier: "subscribed", select: (data) => data.sekokuvaCaPass },
 		{ tier: "free", select: (data) => data.free },
 	],
 };
@@ -414,14 +414,14 @@ export function idSlug(modelId: string): string {
 export function applyClineFeaturedModels(
 	providerId: string,
 	models: ProviderModel[],
-	data: ClineRecommendedModelsData,
+	data: SekoKuvaRecommendedModelsData,
 ): ProviderModel[] {
 	const buckets = FEATURED_TIER_BUCKETS[providerId];
 	if (!buckets) {
 		return models;
 	}
 	type FeaturedMatch = {
-		entry: ClineRecommendedModel;
+		entry: SekoKuvaRecommendedModel;
 		tier: ProviderModelFeaturedTier;
 		rank: number;
 	};

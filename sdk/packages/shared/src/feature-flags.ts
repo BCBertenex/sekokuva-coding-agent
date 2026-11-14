@@ -1,12 +1,12 @@
 export const FeatureFlag = {
-	/** Enables ClinePass provider/model list exposure in supported clients. */
-	CLINE_PASS: "ext-cline-pass",
+	/** Enables SekoKuvaPass provider/model list exposure in supported clients. */
+	SEKOKUVA_CA_PASS: "ext-cline-pass",
 	/** Enables Cloud sessions in the Cline Code desktop app. */
 	CODE_CLOUD_AGENTS: "code-cloud-agents",
 	/** Shows the GitHub integration step in the desktop app */
 	CODE_ONBOARDING_GITHUB: "code-onboarding-github",
 	/** Enables Composio connectors for the signed-in Cline account. */
-	CLINE_COMPOSIO_BETA: "CLINE_COMPOSIO_BETA",
+	SEKOKUVA_CA_COMPOSIO_BETA: "SEKOKUVA_CA_COMPOSIO_BETA",
 	/** Tells new cloud session agents to verify visual changes with computer use. */
 	CLOUD_COMPUTER_USE: "cloud-computer-use",
 } as const;
@@ -73,10 +73,10 @@ export interface IFeatureFlagsProvider {
 export const FeatureFlagDefaultValue: Partial<
 	Record<FeatureFlag, FeatureFlagPayload | undefined>
 > = {
-	[FeatureFlag.CLINE_PASS]: false,
+	[FeatureFlag.SEKOKUVA_CA_PASS]: false,
 	[FeatureFlag.CODE_CLOUD_AGENTS]: false,
 	[FeatureFlag.CODE_ONBOARDING_GITHUB]: false,
-	[FeatureFlag.CLINE_COMPOSIO_BETA]: false,
+	[FeatureFlag.SEKOKUVA_CA_COMPOSIO_BETA]: false,
 	[FeatureFlag.CLOUD_COMPUTER_USE]: false,
 };
 

@@ -46,10 +46,10 @@ export {
 	isRetryableProviderError,
 } from "./providers/error-classification";
 export {
-	ClineFreeModelLimitError,
-	ClineNotSubscribedError,
-	ClineOrgIndividualInferenceSubscriptionError,
-	ClinePassLimitError,
+	SekoKuvaFreeModelLimitError,
+	SekoKuvaNotSubscribedError,
+	SekoKuvaOrgIndividualInferenceSubscriptionError,
+	SekoKuvaPassLimitError,
 	extractClineFreeModelLimitResetTime,
 	extractClinePassLimitMessage,
 	getClineNotSubscribedMessage,

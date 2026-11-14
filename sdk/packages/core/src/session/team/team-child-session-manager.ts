@@ -414,7 +414,7 @@ export class TeamChildSessionManager {
 	}
 
 	appendSubagentHookAudit(event: HookEventPayload): void {
-		const envPath = process.env.CLINE_HOOKS_LOG_PATH?.trim() || undefined;
+		const envPath = process.env.SEKOKUVA_CA_HOOKS_LOG_PATH?.trim() || undefined;
 		const logPath = envPath ?? join(ensureHookLogDir(), "hooks.jsonl");
 		appendFileSync(
 			logPath,

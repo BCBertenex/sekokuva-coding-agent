@@ -1,4 +1,4 @@
-import { CLINE_ACCOUNT_AUTH_ERROR_MESSAGE } from "@shared/ClineAccount"
+import { SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE } from "@shared/ClineAccount"
 import type { ClineMessage, TurnPhase } from "@shared/ExtensionMessage"
 import type { Mode } from "@shared/storage/types"
 import type { ClineAskResponse } from "@shared/WebviewMessage"
@@ -210,7 +210,7 @@ export class SdkFollowupCoordinator {
 			const errorMsg = error instanceof Error ? error.message : String(error)
 			const isClineAuth =
 				this.options.isClineManagedProviderActive() &&
-				(errorMsg.includes(CLINE_ACCOUNT_AUTH_ERROR_MESSAGE) ||
+				(errorMsg.includes(SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE) ||
 					errorMsg.toLowerCase().includes("missing api key") ||
 					errorMsg.toLowerCase().includes("unauthorized"))
 

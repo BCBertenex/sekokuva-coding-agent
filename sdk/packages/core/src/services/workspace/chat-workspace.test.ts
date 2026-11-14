@@ -31,16 +31,16 @@ describe("chat workspace", () => {
 	let isolatedDataDir: string;
 
 	beforeEach(async () => {
-		previousDataDir = process.env.CLINE_DATA_DIR;
+		previousDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
 		isolatedDataDir = await mkdtemp(join(tmpdir(), "chat-workspace-test-"));
-		process.env.CLINE_DATA_DIR = isolatedDataDir;
+		process.env.SEKOKUVA_CA_DATA_DIR = isolatedDataDir;
 	});
 
 	afterEach(async () => {
 		if (previousDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+			delete process.env.SEKOKUVA_CA_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = previousDataDir;
+			process.env.SEKOKUVA_CA_DATA_DIR = previousDataDir;
 		}
 		await rm(isolatedDataDir, { recursive: true, force: true });
 	});

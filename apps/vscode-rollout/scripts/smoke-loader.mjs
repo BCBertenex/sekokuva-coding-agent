@@ -7,7 +7,7 @@
  *   2. cached cohort "next"            -> activates next, scoped context paths
  *   3. the flag refresh caches a TWO-WAY assignment for the next window
  *      (rollout on promotes, rollout off demotes a cached "next")
- *   4. CLINE_BUNDLE_OVERRIDE / the cline.rollout.bundleOverride setting
+ *   4. SEKOKUVA_CA_BUNDLE_OVERRIDE / the cline.rollout.bundleOverride setting
  *      force a bundle in either direction
  *   5. next activation throws          -> disposes partial registrations, falls
  *                                         back to legacy, pins version, and
@@ -243,7 +243,7 @@ async function runScenario(
 
 	const previousEnv = {};
 	const scenarioEnv = {
-		CLINE_DIR: sandbox,
+		SEKOKUVA_CA_DIR: sandbox,
 		// A dev build leaves this lookup dynamic; production builds inline the
 		// real PostHog key. Either way, the smoke must exercise refreshCohort.
 		TELEMETRY_SERVICE_API_KEY: "smoke-posthog-project-key",
@@ -414,7 +414,7 @@ await runScenario(
 
 await runScenario(
 	"env override forces next",
-	{ env: { CLINE_BUNDLE_OVERRIDE: "next" } },
+	{ env: { SEKOKUVA_CA_BUNDLE_OVERRIDE: "next" } },
 	async ({ api }) => {
 		assert.deepEqual(api, { bundle: "next" });
 	},

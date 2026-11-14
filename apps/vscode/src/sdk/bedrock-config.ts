@@ -4,7 +4,7 @@
 // Both inference paths need this:
 //   - buildSdkProviderConfig() in sdk-api-handler.ts (standalone utility calls)
 //   - buildSessionConfig() in cline-session-factory.ts (main task loop, which
-//     hands a CoreSessionConfig.providerConfig to ClineCore)
+//     hands a CoreSessionConfig.providerConfig to SekoKuvaCore)
 //
 // Without it, the SDK gateway never receives the AWS region or authentication
 // mode, so a pasted Bedrock API key (awsBedrockApiKey + awsAuthentication

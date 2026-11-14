@@ -17,7 +17,7 @@ export interface OnboardingModel {
 /**
  * The fallback list of models available to new users during the onboarding flow.
  */
-export const CLINE_ONBOARDING_MODELS: OnboardingModel[] = [
+export const SEKOKUVA_CA_ONBOARDING_MODELS: OnboardingModel[] = [
 	{
 		group: "free",
 		id: "kwaipilot/kat-coder-pro",

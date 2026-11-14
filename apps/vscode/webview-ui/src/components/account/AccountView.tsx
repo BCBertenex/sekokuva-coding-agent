@@ -1,5 +1,5 @@
 import { resolveClineAppUrl } from "@sekokuva-ca/shared/browser"
-import type { UsageTransaction as ClineAccountUsageTransaction, PaymentTransaction } from "@shared/ClineAccount"
+import type { PaymentTransaction, UsageTransaction as SekoKuvaAccountUsageTransaction } from "@shared/ClineAccount"
 import { isClineInternalTester } from "@shared/internal/account"
 import type { UserOrganization } from "@shared/proto/cline/account"
 import { EmptyRequest } from "@shared/proto/cline/common"
@@ -38,7 +38,7 @@ type ClineAccountViewProps = {
 
 type CachedData = {
 	balance: number | null
-	usageData: ClineAccountUsageTransaction[]
+	usageData: SekoKuvaAccountUsageTransaction[]
 	paymentsData: PaymentTransaction[]
 	lastFetchTime: number
 }

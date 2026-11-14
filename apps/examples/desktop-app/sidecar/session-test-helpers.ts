@@ -52,13 +52,13 @@ const handoffOptInDataDirs: string[] = [];
 export function enableCloudHandoffGates(): void {
 	const dataDir = mkdtempSync(join(tmpdir(), "cline-handoff-optin-"));
 	handoffOptInDataDirs.push(dataDir);
-	process.env.CLINE_DATA_DIR = dataDir;
-	process.env.CLINE_CODE_CLOUD_AGENTS = "1";
+	process.env.SEKOKUVA_CA_DATA_DIR = dataDir;
+	process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "1";
 }
 
 export function cleanupCloudHandoffGates(): void {
-	delete process.env.CLINE_CODE_CLOUD_AGENTS;
-	delete process.env.CLINE_DATA_DIR;
+	delete process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS;
+	delete process.env.SEKOKUVA_CA_DATA_DIR;
 	for (const dataDir of handoffOptInDataDirs.splice(0)) {
 		rmSync(dataDir, { recursive: true, force: true });
 	}

@@ -90,7 +90,7 @@ export function getInstallationInfo(currentVersion: string): InstallationInfo {
 	const tag = getNpmTag(currentVersion);
 	try {
 		const scriptPath = realpathSync(
-			process.env.CLINE_WRAPPER_PATH || process.argv[1] || "",
+			process.env.SEKOKUVA_CA_WRAPPER_PATH || process.argv[1] || "",
 		).replace(/\\/g, "/");
 
 		if (scriptPath.includes("/.npm/_npx") || scriptPath.includes("/npm/_npx")) {
@@ -306,11 +306,11 @@ const CLIENT_COUNT_EXIT_TIMEOUT_MS = 3_000;
  * to the hub — at that point nothing is running that the swap could hurt.
  * The next launch picks up the new binary and a fresh hub.
  *
- * Skipped for npx, dev, unknown installs. Disable with CLINE_NO_AUTO_UPDATE=1.
+ * Skipped for npx, dev, unknown installs. Disable with SEKOKUVA_CA_NO_AUTO_UPDATE=1.
  */
 export function autoUpdateOnStartup(): void {
 	if (process.env.IS_DEV === "true") return;
-	if (process.env.CLINE_NO_AUTO_UPDATE === "1") return;
+	if (process.env.SEKOKUVA_CA_NO_AUTO_UPDATE === "1") return;
 	if (!isAutoUpdateEnabledGlobally()) return;
 
 	const { packageName, packageManager, updateCommand } =

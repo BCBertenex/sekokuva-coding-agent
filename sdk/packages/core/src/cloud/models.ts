@@ -78,8 +78,8 @@ export async function loadCloudModels(
 		recommendedEnvelope?.data && typeof recommendedEnvelope.data === "object"
 			? (recommendedEnvelope.data as Record<string, unknown>)
 			: recommendedEnvelope;
-	const pass = readCloudModels(recommended?.clinePass, "cline-pass");
-	const cloud = readCloudModels(recommended?.clineCloud, "cline-cloud");
+	const pass = readCloudModels(recommended?.sekokuvaCaPass, "cline-pass");
+	const cloud = readCloudModels(recommended?.sekokuvaCaCloud, "cline-cloud");
 	const seen = new Set<string>();
 	return [
 		...(options.isOrganizationSession ? [] : pass),

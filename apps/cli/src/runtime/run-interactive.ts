@@ -154,16 +154,16 @@ export async function resumeInteractiveSession(
 	>,
 	sessionId: string,
 ) {
-	const previousAgentResume = process.env.CLINE_HOOK_AGENT_RESUME;
-	process.env.CLINE_HOOK_AGENT_RESUME = "1";
+	const previousAgentResume = process.env.SEKOKUVA_CA_HOOK_AGENT_RESUME;
+	process.env.SEKOKUVA_CA_HOOK_AGENT_RESUME = "1";
 	let messages: Awaited<ReturnType<typeof sessionRuntime.resumeSession>>;
 	try {
 		messages = await sessionRuntime.resumeSession(sessionId);
 	} catch (error) {
 		if (previousAgentResume === undefined) {
-			delete process.env.CLINE_HOOK_AGENT_RESUME;
+			delete process.env.SEKOKUVA_CA_HOOK_AGENT_RESUME;
 		} else {
-			process.env.CLINE_HOOK_AGENT_RESUME = previousAgentResume;
+			process.env.SEKOKUVA_CA_HOOK_AGENT_RESUME = previousAgentResume;
 		}
 		throw error;
 	}

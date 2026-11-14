@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { HubEventEnvelope } from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { ClineAccountService } from "../../account";
+import { SekoKuvaAccountService } from "../../account";
 import { getProviderAuthHandler } from "../../auth/provider-auth-registry";
 import { CloudSessionError } from "../../cloud/api";
 import type { CloudSessionController } from "../../cloud/controller";
@@ -1042,7 +1042,7 @@ describe("hub cloud credentials", () => {
 		],
 		[undefined, "https://environment.example"],
 	])("discovers cloud sessions with provider base %s", async (baseUrl, apiBaseUrl) => {
-		vi.stubEnv("CLINE_API_BASE_URL", "https://environment.example");
+		vi.stubEnv("SEKOKUVA_CA_API_BASE_URL", "https://environment.example");
 		const settings: NonNullable<
 			ReturnType<ProviderSettingsManager["getProviderSettings"]>
 		> = { provider: "cline", apiKey: "key", baseUrl };
@@ -1087,7 +1087,7 @@ describe("hub cloud credentials", () => {
 			"resolveProviderApiKey",
 		).mockResolvedValue(null);
 		const fetch = vi
-			.spyOn(ClineAccountService.prototype, "fetchUserOrganizations")
+			.spyOn(SekoKuvaAccountService.prototype, "fetchUserOrganizations")
 			.mockResolvedValueOnce([
 				{ organizationId: "org-one", active: true },
 			] as never);
@@ -1120,7 +1120,7 @@ describe("hub cloud credentials", () => {
 			"resolveProviderApiKey",
 		).mockResolvedValue(null);
 		const fetch = vi
-			.spyOn(ClineAccountService.prototype, "fetchUserOrganizations")
+			.spyOn(SekoKuvaAccountService.prototype, "fetchUserOrganizations")
 			.mockResolvedValueOnce([
 				{ organizationId: "org-one", active: true },
 			] as never)

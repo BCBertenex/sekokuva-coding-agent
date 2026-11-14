@@ -27,12 +27,12 @@ vi.mock("@sekokuva-ca/llms", () => ({
  * tests can drive the signed-in / signed-out cases without a real account.
  */
 const beta = vi.hoisted(() => ({ enabled: true }));
-vi.mock("../../services/feature-flags/cline-account-feature-flags", () => ({
+vi.mock("../../services/feature-flags/sekokuva-ca-account-feature-flags", () => ({
 	isClineAccountFeatureEnabled: async () => beta.enabled,
 }));
 
 const auth = vi.hoisted(() => ({
-	token: "cline_token_123" as string | undefined,
+	token: "sekokuva_ca_token_123" as string | undefined,
 	accountId: "account-a" as string | undefined,
 	baseUrl: "https://api.cline.bot",
 	forbidLocal: false,
@@ -84,7 +84,7 @@ type RegisteredTool = {
 	execute: (input: unknown, context?: unknown) => Promise<unknown>;
 };
 
-const originalDataDir = process.env.CLINE_DATA_DIR;
+const originalDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
 let tempDataDir: string;
 
 function writeState(state: unknown): void {
@@ -116,8 +116,8 @@ async function setupTools(
 beforeEach(() => {
 	beta.enabled = true;
 	tempDataDir = mkdtempSync(join(tmpdir(), "composio-ext-test-"));
-	process.env.CLINE_DATA_DIR = tempDataDir;
-	auth.token = "cline_token_123";
+	process.env.SEKOKUVA_CA_DATA_DIR = tempDataDir;
+	auth.token = "sekokuva_ca_token_123";
 	auth.accountId = "account-a";
 	auth.baseUrl = "https://api.cline.bot";
 	auth.forbidLocal = false;
@@ -134,9 +134,9 @@ beforeEach(() => {
 
 afterEach(() => {
 	if (originalDataDir === undefined) {
-		delete process.env.CLINE_DATA_DIR;
+		delete process.env.SEKOKUVA_CA_DATA_DIR;
 	} else {
-		process.env.CLINE_DATA_DIR = originalDataDir;
+		process.env.SEKOKUVA_CA_DATA_DIR = originalDataDir;
 	}
 	vi.unstubAllGlobals();
 	rmSync(tempDataDir, { recursive: true, force: true });
@@ -404,7 +404,7 @@ describe("createComposioToolsExtension", () => {
 		for (const [, init] of fetchMock.mock.calls) {
 			expect(init?.method).toBe("POST");
 			expect(new Headers(init?.headers).get("authorization")).toBe(
-				hostTransport ? null : "Bearer cline_token_123",
+				hostTransport ? null : "Bearer sekokuva_ca_token_123",
 			);
 		}
 		for (const [index, step] of steps.entries()) {
@@ -443,7 +443,7 @@ describe("createComposioToolsExtension", () => {
 			"https://api.cline.bot/api/v1/connectors/meta-tools/COMPOSIO_MANAGE_CONNECTIONS/execute",
 		);
 		expect(new Headers(init.headers).get("authorization")).toBe(
-			"Bearer cline_token_123",
+			"Bearer sekokuva_ca_token_123",
 		);
 		expect(JSON.parse(init.body as string)).toEqual({
 			sessionId: "trs_1",

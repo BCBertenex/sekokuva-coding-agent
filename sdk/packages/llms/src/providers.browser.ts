@@ -1,8 +1,8 @@
 export {
-	ClineFreeModelLimitError,
-	ClineNotSubscribedError,
-	ClineOrgIndividualInferenceSubscriptionError,
-	ClinePassLimitError,
+	SekoKuvaFreeModelLimitError,
+	SekoKuvaNotSubscribedError,
+	SekoKuvaOrgIndividualInferenceSubscriptionError,
+	SekoKuvaPassLimitError,
 	extractClineFreeModelLimitResetTime,
 	extractClinePassLimitMessage,
 	getClineNotSubscribedMessage,

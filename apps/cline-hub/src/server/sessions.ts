@@ -1,6 +1,6 @@
 import process from "node:process";
 import {
-	type ClineCoreStartInput,
+	type SekoKuvaCoreStartInput,
 	type SessionRecord,
 	SessionSource,
 } from "@sekokuva-ca/core";
@@ -25,7 +25,7 @@ import { asNumber, asString } from "./utils";
 
 function toRuntimeReasoningOptions(
 	reasonLevel?: WebviewReasonLevel,
-): Pick<ClineCoreStartInput["config"], "reasoningEffort" | "thinking"> {
+): Pick<SekoKuvaCoreStartInput["config"], "reasoningEffort" | "thinking"> {
 	if (reasonLevel === undefined) return {};
 	if (reasonLevel === "none") return { thinking: false };
 	return { thinking: true, reasoningEffort: reasonLevel };
@@ -49,14 +49,14 @@ export function resolveLaunchContext(
 		override?.providerId ??
 		ctx.lastSessionContext?.providerId ??
 		providerSettingsManager.getLastUsedProviderSettings()?.provider ??
-		process.env.CLINE_PROVIDER?.trim() ??
+		process.env.SEKOKUVA_CA_PROVIDER?.trim() ??
 		"";
 	const modelId =
 		override?.model ??
 		override?.modelId ??
 		ctx.lastSessionContext?.modelId ??
 		providerSettingsManager.getLastUsedProviderSettings()?.model ??
-		process.env.CLINE_MODEL?.trim() ??
+		process.env.SEKOKUVA_CA_MODEL?.trim() ??
 		"";
 	const root =
 		override?.workspaceRoot ??
@@ -64,7 +64,7 @@ export function resolveLaunchContext(
 		workspaceRoot;
 	if (!providerId || !modelId) {
 		throw new Error(
-			"No provider/model available. Start a session in another Cline client first, or set CLINE_PROVIDER and CLINE_MODEL.",
+			"No provider/model available. Start a session in another Cline client first, or set SEKOKUVA_CA_PROVIDER and SEKOKUVA_CA_MODEL.",
 		);
 	}
 	return {
@@ -91,7 +91,7 @@ function buildSessionStartInput(
 		sessionMetadata?: Record<string, unknown>;
 		initialMessages?: MessageWithMetadata[];
 	},
-): ClineCoreStartInput {
+): SekoKuvaCoreStartInput {
 	const mode = options?.mode === "plan" ? "plan" : "act";
 	const reasoningOptions = toRuntimeReasoningOptions(options?.reasonLevel);
 	return {

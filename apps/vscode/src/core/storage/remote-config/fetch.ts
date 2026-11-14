@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { Controller } from "@/core/controller"
-import { CLINE_PASS_PROVIDER_ID } from "@/core/controller/models/handleClinePassProviderSelection"
+import { SEKOKUVA_CA_PASS_PROVIDER_ID } from "@/core/controller/models/handleClinePassProviderSelection"
 import { ClineAccountService } from "@/services/account/ClineAccountService"
 import { buildBasicClineHeaders } from "@/services/EnvUtils"
 import { getAxiosSettings } from "@/shared/net"
@@ -8,7 +8,7 @@ import { Logger } from "@/shared/services/Logger"
 import { ConfiguredAPIKeys } from "@/shared/storage/state-keys"
 import { ClineEnv } from "../../../config"
 import { AuthService } from "../../../services/auth/AuthService"
-import { CLINE_API_ENDPOINT } from "../../../shared/cline/api"
+import { SEKOKUVA_CA_API_ENDPOINT } from "../../../shared/cline/api"
 import { APIKeySchema, type APIKeySettings, RemoteConfig, RemoteConfigSchema } from "../../../shared/remote-config/schema"
 import { deleteRemoteConfigFromCache, readRemoteConfigFromCache, writeRemoteConfigToCache } from "../disk"
 import { applyRemoteConfig, clearRemoteConfig, isRemoteConfigEnabled } from "./utils"
@@ -101,7 +101,7 @@ async function fetchRemoteConfigForOrganization(organizationId: string): Promise
 	try {
 		// Fetch config data using helper
 		const configData = await makeAuthenticatedRequest<{ value: string; enabled: boolean }>(
-			CLINE_API_ENDPOINT.REMOTE_CONFIG,
+			SEKOKUVA_CA_API_ENDPOINT.REMOTE_CONFIG,
 			organizationId,
 		)
 
@@ -148,7 +148,10 @@ async function fetchRemoteConfigForOrganization(organizationId: string): Promise
 async function fetchApiKeysForOrganization(organizationId: string): Promise<APIKeySettings> {
 	try {
 		// Fetch API keys string using helper
-		const response = await makeAuthenticatedRequest<{ providerApiKeys: string }>(CLINE_API_ENDPOINT.API_KEYS, organizationId)
+		const response = await makeAuthenticatedRequest<{ providerApiKeys: string }>(
+			SEKOKUVA_CA_API_ENDPOINT.API_KEYS,
+			organizationId,
+		)
 
 		// Parse and return API keys
 		return parseApiKeys(response?.providerApiKeys)
@@ -207,8 +210,8 @@ function isClinePassSelected(controller: Controller): boolean {
 	const apiConfiguration = controller.stateManager.getApiConfiguration()
 
 	return (
-		apiConfiguration.planModeApiProvider === CLINE_PASS_PROVIDER_ID ||
-		apiConfiguration.actModeApiProvider === CLINE_PASS_PROVIDER_ID
+		apiConfiguration.planModeApiProvider === SEKOKUVA_CA_PASS_PROVIDER_ID ||
+		apiConfiguration.actModeApiProvider === SEKOKUVA_CA_PASS_PROVIDER_ID
 	)
 }
 

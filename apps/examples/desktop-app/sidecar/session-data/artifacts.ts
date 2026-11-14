@@ -5,10 +5,10 @@ import type { JsonRecord } from "../types";
 import { parseF64Value, parseU64Value } from "./common";
 
 function resolveGlobalHookLogPath(): string {
-	const envPath = process.env.CLINE_HOOKS_LOG_PATH?.trim();
+	const envPath = process.env.SEKOKUVA_CA_HOOKS_LOG_PATH?.trim();
 	if (envPath) return envPath;
 	const dataDir =
-		process.env.CLINE_DATA_DIR?.trim() ||
+		process.env.SEKOKUVA_CA_DATA_DIR?.trim() ||
 		join(process.env.HOME ?? process.env.USERPROFILE ?? "", ".cline", "data");
 	return join(dataDir, "logs", "hooks.jsonl");
 }

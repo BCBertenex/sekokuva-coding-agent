@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import {
-	type ClineAccountOperations,
+	type SekoKuvaAccountOperations,
 	executeClineAccountAction,
 	RpcClineAccountService,
 } from "./rpc";
 
 describe("executeClineAccountAction", () => {
 	it("dispatches fetchMe", async () => {
-		const service: ClineAccountOperations = {
+		const service: SekoKuvaAccountOperations = {
 			fetchMe: vi.fn(async () => ({
 				id: "u1",
 				email: "user1@example.com",
@@ -31,7 +31,7 @@ describe("executeClineAccountAction", () => {
 		};
 
 		const result = await executeClineAccountAction(
-			{ action: "clineAccount", operation: "fetchMe" },
+			{ action: "sekokuvaCaAccount", operation: "fetchMe" },
 			service,
 		);
 		expect(service.fetchMe).toHaveBeenCalledTimes(1);
@@ -39,11 +39,11 @@ describe("executeClineAccountAction", () => {
 	});
 
 	it("dispatches fetchCurrentUserPlan", async () => {
-		const plan = { plan: { displayName: "ClinePass Monthly" } };
+		const plan = { plan: { displayName: "SekoKuvaPass Monthly" } };
 		const fetchCurrentUserPlan = vi.fn(async () => plan);
 		const result = await executeClineAccountAction(
-			{ action: "clineAccount", operation: "fetchCurrentUserPlan" },
-			{ fetchCurrentUserPlan } as unknown as ClineAccountOperations,
+			{ action: "sekokuvaCaAccount", operation: "fetchCurrentUserPlan" },
+			{ fetchCurrentUserPlan } as unknown as SekoKuvaAccountOperations,
 		);
 		expect(fetchCurrentUserPlan).toHaveBeenCalledTimes(1);
 		expect(result).toBe(plan);
@@ -58,7 +58,7 @@ describe("RpcClineAccountService", () => {
 				operation: string;
 			};
 			expect(parsed).toEqual({
-				action: "clineAccount",
+				action: "sekokuvaCaAccount",
 				operation: "fetchMe",
 			});
 			return {

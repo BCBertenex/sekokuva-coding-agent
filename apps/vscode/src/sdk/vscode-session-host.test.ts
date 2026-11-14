@@ -1,4 +1,4 @@
-import { type ClineCoreStartInput, type ITelemetryService, toClineCoreStartInput } from "@sekokuva-ca/core"
+import { type ITelemetryService, type SekoKuvaCoreStartInput, toClineCoreStartInput } from "@sekokuva-ca/core"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 const mockClineCoreCreate = vi.hoisted(() => vi.fn())
@@ -7,7 +7,7 @@ const mockInnerStart = vi.hoisted(() => vi.fn())
 
 vi.mock("@sekokuva-ca/core", async () => {
 	const actual = await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core")
-	return { ...actual, ClineCore: { create: mockClineCoreCreate } }
+	return { ...actual, SekoKuvaCore: { create: mockClineCoreCreate } }
 })
 vi.mock("@/services/logging/distinctId", () => ({ getDistinctId: () => "distinct-id" }))
 vi.mock("@/core/storage/StateManager", () => ({
@@ -18,7 +18,7 @@ vi.mock("./vscode-runtime-builder", () => ({ createVscodeExtraTools: mockCreateV
 import { VscodeGitTelemetry } from "./git-telemetry"
 import { VscodeSessionHost } from "./vscode-session-host"
 
-const gitStartInput: ClineCoreStartInput = {
+const gitStartInput: SekoKuvaCoreStartInput = {
 	config: {
 		sessionId: "git-task",
 		cwd: "/workspace",
@@ -80,7 +80,7 @@ describe("VscodeSessionHost telemetry wiring", () => {
 			telemetry,
 			getRemoteConfigIntegration: () =>
 				({
-					applyToStartSessionInput: (input: ClineCoreStartInput) => ({
+					applyToStartSessionInput: (input: SekoKuvaCoreStartInput) => ({
 						...input,
 						config: { ...input.config, telemetry: remoteTelemetry },
 					}),
@@ -114,7 +114,7 @@ describe("VscodeSessionHost telemetry wiring", () => {
 		const capture = vi.spyOn(telemetry, "capture")
 		const dispose = vi.spyOn(VscodeGitTelemetry.prototype, "dispose")
 		const actualId = requestedId?.trim() ?? "core-generated-task"
-		const input: ClineCoreStartInput = {
+		const input: SekoKuvaCoreStartInput = {
 			initialMessages: [{ id: "previous", role: "user", content: [{ type: "text", text: "previous turn" }] }],
 			config: {
 				...gitStartInput.config,
@@ -122,19 +122,19 @@ describe("VscodeSessionHost telemetry wiring", () => {
 				extensions: [{ name: "existing-extension", manifest: { capabilities: [] }, setup: vi.fn() }],
 			},
 		}
-		let preparedConfig: ClineCoreStartInput["config"] | undefined
-		const checkPrepared = (prepared: ClineCoreStartInput) => {
+		let preparedConfig: SekoKuvaCoreStartInput["config"] | undefined
+		const checkPrepared = (prepared: SekoKuvaCoreStartInput) => {
 			expect(prepared.config.sessionId).toBe(requestedId)
 			expect(prepared.initialMessages).toBe(input.initialMessages)
 			expect(prepared.config.extensions).toEqual(input.config.extensions)
 			preparedConfig = prepared.config
 		}
 		mockClineCoreCreate.mockResolvedValue({
-			start: async (start: ClineCoreStartInput) => {
+			start: async (start: SekoKuvaCoreStartInput) => {
 				checkPrepared(start)
 				return { sessionId: actualId }
 			},
-			restore: async (restore: { start: ClineCoreStartInput }) => {
+			restore: async (restore: { start: SekoKuvaCoreStartInput }) => {
 				checkPrepared(restore.start)
 				return { sessionId: actualId, startResult: { sessionId: actualId } }
 			},
@@ -175,7 +175,7 @@ describe("VscodeSessionHost telemetry wiring", () => {
 		const releaseFirst = Promise.withResolvers<void>()
 		const configure = vi.spyOn(VscodeGitTelemetry.prototype, "configure")
 		const dispose = vi.spyOn(VscodeGitTelemetry.prototype, "dispose")
-		mockInnerStart.mockImplementation(async (input: ClineCoreStartInput) => {
+		mockInnerStart.mockImplementation(async (input: SekoKuvaCoreStartInput) => {
 			if (input.config.modelId === "first") {
 				firstPrepared.resolve()
 				await releaseFirst.promise
@@ -276,7 +276,7 @@ describe("VscodeSessionHost telemetry wiring", () => {
 			getRemoteConfigIntegration: () => {
 				events.push("select")
 				return {
-					applyToStartSessionInput: (input: ClineCoreStartInput) => {
+					applyToStartSessionInput: (input: SekoKuvaCoreStartInput) => {
 						events.push("apply")
 						return { ...input, config: { ...input.config, extraTools: [{ name: "remote-tool" }] } }
 					},
@@ -289,7 +289,7 @@ describe("VscodeSessionHost telemetry wiring", () => {
 		const prepared =
 			method === "start"
 				? mockInnerStart.mock.calls[0][0]
-				: (restore.mock.calls[0][0] as { start: ClineCoreStartInput }).start
+				: (restore.mock.calls[0][0] as { start: SekoKuvaCoreStartInput }).start
 		expect(prepared.source).toBe("vscode")
 		expect(prepared.config.extraTools).toEqual([{ name: "remote-tool" }, { name: "vscode-tool" }])
 		expect(prepared.localRuntime.configExtensions).not.toContain("hooks")

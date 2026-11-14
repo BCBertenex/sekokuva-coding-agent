@@ -83,13 +83,13 @@ vi.mock("@shared/services/Logger", () => ({
 // ---------------------------------------------------------------------------
 
 let tempDir: string
-const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH
-const previousDataDir = process.env.CLINE_DATA_DIR
+const previousGlobalSettingsPath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH
+const previousDataDir = process.env.SEKOKUVA_CA_DATA_DIR
 
 beforeEach(() => {
 	tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "cline-session-factory-"))
-	process.env.CLINE_DATA_DIR = tempDir
-	process.env.CLINE_GLOBAL_SETTINGS_PATH = path.join(tempDir, "global-settings.json")
+	process.env.SEKOKUVA_CA_DATA_DIR = tempDir
+	process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = path.join(tempDir, "global-settings.json")
 	vi.clearAllMocks()
 	LlmsModels.resetRegistry()
 	mocks.stateManager.getApiConfiguration.mockReturnValue({
@@ -112,8 +112,8 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-	process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath
-	process.env.CLINE_DATA_DIR = previousDataDir
+	process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath
+	process.env.SEKOKUVA_CA_DATA_DIR = previousDataDir
 	fs.rmSync(tempDir, { recursive: true, force: true })
 })
 
@@ -1609,7 +1609,7 @@ describe("buildSessionConfig", () => {
 	})
 
 	it("uses the configured SDK compaction strategy when auto condense is enabled", async () => {
-		writeJson(process.env.CLINE_GLOBAL_SETTINGS_PATH!, { compactionStrategy: "basic" })
+		writeJson(process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH!, { compactionStrategy: "basic" })
 		mocks.stateManager.getGlobalSettingsKey.mockImplementation((key: string) => {
 			if (key === "useAutoCondense") {
 				return true
@@ -1629,7 +1629,7 @@ describe("buildSessionConfig", () => {
 	})
 
 	it("falls back to agentic SDK compaction for an invalid stored strategy", async () => {
-		writeJson(process.env.CLINE_GLOBAL_SETTINGS_PATH!, { compactionStrategy: "invalid" })
+		writeJson(process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH!, { compactionStrategy: "invalid" })
 		mocks.stateManager.getGlobalSettingsKey.mockImplementation((key: string) => {
 			if (key === "useAutoCondense") {
 				return true

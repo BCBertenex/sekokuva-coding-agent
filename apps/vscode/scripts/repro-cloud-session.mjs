@@ -1,13 +1,13 @@
-const accessToken = process.env.CLINE_OAUTH_TOKEN?.trim()
+const accessToken = process.env.SEKOKUVA_CA_OAUTH_TOKEN?.trim()
 if (!accessToken) {
-	throw new Error("Set CLINE_OAUTH_TOKEN to a Cline OAuth access token.")
+	throw new Error("Set SEKOKUVA_CA_OAUTH_TOKEN to a Cline OAuth access token.")
 }
 
-const apiBaseUrl = (process.env.CLINE_API_BASE_URL ?? "https://api.cline.bot").replace(/\/+$/, "")
-const repositoryUrl = process.env.CLINE_REPO_URL ?? "https://github.com/cline/cline"
-const branch = process.env.CLINE_BRANCH
-const modelId = process.env.CLINE_MODEL_ID ?? "openai/gpt-5.6-sol"
-const organizationId = process.env.CLINE_ORGANIZATION_ID
+const apiBaseUrl = (process.env.SEKOKUVA_CA_API_BASE_URL ?? "https://api.cline.bot").replace(/\/+$/, "")
+const repositoryUrl = process.env.SEKOKUVA_CA_REPO_URL ?? "https://github.com/cline/cline"
+const branch = process.env.SEKOKUVA_CA_BRANCH
+const modelId = process.env.SEKOKUVA_CA_MODEL_ID ?? "openai/gpt-5.6-sol"
+const organizationId = process.env.SEKOKUVA_CA_ORGANIZATION_ID
 
 async function request(path, init = {}) {
 	const response = await fetch(`${apiBaseUrl}${path}`, {

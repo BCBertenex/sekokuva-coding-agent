@@ -22,7 +22,7 @@ import {
 } from "node:path";
 import { promisify } from "node:util";
 import type {
-	ClineAccountActionRequest,
+	SekoKuvaAccountActionRequest,
 	CoreSettingsSnapshot,
 	ProviderCapability,
 	ProviderClient,
@@ -33,8 +33,8 @@ import type {
 	SaveProviderSettingsActionRequest,
 } from "@sekokuva-ca/core";
 import {
-	ClineAccountService,
-	type ClineAccountUser,
+	SekoKuvaAccountService,
+	type SekoKuvaAccountUser,
 	clearAccountTelemetryIdentity,
 	createConfiguredStreamingTranscriptionSession,
 	createHubMcpApi,
@@ -70,7 +70,7 @@ import {
 import { CloudSessionApi } from "@sekokuva-ca/core/cloud";
 import { resolveAudioTranscriptionRoute } from "@sekokuva-ca/llms";
 import {
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	formatSessionSearchPreview,
 	formatSessionSearchTitle,
 	getClineEnvironmentConfig,
@@ -83,7 +83,7 @@ import { readFileSyncStrippingUtf8Bom } from "@sekokuva-ca/shared/node";
 import { resolveClineDir } from "@sekokuva-ca/shared/storage";
 import { z } from "zod";
 import packageJson from "../package.json";
-import { CLINE_ACCOUNT_NOT_AUTHENTICATED_RESULT } from "../webview/lib/cline-account-state";
+import { SEKOKUVA_CA_ACCOUNT_NOT_AUTHENTICATED_RESULT } from "../webview/lib/cline-account-state";
 import { MAX_RECORDED_AUDIO_BYTES } from "../webview/lib/voice-input-limits";
 import { resolveDesktopTelemetryUser } from "./client-context";
 import {
@@ -512,7 +512,7 @@ function syncAccountContextFromResult(
 	result: unknown,
 ): void {
 	if (operation === "fetchMe") {
-		const user = result as ClineAccountUser | undefined;
+		const user = result as SekoKuvaAccountUser | undefined;
 		if (user?.id) {
 			const identity = resolveClineAccountTelemetryIdentity(user);
 			ctx.telemetryUser = resolveDesktopTelemetryUser({
@@ -967,7 +967,7 @@ async function listGitBranches(
 	return { current, branches };
 }
 
-/** Where task worktrees live; honors `CLINE_DIR` like the rest of the Cline dir. */
+/** Where task worktrees live; honors `SEKOKUVA_CA_DIR` like the rest of the Cline dir. */
 function taskWorktreesRoot(): string {
 	return join(resolveClineDir(), "worktrees");
 }
@@ -1365,7 +1365,7 @@ async function handleRoutineScheduleCommand(
 			prompt,
 			modelSelection: {
 				providerId: asTrimmedString(args?.provider) ?? "cline",
-				modelId: asTrimmedString(args?.model) ?? CLINE_DEFAULT_MODEL_ID,
+				modelId: asTrimmedString(args?.model) ?? SEKOKUVA_CA_DEFAULT_MODEL_ID,
 			},
 			mode: readHubScheduleMode(args, "yolo"),
 			workspaceRoot,
@@ -1399,7 +1399,7 @@ async function handleRoutineScheduleCommand(
 			prompt,
 			modelSelection: {
 				providerId: asTrimmedString(args?.provider) ?? "cline",
-				modelId: asTrimmedString(args?.model) ?? CLINE_DEFAULT_MODEL_ID,
+				modelId: asTrimmedString(args?.model) ?? SEKOKUVA_CA_DEFAULT_MODEL_ID,
 			},
 			...(mode === undefined ? {} : { mode }),
 			workspaceRoot,
@@ -2705,7 +2705,7 @@ export async function handleCommand(
 		// the caller sends no selection, use the app default like other
 		// server-started sessions do.
 		const provider = asTrimmedString(args?.provider) ?? "cline";
-		const model = asTrimmedString(args?.model) ?? CLINE_DEFAULT_MODEL_ID;
+		const model = asTrimmedString(args?.model) ?? SEKOKUVA_CA_DEFAULT_MODEL_ID;
 		const results = await importer.importMany(
 			requests,
 			(result, index) => {
@@ -2959,16 +2959,16 @@ export async function handleCommand(
 			// at its source in `save_provider_settings`; this catches the rest
 			// so a stale account never keeps serving its rollout cohort.
 			syncSignedOutAccountContext(ctx);
-			return CLINE_ACCOUNT_NOT_AUTHENTICATED_RESULT;
+			return SEKOKUVA_CA_ACCOUNT_NOT_AUTHENTICATED_RESULT;
 		}
 		const settings = manager.getProviderSettings("cline");
-		const accountService = new ClineAccountService({
+		const accountService = new SekoKuvaAccountService({
 			apiBaseUrl:
 				settings?.baseUrl?.trim() || getClineEnvironmentConfig().apiBaseUrl,
 			getAuthToken: async () => authToken,
 		});
 		const result = await executeClineAccountAction(
-			args as ClineAccountActionRequest,
+			args as SekoKuvaAccountActionRequest,
 			accountService,
 		);
 		if (operation === "switchAccount") {
@@ -2996,7 +2996,7 @@ export async function handleCommand(
 
 		const authToken = await resolveFreshClineAuthToken(manager, ctx);
 		if (!authToken) {
-			return CLINE_ACCOUNT_NOT_AUTHENTICATED_RESULT;
+			return SEKOKUVA_CA_ACCOUNT_NOT_AUTHENTICATED_RESULT;
 		}
 		const settings = manager.getProviderSettings("cline");
 		const environment = getClineEnvironmentConfig();
@@ -3227,14 +3227,14 @@ export async function handleCommand(
 	}
 	if (command === "save_provider_settings") {
 		const providers = createHubProvidersApi(await ensureSharedHubClient(ctx));
-		const { clineCredentialsChanged, ...saved } = await providers.saveSettings({
+		const { sekokuvaCaCredentialsChanged, ...saved } = await providers.saveSettings({
 			...readProviderSettingsUpdate(args),
 			providerId: String(args?.provider ?? "").trim(),
 			enabled: typeof args?.enabled === "boolean" ? args.enabled : undefined,
 			apiKey: typeof args?.api_key === "string" ? args.api_key : undefined,
 			baseUrl: typeof args?.base_url === "string" ? args.base_url : undefined,
 		});
-		if (clineCredentialsChanged) {
+		if (sekokuvaCaCredentialsChanged) {
 			// Reset also notifies viewers; ordinary preference changes keep the view.
 			await resetCloudSessionManager(ctx);
 		}

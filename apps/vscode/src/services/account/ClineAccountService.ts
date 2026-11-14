@@ -10,7 +10,7 @@ import type {
 } from "@shared/ClineAccount"
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { ClineEnv } from "@/config"
-import { CLINE_API_ENDPOINT } from "@/shared/cline/api"
+import { SEKOKUVA_CA_API_ENDPOINT } from "@/shared/cline/api"
 import { getAxiosSettings } from "@/shared/net"
 import { Logger } from "@/shared/services/Logger"
 import { AuthService } from "../auth/AuthService"
@@ -166,7 +166,7 @@ export class ClineAccountService {
 	 */
 	async fetchMe(): Promise<UserResponse | undefined> {
 		try {
-			const data = await this.authenticatedRequest<UserResponse>(CLINE_API_ENDPOINT.USER_INFO)
+			const data = await this.authenticatedRequest<UserResponse>(SEKOKUVA_CA_API_ENDPOINT.USER_INFO)
 			return data
 		} catch (error) {
 			Logger.error("Failed to fetch user data (RPC):", error)
@@ -180,7 +180,7 @@ export class ClineAccountService {
 	 */
 	async fetchFeaturebaseToken(): Promise<FeaturebaseTokenResponse | undefined> {
 		try {
-			const data = await this.authenticatedRequest<FeaturebaseTokenResponse>(CLINE_API_ENDPOINT.FEATUREBASE_TOKEN)
+			const data = await this.authenticatedRequest<FeaturebaseTokenResponse>(SEKOKUVA_CA_API_ENDPOINT.FEATUREBASE_TOKEN)
 			return data
 		} catch (error) {
 			Logger.error("Failed to fetch Featurebase token:", error)
@@ -255,7 +255,7 @@ export class ClineAccountService {
 		}
 
 		const data = await this.authenticatedRequest<UserRemoteConfigDiscoveryResponse | null>(
-			CLINE_API_ENDPOINT.USER_REMOTE_CONFIG,
+			SEKOKUVA_CA_API_ENDPOINT.USER_REMOTE_CONFIG,
 			{},
 			{ allowNullData: true, authToken: token },
 		)
@@ -289,7 +289,7 @@ export class ClineAccountService {
 		// Call API to switch account
 		try {
 			// make XHR request to switch account
-			const _response = await this.authenticatedRequest<string>(CLINE_API_ENDPOINT.ACTIVE_ACCOUNT, {
+			const _response = await this.authenticatedRequest<string>(SEKOKUVA_CA_API_ENDPOINT.ACTIVE_ACCOUNT, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",

@@ -56,7 +56,7 @@ const getOnboardingPage = (step: number, userType: NEW_USER_TYPE): OnboardingPag
 }
 
 type ModelSelectionProps = {
-	userType: NEW_USER_TYPE.FREE | NEW_USER_TYPE.POWER | NEW_USER_TYPE.CLINE_PASS
+	userType: NEW_USER_TYPE.FREE | NEW_USER_TYPE.POWER | NEW_USER_TYPE.SEKOKUVA_CA_PASS
 	selectedModelId: string
 	onSelectModel: (modelId: string) => void
 	onboardingModels: OnboardingModelsByGroup
@@ -66,7 +66,7 @@ type ModelSelectionProps = {
 }
 
 function getModelGroupKey(userType: ModelSelectionProps["userType"]): keyof OnboardingModelsByGroup {
-	if (userType === NEW_USER_TYPE.CLINE_PASS) {
+	if (userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS) {
 		return "clinePass"
 	}
 	return userType === NEW_USER_TYPE.FREE ? "free" : "power"
@@ -81,7 +81,7 @@ const ModelSelection = ({
 	setSearchTerm,
 	onboardingModels,
 }: ModelSelectionProps) => {
-	const isClinePass = userType === NEW_USER_TYPE.CLINE_PASS
+	const isClinePass = userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS
 	const modelGroups = onboardingModels[getModelGroupKey(userType)]
 	// ClinePass costs are covered by the subscription, so prices are hidden.
 	const hidePrice = isClinePass
@@ -337,7 +337,7 @@ const OnboardingStepContent = ({
 	if (step === 2) {
 		return null
 	}
-	if (userType === NEW_USER_TYPE.FREE || userType === NEW_USER_TYPE.POWER || userType === NEW_USER_TYPE.CLINE_PASS) {
+	if (userType === NEW_USER_TYPE.FREE || userType === NEW_USER_TYPE.POWER || userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS) {
 		return (
 			<ModelSelection
 				models={models}
@@ -384,10 +384,12 @@ const OnboardingViewContent = ({ onboardingModels }: { onboardingModels: Onboard
 
 	useEffect(() => {
 		setSearchTerm("")
-		const groupKey = userType === NEW_USER_TYPE.CLINE_PASS ? "clinePass" : userType === NEW_USER_TYPE.POWER ? "power" : "free"
+		const groupKey =
+			userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS ? "clinePass" : userType === NEW_USER_TYPE.POWER ? "power" : "free"
 		// ClinePass must stay within its curated list (never fall back to a free/OpenRouter model
 		// under the cline-pass provider). Free/Frontier fall back to free if their group is empty.
-		const modelGroup = userType === NEW_USER_TYPE.CLINE_PASS ? models[groupKey][0] : (models[groupKey][0] ?? models.free[0])
+		const modelGroup =
+			userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS ? models[groupKey][0] : (models[groupKey][0] ?? models.free[0])
 		const userGroupInitModel = modelGroup?.models[0]
 		setSelectedModelId(userGroupInitModel?.id ?? "")
 	}, [userType, models])
@@ -451,7 +453,7 @@ const OnboardingViewContent = ({ onboardingModels }: { onboardingModels: Onboard
 			// Guard: never save a non-ClinePass model id under the cline-pass provider.
 			const isClinePassModel = selectedModelId.startsWith("cline-pass/")
 			if (modelSelected) {
-				if (userType === NEW_USER_TYPE.CLINE_PASS && isClinePassModel) {
+				if (userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS && isClinePassModel) {
 					const clinePassModelInfo = resolveClinePassModelInfo(selectedModelId, openRouterModelsByName)
 					await handleFieldsChange({
 						planModeClinePassModelId: selectedModelId,
@@ -461,7 +463,7 @@ const OnboardingViewContent = ({ onboardingModels }: { onboardingModels: Onboard
 						planModeApiProvider: "cline-pass",
 						actModeApiProvider: "cline-pass",
 					})
-				} else if (userType !== NEW_USER_TYPE.CLINE_PASS) {
+				} else if (userType !== NEW_USER_TYPE.SEKOKUVA_CA_PASS) {
 					const selectedModelInfo = clineModels[selectedModelId] ??
 						onboardingModelById.get(selectedModelId)?.info ?? {
 							...openAiModelInfoSafeDefaults,
@@ -581,7 +583,7 @@ const OnboardingViewContent = ({ onboardingModels }: { onboardingModels: Onboard
 				case "signup":
 					// ClinePass: record the intent so App opens the subscription page once auth
 					// completes (App outlives this view, which unmounts on auth). Login flow unchanged.
-					setPendingClinePassSubscribe(userType === NEW_USER_TYPE.CLINE_PASS)
+					setPendingClinePassSubscribe(userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS)
 					captureNavigation("signup_clicked", stepNumber + 1)
 					setStepNumber(stepNumber + 1)
 					await loginAndFinishOnboarding(true, stepNumber + 1)
@@ -653,7 +655,7 @@ const OnboardingViewContent = ({ onboardingModels }: { onboardingModels: Onboard
 						const showSpinner = isActionLoading && isLoginAction
 						const disabled =
 							isActionLoading ||
-							(btn.action === "signup" && userType === NEW_USER_TYPE.CLINE_PASS && !selectedModelId)
+							(btn.action === "signup" && userType === NEW_USER_TYPE.SEKOKUVA_CA_PASS && !selectedModelId)
 						return (
 							<Button
 								className={`w-full rounded-xs ${isActionLoading ? "animate-pulse" : ""}`}

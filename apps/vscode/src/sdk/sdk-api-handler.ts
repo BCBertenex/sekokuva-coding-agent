@@ -2,7 +2,7 @@
 //
 // Builds an SDK ApiHandler (from `@sekokuva-ca/llms`) directly from the extension's
 // legacy ApiConfiguration. This is the single inference path: the main task
-// loop runs through ClineCore (see cline-session-factory.ts), and standalone
+// loop runs through SekoKuvaCore (see cline-session-factory.ts), and standalone
 // utility callers (commit message generation) use the handler
 // returned here. Both share the same provider/model/key/baseUrl resolution so
 // there is no second source of truth.

@@ -46,11 +46,11 @@ function createSpawnTool() {
 }
 
 describe("prepareLocalRuntimeBootstrap", () => {
-	const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+	const previousGlobalSettingsPath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 	let resetModulesAfterEach = false;
 
 	afterEach(() => {
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
 		vi.doUnmock("../extensions/plugin/plugin-config-loader");
 		if (resetModulesAfterEach) {
 			vi.resetModules();
@@ -97,7 +97,7 @@ describe("prepareLocalRuntimeBootstrap", () => {
 		setHomeDir(homeRoot);
 		try {
 			const globalSettingsPath = join(root, "global-settings.json");
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = globalSettingsPath;
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = globalSettingsPath;
 			const workspaceRoot = join(root, "workspace");
 			mkdirSync(workspaceRoot, { recursive: true });
 			const pluginRoot = join(homeRoot, ".agents", "plugins", "portable");
@@ -367,7 +367,7 @@ describe("prepareLocalRuntimeBootstrap", () => {
 		resetModulesAfterEach = true;
 		const tempRoot = mkdtempSync(join(tmpdir(), "local-bootstrap-global-"));
 		const settingsPath = join(tempRoot, "global-settings.json");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = settingsPath;
 		writeFileSync(
 			settingsPath,
 			JSON.stringify({ disabledTools: ["blocked_tool"] }, null, 2),
@@ -529,7 +529,7 @@ describe("prepareLocalRuntimeBootstrap", () => {
 			mkdtempSync(join(tmpdir(), "core-plugin-policy-bootstrap-")),
 		);
 		setHomeDir(join(root, "home"));
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(root, "global-settings.json");
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(root, "global-settings.json");
 		const { PluginRegistry, resetProcessPluginRegistryForTests } = await import(
 			"../extensions/plugin/plugin-registry"
 		);
@@ -614,7 +614,7 @@ describe("prepareLocalRuntimeBootstrap", () => {
 			mkdtempSync(join(tmpdir(), "core-plugin-new-sessions-")),
 		);
 		setHomeDir(join(root, "home"));
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(root, "global-settings.json");
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(root, "global-settings.json");
 		const workspace = join(root, "workspace");
 		const pluginDir = join(workspace, ".cline", "plugins");
 		mkdirSync(pluginDir, { recursive: true });

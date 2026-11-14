@@ -11,7 +11,7 @@ import type {
 	ToolApprovalRequest,
 } from "@sekokuva-ca/shared";
 import {
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	captureSdkError,
 	createSessionId,
 	HUB_CLIENT_TOOL_APPROVAL_CAPABILITY,
@@ -547,7 +547,7 @@ export class HubServerTransport implements NativeHubTransport {
 		const providerId = task.modelSelection?.providerId?.trim() || "cline";
 		const modelId =
 			task.modelSelection?.modelId?.trim() ||
-			(providerId === "cline" ? CLINE_DEFAULT_MODEL_ID : "");
+			(providerId === "cline" ? SEKOKUVA_CA_DEFAULT_MODEL_ID : "");
 		const metadata = withSessionHistoryOriginMetadata(
 			{
 				title: task.title,

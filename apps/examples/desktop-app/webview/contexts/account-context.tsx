@@ -1,6 +1,6 @@
 "use client";
 
-import type { ClineAccountOrganization, ClineAccountUser } from "@sekokuva-ca/core";
+import type { SekoKuvaAccountOrganization, SekoKuvaAccountUser } from "@sekokuva-ca/core";
 import {
 	createContext,
 	useCallback,
@@ -20,12 +20,12 @@ const SIGNED_OUT_ERROR_MARKERS = [
 ];
 
 type AccountContextValue = {
-	user: ClineAccountUser | null;
+	user: SekoKuvaAccountUser | null;
 	/** False until the first identity lookup has finished, so a `null` user
 	 * can be told apart from "still loading". */
 	accountReady: boolean;
-	organizations: ClineAccountOrganization[];
-	activeOrganization: ClineAccountOrganization | null;
+	organizations: SekoKuvaAccountOrganization[];
+	activeOrganization: SekoKuvaAccountOrganization | null;
 	refreshAccount: () => Promise<void>;
 };
 
@@ -39,12 +39,12 @@ const AccountContext = createContext<AccountContextValue>({
 
 export function parseCachedAccountUser(
 	raw: string | null,
-): ClineAccountUser | null {
+): SekoKuvaAccountUser | null {
 	if (!raw) {
 		return null;
 	}
 	try {
-		const parsed = JSON.parse(raw) as { user?: ClineAccountUser | null };
+		const parsed = JSON.parse(raw) as { user?: SekoKuvaAccountUser | null };
 		const user = parsed?.user;
 		if (!user || typeof user !== "object") {
 			return null;
@@ -61,7 +61,7 @@ export function parseCachedAccountUser(
 	}
 }
 
-function readCachedAccountUser(): ClineAccountUser | null {
+function readCachedAccountUser(): SekoKuvaAccountUser | null {
 	if (typeof window === "undefined") {
 		return null;
 	}
@@ -74,7 +74,7 @@ function readCachedAccountUser(): ClineAccountUser | null {
 	}
 }
 
-function writeCachedAccountUser(user: ClineAccountUser | null): void {
+function writeCachedAccountUser(user: SekoKuvaAccountUser | null): void {
 	if (typeof window === "undefined") {
 		return;
 	}
@@ -98,12 +98,12 @@ export function isSignedOutAccountError(error: unknown): boolean {
 }
 
 export function AccountProvider({ children }: { children: React.ReactNode }) {
-	const [user, setUser] = useState<ClineAccountUser | null>(null);
+	const [user, setUser] = useState<SekoKuvaAccountUser | null>(null);
 	const [accountReady, setAccountReady] = useState(false);
 
 	const refreshAccount = useCallback(async () => {
 		try {
-			const me = await desktopClient.invoke<ClineAccountUser>("cline_account", {
+			const me = await desktopClient.invoke<SekoKuvaAccountUser>("cline_account", {
 				action: "clineAccount",
 				operation: "fetchMe",
 			});

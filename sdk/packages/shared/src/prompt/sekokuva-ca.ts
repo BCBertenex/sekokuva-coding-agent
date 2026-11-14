@@ -126,7 +126,7 @@ function buildWorkspaceMetadata(
  * directly. `workspaceRoot` is accepted as an alias for `rootPath` to support
  * existing call sites that set it explicitly.
  */
-export interface ClineSystemPromptOptions
+export interface SekoKuvaSystemPromptOptions
 	extends Omit<WorkspaceContext, "rootPath"> {
 	/**
 	 * Workspace root path. Accepts either `rootPath` (from WorkspaceContext/WorkspaceInfo)
@@ -150,7 +150,7 @@ export interface ClineSystemPromptOptions
 }
 
 export function buildClineSystemPrompt(
-	options: ClineSystemPromptOptions,
+	options: SekoKuvaSystemPromptOptions,
 ): string {
 	const {
 		ide = "Terminal Shell",
@@ -203,11 +203,11 @@ export function buildClineSystemPrompt(
 		.replace("{{CURRENT_DATE}}", new Date().toLocaleDateString())
 		.replace("{{IDE_NAME}}", ide)
 		.replace(
-			"{{CLINE_METADATA}}",
+			"{{SEKOKUVA_CA_METADATA}}",
 			isCline
 				? buildWorkspaceMetadata(workspaceRoot, workspaceName, metadata)
 				: "",
 		)
-		.replace("{{CLINE_RULES}}", effectiveRules)
+		.replace("{{SEKOKUVA_CA_RULES}}", effectiveRules)
 		.trim();
 }

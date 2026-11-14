@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
 import {
 	act,
 	Fragment,
@@ -1188,14 +1188,14 @@ describe("ChatInputBar", () => {
 			"cline-pass/retired",
 			true,
 			"cline",
-			CLINE_DEFAULT_MODEL_ID,
+			SEKOKUVA_CA_DEFAULT_MODEL_ID,
 		],
 		[
 			"a local ClinePass model on an organization account",
 			"cline-pass/retired",
 			false,
 			"cline-pass",
-			CLINE_DEFAULT_MODEL_ID,
+			SEKOKUVA_CA_DEFAULT_MODEL_ID,
 		],
 	])("starts a new cloud chat on %s", async (_label, model, hasPass, localProvider, expected) => {
 		window.localStorage.clear();
@@ -1212,7 +1212,7 @@ describe("ChatInputBar", () => {
 				? ["cline", "cline-pass", "cline-cloud"]
 				: ["cline", "cline-cloud"],
 			providerModels: {
-				cline: ["cline-test", CLINE_DEFAULT_MODEL_ID],
+				cline: ["cline-test", SEKOKUVA_CA_DEFAULT_MODEL_ID],
 				"cline-pass": hasPass
 					? ["cline-pass/first-pass", "cline-pass/second-pass"]
 					: [],

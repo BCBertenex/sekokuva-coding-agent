@@ -24,7 +24,7 @@ const {
 	resolveHubBuildIdentity,
 	withHubStartupLock,
 	writeHubDiscovery,
-	CLINE_RUN_AS_HUB_DAEMON_ENV,
+	SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV,
 } = vi.hoisted(() => ({
 	spawn: vi.fn(() => ({ unref: vi.fn() })),
 	closeSync: vi.fn(),
@@ -101,11 +101,11 @@ const {
 			await callback(),
 	),
 	writeHubDiscovery: vi.fn(),
-	CLINE_RUN_AS_HUB_DAEMON_ENV: "CLINE_RUN_AS_HUB_DAEMON",
+	SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV: "SEKOKUVA_CA_RUN_AS_HUB_DAEMON",
 }));
 
-const originalRunAsHubDaemon = process.env[CLINE_RUN_AS_HUB_DAEMON_ENV];
-const originalConnectorCliLaunch = process.env.CLINE_CONNECTOR_CLI_LAUNCH;
+const originalRunAsHubDaemon = process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV];
+const originalConnectorCliLaunch = process.env.SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH;
 
 vi.mock("node:child_process", () => ({
 	spawn,
@@ -118,14 +118,14 @@ vi.mock("node:fs", () => ({
 }));
 
 vi.mock("@sekokuva-ca/shared", () => ({
-	CLINE_RUN_AS_HUB_DAEMON_ENV,
-	CLINE_HUB_PORT: 25463,
-	CLINE_HUB_DEV_PORT: 25466,
+	SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV,
+	SEKOKUVA_CA_HUB_PORT: 25463,
+	SEKOKUVA_CA_HUB_DEV_PORT: 25466,
 	isHubProtocolCompatible: (record: { protocolVersion?: string }) => ({
 		compatible: record.protocolVersion === "v1",
 	}),
 	isHubDaemonProcess: (env: NodeJS.ProcessEnv = process.env) =>
-		env[CLINE_RUN_AS_HUB_DAEMON_ENV] === "1",
+		env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] === "1",
 	// Mirrors the real helper: POSIX and Windows bunfs spellings.
 	isBunEmbeddedModulePath: (path?: string) => {
 		const trimmed = path?.trim() ?? "";
@@ -141,15 +141,15 @@ vi.mock("@sekokuva-ca/shared", () => ({
 		env: NodeJS.ProcessEnv,
 		identity?: { client: string; version?: string; transport?: string },
 	) =>
-		env.CLINE_HUB_LAUNCHER_CLIENT || !identity
+		env.SEKOKUVA_CA_HUB_LAUNCHER_CLIENT || !identity
 			? env
 			: {
 					...env,
-					CLINE_HUB_LAUNCHER_CLIENT: identity.client,
+					SEKOKUVA_CA_HUB_LAUNCHER_CLIENT: identity.client,
 					...(identity.version
-						? { CLINE_HUB_LAUNCHER_VERSION: identity.version }
+						? { SEKOKUVA_CA_HUB_LAUNCHER_VERSION: identity.version }
 						: {}),
-					CLINE_HUB_LAUNCHER_TRANSPORT: identity.transport ?? "local",
+					SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT: identity.transport ?? "local",
 				},
 }));
 
@@ -189,7 +189,7 @@ describe("ensureDetachedHubServer", () => {
 		// cases all retire the same URL.
 		const { __test__ } = await import(".");
 		__test__.resetRetireAttempts();
-		delete process.env[CLINE_RUN_AS_HUB_DAEMON_ENV];
+		delete process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV];
 		spawn.mockReset();
 		spawn.mockImplementation(() => ({ unref: vi.fn() }));
 		closeSync.mockReset();
@@ -220,14 +220,14 @@ describe("ensureDetachedHubServer", () => {
 		vi.clearAllMocks();
 		vi.unstubAllGlobals();
 		if (originalRunAsHubDaemon === undefined) {
-			delete process.env[CLINE_RUN_AS_HUB_DAEMON_ENV];
+			delete process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV];
 		} else {
-			process.env[CLINE_RUN_AS_HUB_DAEMON_ENV] = originalRunAsHubDaemon;
+			process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] = originalRunAsHubDaemon;
 		}
 		if (originalConnectorCliLaunch === undefined) {
-			delete process.env.CLINE_CONNECTOR_CLI_LAUNCH;
+			delete process.env.SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH;
 		} else {
-			process.env.CLINE_CONNECTOR_CLI_LAUNCH = originalConnectorCliLaunch;
+			process.env.SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH = originalConnectorCliLaunch;
 		}
 	});
 
@@ -235,7 +235,7 @@ describe("ensureDetachedHubServer", () => {
 		true,
 		false,
 	])("preserves production startup options with manageConnectors=%s", async (manageConnectors) => {
-		process.env.CLINE_CONNECTOR_CLI_LAUNCH = JSON.stringify({
+		process.env.SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH = JSON.stringify({
 			launcher: "bun",
 			connectArgsPrefix: ["/workspace/apps/cli/src/index.ts", "connect"],
 			cwd: "/workspace",
@@ -282,9 +282,9 @@ describe("ensureDetachedHubServer", () => {
 		expect(spawnArgs).toContain("25463");
 		expect(spawnArgs).not.toContain("0");
 		expect(spawnArgs?.includes("--no-connectors")).toBe(!manageConnectors);
-		expect(spawnOptions?.env?.[CLINE_RUN_AS_HUB_DAEMON_ENV]).toBe("1");
-		expect(spawnOptions?.env?.CLINE_CONNECTOR_CLI_LAUNCH).toBe(
-			process.env.CLINE_CONNECTOR_CLI_LAUNCH,
+		expect(spawnOptions?.env?.[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV]).toBe("1");
+		expect(spawnOptions?.env?.SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH).toBe(
+			process.env.SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH,
 		);
 	});
 
@@ -340,7 +340,7 @@ describe("ensureDetachedHubServer", () => {
 	});
 
 	it("does not spawn another detached daemon from inside the hub daemon process", async () => {
-		process.env[CLINE_RUN_AS_HUB_DAEMON_ENV] = "1";
+		process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] = "1";
 
 		const { spawnDetachedHubServer } = await import(".");
 		spawnDetachedHubServer("/workspace");
@@ -350,7 +350,7 @@ describe("ensureDetachedHubServer", () => {
 	});
 
 	it("does not prewarm another detached daemon from inside the hub daemon process", async () => {
-		process.env[CLINE_RUN_AS_HUB_DAEMON_ENV] = "1";
+		process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] = "1";
 
 		const { prewarmDetachedHubServer } = await import(".");
 		prewarmDetachedHubServer("/workspace");
@@ -974,7 +974,7 @@ describe("upgradeManagedHub", () => {
 	beforeEach(async () => {
 		const { __test__ } = await import(".");
 		__test__.resetRetireAttempts();
-		delete process.env[CLINE_RUN_AS_HUB_DAEMON_ENV];
+		delete process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV];
 		spawn.mockReset();
 		spawn.mockImplementation(() => ({ unref: vi.fn() }));
 		rememberRecoverableLocalHubUrl.mockReset();
@@ -1001,9 +1001,9 @@ describe("upgradeManagedHub", () => {
 		vi.clearAllMocks();
 		vi.unstubAllGlobals();
 		if (originalRunAsHubDaemon === undefined) {
-			delete process.env[CLINE_RUN_AS_HUB_DAEMON_ENV];
+			delete process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV];
 		} else {
-			process.env[CLINE_RUN_AS_HUB_DAEMON_ENV] = originalRunAsHubDaemon;
+			process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] = originalRunAsHubDaemon;
 		}
 	});
 
@@ -1425,7 +1425,7 @@ describe("setHubDaemonLauncher", () => {
 			"0",
 			"--no-connectors",
 		]);
-		expect(command.env.CLINE_RUN_AS_HUB_DAEMON).toBe("1");
+		expect(command.env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON).toBe("1");
 	});
 
 	it("restores the current runtime when cleared", async () => {
@@ -1439,7 +1439,7 @@ describe("setHubDaemonLauncher", () => {
 
 	it("applies child-only runtime settings while preserving daemon markers", async () => {
 		const { __test__, setHubDaemonLauncher } = await import(".");
-		const env = { ELECTRON_RUN_AS_NODE: "1", CLINE_RUN_AS_HUB_DAEMON: "0" };
+		const env = { ELECTRON_RUN_AS_NODE: "1", SEKOKUVA_CA_RUN_AS_HUB_DAEMON: "0" };
 		setHubDaemonLauncher({
 			command: "/editor",
 			args: ["/extension/hub.js"],
@@ -1449,7 +1449,7 @@ describe("setHubDaemonLauncher", () => {
 		const command = __test__.resolveLaunchCommand("/work");
 		expect(command.args.slice(0, 2)).toEqual(["/extension/hub.js", "--cwd"]);
 		expect(command.env.ELECTRON_RUN_AS_NODE).toBe("1");
-		expect(command.env.CLINE_RUN_AS_HUB_DAEMON).toBe("1");
+		expect(command.env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON).toBe("1");
 		setHubDaemonLauncher(undefined);
 		expect(
 			__test__.resolveLaunchCommand("/work").env.ELECTRON_RUN_AS_NODE,

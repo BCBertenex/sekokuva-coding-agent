@@ -2,8 +2,8 @@ import { Agent, Llms } from "@sekokuva-ca/sdk";
 
 const agent = new Agent({
 	providerId: "cline",
-	modelId: Llms.CLINE_DEFAULT_MODEL_ID,
-	apiKey: process.env.CLINE_API_KEY,
+	modelId: Llms.SEKOKUVA_CA_DEFAULT_MODEL_ID,
+	apiKey: process.env.SEKOKUVA_CA_API_KEY,
 	maxIterations: 1,
 });
 

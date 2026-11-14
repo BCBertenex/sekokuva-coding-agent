@@ -20,15 +20,34 @@ function createTempDir(): string {
 	return dir;
 }
 
-function writeExecutable(dir: string, name: string): void {
-	writeExecutableScript(dir, name, "#!/bin/sh\necho ok\n");
+function writeExecutable(
+	dir: string,
+	name: string,
+	platform: NodeJS.Platform = process.platform,
+): void {
+	writeExecutableScript(dir, name, "#!/bin/sh\necho ok\n", platform);
 }
 
+/**
+ * Writes a runnable stub onto a fake PATH.
+ *
+ * On Windows the product resolves `kanban.cmd` (see `resolveKanbanBinary`), and
+ * a POSIX `sh` script is not executable there, so the stub is emitted as a
+ * `.cmd` that exits with the requested status. Tests that pass an explicit
+ * `platform` to the resolver must build the stub for that same platform.
+ */
 function writeExecutableScript(
 	dir: string,
 	name: string,
 	content: string,
+	platform: NodeJS.Platform = process.platform,
 ): void {
+	if (platform === "win32") {
+		const exitCode = /exit\s+(\d+)/.exec(content)?.[1] ?? "0";
+		const filePath = join(dir, `${name}.cmd`);
+		writeFileSync(filePath, `@echo off\r\nexit /b ${exitCode}\r\n`, "utf8");
+		return;
+	}
 	const filePath = join(dir, name);
 	writeFileSync(filePath, content, "utf8");
 	chmodSync(filePath, 0o755);
@@ -48,7 +67,7 @@ describe("kanban command helpers", () => {
 
 	it("detects commands in PATH", () => {
 		const dir = createTempDir();
-		writeExecutable(dir, "kanban");
+		writeExecutable(dir, "kanban", "linux");
 
 		expect(isCommandAvailable("kanban", { PATH: dir }, "linux")).toBe(true);
 		expect(isCommandAvailable("missing", { PATH: dir }, "linux")).toBe(false);
@@ -74,9 +93,9 @@ describe("kanban command helpers", () => {
 
 	it("prefers npm for kanban installs", () => {
 		const dir = createTempDir();
-		writeExecutable(dir, "npm");
-		writeExecutable(dir, "pnpm");
-		writeExecutable(dir, "bun");
+		writeExecutable(dir, "npm", "linux");
+		writeExecutable(dir, "pnpm", "linux");
+		writeExecutable(dir, "bun", "linux");
 
 		expect(resolveKanbanInstallCommand({ PATH: dir }, "linux")).toEqual({
 			packageManager: "npm",
@@ -88,9 +107,9 @@ describe("kanban command helpers", () => {
 
 	it("uses the preferred package manager when available", () => {
 		const dir = createTempDir();
-		writeExecutable(dir, "npm");
-		writeExecutable(dir, "pnpm");
-		writeExecutable(dir, "bun");
+		writeExecutable(dir, "npm", "linux");
+		writeExecutable(dir, "pnpm", "linux");
+		writeExecutable(dir, "bun", "linux");
 
 		expect(resolveKanbanInstallCommand({ PATH: dir }, "linux", "pnpm")).toEqual(
 			{
@@ -110,7 +129,7 @@ describe("kanban command helpers", () => {
 
 	it("falls back when the preferred package manager is unavailable", () => {
 		const dir = createTempDir();
-		writeExecutable(dir, "npm");
+		writeExecutable(dir, "npm", "linux");
 
 		expect(resolveKanbanInstallCommand({ PATH: dir }, "linux", "pnpm")).toEqual(
 			{
@@ -124,13 +143,13 @@ describe("kanban command helpers", () => {
 
 	it("falls back to pnpm and bun for kanban installs", () => {
 		const pnpmDir = createTempDir();
-		writeExecutable(pnpmDir, "pnpm");
+		writeExecutable(pnpmDir, "pnpm", "linux");
 		expect(
 			resolveKanbanInstallCommand({ PATH: pnpmDir }, "linux")?.displayCommand,
 		).toBe("pnpm add -g kanban@latest");
 
 		const bunDir = createTempDir();
-		writeExecutable(bunDir, "bun");
+		writeExecutable(bunDir, "bun", "linux");
 		expect(
 			resolveKanbanInstallCommand({ PATH: bunDir }, "linux")?.displayCommand,
 		).toBe("bun add -g kanban@latest");
@@ -152,10 +171,27 @@ describe("kanban command helpers", () => {
 
 	it("installs kanban before launch when missing", async () => {
 		const dir = createTempDir();
-		writeExecutableScript(
-			dir,
-			"npm",
-			`#!/bin/sh
+			if (process.platform === "win32") {
+				// The stub "installer" must create the file the product looks for on
+				// this platform: `kanban.cmd`. The `exit /b 6` line is written with
+				// `>>` escaped so cmd does not treat `6>>` as a redirect.
+				const kanbanCmd = join(dir, "kanban.cmd");
+				writeFileSync(
+					join(dir, "npm.cmd"),
+					[
+						"@echo off",
+						`> "${kanbanCmd}" echo @echo off`,
+						`>> "${kanbanCmd}" echo exit /b 6`,
+						"exit /b 0",
+						"",
+					].join("\r\n"),
+					"utf8",
+				);
+			} else {
+				writeExecutableScript(
+					dir,
+					"npm",
+					`#!/bin/sh
 /bin/cat > "${dir}/kanban" <<'EOF'
 #!/bin/sh
 exit 6
@@ -163,7 +199,8 @@ EOF
 /bin/chmod +x "${dir}/kanban"
 exit 0
 `,
-		);
+				);
+			}
 		process.env.PATH = dir;
 
 		const stdoutWrite = vi

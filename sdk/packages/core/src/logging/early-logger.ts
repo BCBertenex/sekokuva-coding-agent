@@ -1,11 +1,11 @@
 /**
- * Early SDK logger for components that operate before/outside of `ClineCore`
+ * Early SDK logger for components that operate before/outside of `SekoKuvaCore`
  * sessions, plus a secret-hashing helper for credential diagnostics.
  *
- * `ClineCore.create({ logger })` receives a `BasicLogger` but it is only
+ * `SekoKuvaCore.create({ logger })` receives a `BasicLogger` but it is only
  * threaded to session-scoped components. `ProviderSettingsManager`,
  * `RuntimeOAuthTokenManager`, and the Cline auth functions in `cline.ts` are
- * constructed or called before `ClineCore` exists or outside a session.
+ * constructed or called before `SekoKuvaCore` exists or outside a session.
  * Hosts call `setSdkLogger()` once at startup and every early component picks
  * it up without threading loggers through every constructor.
  *

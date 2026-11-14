@@ -101,7 +101,7 @@ describe("migration notice", () => {
 
 		expect(
 			getClineCliMigrationNotice(dataDir, {
-				CLINE_FORCE_CLINE_PASS_NOTICE: "1",
+				SEKOKUVA_CA_FORCE_CLINE_PASS_NOTICE: "1",
 			}),
 		).toBeDefined();
 	});
@@ -111,7 +111,7 @@ describe("migration notice", () => {
 
 		expect(
 			getClineCliMigrationNotice(dataDir, {
-				CLINE_DISABLE_CLINE_PASS_NOTICE: "1",
+				SEKOKUVA_CA_DISABLE_CLINE_PASS_NOTICE: "1",
 			}),
 		).toBeUndefined();
 	});
@@ -137,7 +137,7 @@ describe("migration notice", () => {
 	it("does not suppress the active ClinePass provider when forced", () => {
 		expect(
 			shouldSuppressClineCliMigrationNoticeForActiveProvider("cline-pass", {
-				CLINE_FORCE_CLINE_PASS_NOTICE: "1",
+				SEKOKUVA_CA_FORCE_CLINE_PASS_NOTICE: "1",
 			}),
 		).toBe(false);
 	});
@@ -148,7 +148,7 @@ describe("migration notice", () => {
 		expect(
 			getClineCliMigrationNotice(
 				dataDir,
-				{ CLINE_FORCE_CLINE_PASS_NOTICE: "1" },
+				{ SEKOKUVA_CA_FORCE_CLINE_PASS_NOTICE: "1" },
 				{ activeProviderId: "cline-pass" },
 			),
 		).toBeDefined();
@@ -159,8 +159,8 @@ describe("migration notice", () => {
 
 		expect(
 			getClineCliMigrationNotice(dataDir, {
-				CLINE_DISABLE_CLINE_PASS_NOTICE: "1",
-				CLINE_FORCE_CLINE_PASS_NOTICE: "1",
+				SEKOKUVA_CA_DISABLE_CLINE_PASS_NOTICE: "1",
+				SEKOKUVA_CA_FORCE_CLINE_PASS_NOTICE: "1",
 			}),
 		).toBeDefined();
 	});

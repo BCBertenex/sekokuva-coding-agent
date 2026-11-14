@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	AwsBedrockSettingsSchema,
-	ClineSettingsSchema,
+	SekoKuvaSettingsSchema,
 	EnterpriseTelemetrySchema,
 	OpenAiCompatibleSchema,
 	PromptUploadingSchema,
@@ -237,7 +237,7 @@ describe("Remote Config Schema", () => {
 		});
 	});
 
-	describe("ClineSettingsSchema", () => {
+	describe("SekoKuvaSettingsSchema", () => {
 		it("should accept valid Cline provider settings", () => {
 			const validSettings = {
 				models: [
@@ -245,12 +245,12 @@ describe("Remote Config Schema", () => {
 					{ id: "claude-3-5-haiku-20241022" },
 				],
 			};
-			const result = ClineSettingsSchema.parse(validSettings);
+			const result = SekoKuvaSettingsSchema.parse(validSettings);
 			expect(result).to.deep.equal(validSettings);
 		});
 
 		it("should accept empty settings object", () => {
-			const result = ClineSettingsSchema.parse({});
+			const result = SekoKuvaSettingsSchema.parse({});
 			expect(result.models).to.be.undefined;
 		});
 
@@ -258,12 +258,12 @@ describe("Remote Config Schema", () => {
 			const settings = {
 				models: [{ id: "claude-3-5-sonnet-20241022" }],
 			};
-			expect(() => ClineSettingsSchema.parse(settings)).to.not.throw();
+			expect(() => SekoKuvaSettingsSchema.parse(settings)).to.not.throw();
 		});
 
 		it("should reject models with missing id field", () => {
 			expect(() =>
-				ClineSettingsSchema.parse({
+				SekoKuvaSettingsSchema.parse({
 					models: [{}],
 				}),
 			).to.throw();

@@ -25,12 +25,12 @@ let dataDir: string;
 
 beforeEach(() => {
 	dataDir = mkdtempSync(join(tmpdir(), "cline-commands-keybindings-"));
-	process.env.CLINE_DATA_DIR = dataDir;
+	process.env.SEKOKUVA_CA_DATA_DIR = dataDir;
 	spawn.mockClear();
 });
 
 afterEach(() => {
-	delete process.env.CLINE_DATA_DIR;
+	delete process.env.SEKOKUVA_CA_DATA_DIR;
 	rmSync(dataDir, { recursive: true, force: true });
 });
 

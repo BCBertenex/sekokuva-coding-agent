@@ -1,4 +1,4 @@
-import { CLINE_ENVIRONMENTS } from "@sekokuva-ca/shared/browser";
+import { SEKOKUVA_CA_ENVIRONMENTS } from "@sekokuva-ca/shared/browser";
 
 const CLOUD_SESSION_ERROR_PREFIX = "CLOUD_SESSION_ERROR:";
 
@@ -22,7 +22,7 @@ function trustedConnectUrl(value: unknown): string | undefined {
 	const trimmed = value.trim();
 	try {
 		const origin = new URL(trimmed).origin;
-		return Object.values(CLINE_ENVIRONMENTS).some(
+		return Object.values(SEKOKUVA_CA_ENVIRONMENTS).some(
 			(environment) => new URL(environment.appBaseUrl).origin === origin,
 		)
 			? trimmed

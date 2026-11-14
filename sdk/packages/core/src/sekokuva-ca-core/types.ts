@@ -23,11 +23,11 @@ import type {
 } from "../runtime/host/runtime-host";
 import type { FeatureFlagsService } from "../services/feature-flags";
 import type { CheckpointWorkspaceCompareResult } from "../session/checkpoint-diff";
-import type { ClineCoreStartConfig } from "../types/config";
+import type { SekoKuvaCoreStartConfig } from "../types/config";
 import type { SessionMessagesArtifactUploader } from "../types/session";
 
 export type { RuntimeHostMode } from "../runtime/host/runtime-host";
-export type { ClineCoreSettingsApi } from "../settings";
+export type { SekoKuvaCoreSettingsApi } from "../settings";
 
 export interface HubOptions {
 	endpoint?: string;
@@ -48,7 +48,7 @@ export interface RemoteOptions {
 	cwd?: string;
 }
 
-export interface ClineCoreAutomationOptions {
+export interface SekoKuvaCoreAutomationOptions {
 	/** @deprecated Use `cronSpecsDir`. */
 	cronDir?: string;
 	cronSpecsDir?: string;
@@ -64,18 +64,18 @@ export interface ClineCoreAutomationOptions {
 	autoStart?: boolean;
 }
 
-export type ClineAutomationSpec = CronSpecRecord;
-export type ClineAutomationRun = CronRunRecord;
-export type ClineAutomationEventLog = CronEventLogRecord;
-export type ClineAutomationEventSuppression = CronEventSuppression;
-export type ClineAutomationRunStatus =
+export type SekoKuvaAutomationSpec = CronSpecRecord;
+export type SekoKuvaAutomationRun = CronRunRecord;
+export type SekoKuvaAutomationEventLog = CronEventLogRecord;
+export type SekoKuvaAutomationEventSuppression = CronEventSuppression;
+export type SekoKuvaAutomationRunStatus =
 	| "queued"
 	| "running"
 	| "done"
 	| "failed"
 	| "cancelled";
 
-export interface ClineAutomationListSpecsOptions {
+export interface SekoKuvaAutomationListSpecsOptions {
 	triggerKind?: "one_off" | "schedule" | "event";
 	enabled?: boolean;
 	parseStatus?: "valid" | "invalid";
@@ -83,13 +83,13 @@ export interface ClineAutomationListSpecsOptions {
 	limit?: number;
 }
 
-export interface ClineAutomationListRunsOptions {
+export interface SekoKuvaAutomationListRunsOptions {
 	specId?: string;
-	status?: ClineAutomationRunStatus | ClineAutomationRunStatus[];
+	status?: SekoKuvaAutomationRunStatus | SekoKuvaAutomationRunStatus[];
 	limit?: number;
 }
 
-export interface ClineAutomationListEventsOptions {
+export interface SekoKuvaAutomationListEventsOptions {
 	eventType?: string;
 	source?: string;
 	processingStatus?:
@@ -101,34 +101,34 @@ export interface ClineAutomationListEventsOptions {
 	limit?: number;
 }
 
-export interface ClineAutomationEventIngressResult {
-	event: ClineAutomationEventLog;
+export interface SekoKuvaAutomationEventIngressResult {
+	event: SekoKuvaAutomationEventLog;
 	duplicate: boolean;
 	matchedSpecIds: string[];
-	queuedRuns: ClineAutomationRun[];
-	suppressions: ClineAutomationEventSuppression[];
+	queuedRuns: SekoKuvaAutomationRun[];
+	suppressions: SekoKuvaAutomationEventSuppression[];
 }
 
-export interface ClineCoreAutomationApi {
+export interface SekoKuvaCoreAutomationApi {
 	start(): Promise<void>;
 	stop(): Promise<void>;
 	reconcileNow(): Promise<void>;
 	ingestEvent(
 		event: AutomationEventEnvelope,
-	): ClineAutomationEventIngressResult;
+	): SekoKuvaAutomationEventIngressResult;
 	listEvents(
-		options?: ClineAutomationListEventsOptions,
-	): ClineAutomationEventLog[];
-	getEvent(eventId: string): ClineAutomationEventLog | undefined;
-	listSpecs(options?: ClineAutomationListSpecsOptions): ClineAutomationSpec[];
-	listRuns(options?: ClineAutomationListRunsOptions): ClineAutomationRun[];
+		options?: SekoKuvaAutomationListEventsOptions,
+	): SekoKuvaAutomationEventLog[];
+	getEvent(eventId: string): SekoKuvaAutomationEventLog | undefined;
+	listSpecs(options?: SekoKuvaAutomationListSpecsOptions): SekoKuvaAutomationSpec[];
+	listRuns(options?: SekoKuvaAutomationListRunsOptions): SekoKuvaAutomationRun[];
 }
 
-export type ClineCoreListHistoryOptions = SessionHistoryListOptions;
+export type SekoKuvaCoreListHistoryOptions = SessionHistoryListOptions;
 
-export interface ClineCoreStartInput
+export interface SekoKuvaCoreStartInput
 	extends Omit<StartSessionInput, "config" | "localRuntime"> {
-	config: ClineCoreStartConfig;
+	config: SekoKuvaCoreStartConfig;
 	localRuntime?: LocalRuntimeStartOptions;
 }
 
@@ -155,7 +155,7 @@ export interface RestoreOptions {
 export interface RestoreInput {
 	sessionId: string;
 	checkpointRunCount: number;
-	start?: ClineCoreStartInput;
+	start?: SekoKuvaCoreStartInput;
 	cwd?: string;
 	restore?: RestoreOptions;
 }
@@ -175,7 +175,7 @@ export interface CompareCheckpointInput {
 
 export type CompareCheckpointResult = CheckpointWorkspaceCompareResult;
 
-export interface ClineCoreOptions {
+export interface SekoKuvaCoreOptions {
 	/**
 	 * A human-readable name for this SDK client (e.g. `"my-app"`, `"acme-bot"`).
 	 * Used to identify the consumer in telemetry and logs.
@@ -216,7 +216,7 @@ export interface ClineCoreOptions {
 	 */
 	telemetry?: ITelemetryService;
 	/**
-	 * Feature flags service for this ClineCore instance.
+	 * Feature flags service for this SekoKuvaCore instance.
 	 * If omitted, Core uses a no-op provider with default flag values.
 	 */
 	featureFlags?: FeatureFlagsService;
@@ -236,11 +236,11 @@ export interface ClineCoreOptions {
 	 */
 	messagesArtifactUploader?: SessionMessagesArtifactUploader;
 	/**
-	 * Enables file-based and event-driven automation through this ClineCore
+	 * Enables file-based and event-driven automation through this SekoKuvaCore
 	 * instance. When configured, callers use `cline.automation.*` instead of
 	 * constructing cron services directly.
 	 */
-	automation?: boolean | ClineCoreAutomationOptions;
+	automation?: boolean | SekoKuvaCoreAutomationOptions;
 	/**
 	 * Custom `fetch` implementation forwarded to the AI gateway providers used
 	 * by local sessions. When supplied, it is threaded into each
@@ -276,7 +276,7 @@ export interface ClineCoreOptions {
 	 * pathless starts expose neither `cwd` nor `workspaceRoot` to this hook.
 	 */
 	prepare?: (
-		input: ClineCoreStartInput,
+		input: SekoKuvaCoreStartInput,
 	) =>
 		| Promise<StartSessionBootstrap | undefined>
 		| StartSessionBootstrap
@@ -285,7 +285,7 @@ export interface ClineCoreOptions {
 
 export interface StartSessionBootstrap {
 	applyToStartSessionInput(
-		input: ClineCoreStartInput,
-	): Promise<ClineCoreStartInput> | ClineCoreStartInput;
+		input: SekoKuvaCoreStartInput,
+	): Promise<SekoKuvaCoreStartInput> | SekoKuvaCoreStartInput;
 	dispose?(): Promise<void> | void;
 }

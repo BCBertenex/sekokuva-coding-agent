@@ -37,8 +37,8 @@ const runtime = () => ({
 beforeEach(async () => {
 	root = await mkdtemp(join(tmpdir(), "hub-mcp-management-"));
 	path = join(root, "settings", "cline_mcp_settings.json");
-	vi.stubEnv("CLINE_DATA_DIR", root);
-	vi.stubEnv("CLINE_MCP_SETTINGS_PATH", path);
+	vi.stubEnv("SEKOKUVA_CA_DATA_DIR", root);
+	vi.stubEnv("SEKOKUVA_CA_MCP_SETTINGS_PATH", path);
 	stopped = false;
 	transport = new HubServerTransport({ ...runtime(), workspaceRoot: root });
 	send.mockReset();

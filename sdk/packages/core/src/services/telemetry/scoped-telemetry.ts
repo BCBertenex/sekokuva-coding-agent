@@ -30,13 +30,13 @@ export function resolveClientTelemetryProperties(
 	context: ClientTelemetryContext,
 ): TelemetryProperties {
 	const client = context.client;
-	const clineType =
+	const sekokuvaCaType =
 		resolveClientSessionSource(client) ?? trimNonEmpty(context.source);
 	const version = trimNonEmpty(client.version);
 	const platform = trimNonEmpty(client.platform) ?? trimNonEmpty(client.name);
 	const platformVersion = trimNonEmpty(client.platformVersion) ?? version;
 	const clientProperties: TelemetryProperties = {
-		cline_type: clineType,
+		sekokuva_ca_type: sekokuvaCaType,
 		extension_version: version,
 		platform,
 		platform_version: platformVersion,

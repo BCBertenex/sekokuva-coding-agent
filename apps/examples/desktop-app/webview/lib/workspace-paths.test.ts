@@ -277,7 +277,7 @@ describe("workspace paths", () => {
 				isTaskWorktreePath("/Users/beatrix/.cline/worktrees/5e0b3/sdk-wip"),
 			).toBe(false);
 
-			// A custom CLINE_DIR moves the root away from ~/.cline.
+			// A custom SEKOKUVA_CA_DIR moves the root away from ~/.cline.
 			registerTaskWorktreeRoot("/srv/cline-dir/worktrees/");
 			expect(isTaskWorktreePath("/srv/cline-dir/worktrees/5e0b3/sdk-wip")).toBe(
 				true,

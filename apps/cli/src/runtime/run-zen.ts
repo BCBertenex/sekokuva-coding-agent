@@ -38,10 +38,10 @@ export async function runZen(
 		return;
 	}
 	if (
-		process.env.CLINE_SESSION_BACKEND_MODE?.trim().toLowerCase() === "local"
+		process.env.SEKOKUVA_CA_SESSION_BACKEND_MODE?.trim().toLowerCase() === "local"
 	) {
 		writeErr(
-			"--zen requires the hub backend but CLINE_SESSION_BACKEND_MODE=local is set.",
+			"--zen requires the hub backend but SEKOKUVA_CA_SESSION_BACKEND_MODE=local is set.",
 		);
 		process.exitCode = 1;
 		return;

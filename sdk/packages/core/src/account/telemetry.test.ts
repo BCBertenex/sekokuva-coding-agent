@@ -3,11 +3,11 @@ import {
 	persistClineAccountTelemetryIdentity,
 	resolveClineAccountTelemetryIdentity,
 } from "./telemetry";
-import type { ClineAccountUser } from "./types";
+import type { SekoKuvaAccountUser } from "./types";
 
 function createUser(
-	overrides: Partial<ClineAccountUser> = {},
-): ClineAccountUser {
+	overrides: Partial<SekoKuvaAccountUser> = {},
+): SekoKuvaAccountUser {
 	return {
 		id: "user-1",
 		email: "user@example.com",

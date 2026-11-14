@@ -34,7 +34,7 @@ import {
 } from "./shutdown-coordinator";
 import { createHubDaemonTelemetry } from "./telemetry";
 
-initVcr(process.env.CLINE_VCR);
+initVcr(process.env.SEKOKUVA_CA_VCR);
 
 let resolveHubDaemonReady!: () => void;
 let rejectHubDaemonReady!: (error: unknown) => void;

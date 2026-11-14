@@ -11,13 +11,13 @@ import {
 	withSessionHistoryOriginMetadata,
 } from "../session/history-origin";
 import { SessionSource } from "../types/common";
-import type { ClineCoreStartConfig } from "../types/config";
-import type { ClineCoreStartInput } from "./types";
+import type { SekoKuvaCoreStartConfig } from "../types/config";
+import type { SekoKuvaCoreStartInput } from "./types";
 
 export function toClineCoreStartInput(
-	input: StartSessionInput | ClineCoreStartInput,
-): ClineCoreStartInput {
-	const config = input.config as ClineCoreStartConfig;
+	input: StartSessionInput | SekoKuvaCoreStartInput,
+): SekoKuvaCoreStartInput {
+	const config = input.config as SekoKuvaCoreStartConfig;
 	return "providerId" in config
 		? {
 				...input,
@@ -27,7 +27,7 @@ export function toClineCoreStartInput(
 				},
 				localRuntime: input.localRuntime,
 			}
-		: (input as ClineCoreStartInput);
+		: (input as SekoKuvaCoreStartInput);
 }
 
 export interface NormalizeClineCoreStartInputOptions {
@@ -38,7 +38,7 @@ export interface NormalizeClineCoreStartInputOptions {
 }
 
 export function normalizeClineCoreStartInput(
-	input: ClineCoreStartInput,
+	input: SekoKuvaCoreStartInput,
 	options: NormalizeClineCoreStartInputOptions = {},
 ): StartSessionInput {
 	const split = splitCoreSessionConfig(input.config);
@@ -77,7 +77,7 @@ export function normalizeClineCoreStartInput(
 
 function coreConfigFromLocalRuntime(
 	localRuntime: LocalRuntimeStartOptions | undefined,
-): Partial<ClineCoreStartConfig> {
+): Partial<SekoKuvaCoreStartConfig> {
 	if (!localRuntime) {
 		return {};
 	}

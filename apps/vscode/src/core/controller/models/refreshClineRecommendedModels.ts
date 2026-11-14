@@ -9,19 +9,19 @@ interface ClineRecommendedModelData {
 	tags: string[]
 }
 
-export interface ClineRecommendedModelsData {
+export interface SekoKuvaRecommendedModelsData {
 	recommended: ClineRecommendedModelData[]
 	free: ClineRecommendedModelData[]
-	clinePass?: ClineRecommendedModelData[]
-	clineCloud?: ClineRecommendedModelData[]
+	sekokuvaCaPass?: ClineRecommendedModelData[]
+	sekokuvaCaCloud?: ClineRecommendedModelData[]
 }
 
 const RECOMMENDED_MODELS_CACHE_TTL_MS = 60 * 60 * 1000
 
-let pendingRefresh: Promise<ClineRecommendedModelsData> | null = null
-let inMemoryCache: { data: ClineRecommendedModelsData; timestamp: number } | null = null
+let pendingRefresh: Promise<SekoKuvaRecommendedModelsData> | null = null
+let inMemoryCache: { data: SekoKuvaRecommendedModelsData; timestamp: number } | null = null
 
-export async function refreshClineRecommendedModels(): Promise<ClineRecommendedModelsData> {
+export async function refreshClineRecommendedModels(): Promise<SekoKuvaRecommendedModelsData> {
 	if (inMemoryCache && Date.now() - inMemoryCache.timestamp <= RECOMMENDED_MODELS_CACHE_TTL_MS) {
 		return inMemoryCache.data
 	}
@@ -42,7 +42,7 @@ export async function refreshClineRecommendedModels(): Promise<ClineRecommendedM
 }
 
 /** The last successfully fetched list, without fetching; undefined before the first success. */
-export function getCachedClineRecommendedModels(): ClineRecommendedModelsData | undefined {
+export function getCachedClineRecommendedModels(): SekoKuvaRecommendedModelsData | undefined {
 	return inMemoryCache?.data
 }
 
@@ -51,11 +51,11 @@ export function resetClineRecommendedModelsCacheForTests(): void {
 	inMemoryCache = null
 }
 
-function isFallbackRecommendedModels(data: ClineRecommendedModelsData): boolean {
+function isFallbackRecommendedModels(data: SekoKuvaRecommendedModelsData): boolean {
 	return JSON.stringify(data) === JSON.stringify(FALLBACK_CLINE_RECOMMENDED_MODELS)
 }
 
-async function fetchAndCacheClineRecommendedModels(): Promise<ClineRecommendedModelsData> {
+async function fetchAndCacheClineRecommendedModels(): Promise<SekoKuvaRecommendedModelsData> {
 	// Delegate the actual HTTP fetch + response normalization + offline fallback
 	// to the SDK so the CLI/JetBrains and the extension share one implementation.
 	// We pass the proxy-aware fetch (per .clinerules/network.md) and the

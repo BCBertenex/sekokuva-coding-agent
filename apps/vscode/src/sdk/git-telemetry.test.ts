@@ -3,7 +3,7 @@ import { createHash } from "node:crypto"
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises"
 import { join, resolve } from "node:path"
 import { promisify } from "node:util"
-import type { ClineCoreStartInput, ITelemetryService, TelemetryProperties } from "@sekokuva-ca/core"
+import type { ITelemetryService, SekoKuvaCoreStartInput, TelemetryProperties } from "@sekokuva-ca/core"
 import type { AgentRuntimeEvent } from "@sekokuva-ca/shared"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { readGitSnapshot, sanitizeGitRemote, VscodeGitTelemetry, VscodeGitTelemetryManager } from "./git-telemetry"
@@ -58,7 +58,7 @@ const commit = async () => {
 	await git("commit", "--allow-empty", "-m", "test")
 	return git("rev-parse", "HEAD")
 }
-function observer(config: Partial<ClineCoreStartInput["config"]> = {}) {
+function observer(config: Partial<SekoKuvaCoreStartInput["config"]> = {}) {
 	const result = new VscodeGitTelemetry(
 		{
 			sessionId: "task-1",
@@ -264,7 +264,7 @@ describe("Git snapshots", () => {
 describe("Git telemetry manager", () => {
 	it("disposes late observers without opening them and rejects initialization after disposal", () => {
 		const manager = new VscodeGitTelemetryManager(telemetry)
-		const input: ClineCoreStartInput = {
+		const input: SekoKuvaCoreStartInput = {
 			config: {
 				cwd,
 				providerId: "cline",

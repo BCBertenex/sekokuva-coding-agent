@@ -15,7 +15,7 @@ import { McpHub } from "../McpHub"
 // Tests bypass the constructor's watcher via Object.create(McpHub.prototype),
 // matching McpHub.callTool.test.ts.
 describe("McpHub.addRemoteServer", () => {
-	const envVar = "CLINE_TEST_MCP_URL_SECRET"
+	const envVar = "SEKOKUVA_CA_TEST_MCP_URL_SECRET"
 	const originalIsDev = process.env.IS_DEV
 	let tempDir: string
 	let hub: McpHub

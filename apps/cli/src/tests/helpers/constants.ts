@@ -19,7 +19,7 @@ function resolveClineBin(): string {
 	);
 }
 
-export const CLINE_BIN = resolveClineBin();
+export const SEKOKUVA_CA_BIN = resolveClineBin();
 
 // Standard terminal dimensions used across test suites
 export const TERMINAL_WIDE = { columns: 120, rows: 50 } as const;

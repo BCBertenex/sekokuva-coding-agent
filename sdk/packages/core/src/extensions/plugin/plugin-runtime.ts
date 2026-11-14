@@ -3,7 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { SubprocessSandboxLauncher } from "../../runtime/tools/subprocess-sandbox";
 
-export const CLINE_PLUGIN_RUNTIME_DIR_ENV = "CLINE_PLUGIN_RUNTIME_DIR";
+export const SEKOKUVA_CA_PLUGIN_RUNTIME_DIR_ENV = "SEKOKUVA_CA_PLUGIN_RUNTIME_DIR";
 declare const __CLINE_PLUGIN_RUNTIME_DIR__: string | undefined;
 let searched = false;
 let discoveredDirectory: string | undefined;
@@ -19,12 +19,12 @@ function isPluginRuntime(directory: string): boolean {
 
 /** Core owns the bootstrap and SDK as one artifact for every host and transport. */
 export function resolvePluginRuntimeDirectory(): string | undefined {
-	const configured = process.env[CLINE_PLUGIN_RUNTIME_DIR_ENV]?.trim();
+	const configured = process.env[SEKOKUVA_CA_PLUGIN_RUNTIME_DIR_ENV]?.trim();
 	if (configured) {
 		const resolved = resolve(configured);
 		if (!isPluginRuntime(resolved))
 			throw new Error(
-				`${CLINE_PLUGIN_RUNTIME_DIR_ENV} does not contain a complete plugin runtime: ${configured}`,
+				`${SEKOKUVA_CA_PLUGIN_RUNTIME_DIR_ENV} does not contain a complete plugin runtime: ${configured}`,
 			);
 		return resolved;
 	}

@@ -10,7 +10,7 @@ import {
 	setStartingConnectorInstance,
 } from "@sekokuva-ca/shared";
 import {
-	CLINE_CONNECTOR_DETACHED_CHILD_ENV,
+	SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV,
 	CONNECT_ALREADY_RUNNING_EXIT_CODE,
 } from "../connectors/common";
 import { getConnector, listConnectors } from "../connectors/registry";
@@ -297,7 +297,7 @@ async function runConnectAdapterWithResult(
 	// it makes the same autostart bookkeeping choices as a detached child: the
 	// process that asked for the start already recorded the intent.
 	const isDetachedChild =
-		process.env[CLINE_CONNECTOR_DETACHED_CHILD_ENV] === "1" ||
+		process.env[SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV] === "1" ||
 		isSupervisedConnectorProcess();
 	if (
 		exitCode === 0 &&
@@ -342,7 +342,7 @@ async function tryDelegateToHub(
 	if (
 		passthroughArgs.some((arg) => HELP_FLAGS.has(arg)) ||
 		passthroughArgs.some((arg) => INTERACTIVE_FLAGS.has(arg)) ||
-		process.env[CLINE_CONNECTOR_DETACHED_CHILD_ENV] === "1" ||
+		process.env[SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV] === "1" ||
 		isSupervisedConnectorProcess()
 	) {
 		return undefined;

@@ -4,15 +4,15 @@
  * VS Code extension runs in-process and reports nothing, so the fields are
  * simply absent there, the way `host_plugin_version` is absent on the CLI.
  *
- * Same contract as `IS_DEV` -> `is_dev` and `CLINE_ROLLOUT_VARIANT`: the host
+ * Same contract as `IS_DEV` -> `is_dev` and `SEKOKUVA_CA_ROLLOUT_VARIANT`: the host
  * states a fact at spawn, core owns the telemetry. Without these, a core that
  * crash-restarted three times and a user with three project windows both look
  * like three `user.extension_activated` events.
  */
 import { CORE_SPAWN_REASONS, type CoreSpawnReason } from "@sekokuva-ca/shared"
 
-export const CORE_SPAWN_ORDINAL_ENV = "CLINE_CORE_SPAWN_ORDINAL"
-export const CORE_SPAWN_REASON_ENV = "CLINE_CORE_SPAWN_REASON"
+export const CORE_SPAWN_ORDINAL_ENV = "SEKOKUVA_CA_CORE_SPAWN_ORDINAL"
+export const CORE_SPAWN_REASON_ENV = "SEKOKUVA_CA_CORE_SPAWN_REASON"
 
 export { CORE_SPAWN_REASONS, type CoreSpawnReason }
 

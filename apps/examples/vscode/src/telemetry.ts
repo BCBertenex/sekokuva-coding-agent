@@ -39,7 +39,7 @@ export function createVscodeTelemetry(
 	const config = createClineTelemetryServiceConfig({
 		metadata: createClineTelemetryServiceMetadata({
 			extension_version: options.extensionVersion,
-			cline_type: options.clineType,
+			sekokuva_ca_type: options.clineType,
 			platform: options.platform,
 			platform_version: options.platformVersion,
 			os_type: options.osType ?? os.platform(),

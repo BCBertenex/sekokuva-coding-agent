@@ -2,11 +2,11 @@ import { NodeHubClient } from "@sekokuva-ca/core";
 import { HubCloudSessionClient } from "@sekokuva-ca/core/cloud";
 import { ensureCliHubServer } from "../../utils/hub-runtime";
 
-/** Cloud sessions are experimental; `CLINE_CLOUD_SESSIONS=1` opts in. */
+/** Cloud sessions are experimental; `SEKOKUVA_CA_CLOUD_SESSIONS=1` opts in. */
 export function isCloudSessionsEnabled(
 	env: NodeJS.ProcessEnv = process.env,
 ): boolean {
-	const value = env.CLINE_CLOUD_SESSIONS?.trim().toLowerCase();
+	const value = env.SEKOKUVA_CA_CLOUD_SESSIONS?.trim().toLowerCase();
 	return value === "1" || value === "true";
 }
 

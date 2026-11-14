@@ -433,58 +433,58 @@ export type ProviderSettingsActionRequest =
 	| SaveProviderSettingsActionRequest
 	| AddProviderActionRequest;
 
-export type ClineAccountActionRequest =
+export type SekoKuvaAccountActionRequest =
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchMe";
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchBalance";
 			userId?: string;
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchUsageTransactions";
 			userId?: string;
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchPaymentTransactions";
 			userId?: string;
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchUserOrganizations";
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchOrganizationBalance";
 			organizationId: string;
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchOrganizationUsageTransactions";
 			organizationId: string;
 			memberId?: string;
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "switchAccount";
 			organizationId?: string | null;
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchFeaturebaseToken";
 	  }
 	| {
-			action: "clineAccount";
+			action: "sekokuvaCaAccount";
 			operation: "fetchCurrentUserPlan";
 	  };
 
 export type ProviderActionRequest =
 	| ProviderSettingsActionRequest
-	| ClineAccountActionRequest;
+	| SekoKuvaAccountActionRequest;
 
 export interface ProviderOAuthLoginResponse {
 	provider: string;

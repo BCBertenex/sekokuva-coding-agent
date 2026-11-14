@@ -1,7 +1,7 @@
 /** @deprecated Import from `@sekokuva-ca/shared`; kept for compatibility. */
 export {
 	ANTHROPIC_DEFAULT_MODEL_ID,
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	type ProviderLocalCli,
 	resolveProviderLocalCli,
 } from "@sekokuva-ca/shared";
@@ -43,7 +43,7 @@ export {
 	resolveProviderUsageCostDisplay,
 	shouldShowProviderUsageCost,
 } from "./providers/billing";
-export { buildClineClientHeaders } from "./providers/cline-client-headers";
+export { buildClineClientHeaders } from "./providers/sekokuva-ca-client-headers";
 export { toGatewayModelCapabilities } from "./providers/model-capabilities";
 export {
 	BUILTIN_MODEL_OPERATION_CAPABILITIES,
@@ -69,10 +69,10 @@ export type {
 	ProviderId,
 } from "./providers.browser";
 export {
-	ClineFreeModelLimitError,
-	ClineNotSubscribedError,
-	ClineOrgIndividualInferenceSubscriptionError,
-	ClinePassLimitError,
+	SekoKuvaFreeModelLimitError,
+	SekoKuvaNotSubscribedError,
+	SekoKuvaOrgIndividualInferenceSubscriptionError,
+	SekoKuvaPassLimitError,
 	extractClineFreeModelLimitResetTime,
 	getClineNotSubscribedMessage,
 	getClineOrgIndividualInferenceSubscriptionMessage,

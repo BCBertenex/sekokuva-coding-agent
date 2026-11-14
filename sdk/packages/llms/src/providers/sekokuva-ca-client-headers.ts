@@ -1,5 +1,5 @@
 import {
-	type ClineClientIdentity,
+	type SekoKuvaClientIdentity,
 	getClineClientIdentity,
 } from "@sekokuva-ca/shared";
 import { DEFAULT_CLINE_REQUEST_HEADERS } from "./request-headers";
@@ -10,7 +10,7 @@ function trimNonEmpty(value: string | undefined): string | undefined {
 }
 
 export function buildClineClientHeaders(
-	identity: ClineClientIdentity | undefined = getClineClientIdentity(),
+	identity: SekoKuvaClientIdentity | undefined = getClineClientIdentity(),
 ): Record<string, string> {
 	const clientType =
 		trimNonEmpty(identity?.name) ??

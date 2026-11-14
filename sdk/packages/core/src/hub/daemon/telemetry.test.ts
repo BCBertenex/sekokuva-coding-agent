@@ -82,7 +82,7 @@ describe("createHubDaemonTelemetry", () => {
 		expect(mockCreateConfiguredTelemetryHandle).toHaveBeenCalledWith(
 			expect.objectContaining({
 				metadata: expect.objectContaining({
-					cline_type: "hub",
+					sekokuva_ca_type: "hub",
 					platform: "cline-hub-daemon",
 				}),
 			}),
@@ -109,9 +109,9 @@ describe("createHubDaemonTelemetry", () => {
 
 	it("publishes who launched the daemon as resource attributes", () => {
 		mockGetProviderSettings.mockReturnValue(undefined);
-		vi.stubEnv("CLINE_HUB_LAUNCHER_CLIENT", "cline-desktop");
-		vi.stubEnv("CLINE_HUB_LAUNCHER_VERSION", "0.0.46");
-		vi.stubEnv("CLINE_HUB_LAUNCHER_TRANSPORT", "local");
+		vi.stubEnv("SEKOKUVA_CA_HUB_LAUNCHER_CLIENT", "cline-desktop");
+		vi.stubEnv("SEKOKUVA_CA_HUB_LAUNCHER_VERSION", "0.0.46");
+		vi.stubEnv("SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT", "local");
 		try {
 			const daemonTelemetry = createHubDaemonTelemetry();
 			expect(daemonTelemetry.launcher).toEqual({
@@ -123,9 +123,9 @@ describe("createHubDaemonTelemetry", () => {
 			// is only attributable through the daemon's resource, since the
 			// span's clientName describes the session's client, not the host.
 			// Claimed, not read: hosted sessions must not inherit the stamp.
-			expect(process.env.CLINE_HUB_LAUNCHER_CLIENT).toBeUndefined();
-			expect(process.env.CLINE_HUB_LAUNCHER_VERSION).toBeUndefined();
-			expect(process.env.CLINE_HUB_LAUNCHER_TRANSPORT).toBeUndefined();
+			expect(process.env.SEKOKUVA_CA_HUB_LAUNCHER_CLIENT).toBeUndefined();
+			expect(process.env.SEKOKUVA_CA_HUB_LAUNCHER_VERSION).toBeUndefined();
+			expect(process.env.SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT).toBeUndefined();
 			expect(mockCreateConfiguredTelemetryHandle).toHaveBeenCalledWith(
 				expect.objectContaining({
 					resourceAttributes: expect.objectContaining({

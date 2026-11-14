@@ -7,13 +7,13 @@
 // ---------------------------------------------------------------------------
 
 import { test } from "@microsoft/tui-test";
-import { CLINE_BIN, TERMINAL_WIDE } from "../helpers/constants.js";
+import { SEKOKUVA_CA_BIN, TERMINAL_WIDE } from "../helpers/constants.js";
 import { clineEnv } from "../helpers/env.js";
 import { expectVisible } from "../helpers/terminal.js";
 
 test.describe("cline config --help", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["config", "--help"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["config", "--help"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default"),
 	});

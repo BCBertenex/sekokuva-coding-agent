@@ -125,7 +125,7 @@ const { mockPluginPreload } = vi.hoisted(() => ({
 
 vi.mock("../../extensions/plugin/plugin-config-loader", () => ({
 	resolvePluginExecutionMode: () =>
-		process.env.CLINE_PLUGIN_MODE === "sandbox" ? "sandbox" : "worker",
+		process.env.SEKOKUVA_CA_PLUGIN_MODE === "sandbox" ? "sandbox" : "worker",
 	resolveAgentPluginPathsWithDiagnostics: () => ({
 		paths: [],
 		disabledPaths: [],
@@ -372,16 +372,16 @@ describe("hub daemon entry", () => {
 		vi.spyOn(process, "on").mockImplementation((() => process) as never);
 		vi.spyOn(process.stderr, "write").mockImplementation(() => true);
 		mockPluginPreload.mockClear();
-		const previous = process.env.CLINE_PLUGIN_MODE;
-		process.env.CLINE_PLUGIN_MODE = "sandbox";
+		const previous = process.env.SEKOKUVA_CA_PLUGIN_MODE;
+		process.env.SEKOKUVA_CA_PLUGIN_MODE = "sandbox";
 		try {
 			const { hubDaemonReady } = await import("./entry");
 			await hubDaemonReady;
 			await new Promise((resolve) => setTimeout(resolve, 10));
 			expect(mockPluginPreload).not.toHaveBeenCalled();
 		} finally {
-			if (previous === undefined) delete process.env.CLINE_PLUGIN_MODE;
-			else process.env.CLINE_PLUGIN_MODE = previous;
+			if (previous === undefined) delete process.env.SEKOKUVA_CA_PLUGIN_MODE;
+			else process.env.SEKOKUVA_CA_PLUGIN_MODE = previous;
 		}
 	});
 
@@ -392,8 +392,8 @@ describe("hub daemon entry", () => {
 		vi.spyOn(process, "on").mockImplementation((() => process) as never);
 		vi.spyOn(process.stderr, "write").mockImplementation(() => true);
 		mockPluginPreload.mockClear();
-		const previous = process.env.CLINE_PLUGIN_MODE;
-		delete process.env.CLINE_PLUGIN_MODE;
+		const previous = process.env.SEKOKUVA_CA_PLUGIN_MODE;
+		delete process.env.SEKOKUVA_CA_PLUGIN_MODE;
 		try {
 			const { hubDaemonReady } = await import("./entry");
 			await hubDaemonReady;
@@ -403,8 +403,8 @@ describe("hub daemon entry", () => {
 				expect.objectContaining({ pluginPaths: [] }),
 			);
 		} finally {
-			if (previous === undefined) delete process.env.CLINE_PLUGIN_MODE;
-			else process.env.CLINE_PLUGIN_MODE = previous;
+			if (previous === undefined) delete process.env.SEKOKUVA_CA_PLUGIN_MODE;
+			else process.env.SEKOKUVA_CA_PLUGIN_MODE = previous;
 		}
 	});
 

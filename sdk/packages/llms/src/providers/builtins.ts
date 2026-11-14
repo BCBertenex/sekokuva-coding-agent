@@ -1,6 +1,6 @@
 import {
 	ANTHROPIC_DEFAULT_MODEL_ID,
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	type GatewayModelDefinition,
 	type GatewayModelOperationCapability,
 	type GatewayModelToolCapability,
@@ -14,7 +14,7 @@ import {
 } from "@sekokuva-ca/shared";
 import { getGeneratedModelsForProvider } from "../catalog/catalog.generated-access";
 import { withInterleavedReasoningOverlay } from "../catalog/catalog-live";
-import { GENERATED_CLINE_RECOMMENDED_MODELS } from "../catalog/cline-recommended.generated";
+import { GENERATED_CLINE_RECOMMENDED_MODELS } from "../catalog/sekokuva-ca-recommended.generated";
 import { filterImageOutputModels } from "../catalog/model-filters";
 import {
 	isCanonicalModelIdForAliasRules,
@@ -33,10 +33,10 @@ import type {
 	ProviderFamily,
 } from "./builtin-types";
 import {
-	ClineFreeModelLimitError,
-	ClineNotSubscribedError,
-	ClineOrgIndividualInferenceSubscriptionError,
-	ClinePassLimitError,
+	SekoKuvaFreeModelLimitError,
+	SekoKuvaNotSubscribedError,
+	SekoKuvaOrgIndividualInferenceSubscriptionError,
+	SekoKuvaPassLimitError,
 	extractClinePassLimitMessage,
 	isClineFreeModelLimitMessage,
 	isClineNotSubscribedMessage,
@@ -64,7 +64,7 @@ export const DEFAULT_INTERNAL_OCA_BASE_URL =
 	"https://code-internal.aiservice.us-chicago-1.oci.oraclecloud.com/20250206/app/litellm";
 export const DEFAULT_EXTERNAL_OCA_BASE_URL =
 	"https://code.aiservice.us-chicago-1.oci.oraclecloud.com/20250206/app/litellm";
-const CLINE_PASS_PROVIDER_ID = "cline-pass";
+const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass";
 const OPENAI_CODEX_DEFAULT_MODEL_ID = "gpt-5.6-terra";
 const NATIVE_WEB_SEARCH_MODEL_TOOL_CAPABILITIES: readonly GatewayModelToolCapability[] =
 	[{ name: "web_search" }];
@@ -690,7 +690,7 @@ function createClineLikeSpec(
 		modelsProviderId: input.modelsProviderId,
 		modelsFactory: input.modelsFactory,
 		defaultModelId: input.defaultModelId,
-		apiKeyEnv: ["CLINE_API_KEY"],
+		apiKeyEnv: ["SEKOKUVA_CA_API_KEY"],
 		defaults: {
 			get baseUrl(): string {
 				return `${getClineEnvironmentConfig().apiBaseUrl}/api/v1`;
@@ -720,20 +720,20 @@ async function handleClineResponseError(
 		.catch(() => "");
 
 	if (isClineOrgIndividualInferenceSubscriptionMessage(body)) {
-		throw new ClineOrgIndividualInferenceSubscriptionError(providerId);
+		throw new SekoKuvaOrgIndividualInferenceSubscriptionError(providerId);
 	}
 
 	if (isClineFreeModelLimitMessage(body)) {
-		throw new ClineFreeModelLimitError(body, providerId);
+		throw new SekoKuvaFreeModelLimitError(body, providerId);
 	}
 
-	const clinePassLimitMessage = extractClinePassLimitMessage(body);
-	if (clinePassLimitMessage) {
-		throw new ClinePassLimitError(clinePassLimitMessage, providerId);
+	const sekokuvaCaPassLimitMessage = extractClinePassLimitMessage(body);
+	if (sekokuvaCaPassLimitMessage) {
+		throw new SekoKuvaPassLimitError(sekokuvaCaPassLimitMessage, providerId);
 	}
 
 	if (isClineNotSubscribedMessage(body)) {
-		throw new ClineNotSubscribedError(providerId);
+		throw new SekoKuvaNotSubscribedError(providerId);
 	}
 }
 
@@ -747,7 +747,7 @@ const cline = createClineLikeSpec({
 	// model. Core's resolveClineDefaultModelId prefers the live feed's first free.
 	defaultModelId:
 		GENERATED_CLINE_RECOMMENDED_MODELS.free?.[0]?.id ??
-		CLINE_DEFAULT_MODEL_ID,
+		SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	defaults: {
 		options: {
 			onResponseError: async (response: Response) => {
@@ -757,19 +757,19 @@ const cline = createClineLikeSpec({
 	},
 });
 
-const clinePass = createClineLikeSpec({
-	id: CLINE_PASS_PROVIDER_ID,
+const sekokuvaCaPass = createClineLikeSpec({
+	id: SEKOKUVA_CA_PASS_PROVIDER_ID,
 	family: "cline",
-	name: "ClinePass",
+	name: "SekoKuvaPass",
 	popular: 2,
-	description: "Cline API endpoint with ClinePass models",
-	modelsProviderId: CLINE_PASS_PROVIDER_ID,
-	defaultModelId: firstGeneratedModelId(CLINE_PASS_PROVIDER_ID),
+	description: "Cline API endpoint with SekoKuvaPass models",
+	modelsProviderId: SEKOKUVA_CA_PASS_PROVIDER_ID,
+	defaultModelId: firstGeneratedModelId(SEKOKUVA_CA_PASS_PROVIDER_ID),
 	metadata: { usageCostDisplay: "subscription" },
 	defaults: {
 		options: {
 			onResponseError: async (response: Response) => {
-				await handleClineResponseError(response, CLINE_PASS_PROVIDER_ID);
+				await handleClineResponseError(response, SEKOKUVA_CA_PASS_PROVIDER_ID);
 			},
 		},
 	},
@@ -822,7 +822,7 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		metadata: { apiKeyOptional: true },
 	},
 	cline,
-	clinePass,
+	sekokuvaCaPass,
 	{
 		id: "deepseek",
 		name: "DeepSeek",
@@ -1078,7 +1078,7 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		family: "openai-compatible",
 		popular: 20,
 		capabilities: ["reasoning", "prompt-cache"],
-		defaultModelId: CLINE_DEFAULT_MODEL_ID,
+		defaultModelId: SEKOKUVA_CA_DEFAULT_MODEL_ID,
 		apiKeyEnv: ["OPENROUTER_API_KEY"],
 		modelsProviderId: "openrouter",
 		docsUrl: "https://openrouter.ai/models",
@@ -1221,7 +1221,7 @@ const BUILTIN_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		// Anthropic's first-party API uses bare, dash-separated model ids
 		// (`claude-sonnet-5-5`) while gateways use the prefixed, dotted form
 		// (`anthropic/claude-sonnet-5.5`). Keep this in sync with
-		// CLINE_DEFAULT_MODEL_ID — it is the same model in Anthropic format.
+		// SEKOKUVA_CA_DEFAULT_MODEL_ID — it is the same model in Anthropic format.
 		defaultModelId: ANTHROPIC_DEFAULT_MODEL_ID,
 		apiKeyEnv: ["ANTHROPIC_API_KEY"],
 		modelsProviderId: "anthropic",

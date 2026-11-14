@@ -16,7 +16,7 @@ import {
 } from "@opentui-ui/dialog/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-	CLINE_PASS_NOTICE_ID,
+	SEKOKUVA_CA_PASS_NOTICE_ID,
 	shouldSuppressClineCliMigrationNoticeForActiveProvider,
 } from "../kanban-migration/notice";
 import { MigrationNoticeContent } from "../kanban-migration/notice-dialog";
@@ -113,7 +113,7 @@ function App(props: TuiProps) {
 		string | null
 	>(null);
 	const [appView, setAppView] = useState<AppView>(() => {
-		if (process.env.CLINE_FORCE_ONBOARDING === "1") return "onboarding";
+		if (process.env.SEKOKUVA_CA_FORCE_ONBOARDING === "1") return "onboarding";
 		if (!isProviderConfigured(props.config)) return "onboarding";
 		return isChatBackedStartupTarget(props.startupTarget) ||
 			session.entries.length > 0
@@ -601,7 +601,7 @@ function App(props: TuiProps) {
 		if (initialNoticeShownRef.current) return;
 		if (appView !== "home") return;
 		if (
-			notice.id === CLINE_PASS_NOTICE_ID &&
+			notice.id === SEKOKUVA_CA_PASS_NOTICE_ID &&
 			shouldSuppressClineCliMigrationNoticeForActiveProvider(currentProviderId)
 		) {
 			initialNoticeShownRef.current = true;

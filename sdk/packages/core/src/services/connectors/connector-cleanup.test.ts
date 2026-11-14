@@ -24,8 +24,8 @@ class FakeChild extends EventEmitter {
 describe("cleanupConnectorInstanceViaCli", () => {
 	afterEach(() => {
 		vi.clearAllMocks();
-		delete process.env.CLINE_SLACK_CONNECT_CHILD;
-		delete process.env.CLINE_RUN_AS_HUB_DAEMON;
+		delete process.env.SEKOKUVA_CA_SLACK_CONNECT_CHILD;
+		delete process.env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON;
 	});
 
 	it("invokes the CLI cleanup path with flags before the channel", async () => {
@@ -55,8 +55,8 @@ describe("cleanupConnectorInstanceViaCli", () => {
 	});
 
 	it("strips inherited daemon and connector-child markers", async () => {
-		process.env.CLINE_RUN_AS_HUB_DAEMON = "1";
-		process.env.CLINE_SLACK_CONNECT_CHILD = "1";
+		process.env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON = "1";
+		process.env.SEKOKUVA_CA_SLACK_CONNECT_CHILD = "1";
 		const child = new FakeChild();
 		let env: NodeJS.ProcessEnv = {};
 		const spawnProcess = vi.fn(
@@ -77,8 +77,8 @@ describe("cleanupConnectorInstanceViaCli", () => {
 		child.emit("close", 0);
 		await pending;
 
-		expect(env.CLINE_RUN_AS_HUB_DAEMON).toBeUndefined();
-		expect(env.CLINE_SLACK_CONNECT_CHILD).toBeUndefined();
+		expect(env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON).toBeUndefined();
+		expect(env.SEKOKUVA_CA_SLACK_CONNECT_CHILD).toBeUndefined();
 	});
 
 	it("reports a failing cleanup with the CLI's stderr", async () => {

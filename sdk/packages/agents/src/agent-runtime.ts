@@ -132,11 +132,11 @@ class ContextWindowOverflowError extends Error {
 	}
 }
 
-// Local `createUID` helper. The clinee source imports this from
+// Local `createUID` helper. The cline source imports this from
 // `@sekokuva-ca/shared` (see `packages/shared/dist/identifier.ts`), but
 // sdk-re's shared package does not expose it yet. Inlining here keeps
 // PLAN.md Step 1 scoped to `packages/agents/src/` and matches the
-// exact clinee implementation (`${prefix}_${nanoid(length)}`).
+// exact cline implementation (`${prefix}_${nanoid(length)}`).
 function createUID(prefix: string, length = 8): string {
 	return `${prefix}_${nanoid(length)}`;
 }
@@ -1675,7 +1675,7 @@ export class AgentRuntime {
 			distinctId: trimNonEmpty(this.config.distinctId),
 			clientName: trimNonEmpty(this.config.clientName),
 			clientVersion: trimNonEmpty(this.config.clientVersion),
-			clineCoreVersion: trimNonEmpty(this.config.clineCoreVersion),
+			sekokuvaCaCoreVersion: trimNonEmpty(this.config.sekokuvaCaCoreVersion),
 			sessionId: trimNonEmpty(this.config.sessionId),
 			agentId: this.state.agentId,
 			conversationId: trimNonEmpty(this.config.conversationId),
@@ -2740,10 +2740,10 @@ export class AgentRuntime {
 		const metadata = buildEventMetadata(event);
 		switch (event.type) {
 			case "run-started":
-				// Verbatim clinee calls `logger?.info?.(...)`. sdk-re's
+				// Verbatim cline calls `logger?.info?.(...)`. sdk-re's
 				// `BasicLogger` does not declare `info` (it uses `log`), so
 				// we narrow to an optional-info shape at the call site to
-				// preserve the clinee runtime contract without mutating
+				// preserve the cline runtime contract without mutating
 				// shared's `BasicLogger` interface.
 				(
 					this.config.logger as

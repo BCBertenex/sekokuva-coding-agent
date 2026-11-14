@@ -5,7 +5,7 @@ import { dirname } from "node:path";
 import {
 	type AgentToolContext,
 	type BasicLogger,
-	ClineCore,
+	SekoKuvaCore,
 	type CoreSessionEvent,
 	ensureCompatibleLocalHubUrl,
 	type ITelemetryService,
@@ -972,9 +972,9 @@ export function handleHubLiveEvent(
 		}
 		session.lastHubStatusSequence = event.sequence;
 	}
-	// The observer client and ClineCore's own hub client are separate sockets
+	// The observer client and SekoKuvaCore's own hub client are separate sockets
 	// that both receive this session's events. This projection only exists for
-	// sessions ClineCore is not subscribed to (it subscribes as a side effect
+	// sessions SekoKuvaCore is not subscribed to (it subscribes as a side effect
 	// of start/send/pending_prompts and unsubscribes on stop); once it is,
 	// `handleCoreSessionEvent` carries everything below and a second copy here
 	// would double every delta, tool row, and status change.
@@ -1303,7 +1303,7 @@ export async function initializeSessionManager(
 		return;
 	}
 	setHomeDirIfUnset(homedir());
-	const sessionManager = await ClineCore.create({
+	const sessionManager = await SekoKuvaCore.create({
 		clientName: "cline-code",
 		backendMode: "hub",
 		capabilities: createSidecarRuntimeCapabilities(
@@ -1420,7 +1420,7 @@ export async function connectRemoteSessionRuntime(
 ): Promise<SessionRuntimeBinding> {
 	const environmentId = connection.profile.id;
 	const existing = ctx.runtimeBindings.get(environmentId);
-	const sessionManager = await ClineCore.create({
+	const sessionManager = await SekoKuvaCore.create({
 		clientName: "cline-code",
 		backendMode: "remote",
 		capabilities: createSidecarRuntimeCapabilities(

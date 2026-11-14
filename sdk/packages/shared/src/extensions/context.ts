@@ -63,7 +63,7 @@ export interface WorkspaceContext extends WorkspaceInfo {
 	/** Human-readable workspace name shown in the system prompt */
 	workspaceName?: string;
 	/**
-	 * Pre-serialized workspace metadata block that replaces {{CLINE_METADATA}}
+	 * Pre-serialized workspace metadata block that replaces {{SEKOKUVA_CA_METADATA}}
 	 * in the system prompt template.
 	 */
 	metadata?: string;
@@ -92,7 +92,7 @@ export interface ExtensionContext {
 	session?: AgentExtensionSessionContext;
 	/**
 	 * Host-provided automation ingress for plugins. Present when the session is
-	 * started through a ClineCore instance with automation enabled.
+	 * started through a SekoKuvaCore instance with automation enabled.
 	 */
 	automation?: AgentExtensionAutomationContext;
 	logger?: BasicLogger;

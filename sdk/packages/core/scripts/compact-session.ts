@@ -17,7 +17,7 @@ type StrategySelection = CompactionStrategy | "both";
 
 const PROVIDER_API_KEY_ENV: Record<string, string> = {
 	anthropic: "ANTHROPIC_API_KEY",
-	cline: "CLINE_API_KEY",
+	cline: "SEKOKUVA_CA_API_KEY",
 	gemini: "GOOGLE_API_KEY",
 	mistral: "MISTRAL_API_KEY",
 	openai: "OPENAI_API_KEY",
@@ -45,7 +45,7 @@ Options:
 
 The directory must contain messages.json or exactly one *.messages.json file.
 For agentic compaction, provider API key defaults are ANTHROPIC_API_KEY,
-CLINE_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY, or MISTRAL_API_KEY, according
+SEKOKUVA_CA_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY, or MISTRAL_API_KEY, according
 to --provider.`);
 	process.exit(1);
 }

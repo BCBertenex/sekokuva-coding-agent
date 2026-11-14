@@ -146,7 +146,7 @@ function readFileIfExists(fs, filePath) {
 }
 
 function resolveClineDir(env, os, path) {
-	return env.CLINE_DIR?.trim() || path.join(os.homedir(), ".cline");
+	return env.SEKOKUVA_CA_DIR?.trim() || path.join(os.homedir(), ".cline");
 }
 
 /**

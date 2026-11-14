@@ -9,7 +9,7 @@ import {
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-	CLINE_RUN_AS_HUB_DAEMON_ENV,
+	SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV,
 	getClineClientIdentity,
 	isBunEmbeddedModulePath,
 	isHubDaemonProcess,
@@ -490,8 +490,8 @@ function resolveLaunchCommand(
 				}),
 				resolveSelfLauncherIdentity(),
 			),
-			CLINE_NO_INTERACTIVE: "1",
-			[CLINE_RUN_AS_HUB_DAEMON_ENV]: "1",
+			SEKOKUVA_CA_NO_INTERACTIVE: "1",
+			[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV]: "1",
 		},
 	};
 }
@@ -589,7 +589,7 @@ async function ensureDetachedHubServerLocked(
 		endpointOverrides.host !== undefined ||
 		endpointOverrides.port !== undefined ||
 		endpointOverrides.pathname !== undefined ||
-		!!process.env.CLINE_HUB_PORT?.trim();
+		!!process.env.SEKOKUVA_CA_HUB_PORT?.trim();
 	const endpoint = resolveHubEndpointOptions(endpointOverrides);
 	const expectedUrl = createHubServerUrl(
 		endpoint.host,

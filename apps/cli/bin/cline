@@ -7,7 +7,7 @@
 // has Bun embedded, so users don't need Bun installed.
 //
 // Resolution order:
-// 1. CLINE_BIN_PATH env var override
+// 1. SEKOKUVA_CA_BIN_PATH env var override
 // 2. Cached binary at bin/.cline (created by postinstall)
 // 3. Walk up node_modules to find the platform-specific package
 
@@ -20,7 +20,7 @@ const scriptPath = fs.realpathSync(__filename);
 const scriptDir = path.dirname(scriptPath);
 const childEnv = {
 	...process.env,
-	CLINE_WRAPPER_PATH: scriptPath,
+	SEKOKUVA_CA_WRAPPER_PATH: scriptPath,
 };
 
 // Auto-discover OS trust anchors and pass them to the Bun child via
@@ -31,7 +31,7 @@ try {
 	const caCerts = require("./ca-certs.cjs");
 	const outcome = caCerts.configureNodeExtraCaCerts(childEnv);
 	const debug =
-		process.env.CLINE_DEBUG === "1" || process.env.CLINE_DEBUG === "true";
+		process.env.SEKOKUVA_CA_DEBUG === "1" || process.env.SEKOKUVA_CA_DEBUG === "true";
 	// Not debug-gated: on old Nodes the harvest silently doing nothing is
 	// indistinguishable from a broken corporate proxy. Stamped per Node
 	// version so the nudge shows once, not on every command.
@@ -66,9 +66,21 @@ try {
 }
 
 function run(target) {
-	const result = childProcess.spawnSync(target, process.argv.slice(2), {
+	// Windows cannot spawn a `.cmd`/`.bat` shim directly (EINVAL); it needs a
+	// shell. A real executable must not go through one, or `cmd.exe` splits a
+	// path containing spaces. Mirrors `resolveWindowsSpawnOptions` in the SDK.
+	const extension = path.extname(target).toLowerCase();
+	const needsShell =
+		os.platform() === "win32" &&
+		(extension === ".cmd" || extension === ".bat" || !fs.existsSync(target));
+	const spawnTarget =
+		needsShell && /\s/.test(target) && !target.startsWith('"')
+			? `"${target}"`
+			: target;
+	const result = childProcess.spawnSync(spawnTarget, process.argv.slice(2), {
 		stdio: "inherit",
 		env: childEnv,
+		...(needsShell ? { shell: true } : {}),
 	});
 	if (result.error) {
 		console.error(result.error.message);
@@ -108,7 +120,7 @@ function run(target) {
 }
 
 // 1. Check env var override
-const envPath = process.env.CLINE_BIN_PATH;
+const envPath = process.env.SEKOKUVA_CA_BIN_PATH;
 if (envPath) {
 	run(envPath);
 }

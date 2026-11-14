@@ -20,7 +20,7 @@ describe("HistoryTransferPool", () => {
 	let directory: string;
 	beforeEach(async () => {
 		directory = await mkdtemp(join(tmpdir(), "hub-history-transfer-"));
-		vi.stubEnv("CLINE_DATA_DIR", directory);
+		vi.stubEnv("SEKOKUVA_CA_DATA_DIR", directory);
 	});
 	afterEach(async () => {
 		vi.useRealTimers();

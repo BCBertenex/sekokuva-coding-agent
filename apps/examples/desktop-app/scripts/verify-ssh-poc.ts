@@ -2,7 +2,7 @@ import { mkdtemp, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
-	ClineCore,
+	SekoKuvaCore,
 	ProviderSettingsManager,
 	RemoteEnvironmentService,
 	RuntimeOAuthTokenManager,
@@ -21,21 +21,21 @@ async function main(): Promise<void> {
 	const temporaryDirectory = await mkdtemp(join(tmpdir(), "cline-ssh-proof-"));
 	const service = new RemoteEnvironmentService({
 		profilesPath: join(temporaryDirectory, "remote-environments.json"),
-		helperBinaryPath: required("CLINE_SSH_TEST_HELPER"),
-		knownHostsPath: process.env.CLINE_SSH_TEST_KNOWN_HOSTS?.trim() || undefined,
+		helperBinaryPath: required("SEKOKUVA_CA_SSH_TEST_HELPER"),
+		knownHostsPath: process.env.SEKOKUVA_CA_SSH_TEST_KNOWN_HOSTS?.trim() || undefined,
 		commandTimeoutMs: 60_000,
 		uploadTimeoutMs: 5 * 60_000,
 	});
-	let core: ClineCore | undefined;
+	let core: SekoKuvaCore | undefined;
 
 	try {
-		const helperPath = required("CLINE_SSH_TEST_HELPER");
-		const workspaceRoot = required("CLINE_SSH_TEST_WORKSPACE");
+		const helperPath = required("SEKOKUVA_CA_SSH_TEST_HELPER");
+		const workspaceRoot = required("SEKOKUVA_CA_SSH_TEST_WORKSPACE");
 		const profile = await service.upsert({
 			name: "SSH proof host",
-			host: required("CLINE_SSH_TEST_HOST"),
-			user: process.env.CLINE_SSH_TEST_USER?.trim() || undefined,
-			identityFile: required("CLINE_SSH_TEST_KEY"),
+			host: required("SEKOKUVA_CA_SSH_TEST_HOST"),
+			user: process.env.SEKOKUVA_CA_SSH_TEST_USER?.trim() || undefined,
+			identityFile: required("SEKOKUVA_CA_SSH_TEST_KEY"),
 		});
 		const connection = await service.connect(profile.id);
 		const marker = await service.run(profile.id, {
@@ -75,7 +75,7 @@ async function main(): Promise<void> {
 		providerConfig.apiKey = apiKey;
 		providerConfig.accessToken = apiKey;
 
-		core = await ClineCore.create({
+		core = await SekoKuvaCore.create({
 			clientName: "cline-code",
 			backendMode: "remote",
 			remote: {
@@ -121,7 +121,7 @@ async function main(): Promise<void> {
 		await service.disconnect(profile.id);
 
 		const reconnected = await service.connect(profile.id);
-		core = await ClineCore.create({
+		core = await SekoKuvaCore.create({
 			clientName: "cline-code",
 			backendMode: "remote",
 			remote: {

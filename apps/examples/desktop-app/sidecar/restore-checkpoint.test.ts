@@ -9,19 +9,19 @@ import {
 } from "./session-data/messages";
 import type { SidecarContext } from "./types";
 
-const originalDataDir = process.env.CLINE_SESSION_DATA_DIR;
+const originalDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 let dataDir: string;
 
 beforeEach(() => {
 	dataDir = mkdtempSync(join(tmpdir(), "cline-restore-"));
-	process.env.CLINE_SESSION_DATA_DIR = dataDir;
+	process.env.SEKOKUVA_CA_SESSION_DATA_DIR = dataDir;
 });
 
 afterEach(() => {
 	if (originalDataDir === undefined) {
-		delete process.env.CLINE_SESSION_DATA_DIR;
+		delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 	} else {
-		process.env.CLINE_SESSION_DATA_DIR = originalDataDir;
+		process.env.SEKOKUVA_CA_SESSION_DATA_DIR = originalDataDir;
 	}
 	rmSync(dataDir, { force: true, recursive: true });
 });

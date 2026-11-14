@@ -25,7 +25,7 @@ vi.mock("@sekokuva-ca/core", async (importOriginal) => {
 	const actual = await importOriginal<typeof import("@sekokuva-ca/core")>();
 	return {
 		...actual,
-		ClineAccountService: class {
+		SekoKuvaAccountService: class {
 			constructor(options: {
 				apiBaseUrl: string;
 				getAuthToken: () => Promise<string | undefined | null>;
@@ -265,7 +265,7 @@ describe("loadClineAccountSnapshot", () => {
 	});
 
 	it("links to the web app's privacy settings when the account provides a path", async () => {
-		vi.stubEnv("CLINE_ENVIRONMENT", "staging");
+		vi.stubEnv("SEKOKUVA_CA_ENVIRONMENT", "staging");
 		coreMocks.getProviderSettings.mockReturnValue({
 			provider: "cline",
 			apiKey: "account-token",

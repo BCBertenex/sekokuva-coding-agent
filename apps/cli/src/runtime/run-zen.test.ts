@@ -50,7 +50,7 @@ import { runZen } from "./run-zen";
 
 describe("runZen", () => {
 	afterEach(() => {
-		delete process.env.CLINE_SESSION_BACKEND_MODE;
+		delete process.env.SEKOKUVA_CA_SESSION_BACKEND_MODE;
 		vi.clearAllMocks();
 	});
 

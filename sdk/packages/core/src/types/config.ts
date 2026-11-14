@@ -297,10 +297,10 @@ export interface CoreSessionConfig
 }
 
 /**
- * Public ClineCore start configuration. The execution host resolves `cwd`
+ * Public SekoKuvaCore start configuration. The execution host resolves `cwd`
  * before constructing a runtime, assigning the shared chat workspace when both
  * workspace paths are omitted.
  */
-export type ClineCoreStartConfig = Omit<CoreSessionConfig, "cwd"> & {
+export type SekoKuvaCoreStartConfig = Omit<CoreSessionConfig, "cwd"> & {
 	cwd?: string;
 };

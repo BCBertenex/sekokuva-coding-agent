@@ -48,7 +48,7 @@ async function withTempSettings(
 ): Promise<void> {
 	const root = mkdtempSync(join(tmpdir(), "cli-mcp-install-wizard-"));
 	const settingsPath = join(root, "cline_mcp_settings.json");
-	vi.stubEnv("CLINE_MCP_SETTINGS_PATH", settingsPath);
+	vi.stubEnv("SEKOKUVA_CA_MCP_SETTINGS_PATH", settingsPath);
 	try {
 		await run((name) => {
 			const written = JSON.parse(readFileSync(settingsPath, "utf8")) as {

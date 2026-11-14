@@ -87,15 +87,15 @@ function normalizeRuntimeConfig(input: {
 	runtimeConfig?: RuntimeLoggerConfig;
 }): Required<RuntimeLoggerConfig> {
 	const base = input.runtimeConfig;
-	const enabledEnv = process.env.CLINE_LOG_ENABLED?.trim();
+	const enabledEnv = process.env.SEKOKUVA_CA_LOG_ENABLED?.trim();
 	const enabled =
 		base?.enabled ??
 		!(enabledEnv === "0" || enabledEnv?.toLowerCase() === "false");
-	const level = normalizeLogLevel(base?.level ?? process.env.CLINE_LOG_LEVEL);
+	const level = normalizeLogLevel(base?.level ?? process.env.SEKOKUVA_CA_LOG_LEVEL);
 	const destination = base?.destination?.trim() || resolveCliLogPath();
 	const name =
 		base?.name?.trim() ||
-		process.env.CLINE_LOG_NAME?.trim() ||
+		process.env.SEKOKUVA_CA_LOG_NAME?.trim() ||
 		`${getCliBuildInfo().name}.${input.runtime}`;
 	const bindings = base?.bindings ?? {};
 

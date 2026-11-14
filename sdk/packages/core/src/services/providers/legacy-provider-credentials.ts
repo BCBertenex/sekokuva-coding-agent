@@ -8,7 +8,7 @@ import { resolveClineDataDir } from "@sekokuva-ca/shared/storage";
  */
 const LEGACY_SECRET_KEYS_BY_PROVIDER: Record<string, string[]> = {
 	"openai-codex": ["openai-codex-oauth-credentials"],
-	cline: ["cline:clineAccountId", "clineApiKey"],
+	cline: ["cline:sekokuvaCaAccountId", "sekokuvaCaApiKey"],
 };
 
 /**

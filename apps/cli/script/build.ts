@@ -139,13 +139,13 @@ for (const item of targets) {
 				...process.env,
 				HOME: smokeHome,
 				USERPROFILE: smokeHome,
-				CLINE_DIR: join(smokeHome, ".cline"),
-				CLINE_DATA_DIR: join(smokeHome, "data"),
+				SEKOKUVA_CA_DIR: join(smokeHome, ".cline"),
+				SEKOKUVA_CA_DATA_DIR: join(smokeHome, "data"),
 				// Keep clear of a developer's real hub: its discovery record
-				// (which CLINE_HUB_DISCOVERY_PATH can point anywhere) and the
+				// (which SEKOKUVA_CA_HUB_DISCOVERY_PATH can point anywhere) and the
 				// default port.
-				CLINE_HUB_DISCOVERY_PATH: join(smokeHome, "hub-discovery.json"),
-				CLINE_HUB_PORT: String(await findFreePort()),
+				SEKOKUVA_CA_HUB_DISCOVERY_PATH: join(smokeHome, "hub-discovery.json"),
+				SEKOKUVA_CA_HUB_PORT: String(await findFreePort()),
 			};
 			try {
 				await $`${outfile} hub start`.env(smokeEnv).quiet();

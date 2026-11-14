@@ -15,7 +15,7 @@ import { executePluginCommand, parsePluginCommand } from "./plugin-command-api";
 import { PluginCommandManager } from "./plugin-commands";
 
 const originalHome = process.env.HOME;
-const originalClineDir = process.env.CLINE_DIR;
+const originalClineDir = process.env.SEKOKUVA_CA_DIR;
 const roots: string[] = [];
 beforeEach(async () => {
 	const home = await workspace();

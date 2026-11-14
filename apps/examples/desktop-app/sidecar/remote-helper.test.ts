@@ -43,7 +43,7 @@ it("uses the bundled universal macOS CLI for Mac remotes", () => {
 					{
 						execPath: cli,
 						cwd: tmpdir(),
-						env: { CLINE_DESKTOP_CLI_PATH: cli },
+						env: { SEKOKUVA_CA_DESKTOP_CLI_PATH: cli },
 						platform: "darwin",
 					},
 				),
@@ -55,7 +55,7 @@ it("uses the bundled universal macOS CLI for Mac remotes", () => {
 				{
 					execPath: cli,
 					cwd: tmpdir(),
-					env: { CLINE_DESKTOP_CLI_PATH: cli },
+					env: { SEKOKUVA_CA_DESKTOP_CLI_PATH: cli },
 					platform: "darwin",
 				},
 			),
@@ -75,7 +75,7 @@ it("only offers a thin bundled macOS CLI to Mac remotes of its own architecture"
 		const options = {
 			execPath: cli,
 			cwd: tmpdir(),
-			env: { CLINE_DESKTOP_CLI_PATH: cli },
+			env: { SEKOKUVA_CA_DESKTOP_CLI_PATH: cli },
 			platform: "darwin" as const,
 		};
 		expect(
@@ -151,7 +151,7 @@ it("selects only the running Linux channels SSH helpers", () => {
 			resolveDesktopRemoteHelper(target, {
 				execPath: join(root, "usr", "bin", "cline-cli"),
 				cwd: tmpdir(),
-				env: { CLINE_REMOTE_HELPER_DIRECTORY: directory },
+				env: { SEKOKUVA_CA_REMOTE_HELPER_DIRECTORY: directory },
 			}),
 		).toBe(helper);
 		// A missing binary in this channel must not fall back to another app.
@@ -160,7 +160,7 @@ it("selects only the running Linux channels SSH helpers", () => {
 			resolveDesktopRemoteHelper(target, {
 				execPath: join(root, "usr", "bin", "cline-cli"),
 				cwd: tmpdir(),
-				env: { CLINE_REMOTE_HELPER_DIRECTORY: directory },
+				env: { SEKOKUVA_CA_REMOTE_HELPER_DIRECTORY: directory },
 			}),
 		).toBeUndefined();
 	} finally {

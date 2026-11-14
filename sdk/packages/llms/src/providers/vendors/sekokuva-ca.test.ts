@@ -5,7 +5,7 @@ import type {
 } from "@sekokuva-ca/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { composeAiSdkProviderOptions } from "../routing/provider-options";
-import { createCline, createClineProviderModule } from "./cline";
+import { createCline, createClineProviderModule } from "./sekokuva-ca";
 
 describe("createCline", () => {
 	const fetchMock = vi.fn<typeof fetch>();

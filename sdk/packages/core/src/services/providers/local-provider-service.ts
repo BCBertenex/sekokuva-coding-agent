@@ -29,7 +29,7 @@ import {
 	applyClineFeaturedModels,
 	getCachedClineRecommendedModels,
 	peekClineRecommendedModels,
-} from "../../services/llms/cline-recommended-models";
+} from "../../services/llms/sekokuva-ca-recommended-models";
 import {
 	getLiveModelsCatalog,
 	isPrivateModelCatalogProvider,
@@ -62,8 +62,8 @@ import { isProviderSettingsUsable } from "./provider-readiness";
 
 export { ensureCustomProvidersLoaded } from "./local-provider-registry";
 
-const CLINE_PROVIDER_ID = "cline";
-const CLINE_PASS_PROVIDER_ID = "cline-pass";
+const SEKOKUVA_CA_PROVIDER_ID = "cline";
+const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass";
 
 export interface ListLocalProvidersOptions {
 	isClinePassEnabled?: boolean;
@@ -189,7 +189,7 @@ async function resolveProviderModelMap(
 	const provider = await LlmsModels.getProvider(providerId);
 	const shouldLoadLiveCatalog =
 		!isPrivateModelCatalogProvider(providerId) && !provider?.modelsSourceUrl;
-	const isClinePass = providerId === CLINE_PASS_PROVIDER_ID;
+	const isClinePass = providerId === SEKOKUVA_CA_PASS_PROVIDER_ID;
 
 	const resolved = await resolveProviderConfig(
 		providerId,
@@ -979,7 +979,7 @@ export async function listLocalProviders(
 				);
 				const directSettings = state.providers[id]?.settings;
 				// Providers that store their credentials under another provider
-				// (ClinePass signs in as "cline") are enabled whenever that
+				// (SekoKuvaPass signs in as "cline") are enabled whenever that
 				// provider is: one Cline sign-in configures both, so both must
 				// show wherever `enabled` gates a picker.
 				const storageProviderId = getProviderAuthHandler(id)?.storageProviderId;
@@ -1065,7 +1065,7 @@ export async function listLocalProviders(
 	let providers = providerEntries.map((entry) => entry.provider);
 	if (options.isClinePassEnabled !== true) {
 		providers = providers.filter(
-			(provider) => provider.id !== CLINE_PASS_PROVIDER_ID,
+			(provider) => provider.id !== SEKOKUVA_CA_PASS_PROVIDER_ID,
 		);
 	}
 
@@ -1092,7 +1092,7 @@ export async function getLocalProviderModels(
 	const id = providerId.trim();
 	const modelMap = await resolveProviderModelMap(id, config, options);
 	let models = toSortedProviderModels(modelMap);
-	if (id === CLINE_PROVIDER_ID || id === CLINE_PASS_PROVIDER_ID) {
+	if (id === SEKOKUVA_CA_PROVIDER_ID || id === SEKOKUVA_CA_PASS_PROVIDER_ID) {
 		// Stamp the recommended-feed tiers onto the list so every client's
 		// picker gets Recommended/Free/Subscribed data without fetching and
 		// joining the feed itself. A miss only means models without tier

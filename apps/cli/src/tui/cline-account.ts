@@ -1,10 +1,10 @@
 import {
-	type ClineAccountBalance,
-	type ClineAccountOrganization,
-	type ClineAccountOrganizationBalance,
-	ClineAccountService,
-	type ClineAccountUser,
-	type ClineSubscriptionPlan,
+	type SekoKuvaAccountBalance,
+	type SekoKuvaAccountOrganization,
+	type SekoKuvaAccountOrganizationBalance,
+	SekoKuvaAccountService,
+	type SekoKuvaAccountUser,
+	type SekoKuvaSubscriptionPlan,
 	formatProviderOAuthApiKey,
 	getPersistedProviderApiKey,
 	getProviderOAuthCredentialsFromSettings,
@@ -21,19 +21,19 @@ import { formatCreditBalance, normalizeCreditBalance } from "../utils/output";
 import { identifyTelemetryAccount } from "../utils/telemetry";
 import type { Config } from "../utils/types";
 
-export const CLINE_CREDITS_DASHBOARD_URL =
+export const SEKOKUVA_CA_CREDITS_DASHBOARD_URL =
 	"https://app.cline.bot/dashboard/account?tab=credits";
 
 type ClineAccountConfig = Pick<Config, "apiKey" | "logger" | "providerId">;
 
-const CLINE_PASS_PROVIDER_ID = "cline-pass";
+const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass";
 
 export interface ClineAccountSnapshot {
-	user: ClineAccountUser;
-	balance: ClineAccountBalance;
-	organizationBalance: ClineAccountOrganizationBalance | null;
-	organizations: ClineAccountOrganization[];
-	activeOrganization: ClineAccountOrganization | null;
+	user: SekoKuvaAccountUser;
+	balance: SekoKuvaAccountBalance;
+	organizationBalance: SekoKuvaAccountOrganizationBalance | null;
+	organizations: SekoKuvaAccountOrganization[];
+	activeOrganization: SekoKuvaAccountOrganization | null;
 	displayedBalance: number;
 	privacySettingsUrl?: string;
 }
@@ -137,7 +137,7 @@ export async function createClineAccountService(input: {
 	clineApiBaseUrl?: string;
 	clineProviderSettings?: ProviderSettings;
 	providerSettingsManager?: ProviderSettingsManager;
-}): Promise<ClineAccountService | undefined> {
+}): Promise<SekoKuvaAccountService | undefined> {
 	const manager =
 		input.providerSettingsManager ?? new ProviderSettingsManager();
 	const settings =
@@ -155,7 +155,7 @@ export async function createClineAccountService(input: {
 	if (!authToken) {
 		return undefined;
 	}
-	return new ClineAccountService({
+	return new SekoKuvaAccountService({
 		apiBaseUrl,
 		getAuthToken: async () => authToken,
 	});
@@ -222,7 +222,7 @@ export async function loadIndividualSubscriptionPlans(input: {
 	config: ClineAccountConfig;
 	clineApiBaseUrl?: string;
 	clineProviderSettings?: ProviderSettings;
-}): Promise<ClineSubscriptionPlan[]> {
+}): Promise<SekoKuvaSubscriptionPlan[]> {
 	const service = await createClineAccountService(input);
 	if (!service) {
 		throw new Error("No Cline account auth token found");
@@ -260,7 +260,7 @@ export async function loadCurrentUserPlanFromProviderSettings(input: {
 export async function loadIndividualSubscriptionPlansFromProviderSettings(input: {
 	providerSettingsManager: ProviderSettingsManager;
 	clineApiBaseUrl?: string;
-}): Promise<ClineSubscriptionPlan[]> {
+}): Promise<SekoKuvaSubscriptionPlan[]> {
 	const service = await createClineAccountService({
 		config: { apiKey: "", logger: undefined, providerId: "cline" },
 		clineApiBaseUrl: input.clineApiBaseUrl,
@@ -289,7 +289,7 @@ export async function onProviderChange(input: {
 	config: ClineAccountConfig;
 	providerId: string;
 }): Promise<void> {
-	if (input.providerId === CLINE_PASS_PROVIDER_ID) {
+	if (input.providerId === SEKOKUVA_CA_PASS_PROVIDER_ID) {
 		return onChangeToClinePass(input.config);
 	}
 

@@ -28,8 +28,8 @@ describe("provider model catalog backend smoke", () => {
 
 	beforeAll(async () => {
 		clineDir = await fs.mkdtemp(path.join(os.tmpdir(), "cline-provider-catalog-smoke-"))
-		originalClineDir = process.env.CLINE_DIR
-		process.env.CLINE_DIR = clineDir
+		originalClineDir = process.env.SEKOKUVA_CA_DIR
+		process.env.SEKOKUVA_CA_DIR = clineDir
 		await StateManager.initialize(createStorageContext({ clineDir, workspacePath: clineDir }))
 		store = createProviderConfigStore()
 		catalog = createProviderCatalog(store)
@@ -42,9 +42,9 @@ describe("provider model catalog backend smoke", () => {
 	afterAll(async () => {
 		await StateManager.get().flushPendingState()
 		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR
+			delete process.env.SEKOKUVA_CA_DIR
 		} else {
-			process.env.CLINE_DIR = originalClineDir
+			process.env.SEKOKUVA_CA_DIR = originalClineDir
 		}
 		await StateManager.get().reInitialize()
 		await fs.rm(clineDir, { recursive: true, force: true })

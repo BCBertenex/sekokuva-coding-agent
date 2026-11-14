@@ -20,7 +20,7 @@ vi.mock("node:fs", async () => {
 const originalArgv = [...process.argv];
 const originalStdinIsTTY = process.stdin.isTTY;
 const originalStdoutIsTTY = process.stdout.isTTY;
-const originalGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+const originalGlobalSettingsPath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 const mockState = vi.hoisted(() => ({
 	coreImports: 0,
 	wizardImports: [] as string[],
@@ -247,7 +247,7 @@ describe("runCli lightweight command dispatch", () => {
 		// Startup now reads persisted general settings; point the resolver at a
 		// fresh temp file so the developer's real settings cannot leak in.
 		globalSettingsRoot = mkdtempSync(join(tmpdir(), "cline-cli-main-test-"));
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			globalSettingsRoot,
 			"global-settings.json",
 		);
@@ -359,9 +359,9 @@ describe("runCli lightweight command dispatch", () => {
 		process.exitCode = undefined;
 
 		if (originalGlobalSettingsPath === undefined) {
-			delete process.env.CLINE_GLOBAL_SETTINGS_PATH;
+			delete process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
 		}
 		if (globalSettingsRoot) {
 			rmSync(globalSettingsRoot, { recursive: true, force: true });
@@ -1064,9 +1064,9 @@ describe("runCli lightweight command dispatch", () => {
 
 	describe("persisted general settings at startup", () => {
 		function writePersistedSettings(settings: Record<string, unknown>) {
-			const path = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+			const path = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 			if (!path) {
-				throw new Error("CLINE_GLOBAL_SETTINGS_PATH is not set");
+				throw new Error("SEKOKUVA_CA_GLOBAL_SETTINGS_PATH is not set");
 			}
 			writeFileSync(path, JSON.stringify(settings));
 		}

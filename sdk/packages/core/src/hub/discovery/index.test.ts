@@ -15,26 +15,26 @@ import {
 } from ".";
 
 type EnvSnapshot = {
-	CLINE_DATA_DIR: string | undefined;
-	CLINE_HUB_BUILD_ID: string | undefined;
-	CLINE_HUB_BUILD_EPOCH_MS: string | undefined;
-	CLINE_HUB_DISCOVERY_PATH: string | undefined;
+	SEKOKUVA_CA_DATA_DIR: string | undefined;
+	SEKOKUVA_CA_HUB_BUILD_ID: string | undefined;
+	SEKOKUVA_CA_HUB_BUILD_EPOCH_MS: string | undefined;
+	SEKOKUVA_CA_HUB_DISCOVERY_PATH: string | undefined;
 };
 
 function captureEnv(): EnvSnapshot {
 	return {
-		CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
-		CLINE_HUB_BUILD_ID: process.env.CLINE_HUB_BUILD_ID,
-		CLINE_HUB_BUILD_EPOCH_MS: process.env.CLINE_HUB_BUILD_EPOCH_MS,
-		CLINE_HUB_DISCOVERY_PATH: process.env.CLINE_HUB_DISCOVERY_PATH,
+		SEKOKUVA_CA_DATA_DIR: process.env.SEKOKUVA_CA_DATA_DIR,
+		SEKOKUVA_CA_HUB_BUILD_ID: process.env.SEKOKUVA_CA_HUB_BUILD_ID,
+		SEKOKUVA_CA_HUB_BUILD_EPOCH_MS: process.env.SEKOKUVA_CA_HUB_BUILD_EPOCH_MS,
+		SEKOKUVA_CA_HUB_DISCOVERY_PATH: process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH,
 	};
 }
 
 function restoreEnv(snapshot: EnvSnapshot): void {
-	process.env.CLINE_DATA_DIR = snapshot.CLINE_DATA_DIR;
-	process.env.CLINE_HUB_BUILD_ID = snapshot.CLINE_HUB_BUILD_ID;
-	process.env.CLINE_HUB_BUILD_EPOCH_MS = snapshot.CLINE_HUB_BUILD_EPOCH_MS;
-	process.env.CLINE_HUB_DISCOVERY_PATH = snapshot.CLINE_HUB_DISCOVERY_PATH;
+	process.env.SEKOKUVA_CA_DATA_DIR = snapshot.SEKOKUVA_CA_DATA_DIR;
+	process.env.SEKOKUVA_CA_HUB_BUILD_ID = snapshot.SEKOKUVA_CA_HUB_BUILD_ID;
+	process.env.SEKOKUVA_CA_HUB_BUILD_EPOCH_MS = snapshot.SEKOKUVA_CA_HUB_BUILD_EPOCH_MS;
+	process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = snapshot.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 }
 
 describe("hub discovery", () => {
@@ -46,8 +46,8 @@ describe("hub discovery", () => {
 
 	it("stores shared hub discovery under the locks directory by default", () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
+		process.env.SEKOKUVA_CA_DATA_DIR = "/tmp/cline-data";
 
 		expect(resolveHubOwnerContext("shared").discoveryPath).toBe(
 			join(
@@ -62,7 +62,7 @@ describe("hub discovery", () => {
 
 	it("honors an explicit hub discovery path override", () => {
 		snapshot = captureEnv();
-		process.env.CLINE_HUB_DISCOVERY_PATH = "/tmp/custom-hub-discovery.json";
+		process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = "/tmp/custom-hub-discovery.json";
 
 		expect(resolveHubOwnerContext("shared").discoveryPath).toBe(
 			"/tmp/custom-hub-discovery.json",
@@ -71,10 +71,10 @@ describe("hub discovery", () => {
 
 	it("allows tests to override the unbundled source build identity", () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_BUILD_ID;
+		delete process.env.SEKOKUVA_CA_HUB_BUILD_ID;
 		expect(resolveHubBuildId()).toMatch(/^source-/);
 
-		process.env.CLINE_HUB_BUILD_ID = "e2e-build";
+		process.env.SEKOKUVA_CA_HUB_BUILD_ID = "e2e-build";
 		expect(resolveHubBuildId()).toBe("e2e-build");
 	});
 
@@ -104,16 +104,16 @@ describe("hub discovery", () => {
 
 	it("allows tests to override the build epoch and treats sources as unordered", () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_BUILD_EPOCH_MS;
+		delete process.env.SEKOKUVA_CA_HUB_BUILD_EPOCH_MS;
 		expect(resolveHubBuildEpochMs()).toBeUndefined();
 
-		process.env.CLINE_HUB_BUILD_EPOCH_MS = "12345";
+		process.env.SEKOKUVA_CA_HUB_BUILD_EPOCH_MS = "12345";
 		expect(resolveHubBuildEpochMs()).toBe(12345);
 	});
 
 	it("retires a managed Hub only when this build is strictly newer", () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_BUILD_EPOCH_MS;
+		delete process.env.SEKOKUVA_CA_HUB_BUILD_EPOCH_MS;
 		const self = {
 			buildId: "current-build",
 			buildEpochMs: 1_000,
@@ -195,8 +195,8 @@ describe("hub discovery", () => {
 
 	it("writes and clears discovery records at the resolved location", async () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
+		process.env.SEKOKUVA_CA_DATA_DIR = "/tmp/cline-data";
 
 		const discoveryPath = resolveHubOwnerContext("shared").discoveryPath;
 		const record = {
@@ -227,8 +227,8 @@ describe("hub discovery", () => {
 
 	it("rejects discovery records without an auth token", async () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
+		process.env.SEKOKUVA_CA_DATA_DIR = "/tmp/cline-data";
 
 		const discoveryPath = resolveHubOwnerContext("missing-auth").discoveryPath;
 		await mkdir(dirname(discoveryPath), { recursive: true });
@@ -253,8 +253,8 @@ describe("hub discovery", () => {
 
 	it("ignores invalid records for recovery but rejects them for shutdown", async () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
+		process.env.SEKOKUVA_CA_DATA_DIR = "/tmp/cline-data";
 		const discoveryPath =
 			resolveHubOwnerContext("invalid-record").discoveryPath;
 		await mkdir(dirname(discoveryPath), { recursive: true });
@@ -270,8 +270,8 @@ describe("hub discovery", () => {
 
 	it("propagates discovery read errors instead of reporting absence", async () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
+		process.env.SEKOKUVA_CA_DATA_DIR = "/tmp/cline-data";
 		const discoveryPath = resolveHubOwnerContext(
 			"directory-read-error",
 		).discoveryPath;
@@ -287,8 +287,8 @@ describe("hub discovery", () => {
 
 	it("serializes generation cleanup with replacement publication", async () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
+		process.env.SEKOKUVA_CA_DATA_DIR = "/tmp/cline-data";
 		const discoveryPath = resolveHubOwnerContext(
 			"generation-mutation-race",
 		).discoveryPath;

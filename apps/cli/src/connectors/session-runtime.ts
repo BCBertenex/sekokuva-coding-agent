@@ -6,7 +6,7 @@ import {
 	ProviderSettingsManager,
 	SqliteSessionStore,
 } from "@sekokuva-ca/core";
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 import type { Thread } from "chat";
 import {
 	ensureOAuthProviderApiKey,
@@ -120,7 +120,7 @@ export async function buildConnectorStartRequest(input: {
 			selectedProviderSettings?.model ||
 			input.defaultModel ||
 			usableProviderDefault ||
-			CLINE_DEFAULT_MODEL_ID,
+			SEKOKUVA_CA_DEFAULT_MODEL_ID,
 		mode: input.options.mode,
 		apiKey,
 		systemPrompt,

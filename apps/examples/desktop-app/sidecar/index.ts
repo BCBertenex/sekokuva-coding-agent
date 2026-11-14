@@ -230,10 +230,10 @@ async function main(desktopCliPath?: string) {
 	// settled the hub state by the time this runs. The broadcast reaches
 	// webviews that are already connected; the replay in
 	// createWebSocketHandler covers ones that connect later. Skipped when
-	// CLINE_HUB_PORT pins an explicit endpoint, matching the watcher: such
+	// SEKOKUVA_CA_HUB_PORT pins an explicit endpoint, matching the watcher: such
 	// hosts keep protocol-only compatibility and must not show update prompts.
 	function checkStartupHubBuildMismatch(): void {
-		if (process.env.CLINE_HUB_PORT?.trim()) return;
+		if (process.env.SEKOKUVA_CA_HUB_PORT?.trim()) return;
 		void checkManagedHubBuildMismatch()
 			.then((mismatch) => {
 				if (!mismatch || ctx.hubBuildMismatch) {

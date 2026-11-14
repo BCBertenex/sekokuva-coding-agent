@@ -1,7 +1,7 @@
 import {
 	addLocalProvider,
-	type ClineAccountActionRequest,
-	ClineAccountService,
+	type SekoKuvaAccountActionRequest,
+	SekoKuvaAccountService,
 	ensureCustomProvidersLoaded,
 	executeClineAccountAction,
 	formatProviderOAuthApiKey,
@@ -188,12 +188,12 @@ export async function handleDesktopCommand(
 		if (!authToken) {
 			throw new Error("No Cline account auth token found");
 		}
-		const accountService = new ClineAccountService({
+		const accountService = new SekoKuvaAccountService({
 			apiBaseUrl,
 			getAuthToken: async () => authToken,
 		});
 		return await executeClineAccountAction(
-			args as ClineAccountActionRequest,
+			args as SekoKuvaAccountActionRequest,
 			accountService,
 		);
 	}

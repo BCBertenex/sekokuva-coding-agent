@@ -45,8 +45,8 @@ let previousClineDir: string | undefined;
 
 beforeEach(async () => {
 	tempClineDir = await mkdtemp(join(tmpdir(), "desktop-marketplace-"));
-	previousClineDir = process.env.CLINE_DIR;
-	process.env.CLINE_DIR = tempClineDir;
+	previousClineDir = process.env.SEKOKUVA_CA_DIR;
+	process.env.SEKOKUVA_CA_DIR = tempClineDir;
 	installPluginMock.mockReset().mockImplementation(async (options) => ({
 		source: options.source,
 		installPath: goalInstallDir(),
@@ -59,9 +59,9 @@ beforeEach(async () => {
 afterEach(async () => {
 	vi.unstubAllEnvs();
 	if (previousClineDir === undefined) {
-		delete process.env.CLINE_DIR;
+		delete process.env.SEKOKUVA_CA_DIR;
 	} else {
-		process.env.CLINE_DIR = previousClineDir;
+		process.env.SEKOKUVA_CA_DIR = previousClineDir;
 	}
 	await rm(tempClineDir, { recursive: true, force: true });
 });
@@ -176,8 +176,8 @@ describe("official plugin install detection", () => {
 
 	it("registers MCP servers through the Hub API, honoring the -- args separator", async () => {
 		const settingsPath = join(tempClineDir, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		const previousSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const install = vi.fn(async (args: string[]) =>
 				installMcpServer(parseMcpInstallArgs(args)),
@@ -217,9 +217,9 @@ describe("official plugin install detection", () => {
 			});
 		} finally {
 			if (previousSettingsPath === undefined) {
-				delete process.env.CLINE_MCP_SETTINGS_PATH;
+				delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 			} else {
-				process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+				process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 			}
 		}
 	});

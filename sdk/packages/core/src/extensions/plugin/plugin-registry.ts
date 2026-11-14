@@ -39,7 +39,7 @@ export const DEFAULT_PLUGIN_TOOL_TIMEOUT_MS = 60_000;
 /** Consecutive call failures after which a plugin is turned off. */
 export const DEFAULT_PLUGIN_FAILURE_THRESHOLD = 5;
 
-const PLUGIN_IMPORT_TIMEOUT_ENV = "CLINE_PLUGIN_IMPORT_TIMEOUT_MS";
+const PLUGIN_IMPORT_TIMEOUT_ENV = "SEKOKUVA_CA_PLUGIN_IMPORT_TIMEOUT_MS";
 
 export type PluginHookErrorMode = "ignore" | "throw";
 

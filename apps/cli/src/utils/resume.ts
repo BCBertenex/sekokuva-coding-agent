@@ -1,8 +1,8 @@
-import type { ClineCore } from "@sekokuva-ca/core";
+import type { SekoKuvaCore } from "@sekokuva-ca/core";
 import type { MessageWithMetadata } from "@sekokuva-ca/shared";
 
 export async function loadInteractiveResumeMessages(
-	sessionManager: ClineCore,
+	sessionManager: SekoKuvaCore,
 	resumeSessionId?: string,
 ): Promise<MessageWithMetadata[] | undefined> {
 	const target = resumeSessionId?.trim();

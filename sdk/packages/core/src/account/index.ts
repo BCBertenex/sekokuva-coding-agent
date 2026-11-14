@@ -1,29 +1,29 @@
 export {
-	ClineAccountService,
-	type ClineAccountServiceOptions,
-} from "./cline-account-service";
+	SekoKuvaAccountService,
+	type SekoKuvaAccountServiceOptions,
+} from "./sekokuva-ca-account-service";
 export {
-	type ClineAccountOperations,
+	type SekoKuvaAccountOperations,
 	executeClineAccountAction,
 	isClineAccountActionRequest,
 	type ProviderActionExecutor,
 	RpcClineAccountService,
 } from "./rpc";
 export {
-	type ClineAccountTelemetryIdentity,
+	type SekoKuvaAccountTelemetryIdentity,
 	persistClineAccountTelemetryIdentity,
 	resolveClineAccountTelemetryIdentity,
 } from "./telemetry";
 export type {
-	ClineAccountBalance,
-	ClineAccountOrganization,
-	ClineAccountOrganizationBalance,
-	ClineAccountOrganizationUsageTransaction,
-	ClineAccountPaymentTransaction,
-	ClineAccountUsageTransaction,
-	ClineAccountUser,
-	ClineOrganization,
-	ClineSubscriptionPlan,
+	SekoKuvaAccountBalance,
+	SekoKuvaAccountOrganization,
+	SekoKuvaAccountOrganizationBalance,
+	SekoKuvaAccountOrganizationUsageTransaction,
+	SekoKuvaAccountPaymentTransaction,
+	SekoKuvaAccountUsageTransaction,
+	SekoKuvaAccountUser,
+	SekoKuvaOrganization,
+	SekoKuvaSubscriptionPlan,
 	FeaturebaseTokenResponse,
 	UserCurrentPlan,
 	UserRemoteConfigOrganization,

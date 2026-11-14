@@ -1,18 +1,18 @@
 import { describe, expect, it } from "vitest";
 import {
 	augmentNodeCommandForDebug,
-	CLINE_BUILD_ENV_ENV,
-	CLINE_DEBUG_HOST_ENV,
-	CLINE_DEBUG_PORT_BASE_ENV,
+	SEKOKUVA_CA_BUILD_ENV_ENV,
+	SEKOKUVA_CA_DEBUG_HOST_ENV,
+	SEKOKUVA_CA_DEBUG_PORT_BASE_ENV,
 	resolveClineBuildEnv,
 	withResolvedClineBuildEnv,
 } from "./build-env";
 
 describe("build env helpers", () => {
-	it("prefers explicit CLINE_BUILD_ENV", () => {
+	it("prefers explicit SEKOKUVA_CA_BUILD_ENV", () => {
 		expect(
 			resolveClineBuildEnv({
-				env: { [CLINE_BUILD_ENV_ENV]: "development", NODE_ENV: "production" },
+				env: { [SEKOKUVA_CA_BUILD_ENV_ENV]: "development", NODE_ENV: "production" },
 			}),
 		).toBe("development");
 	});
@@ -48,10 +48,10 @@ describe("build env helpers", () => {
 		).toBe("production");
 	});
 
-	it("materializes CLINE_BUILD_ENV when absent", () => {
+	it("materializes SEKOKUVA_CA_BUILD_ENV when absent", () => {
 		expect(
 			withResolvedClineBuildEnv({ NODE_ENV: "development" }, { execArgv: [] })[
-				CLINE_BUILD_ENV_ENV
+				SEKOKUVA_CA_BUILD_ENV_ENV
 			],
 		).toBe("development");
 	});
@@ -59,7 +59,7 @@ describe("build env helpers", () => {
 	it("adds dynamic inspect and source maps for node commands in development", () => {
 		expect(
 			augmentNodeCommandForDebug(["node", "script.js"], {
-				env: { [CLINE_BUILD_ENV_ENV]: "development" },
+				env: { [SEKOKUVA_CA_BUILD_ENV_ENV]: "development" },
 				debugRole: "rpc",
 			}),
 		).toEqual([
@@ -74,9 +74,9 @@ describe("build env helpers", () => {
 		expect(
 			augmentNodeCommandForDebug(["node", "script.js"], {
 				env: {
-					[CLINE_BUILD_ENV_ENV]: "development",
-					[CLINE_DEBUG_HOST_ENV]: "0.0.0.0",
-					[CLINE_DEBUG_PORT_BASE_ENV]: "9500",
+					[SEKOKUVA_CA_BUILD_ENV_ENV]: "development",
+					[SEKOKUVA_CA_DEBUG_HOST_ENV]: "0.0.0.0",
+					[SEKOKUVA_CA_DEBUG_PORT_BASE_ENV]: "9500",
 				},
 				debugRole: "plugin-sandbox",
 			}),
@@ -91,7 +91,7 @@ describe("build env helpers", () => {
 	it("adds inspect and source maps for bun commands in development", () => {
 		expect(
 			augmentNodeCommandForDebug(["/usr/local/bin/bun", "script.js"], {
-				env: { [CLINE_BUILD_ENV_ENV]: "development" },
+				env: { [SEKOKUVA_CA_BUILD_ENV_ENV]: "development" },
 				debugRole: "rpc",
 			}),
 		).toEqual([
@@ -106,7 +106,7 @@ describe("build env helpers", () => {
 		expect(
 			augmentNodeCommandForDebug(["node", "--inspect=9229", "script.js"], {
 				env: {
-					[CLINE_BUILD_ENV_ENV]: "development",
+					[SEKOKUVA_CA_BUILD_ENV_ENV]: "development",
 					NODE_OPTIONS: "--enable-source-maps",
 				},
 			}),

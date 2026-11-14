@@ -1,6 +1,6 @@
 import type { ModelInfo } from "@shared/api"
 import { openAiModelInfoSafeDefaults } from "@shared/api"
-import { CLINE_RECOMMENDED_MODELS_FALLBACK } from "@shared/cline/recommended-models"
+import { SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK } from "@shared/cline/recommended-models"
 import { EmptyRequest } from "@shared/proto/cline/common"
 import { type ClineRecommendedModel, ClineRecommendedModelsResponse } from "@shared/proto/cline/models"
 import { Mode } from "@shared/storage/types"
@@ -25,8 +25,8 @@ interface ClinePassProviderProps {
 	currentMode: Mode
 }
 
-const CLINE_PASS_PROVIDER_ID = "cline-pass"
-const CLINE_PASS_MODEL_ID_PREFIX = "cline-pass/"
+const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass"
+const SEKOKUVA_CA_PASS_MODEL_ID_PREFIX = "cline-pass/"
 const FREE_TAB_DESCRIPTION = "Try with limited usage, separate from ClinePass quota."
 
 interface FeaturedTabEntry {
@@ -57,7 +57,7 @@ function toSubscribedEntry(model: Pick<ClineRecommendedModel, "id" | "name" | "d
 	// The whole list is included with the plan, so no per-card label chip
 	return {
 		id: model.id,
-		displayName: model.name || model.id.replace(CLINE_PASS_MODEL_ID_PREFIX, ""),
+		displayName: model.name || model.id.replace(SEKOKUVA_CA_PASS_MODEL_ID_PREFIX, ""),
 		description: model.description || "",
 		label: "",
 	}
@@ -87,9 +87,9 @@ function toFreeEntry(model: Pick<ClineRecommendedModel, "id" | "name" | "descrip
  * same Cline API — free models simply ride usage billing at $0).
  */
 export const ClinePassProvider = ({ showModelOptions, isPopup, currentMode }: ClinePassProviderProps) => {
-	const { models, defaultModelId, isLoading, isStale, error } = useProviderModels(CLINE_PASS_PROVIDER_ID)
-	const { config, write, commitSelection, reasoningEffort } = useProviderConfig(CLINE_PASS_PROVIDER_ID)
-	const { selectedModel, commitModelSelection } = useProviderModelSelection(CLINE_PASS_PROVIDER_ID, currentMode, {
+	const { models, defaultModelId, isLoading, isStale, error } = useProviderModels(SEKOKUVA_CA_PASS_PROVIDER_ID)
+	const { config, write, commitSelection, reasoningEffort } = useProviderConfig(SEKOKUVA_CA_PASS_PROVIDER_ID)
+	const { selectedModel, commitModelSelection } = useProviderModelSelection(SEKOKUVA_CA_PASS_PROVIDER_ID, currentMode, {
 		models,
 		defaultModelId,
 		config,
@@ -133,13 +133,13 @@ export const ClinePassProvider = ({ showModelOptions, isPopup, currentMode }: Cl
 			return subscribedModels.map(toSubscribedEntry).filter((entry): entry is FeaturedTabEntry => entry !== null)
 		}
 		return Object.keys(models ?? {})
-			.filter((id) => id.startsWith(CLINE_PASS_MODEL_ID_PREFIX))
+			.filter((id) => id.startsWith(SEKOKUVA_CA_PASS_MODEL_ID_PREFIX))
 			.map((id) => toSubscribedEntry({ id, name: models[id]?.name ?? "", description: models[id]?.description ?? "" }))
 			.filter((entry): entry is FeaturedTabEntry => entry !== null)
 	}, [subscribedModels, models])
 
 	const freeCards = useMemo(() => {
-		const source = freeModels.length > 0 ? freeModels : CLINE_RECOMMENDED_MODELS_FALLBACK.free
+		const source = freeModels.length > 0 ? freeModels : SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK.free
 		return source.map(toFreeEntry).filter((entry): entry is FeaturedTabEntry => entry !== null)
 	}, [freeModels])
 
@@ -158,7 +158,7 @@ export const ClinePassProvider = ({ showModelOptions, isPopup, currentMode }: Cl
 
 	const handleFeaturedModelSelect = (modelId: string) => {
 		handleModelSelect({
-			providerId: CLINE_PASS_PROVIDER_ID,
+			providerId: SEKOKUVA_CA_PASS_PROVIDER_ID,
 			modelId,
 			modelInfo: models?.[modelId] ?? clinePassFallbackModelInfo(modelId),
 		})

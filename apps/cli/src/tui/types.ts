@@ -2,7 +2,7 @@ import type {
 	AgentEvent,
 	AgentMode,
 	CheckpointEntry,
-	ClineSubscriptionPlan,
+	SekoKuvaSubscriptionPlan,
 	TeamEvent,
 } from "@sekokuva-ca/core";
 import type { HubCloudSessionClient } from "@sekokuva-ca/core/cloud";
@@ -174,7 +174,7 @@ export interface TuiProps {
 	subscribeAdditionalSlashCommands?: (listener: () => void) => () => void;
 	loadWelcomeLine?: () => Promise<string | undefined>;
 	loadClineAccount: () => Promise<ClineAccountSnapshot>;
-	loadIndividualSubscriptionPlans?: () => Promise<ClineSubscriptionPlan[]>;
+	loadIndividualSubscriptionPlans?: () => Promise<SekoKuvaSubscriptionPlan[]>;
 	switchClineAccount: (organizationId?: string | null) => Promise<void>;
 	loadConfigData: (
 		options?: LoadInteractiveConfigDataOptions,

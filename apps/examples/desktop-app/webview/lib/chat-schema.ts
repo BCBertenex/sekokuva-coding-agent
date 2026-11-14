@@ -26,6 +26,11 @@ export const ChatSessionConfigSchema = z.object({
 	model: z.string().min(1),
 	mode: z.enum(["act", "plan"]).default("act"),
 	apiKey: z.string(),
+	// A custom endpoint (or any provider whose base URL the user overrides)
+	// must reach the sidecar. Without this, Zod strips it and the request
+	// silently falls back to the provider's built-in default.
+	baseUrl: z.string().optional(),
+	headers: z.record(z.string(), z.string()).optional(),
 	systemPrompt: z.string().optional(),
 	rules: z.string().optional(),
 	maxIterations: z.number().int().positive().optional(),

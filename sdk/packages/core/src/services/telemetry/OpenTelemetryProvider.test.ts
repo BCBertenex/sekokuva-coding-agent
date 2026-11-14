@@ -13,19 +13,19 @@ import {
 import { TelemetryService } from "./TelemetryService";
 
 describe("createOpenTelemetryTelemetryService", () => {
-	const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+	const previousGlobalSettingsPath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 	let tempRoot: string | undefined;
 
 	beforeEach(() => {
 		tempRoot = mkdtempSync(join(tmpdir(), "core-telemetry-settings-"));
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			tempRoot,
 			"global-settings.json",
 		);
 	});
 
 	afterEach(() => {
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
 		if (tempRoot) {
 			rmSync(tempRoot, { recursive: true, force: true });
 			tempRoot = undefined;
@@ -41,7 +41,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const { provider } = createOpenTelemetryTelemetryService({
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: "terminal",
 				platform_version: process.version,
 				os_type: process.platform,
@@ -82,7 +82,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 			createOpenTelemetryTelemetryService({
 				metadata: {
 					extension_version: "1.2.3",
-					cline_type: "cli",
+					sekokuva_ca_type: "cli",
 					platform: "terminal",
 					platform_version: process.version,
 					os_type: process.platform,
@@ -114,7 +114,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const { provider } = createOpenTelemetryTelemetryService({
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: "terminal",
 				platform_version: process.version,
 				os_type: process.platform,
@@ -140,7 +140,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const { provider } = createOpenTelemetryTelemetryService({
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: "terminal",
 				platform_version: process.version,
 				os_type: process.platform,
@@ -166,7 +166,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const { telemetry, provider } = createConfiguredTelemetryService({
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: "terminal",
 				platform_version: process.version,
 				os_type: process.platform,
@@ -195,7 +195,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const { telemetry, provider } = createConfiguredTelemetryService({
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: "terminal",
 				platform_version: process.version,
 				os_type: process.platform,
@@ -209,7 +209,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 			logsExporter: "console",
 			logger,
 		});
-		telemetry.updateMetadata({ cline_type: "cli-updated" });
+		telemetry.updateMetadata({ sekokuva_ca_type: "cli-updated" });
 		telemetry.updateCommonProperties({ member_id: "member-1" });
 
 		telemetry.capture({
@@ -224,7 +224,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		expect(Reflect.get(telemetry, "distinctId")).toBe("distinct-1");
 		expect(Reflect.get(telemetry, "metadata")).toEqual(
 			expect.objectContaining({
-				cline_type: "cli-updated",
+				sekokuva_ca_type: "cli-updated",
 				platform: "terminal",
 			}),
 		);
@@ -238,7 +238,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 	it("preserves metadata when disabled", () => {
 		const metadata = {
 			extension_version: "1.0.0",
-			cline_type: "kanban",
+			sekokuva_ca_type: "kanban",
 			platform: "kanban",
 			platform_version: "v22.0.0",
 			os_type: "darwin",
@@ -264,7 +264,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		expect(spy).toHaveBeenCalledWith(
 			"test.event",
 			expect.objectContaining({
-				cline_type: "kanban",
+				sekokuva_ca_type: "kanban",
 				platform: "kanban",
 			}),
 		);
@@ -273,7 +273,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 	it("preserves metadata in the enabled (OTEL) path", async () => {
 		const metadata = {
 			extension_version: "1.0.0",
-			cline_type: "kanban",
+			sekokuva_ca_type: "kanban",
 			platform: "kanban",
 			platform_version: "v22.0.0",
 			os_type: "darwin",
@@ -300,7 +300,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		expect(spy).toHaveBeenCalledWith(
 			"test.event",
 			expect.objectContaining({
-				cline_type: "kanban",
+				sekokuva_ca_type: "kanban",
 				platform: "kanban",
 			}),
 		);
@@ -321,7 +321,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 
 		const metadata = {
 			extension_version: "1.0.0",
-			cline_type: "kanban",
+			sekokuva_ca_type: "kanban",
 			platform: "kanban",
 			platform_version: "v22.0.0",
 			os_type: "darwin",
@@ -337,7 +337,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 
 		// Metadata fields must be present
 		expect(emittedAttributes).toMatchObject({
-			cline_type: "kanban",
+			sekokuva_ca_type: "kanban",
 			platform: "kanban",
 			extension_version: "1.0.0",
 			custom_prop: "value",
@@ -372,7 +372,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 
 		const metadata = {
 			extension_version: "1.0.0",
-			cline_type: "kanban",
+			sekokuva_ca_type: "kanban",
 			platform: "kanban",
 			platform_version: "v22.0.0",
 			os_type: "darwin",
@@ -382,14 +382,14 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const telemetry = provider.createTelemetryService({ metadata });
 
 		// Update metadata after construction
-		telemetry.updateMetadata({ cline_type: "kanban-updated" });
+		telemetry.updateMetadata({ sekokuva_ca_type: "kanban-updated" });
 
 		telemetry.captureRequired("test.updated_event", {});
 
 		// The OTEL logger should see the updated value
 		const emittedAttributes =
 			otelEmit.mock.calls[otelEmit.mock.calls.length - 1][0].attributes;
-		expect(emittedAttributes.cline_type).toBe("kanban-updated");
+		expect(emittedAttributes.sekokuva_ca_type).toBe("kanban-updated");
 
 		await provider.dispose();
 	});
@@ -403,7 +403,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const { telemetry } = createConfiguredTelemetryService({
 			metadata: {
 				extension_version: "1.0.0",
-				cline_type: "kanban",
+				sekokuva_ca_type: "kanban",
 				platform: "kanban",
 				platform_version: "v22.0.0",
 				os_type: "darwin",
@@ -435,7 +435,7 @@ describe("createOpenTelemetryTelemetryService", () => {
 		const { telemetry, provider } = createConfiguredTelemetryService({
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				platform: "terminal",
 				platform_version: process.version,
 				os_type: process.platform,

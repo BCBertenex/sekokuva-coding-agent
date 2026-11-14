@@ -47,7 +47,7 @@ async function getDistinctId(): Promise<string> {
 /** Read one key from the file-backed global state both bundles share. */
 async function readSharedGlobalStateKey(key: string): Promise<unknown> {
 	try {
-		const clineDir = process.env.CLINE_DIR || path.join(os.homedir(), ".cline");
+		const clineDir = process.env.SEKOKUVA_CA_DIR || path.join(os.homedir(), ".cline");
 		const raw = await readFile(
 			path.join(clineDir, "data", "globalState.json"),
 			"utf8",

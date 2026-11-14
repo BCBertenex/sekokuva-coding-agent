@@ -4,7 +4,7 @@ import type { PluginCommandCatalog } from "@sekokuva-ca/core";
 
 import {
 	ANTHROPIC_DEFAULT_MODEL_ID,
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	formatDisplayUserInput,
 } from "@sekokuva-ca/shared/browser";
 import {
@@ -181,20 +181,20 @@ export function buildUserInstructionSlashCommands(
 }
 
 const FALLBACK_PROVIDER_MODELS: Record<string, string[]> = {
-	cline: [CLINE_DEFAULT_MODEL_ID],
+	cline: [SEKOKUVA_CA_DEFAULT_MODEL_ID],
 	// Anthropic's own API expects bare ids, so use the Anthropic-format
-	// equivalent of CLINE_DEFAULT_MODEL_ID rather than the prefixed id.
+	// equivalent of SEKOKUVA_CA_DEFAULT_MODEL_ID rather than the prefixed id.
 	anthropic: [ANTHROPIC_DEFAULT_MODEL_ID],
 	"openai-native": ["gpt-5.5"],
-	openrouter: [CLINE_DEFAULT_MODEL_ID],
+	openrouter: [SEKOKUVA_CA_DEFAULT_MODEL_ID],
 	gemini: ["gemini-3-pro-latest"],
 };
 
 const FALLBACK_PROVIDER_REASONING_MODELS: Record<string, string[]> = {
-	cline: [CLINE_DEFAULT_MODEL_ID],
+	cline: [SEKOKUVA_CA_DEFAULT_MODEL_ID],
 	anthropic: [ANTHROPIC_DEFAULT_MODEL_ID],
 	"openai-native": ["gpt-5.5"],
-	openrouter: [CLINE_DEFAULT_MODEL_ID],
+	openrouter: [SEKOKUVA_CA_DEFAULT_MODEL_ID],
 	gemini: ["gemini-3-pro-latest"],
 };
 
@@ -2055,9 +2055,9 @@ const ModelSelector = memo(function ModelSelector({
 					? visibleProviderModels["cline-pass"]?.[0]
 					: undefined) ??
 				(Object.values(visibleProviderModels).some((ids) =>
-					ids.includes(CLINE_DEFAULT_MODEL_ID),
+					ids.includes(SEKOKUVA_CA_DEFAULT_MODEL_ID),
 				)
-					? CLINE_DEFAULT_MODEL_ID
+					? SEKOKUVA_CA_DEFAULT_MODEL_ID
 					: undefined);
 			if (fallback) return fallback;
 		}

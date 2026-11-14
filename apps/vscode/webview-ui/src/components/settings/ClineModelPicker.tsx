@@ -1,5 +1,5 @@
 import { openAiModelInfoSafeDefaults } from "@shared/api"
-import { CLINE_RECOMMENDED_MODELS_FALLBACK } from "@shared/cline/recommended-models"
+import { SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK } from "@shared/cline/recommended-models"
 import { EmptyRequest, StringRequest } from "@shared/proto/cline/common"
 import { type ClineRecommendedModel, ClineRecommendedModelsResponse } from "@shared/proto/cline/models"
 import { fromProtobufModelInfo } from "@shared/proto-conversions/models/typeConversion"
@@ -75,7 +75,7 @@ interface FeaturedModelCardEntry {
 
 type FeaturedTabId = "recommended" | "free" | "clinePass" | "clineCloud"
 
-const CLINE_RECOMMENDED_MODELS_RETRY_DELAY_MS = 5000
+const SEKOKUVA_CA_RECOMMENDED_MODELS_RETRY_DELAY_MS = 5000
 
 function normalizeModelId(modelId: string): string {
 	return modelId.trim().toLowerCase()
@@ -101,11 +101,11 @@ function toFeaturedModelCardEntry(
 	}
 }
 
-const RECOMMENDED_MODELS_FALLBACK: FeaturedModelCardEntry[] = CLINE_RECOMMENDED_MODELS_FALLBACK.recommended
+const RECOMMENDED_MODELS_FALLBACK: FeaturedModelCardEntry[] = SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK.recommended
 	.map((model) => toFeaturedModelCardEntry(model, "RECOMMENDED"))
 	.filter((model): model is FeaturedModelCardEntry => model !== null)
 
-const FREE_MODELS_FALLBACK: FeaturedModelCardEntry[] = CLINE_RECOMMENDED_MODELS_FALLBACK.free
+const FREE_MODELS_FALLBACK: FeaturedModelCardEntry[] = SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK.free
 	.map((model) => toFeaturedModelCardEntry(model, "FREE"))
 	.filter((model): model is FeaturedModelCardEntry => model !== null)
 
@@ -233,7 +233,7 @@ const ClineModelPicker: React.FC<ClineModelPickerProps> = ({
 			clineRecommendedModelsRetryTimeoutRef.current = window.setTimeout(() => {
 				clineRecommendedModelsRetryTimeoutRef.current = null
 				void fetchClineRecommendedModels()
-			}, CLINE_RECOMMENDED_MODELS_RETRY_DELAY_MS)
+			}, SEKOKUVA_CA_RECOMMENDED_MODELS_RETRY_DELAY_MS)
 		}
 	}, [clearClineRecommendedModelsRetryTimeout, refreshClineRecommendedModels])
 
@@ -543,7 +543,7 @@ const ClineModelPicker: React.FC<ClineModelPickerProps> = ({
 						role="combobox"
 						style={{
 							width: "100%",
-							zIndex: CLINE_MODEL_PICKER_Z_INDEX,
+							zIndex: SEKOKUVA_CA_MODEL_PICKER_Z_INDEX,
 							position: "relative",
 						}}
 						value={searchTerm}>
@@ -661,7 +661,7 @@ const DropdownWrapper = styled.div`
 	width: 100%;
 `
 
-const CLINE_MODEL_PICKER_Z_INDEX = 1_000
+const SEKOKUVA_CA_MODEL_PICKER_Z_INDEX = 1_000
 
 const DropdownList = styled.div`
 	position: absolute;
@@ -672,7 +672,7 @@ const DropdownList = styled.div`
 	overflow-y: auto;
 	background-color: var(--vscode-dropdown-background);
 	border: 1px solid var(--vscode-list-activeSelectionBackground);
-	z-index: ${CLINE_MODEL_PICKER_Z_INDEX - 1};
+	z-index: ${SEKOKUVA_CA_MODEL_PICKER_Z_INDEX - 1};
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 `

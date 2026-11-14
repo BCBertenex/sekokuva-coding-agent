@@ -229,7 +229,7 @@ const genericProviderFanoutRule: ProviderOptionRule = {
 				}),
 };
 
-const clineGatewayReasoningRule: ProviderOptionRule = {
+const sekokuvaCaGatewayReasoningRule: ProviderOptionRule = {
 	id: "provider.cline.reasoning",
 	phase: "provider-reasoning",
 	description: "Cline gateway accepts the shared gateway reasoning shape.",
@@ -255,7 +255,7 @@ const openRouterReasoningRule: ProviderOptionRule = {
 		),
 };
 
-const clineMiniMaxM3GatewayReasoningRule: ProviderOptionRule = {
+const sekokuvaCaMiniMaxM3GatewayReasoningRule: ProviderOptionRule = {
 	id: "provider.cline.minimax-m3.gateway-reasoning",
 	phase: "provider-reasoning",
 	description:
@@ -393,7 +393,7 @@ const geminiThinkingRule: ProviderOptionRule = {
 	},
 };
 
-const clineReasoningDisabledThinkingRule: ProviderOptionRule = {
+const sekokuvaCaReasoningDisabledThinkingRule: ProviderOptionRule = {
 	id: "provider.cline.disable-thinking",
 	phase: "provider",
 	description:
@@ -549,14 +549,14 @@ export const PROVIDER_OPTION_RULES: ReadonlyArray<ProviderOptionRule> = [
 	openAiAdapterRule,
 	openAiCodexRule,
 	genericProviderFanoutRule,
-	clineGatewayReasoningRule,
+	sekokuvaCaGatewayReasoningRule,
 	openRouterReasoningRule,
-	clineMiniMaxM3GatewayReasoningRule,
+	sekokuvaCaMiniMaxM3GatewayReasoningRule,
 	vercelReasoningRule,
 	directMoonshotReasoningRule,
 	fireworksReasoningRule,
 	geminiThinkingRule,
-	clineReasoningDisabledThinkingRule,
+	sekokuvaCaReasoningDisabledThinkingRule,
 	kimiK26ThinkingRule,
 	deepSeekThinkingRule,
 	ollamaNativeOptionsRule,

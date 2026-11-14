@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	buildFeaturedModelEntries,
-	CLINE_PASS_FREE_SECTION_DESCRIPTION,
+	SEKOKUVA_CA_PASS_FREE_SECTION_DESCRIPTION,
 	freeTierDescriptionFor,
 } from "./cline-model-entries";
 
@@ -12,7 +12,7 @@ describe("cline model picker entries", () => {
 		const entries = buildFeaturedModelEntries("cline", {
 			recommended: [model("anthropic/claude-sonnet-5")],
 			free: [model("deepseek/deepseek-v4-flash")],
-			clinePass: [model("cline-pass/glm-5.1")],
+			sekokuvaCaPass: [model("cline-pass/glm-5.1")],
 		});
 
 		expect(entries).toEqual([
@@ -34,7 +34,7 @@ describe("cline model picker entries", () => {
 		const entries = buildFeaturedModelEntries("cline-pass", {
 			recommended: [model("anthropic/claude-sonnet-5")],
 			free: [model("deepseek/deepseek-v4-flash")],
-			clinePass: [model("cline-pass/glm-5.1"), model("cline-pass/kimi-k2.6")],
+			sekokuvaCaPass: [model("cline-pass/glm-5.1"), model("cline-pass/kimi-k2.6")],
 		});
 
 		expect(entries).toEqual([
@@ -58,7 +58,7 @@ describe("cline model picker entries", () => {
 		const entries = buildFeaturedModelEntries("cline-pass", {
 			recommended: [],
 			free: [model("deepseek/deepseek-v4-flash")],
-			clinePass: [],
+			sekokuvaCaPass: [],
 		});
 
 		expect(entries).toEqual([
@@ -75,12 +75,12 @@ describe("cline model picker entries", () => {
 		const data = {
 			recommended: [model("anthropic/claude-sonnet-5")],
 			free: [model("deepseek/deepseek-v4-flash")],
-			clinePass: [model("cline-pass/glm-5.1")],
+			sekokuvaCaPass: [model("cline-pass/glm-5.1")],
 		};
 
 		expect(
 			freeTierDescriptionFor(buildFeaturedModelEntries("cline-pass", data)),
-		).toBe(CLINE_PASS_FREE_SECTION_DESCRIPTION);
+		).toBe(SEKOKUVA_CA_PASS_FREE_SECTION_DESCRIPTION);
 		expect(
 			freeTierDescriptionFor(buildFeaturedModelEntries("cline", data)),
 		).toBe(undefined);

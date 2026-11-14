@@ -96,18 +96,18 @@ describe("cli e2e", () => {
 		return {
 			...process.env,
 			HOME: homeDir,
-			CLINE_DIR: path.join(homeDir, ".cline"),
-			CLINE_DATA_DIR: dataDir,
-			CLINE_DB_DATA_DIR: path.join(dataDir, "db"),
-			CLINE_SESSION_DATA_DIR: sessionDir,
-			CLINE_TEAM_DATA_DIR: teamDir,
-			CLINE_SESSION_BACKEND_MODE: "local",
-			CLINE_PROVIDER_SETTINGS_PATH: path.join(
+			SEKOKUVA_CA_DIR: path.join(homeDir, ".cline"),
+			SEKOKUVA_CA_DATA_DIR: dataDir,
+			SEKOKUVA_CA_DB_DATA_DIR: path.join(dataDir, "db"),
+			SEKOKUVA_CA_SESSION_DATA_DIR: sessionDir,
+			SEKOKUVA_CA_TEAM_DATA_DIR: teamDir,
+			SEKOKUVA_CA_SESSION_BACKEND_MODE: "local",
+			SEKOKUVA_CA_PROVIDER_SETTINGS_PATH: path.join(
 				dataDir,
 				"settings",
 				"providers.json",
 			),
-			CLINE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+			SEKOKUVA_CA_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
 			...overrides,
 		};
 	};
@@ -219,8 +219,8 @@ describe("cli e2e", () => {
 
 	it("emits the same config JSON for either flag placement without a TTY", () => {
 		const env = createIsolatedEnv({
-			CLINE_NO_AUTO_UPDATE: "1",
-			CLINE_TELEMETRY_DISABLED: "1",
+			SEKOKUVA_CA_NO_AUTO_UPDATE: "1",
+			SEKOKUVA_CA_TELEMETRY_DISABLED: "1",
 		});
 		const options = { env, cwd: env.HOME, stdin: "" };
 		const local = runCli(["config", "--json"], options);
@@ -260,7 +260,7 @@ describe("cli e2e", () => {
 
 	it("prints hub help when no subcommand is provided", () => {
 		const result = runCli(["hub"], {
-			env: createIsolatedEnv({ CLINE_RUN_AS_HUB_DAEMON: undefined }),
+			env: createIsolatedEnv({ SEKOKUVA_CA_RUN_AS_HUB_DAEMON: undefined }),
 		});
 		expect(result.status).toBe(0);
 		expect(asText(result.stdout)).toContain("Usage: hub [options] [command]");
@@ -271,7 +271,7 @@ describe("cli e2e", () => {
 
 	it("prints hub dashboard help without starting a server", () => {
 		const result = runCli(["hub", "dashboard", "--help"], {
-			env: createIsolatedEnv({ CLINE_RUN_AS_HUB_DAEMON: undefined }),
+			env: createIsolatedEnv({ SEKOKUVA_CA_RUN_AS_HUB_DAEMON: undefined }),
 		});
 		expect(result.status).toBe(0);
 		const output = asText(result.stdout);
@@ -307,7 +307,7 @@ describe("cli e2e", () => {
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DATA_DIR: dataDir,
+				SEKOKUVA_CA_DATA_DIR: dataDir,
 			},
 		});
 		expect(result.status).toBe(1);
@@ -324,7 +324,7 @@ describe("cli e2e", () => {
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_SESSION_DATA_DIR: sessionDir,
+				SEKOKUVA_CA_SESSION_DATA_DIR: sessionDir,
 			},
 		});
 
@@ -341,7 +341,7 @@ describe("cli e2e", () => {
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_SESSION_DATA_DIR: sessionDir,
+				SEKOKUVA_CA_SESSION_DATA_DIR: sessionDir,
 			},
 		});
 
@@ -611,7 +611,7 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
+				SEKOKUVA_CA_DIR: path.join(homeDir, ".cline"),
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -630,7 +630,7 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
+				SEKOKUVA_CA_DIR: path.join(homeDir, ".cline"),
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -684,8 +684,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
-				CLINE_DATA_DIR: dataDir,
+				SEKOKUVA_CA_DIR: path.join(homeDir, ".cline"),
+				SEKOKUVA_CA_DATA_DIR: dataDir,
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -708,8 +708,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
-				CLINE_DATA_DIR: dataDir,
+				SEKOKUVA_CA_DIR: path.join(homeDir, ".cline"),
+				SEKOKUVA_CA_DATA_DIR: dataDir,
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -776,7 +776,7 @@ Break work into clear steps.`,
 		const textResult = runCli(["config", "mcp"], {
 			env: {
 				...createIsolatedEnv(),
-				CLINE_MCP_SETTINGS_PATH: settingsPath,
+				SEKOKUVA_CA_MCP_SETTINGS_PATH: settingsPath,
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -789,7 +789,7 @@ Break work into clear steps.`,
 		const jsonResult = runCli(["config", "mcp", "--json"], {
 			env: {
 				...createIsolatedEnv(),
-				CLINE_MCP_SETTINGS_PATH: settingsPath,
+				SEKOKUVA_CA_MCP_SETTINGS_PATH: settingsPath,
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -868,7 +868,7 @@ Break work into clear steps.`,
 
 		writeSettings();
 		const uninstallResult = runCli(["mcp", "uninstall", "docs"], {
-			env: { ...createIsolatedEnv(), CLINE_MCP_SETTINGS_PATH: settingsPath },
+			env: { ...createIsolatedEnv(), SEKOKUVA_CA_MCP_SETTINGS_PATH: settingsPath },
 		});
 		expect(uninstallResult.status).toBe(0);
 		expect(asText(uninstallResult.stdout)).toContain(
@@ -878,7 +878,7 @@ Break work into clear steps.`,
 
 		writeSettings();
 		const aliasResult = runCli(["mcp", "rm", "remote", "--json"], {
-			env: { ...createIsolatedEnv(), CLINE_MCP_SETTINGS_PATH: settingsPath },
+			env: { ...createIsolatedEnv(), SEKOKUVA_CA_MCP_SETTINGS_PATH: settingsPath },
 		});
 		expect(aliasResult.status).toBe(0);
 		expect(JSON.parse(asText(aliasResult.stdout).trim())).toEqual({
@@ -889,7 +889,7 @@ Break work into clear steps.`,
 
 		writeSettings();
 		const missingResult = runCli(["mcp", "remove", "missing"], {
-			env: { ...createIsolatedEnv(), CLINE_MCP_SETTINGS_PATH: settingsPath },
+			env: { ...createIsolatedEnv(), SEKOKUVA_CA_MCP_SETTINGS_PATH: settingsPath },
 		});
 		expect(missingResult.status).toBe(1);
 		expect(asText(missingResult.stderr)).toContain(
@@ -940,8 +940,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DATA_DIR: dataDir,
-				CLINE_GLOBAL_SETTINGS_PATH: globalSettingsPath,
+				SEKOKUVA_CA_DATA_DIR: dataDir,
+				SEKOKUVA_CA_GLOBAL_SETTINGS_PATH: globalSettingsPath,
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -964,8 +964,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DATA_DIR: dataDir,
-				CLINE_GLOBAL_SETTINGS_PATH: globalSettingsPath,
+				SEKOKUVA_CA_DATA_DIR: dataDir,
+				SEKOKUVA_CA_GLOBAL_SETTINGS_PATH: globalSettingsPath,
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -1036,8 +1036,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_SESSION_DATA_DIR: sessionDir,
-				CLINE_HOOKS_LOG_PATH: hookPath,
+				SEKOKUVA_CA_SESSION_DATA_DIR: sessionDir,
+				SEKOKUVA_CA_HOOKS_LOG_PATH: hookPath,
 			},
 			stdin: JSON.stringify({
 				hookName: "tool_call",

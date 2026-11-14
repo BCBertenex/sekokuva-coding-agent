@@ -31,7 +31,7 @@ describe("loadCloudModels", () => {
 					JSON.stringify(
 						url.endsWith("/models")
 							? { data: [{ id: "local-model", display_name: "Local model" }] }
-							: { data: { clineCloud: [{ id: "recommended" }] } },
+							: { data: { sekokuvaCaCloud: [{ id: "recommended" }] } },
 					),
 				),
 		);
@@ -53,7 +53,7 @@ describe("loadCloudModels", () => {
 					JSON.stringify(
 						url.endsWith("/models")
 							? [{ id: "model" }]
-							: { clinePass: [{ id: "model" }, { id: "pass-only" }] },
+							: { sekokuvaCaPass: [{ id: "model" }, { id: "pass-only" }] },
 					),
 				),
 		);

@@ -236,12 +236,12 @@ function createPayloadBase(
 	options: HookRuntimeOptions,
 ): Omit<HookEventPayload, "hookName"> {
 	const userId =
-		process.env.CLINE_USER_ID?.trim() || process.env.USER?.trim() || "unknown";
+		process.env.SEKOKUVA_CA_USER_ID?.trim() || process.env.USER?.trim() || "unknown";
 	const sessionContext: HookSessionContext = {
 		rootSessionId: options.rootSessionId || ctx.conversationId,
 	};
 	return {
-		clineVersion: process.env.CLINE_VERSION?.trim() || "",
+		sekokuvaCaVersion: process.env.SEKOKUVA_CA_VERSION?.trim() || "",
 		timestamp: new Date().toISOString(),
 		taskId: ctx.conversationId,
 		sessionContext,
@@ -328,6 +328,26 @@ export function getWindowsPythonFallbackCommand(
 	return ["python", ...command.slice(2)];
 }
 
+/**
+ * Builds a PowerShell invocation for a hook script.
+ *
+ * `-File` is the normal form, but Windows PowerShell rejects it for a script
+ * without a `.ps1` extension, so those are piped through `Invoke-Expression`.
+ */
+function powershellInvocation(path: string): string[] {
+	const executable = process.platform === "win32" ? "powershell" : "pwsh";
+	if (path.toLowerCase().endsWith(".ps1")) {
+		return [executable, "-File", path];
+	}
+	return [
+		executable,
+		"-NoProfile",
+		"-NonInteractive",
+		"-Command",
+		`& { Get-Content -Raw -LiteralPath '${path.replace(/'/g, "''")}' | Invoke-Expression }`,
+	];
+}
+
 function normalizeHookInterpreter(tokens: string[]): string[] | undefined {
 	if (tokens.length === 0) {
 		return undefined;
@@ -341,7 +361,15 @@ function normalizeHookInterpreter(tokens: string[]): string[] | undefined {
 	}
 
 	if (commandName === "bash" || commandName === "sh" || commandName === "zsh") {
-		return [commandName, ...rest];
+		// On Windows `bash.exe` is the WSL launcher and cannot run a script at a
+		// Windows path, so a POSIX shebang is executed with PowerShell instead.
+		return process.platform === "win32"
+			? ["powershell"]
+			: [commandName, ...rest];
+	}
+
+	if (commandName === "powershell" || commandName === "pwsh") {
+		return [commandName];
 	}
 
 	if (commandName === "python3" || commandName === "python") {
@@ -356,7 +384,13 @@ function normalizeHookInterpreter(tokens: string[]): string[] | undefined {
 function inferHookCommand(path: string): string[] {
 	const shebang = parseShebangCommand(path);
 	if (shebang && shebang.length > 0) {
-		return [...(normalizeHookInterpreter(shebang) ?? shebang), path];
+		const interpreter = normalizeHookInterpreter(shebang) ?? shebang;
+		const [command] = interpreter;
+		const commandName = command.replace(/\\/g, "/").toLowerCase().split("/").at(-1);
+		if (commandName === "powershell" || commandName === "pwsh") {
+			return powershellInvocation(path);
+		}
+		return [...interpreter, path];
 	}
 	const lowered = path.toLowerCase();
 	if (
@@ -388,14 +422,14 @@ function inferHookCommand(path: string): string[] {
 			: ["python3", path];
 	}
 	if (lowered.endsWith(".ps1")) {
-		return [
-			process.platform === "win32" ? "powershell" : "pwsh",
-			"-File",
-			path,
-		];
+		return powershellInvocation(path);
 	}
-	// Default to bash for legacy hook files with no extension/shebang.
-	return ["bash", path];
+	// Default to bash for legacy hook files with no extension/shebang. On
+	// Windows `bash.exe` is the WSL launcher, which cannot execute a script at
+	// a Windows path, so fall back to PowerShell instead.
+	return process.platform === "win32"
+		? powershellInvocation(path)
+		: ["bash", path];
 }
 
 function createHookCommandMap(workspacePath: string): HookCommandMap {
@@ -643,7 +677,7 @@ export function createHookAuditHooks(options: {
 			ts: new Date().toISOString(),
 			...payload,
 		})}\n`;
-		const envPath = process.env.CLINE_HOOKS_LOG_PATH?.trim() || undefined;
+		const envPath = process.env.SEKOKUVA_CA_HOOKS_LOG_PATH?.trim() || undefined;
 		const logPath = envPath ?? join(ensureHookLogDir(), "hooks.jsonl");
 		ensureHookLogDir(logPath);
 		appendFileSync(logPath, line, "utf8");
@@ -997,7 +1031,7 @@ export function createHookConfigFileHooks(
 		) {
 			hooks.beforeRun = async (ctx: AgentRunLifecycleContext) => {
 				const hookName =
-					process.env.CLINE_HOOK_AGENT_RESUME === "1"
+					process.env.SEKOKUVA_CA_HOOK_AGENT_RESUME === "1"
 						? "agent_resume"
 						: "agent_start";
 				const control = await runAgentStart(

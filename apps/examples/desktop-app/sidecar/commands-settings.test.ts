@@ -36,7 +36,7 @@ let dataDir: string;
 
 beforeEach(() => {
 	dataDir = mkdtempSync(join(tmpdir(), "cline-commands-settings-"));
-	process.env.CLINE_DATA_DIR = dataDir;
+	process.env.SEKOKUVA_CA_DATA_DIR = dataDir;
 	resetDesktopFeatureFlagsForTesting();
 });
 
@@ -44,8 +44,8 @@ afterEach(() => {
 	clearLiveModelsCatalogCache();
 	resetClineRecommendedModelsCacheForTests();
 	vi.unstubAllGlobals();
-	delete process.env.CLINE_CODE_CLOUD_AGENTS;
-	delete process.env.CLINE_DATA_DIR;
+	delete process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS;
+	delete process.env.SEKOKUVA_CA_DATA_DIR;
 	resetDesktopFeatureFlagsForTesting();
 	rmSync(dataDir, { recursive: true, force: true });
 });
@@ -155,11 +155,11 @@ describe("desktop settings commands", () => {
 
 		expect(await rows()).toEqual(["cloud", "local"]);
 		discovery.mockImplementationOnce(async () => {
-			process.env.CLINE_CODE_CLOUD_AGENTS = "0";
+			process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "0";
 			return cloudRows;
 		});
 		expect(await rows()).toEqual(["local"]);
-		delete process.env.CLINE_CODE_CLOUD_AGENTS;
+		delete process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS;
 		discovery.mockClear();
 		flags.hydrateCache({
 			userId: null,
@@ -181,7 +181,7 @@ describe("desktop settings commands", () => {
 			hubClient: { command },
 		} as unknown as SessionRuntimeBinding);
 		ctx.activeEnvironmentId = "ssh-remote";
-		process.env.CLINE_CODE_CLOUD_AGENTS = "0";
+		process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "0";
 		await handleCommand(ctx, "list_provider_models", {
 			provider: "cline",
 			includeCloudModels: true,
@@ -192,7 +192,7 @@ describe("desktop settings commands", () => {
 			undefined,
 			{ retryAfterDispatch: false },
 		);
-		process.env.CLINE_CODE_CLOUD_AGENTS = "1";
+		process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "1";
 		await handleCommand(ctx, "list_provider_models", {
 			provider: "cline",
 			includeCloudModels: true,

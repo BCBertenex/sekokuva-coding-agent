@@ -176,30 +176,30 @@ function normalizeStartInput(
 describe("LocalRuntimeHost", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_DIR: process.env.CLINE_DIR,
-		CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
+		SEKOKUVA_CA_DIR: process.env.SEKOKUVA_CA_DIR,
+		SEKOKUVA_CA_DATA_DIR: process.env.SEKOKUVA_CA_DATA_DIR,
 	};
 	let isolatedHomeDir = "";
 
 	beforeEach(() => {
 		isolatedHomeDir = mkdtempSync(join(tmpdir(), "core-session-home-"));
 		process.env.HOME = isolatedHomeDir;
-		process.env.CLINE_DIR = join(isolatedHomeDir, ".cline");
-		delete process.env.CLINE_DATA_DIR;
+		process.env.SEKOKUVA_CA_DIR = join(isolatedHomeDir, ".cline");
+		delete process.env.SEKOKUVA_CA_DATA_DIR;
 		setHomeDir(isolatedHomeDir);
-		setClineDir(process.env.CLINE_DIR);
+		setClineDir(process.env.SEKOKUVA_CA_DIR);
 	});
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		process.env.CLINE_DIR = envSnapshot.CLINE_DIR;
-		if (envSnapshot.CLINE_DATA_DIR === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+		process.env.SEKOKUVA_CA_DIR = envSnapshot.SEKOKUVA_CA_DIR;
+		if (envSnapshot.SEKOKUVA_CA_DATA_DIR === undefined) {
+			delete process.env.SEKOKUVA_CA_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = envSnapshot.CLINE_DATA_DIR;
+			process.env.SEKOKUVA_CA_DATA_DIR = envSnapshot.SEKOKUVA_CA_DATA_DIR;
 		}
 		setHomeDir(envSnapshot.HOME ?? "~");
-		setClineDir(envSnapshot.CLINE_DIR ?? join("~", ".cline"));
+		setClineDir(envSnapshot.SEKOKUVA_CA_DIR ?? join("~", ".cline"));
 		rmSync(isolatedHomeDir, { recursive: true, force: true });
 	});
 
@@ -683,8 +683,8 @@ describe("LocalRuntimeHost", () => {
 			}),
 		);
 
-		// `session.started` is emitted from `ClineCore.start` (see
-		// `ClineCore.test.ts`), not from `LocalRuntimeHost`, so that the
+		// `session.started` is emitted from `SekoKuvaCore.start` (see
+		// `SekoKuvaCore.test.ts`), not from `LocalRuntimeHost`, so that the
 		// signal fires for every backend. We assert that it is NOT emitted
 		// here and only transport-scoped events remain.
 		expect(adapter.emit).not.toHaveBeenCalledWith(

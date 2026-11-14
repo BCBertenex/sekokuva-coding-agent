@@ -7,10 +7,10 @@
 export * as Llms from "@sekokuva-ca/llms";
 export {
 	buildClineClientHeaders,
-	ClineFreeModelLimitError,
-	ClineNotSubscribedError,
-	ClineOrgIndividualInferenceSubscriptionError,
-	ClinePassLimitError,
+	SekoKuvaFreeModelLimitError,
+	SekoKuvaNotSubscribedError,
+	SekoKuvaOrgIndividualInferenceSubscriptionError,
+	SekoKuvaPassLimitError,
 	extractClineFreeModelLimitResetTime,
 	extractClinePassLimitMessage,
 	getClineNotSubscribedMessage,
@@ -51,7 +51,7 @@ export type {
 	ChatStartSessionArtifacts,
 	ChatStartSessionRequest,
 	ChatTurnResult,
-	ClineAccountActionRequest,
+	SekoKuvaAccountActionRequest,
 	ConnectorHookEvent,
 	ContentBlock,
 	FeatureFlagPayload,
@@ -122,19 +122,19 @@ export {
 } from "@sekokuva-ca/shared";
 export * from "@sekokuva-ca/shared/storage";
 export {
-	type ClineAccountBalance,
-	type ClineAccountOperations,
-	type ClineAccountOrganization,
-	type ClineAccountOrganizationBalance,
-	type ClineAccountOrganizationUsageTransaction,
-	type ClineAccountPaymentTransaction,
-	ClineAccountService,
-	type ClineAccountServiceOptions,
-	type ClineAccountTelemetryIdentity,
-	type ClineAccountUsageTransaction,
-	type ClineAccountUser,
-	type ClineOrganization,
-	type ClineSubscriptionPlan,
+	type SekoKuvaAccountBalance,
+	type SekoKuvaAccountOperations,
+	type SekoKuvaAccountOrganization,
+	type SekoKuvaAccountOrganizationBalance,
+	type SekoKuvaAccountOrganizationUsageTransaction,
+	type SekoKuvaAccountPaymentTransaction,
+	SekoKuvaAccountService,
+	type SekoKuvaAccountServiceOptions,
+	type SekoKuvaAccountTelemetryIdentity,
+	type SekoKuvaAccountUsageTransaction,
+	type SekoKuvaAccountUser,
+	type SekoKuvaOrganization,
+	type SekoKuvaSubscriptionPlan,
 	executeClineAccountAction,
 	type FeaturebaseTokenResponse,
 	isClineAccountActionRequest,
@@ -156,7 +156,7 @@ export {
 	loginClineOAuth,
 	refreshClineToken,
 	startClineDeviceAuth,
-} from "./auth/cline";
+} from "./auth/sekokuva-ca";
 export {
 	getValidOpenAICodexCredentials,
 	loginOpenAICodex,
@@ -203,24 +203,24 @@ export type {
 	OcaOAuthProviderOptions,
 	OcaTokenResolution,
 } from "./auth/types";
-export { ClineCore } from "./ClineCore";
-export { toClineCoreStartInput } from "./cline-core/start-input";
+export { SekoKuvaCore } from "./SekoKuvaCore";
+export { toClineCoreStartInput } from "./sekokuva-ca-core/start-input";
 export type {
-	ClineAutomationEventIngressResult,
-	ClineAutomationEventLog,
-	ClineAutomationEventSuppression,
-	ClineAutomationListEventsOptions,
-	ClineAutomationListRunsOptions,
-	ClineAutomationListSpecsOptions,
-	ClineAutomationRun,
-	ClineAutomationRunStatus,
-	ClineAutomationSpec,
-	ClineCoreAutomationApi,
-	ClineCoreAutomationOptions,
-	ClineCoreListHistoryOptions,
-	ClineCoreOptions,
-	ClineCoreSettingsApi,
-	ClineCoreStartInput,
+	SekoKuvaAutomationEventIngressResult,
+	SekoKuvaAutomationEventLog,
+	SekoKuvaAutomationEventSuppression,
+	SekoKuvaAutomationListEventsOptions,
+	SekoKuvaAutomationListRunsOptions,
+	SekoKuvaAutomationListSpecsOptions,
+	SekoKuvaAutomationRun,
+	SekoKuvaAutomationRunStatus,
+	SekoKuvaAutomationSpec,
+	SekoKuvaCoreAutomationApi,
+	SekoKuvaCoreAutomationOptions,
+	SekoKuvaCoreListHistoryOptions,
+	SekoKuvaCoreOptions,
+	SekoKuvaCoreSettingsApi,
+	SekoKuvaCoreStartInput,
 	CompareCheckpointInput,
 	CompareCheckpointResult,
 	HubOptions,
@@ -228,7 +228,7 @@ export type {
 	RestoreInput,
 	RestoreOptions,
 	RestoreResult,
-} from "./cline-core/types";
+} from "./sekokuva-ca-core/types";
 export type {
 	AgentPluginPackageDiagnostic,
 	AgentPluginPackageDiagnosticScope,
@@ -255,7 +255,7 @@ export type {
 export {
 	AGENT_PLUGINS_V1_MANIFEST_SCHEMA,
 	AGENT_PLUGINS_V1_MCP_SCHEMA,
-	CLINE_PLUGIN_BOOTSTRAP_PATH_ENV,
+	SEKOKUVA_CA_PLUGIN_BOOTSTRAP_PATH_ENV,
 	discoverPluginModulePaths,
 	formatSessionPluginIssue,
 	getPluginDisplayName,
@@ -1003,7 +1003,7 @@ export {
 } from "./extensions/context/compaction";
 export { summarizeConversation } from "./extensions/context/summarize-conversation";
 export {
-	CLINE_PLUGIN_RUNTIME_DIR_ENV,
+	SEKOKUVA_CA_PLUGIN_RUNTIME_DIR_ENV,
 	resolvePluginRuntimeDirectory,
 	setPluginSandboxLauncher,
 } from "./extensions/plugin/plugin-runtime";
@@ -1066,11 +1066,11 @@ export { createHubPluginCommandsApi } from "./hub/client/plugin-commands";
 export { createHubProvidersApi } from "./hub/client/providers";
 export * from "./remote/remote-environments";
 export { ensureLoginShellPath } from "./remote/shell-path";
-export { isClineAccountFeatureEnabled } from "./services/feature-flags/cline-account-feature-flags";
+export { isClineAccountFeatureEnabled } from "./services/feature-flags/sekokuva-ca-account-feature-flags";
 export {
 	applyClineFeaturedModels,
-	type ClineRecommendedModel,
-	type ClineRecommendedModelsData,
+	type SekoKuvaRecommendedModel,
+	type SekoKuvaRecommendedModelsData,
 	FALLBACK_CLINE_RECOMMENDED_MODELS,
 	type FetchClineRecommendedModelsOptions,
 	fetchClineRecommendedModels,
@@ -1078,7 +1078,7 @@ export {
 	peekClineRecommendedModels,
 	resetClineRecommendedModelsCacheForTests,
 	resolveClineDefaultModelId,
-} from "./services/llms/cline-recommended-models";
+} from "./services/llms/sekokuva-ca-recommended-models";
 export {
 	clearLiveModelsCatalogCache,
 	clearPrivateModelsCatalogCache,
@@ -1169,7 +1169,7 @@ export type { RuntimeEnvironment } from "./types";
 export type { SessionStatus } from "./types/common";
 export { SESSION_STATUSES, SessionSource } from "./types/common";
 export type {
-	ClineCoreStartConfig,
+	SekoKuvaCoreStartConfig,
 	CoreAgentMode,
 	CoreCheckpointConfig,
 	CoreCheckpointContext,

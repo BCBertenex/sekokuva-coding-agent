@@ -224,16 +224,16 @@ async function discoverAgentPluginSkillFile(
 }
 
 async function discoverManagedPluginRoots(
-	clineDirectoryPath: string,
+	sekokuvaCaDirectoryPath: string,
 ): Promise<string[]> {
 	try {
-		const entries = await readdir(clineDirectoryPath, { withFileTypes: true });
+		const entries = await readdir(sekokuvaCaDirectoryPath, { withFileTypes: true });
 		const pluginRoots: string[] = [];
 		for (const entry of entries) {
 			if (!entry.isDirectory()) {
 				continue;
 			}
-			const pluginRoot = join(clineDirectoryPath, entry.name);
+			const pluginRoot = join(sekokuvaCaDirectoryPath, entry.name);
 			const manifestPath = join(pluginRoot, MANAGED_PLUGIN_MANIFEST_FILE_NAME);
 			try {
 				const content = await readFile(manifestPath, "utf8");

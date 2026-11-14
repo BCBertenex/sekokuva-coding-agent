@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs"
 import path from "node:path"
-import type { ClineCoreListHistoryOptions, SessionHistoryRecord } from "@sekokuva-ca/core"
+import type { SekoKuvaCoreListHistoryOptions, SessionHistoryRecord } from "@sekokuva-ca/core"
 import type { MessageWithMetadata as SdkMessage } from "@sekokuva-ca/llms"
 import { formatDisplayUserInput, parseUserInputMode } from "@sekokuva-ca/shared"
 import { resolveSessionDataDir } from "@sekokuva-ca/shared/storage"
@@ -58,7 +58,7 @@ export interface CloudHistorySource {
 	delete: (id: string) => Promise<void>
 }
 
-type SdkTaskHistoryListOptions = ClineCoreListHistoryOptions & {
+type SdkTaskHistoryListOptions = SekoKuvaCoreListHistoryOptions & {
 	offset?: number
 }
 
@@ -439,7 +439,7 @@ export class SdkTaskHistory {
 			return result
 		}
 
-		const hostOptions: ClineCoreListHistoryOptions = { ...options }
+		const hostOptions: SekoKuvaCoreListHistoryOptions = { ...options }
 		delete (hostOptions as { offset?: number }).offset
 
 		const sdkHistory = await this.withHistoryHost((host) =>

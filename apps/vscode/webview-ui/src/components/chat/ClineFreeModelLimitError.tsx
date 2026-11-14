@@ -13,8 +13,8 @@ interface ClineFreeModelLimitErrorProps {
 	message: string
 }
 
-const CLINE_PROVIDER_ID = "cline"
-const CLINE_FREE_MODEL_PREFIX = "cline-free/"
+const SEKOKUVA_CA_PROVIDER_ID = "cline"
+const SEKOKUVA_CA_FREE_MODEL_PREFIX = "cline-free/"
 const FREE_MODEL_LIMIT_RETRY_MARKER = "try again in "
 
 function extractFreeModelLimitResetTime(message: string): string | undefined {
@@ -32,23 +32,24 @@ function extractFreeModelLimitResetTime(message: string): string | undefined {
 // catalog model with the same slug under its lab prefix (e.g.
 // cline-free/deepseek-v4-flash -> deepseek/deepseek-v4-flash).
 function findPaidModelId(freeModelId: string | undefined, clineModelIds: string[]): string | undefined {
-	if (!freeModelId?.startsWith(CLINE_FREE_MODEL_PREFIX)) {
+	if (!freeModelId?.startsWith(SEKOKUVA_CA_FREE_MODEL_PREFIX)) {
 		return undefined
 	}
 
-	const modelSlug = freeModelId.slice(CLINE_FREE_MODEL_PREFIX.length)
+	const modelSlug = freeModelId.slice(SEKOKUVA_CA_FREE_MODEL_PREFIX.length)
 	if (!modelSlug) {
 		return undefined
 	}
 
 	return clineModelIds.find(
-		(modelId) => !modelId.startsWith(CLINE_FREE_MODEL_PREFIX) && (modelId === modelSlug || modelId.endsWith(`/${modelSlug}`)),
+		(modelId) =>
+			!modelId.startsWith(SEKOKUVA_CA_FREE_MODEL_PREFIX) && (modelId === modelSlug || modelId.endsWith(`/${modelSlug}`)),
 	)
 }
 
 const ClineFreeModelLimitError = ({ message }: ClineFreeModelLimitErrorProps) => {
 	const { apiConfiguration, mode } = useExtensionState()
-	const { models: clineModels } = useProviderModels(CLINE_PROVIDER_ID)
+	const { models: clineModels } = useProviderModels(SEKOKUVA_CA_PROVIDER_ID)
 	const { handleModeFieldsChange } = useApiConfigurationHandlers()
 	const [isSwitching, setIsSwitching] = useState(false)
 	const [didSwitch, setDidSwitch] = useState(false)
@@ -62,7 +63,7 @@ const ClineFreeModelLimitError = ({ message }: ClineFreeModelLimitErrorProps) =>
 	const selectedFreeModelId =
 		modeFields.apiProvider === "cline-pass"
 			? modeFields.clinePassModelId
-			: modeFields.apiProvider === CLINE_PROVIDER_ID
+			: modeFields.apiProvider === SEKOKUVA_CA_PROVIDER_ID
 				? modeFields.clineModelId
 				: undefined
 	const paidModelId = useMemo(
@@ -84,7 +85,7 @@ const ClineFreeModelLimitError = ({ message }: ClineFreeModelLimitErrorProps) =>
 
 			await ModelsServiceClient.commitModelSelection(
 				CommitModelSelectionRequest.create({
-					providerId: CLINE_PROVIDER_ID,
+					providerId: SEKOKUVA_CA_PROVIDER_ID,
 					mode: currentMode,
 					modelId: paidModelId,
 				}),
@@ -106,7 +107,7 @@ const ClineFreeModelLimitError = ({ message }: ClineFreeModelLimitErrorProps) =>
 					},
 				},
 				{
-					apiProvider: CLINE_PROVIDER_ID,
+					apiProvider: SEKOKUVA_CA_PROVIDER_ID,
 					clineModelId: paidModelId,
 					clineModelInfo: modelInfo,
 				},
