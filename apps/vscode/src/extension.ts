@@ -184,8 +184,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	// registered handler above, which the harness can't synthesize. When running
 	// under browser-capture (debug harness) mode, expose the same handler on
 	// globalThis so the harness can deliver simulated OAuth callbacks via
-	// `ext.evaluate`. Gated on CLINE_CAPTURE_BROWSER so it never ships in prod.
-	if (process.env.CLINE_CAPTURE_BROWSER === "1" || process.env.CLINE_CAPTURE_BROWSER === "true") {
+	// `ext.evaluate`. Gated on SEKOKUVA_CA_CAPTURE_BROWSER so it never ships in prod.
+	if (process.env.SEKOKUVA_CA_CAPTURE_BROWSER === "1" || process.env.SEKOKUVA_CA_CAPTURE_BROWSER === "true") {
 		;(globalThis as Record<string, unknown>).__clineHandleUri = (url: string) => SharedUriHandler.handleUri(url)
 	}
 

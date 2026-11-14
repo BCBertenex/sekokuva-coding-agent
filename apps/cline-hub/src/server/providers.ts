@@ -30,11 +30,11 @@ export function resolveBrowserDefaults(ctx: HubContext): {
 		provider:
 			lastUsed?.provider ??
 			ctx.lastSessionContext?.providerId ??
-			process.env.CLINE_PROVIDER?.trim(),
+			process.env.SEKOKUVA_CA_PROVIDER?.trim(),
 		model:
 			lastUsed?.model ??
 			ctx.lastSessionContext?.modelId ??
-			process.env.CLINE_MODEL?.trim(),
+			process.env.SEKOKUVA_CA_MODEL?.trim(),
 		workspaceRoot: ctx.lastSessionContext?.workspaceRoot ?? workspaceRoot,
 		cwd:
 			ctx.lastSessionContext?.cwd ??

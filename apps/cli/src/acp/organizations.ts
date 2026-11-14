@@ -1,7 +1,7 @@
 import type { SessionConfigOption } from "@agentclientprotocol/sdk";
 import {
-	type ClineAccountOrganization,
-	ClineAccountService,
+	type SekoKuvaAccountOrganization,
+	SekoKuvaAccountService,
 	getPersistedProviderApiKey,
 	type ProviderSettingsManager,
 	RuntimeOAuthTokenManager,
@@ -17,7 +17,7 @@ export function usesClineAccount(providerId: string): boolean {
 }
 
 export interface AcpOrganizationState {
-	organizations: ClineAccountOrganization[];
+	organizations: SekoKuvaAccountOrganization[];
 	/** Active organization id, or null when the personal account is active. */
 	activeOrganizationId: string | null;
 }
@@ -33,10 +33,10 @@ interface ClineAccountInput {
 // refreshes would invalidate each other.
 let oauthTokenManager: RuntimeOAuthTokenManager | undefined;
 
-function createAccountService(input: ClineAccountInput): ClineAccountService {
+function createAccountService(input: ClineAccountInput): SekoKuvaAccountService {
 	const { providerSettingsManager } = input;
 	const settings = providerSettingsManager.getProviderSettings("cline");
-	return new ClineAccountService({
+	return new SekoKuvaAccountService({
 		apiBaseUrl:
 			settings?.baseUrl?.trim() || getClineEnvironmentConfig().apiBaseUrl,
 		getAuthToken: async () => {
@@ -119,7 +119,7 @@ export async function switchClineOrganization(
 // already succeeded server-side.
 async function persistActiveOrganization(
 	manager: ProviderSettingsManager,
-	service: ClineAccountService,
+	service: SekoKuvaAccountService,
 ): Promise<void> {
 	try {
 		const organizations = await service.fetchUserOrganizations();

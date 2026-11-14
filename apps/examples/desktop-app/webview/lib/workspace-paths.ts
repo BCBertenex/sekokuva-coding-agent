@@ -150,7 +150,7 @@ let taskWorktreeRoot = "";
 
 /**
  * The sidecar creates task worktrees under `<cline dir>/worktrees`, where the
- * Cline dir honors `CLINE_DIR`, and reports that root through
+ * Cline dir honors `SEKOKUVA_CA_DIR`, and reports that root through
  * `get_process_context` so the webview matches the same location it uses.
  */
 export function registerTaskWorktreeRoot(path: string): void {

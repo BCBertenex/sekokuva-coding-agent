@@ -23,7 +23,7 @@ const telemetry = {
 	setDistinctId: vi.fn(),
 	updateCommonProperties: vi.fn(),
 } as unknown as ITelemetryService;
-const originalClineDir = process.env.CLINE_DIR;
+const originalClineDir = process.env.SEKOKUVA_CA_DIR;
 const originalHome = process.env.HOME;
 beforeEach(async () => {
 	transportStopped = false;
@@ -326,8 +326,8 @@ describe("hub-owned plugin commands", () => {
 		);
 	});
 	it("exposes session plugin commands loaded in subprocess mode", async () => {
-		const previousMode = process.env.CLINE_PLUGIN_MODE;
-		process.env.CLINE_PLUGIN_MODE = "sandbox";
+		const previousMode = process.env.SEKOKUVA_CA_PLUGIN_MODE;
+		process.env.SEKOKUVA_CA_PLUGIN_MODE = "sandbox";
 		try {
 			const session = await runtime.startSession({
 				...splitCoreSessionConfig({
@@ -351,8 +351,8 @@ describe("hub-owned plugin commands", () => {
 				await runtime.pluginCommands.run({ ...target, prompt: "/counter x" }),
 			).toMatchObject({ reply: `${session.sessionId}:1:x` });
 		} finally {
-			if (previousMode === undefined) delete process.env.CLINE_PLUGIN_MODE;
-			else process.env.CLINE_PLUGIN_MODE = previousMode;
+			if (previousMode === undefined) delete process.env.SEKOKUVA_CA_PLUGIN_MODE;
+			else process.env.SEKOKUVA_CA_PLUGIN_MODE = previousMode;
 		}
 	});
 	it("does not expose session skills as plugin commands", async () => {

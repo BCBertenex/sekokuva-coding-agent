@@ -247,7 +247,7 @@ describe("Routed Anthropic provider failover", () => {
 				provider: { allow_fallbacks: true },
 			});
 			expect(options).not.toHaveProperty("cline-pass");
-			expect(options).not.toHaveProperty("clinePass");
+			expect(options).not.toHaveProperty("sekokuvaCaPass");
 		}
 	});
 
@@ -769,11 +769,11 @@ describe("composeAiSdkProviderOptions: Anthropic thinking precedence", () => {
 			],
 		},
 		{
-			// ClinePass is served by the shared "cline" AI SDK provider (same
+			// SekoKuvaPass is served by the shared "cline" AI SDK provider (same
 			// Cline API), which only reads the "cline" providerOptions bucket.
 			// Uses an explicit budget because effort-based reasoning is portable
 			// and never reaches provider-option buckets.
-			name: "ClinePass-routed Sonnet 4.5 budget -> gateway reasoning under the shared cline bucket",
+			name: "SekoKuvaPass-routed Sonnet 4.5 budget -> gateway reasoning under the shared cline bucket",
 			request: {
 				providerId: "cline-pass",
 				modelId: "anthropic/claude-sonnet-4-5",
@@ -2663,8 +2663,8 @@ describe("composeAiSdkProviderOptions: provider-specific overlays", () => {
 	});
 });
 
-describe("composeAiSdkProviderOptions: ClinePass bucket normalization", () => {
-	it("keys ClinePass options to the shared cline bucket only", () => {
+describe("composeAiSdkProviderOptions: SekoKuvaPass bucket normalization", () => {
+	it("keys SekoKuvaPass options to the shared cline bucket only", () => {
 		const result = composeAiSdkProviderOptions(
 			makeRequest({
 				providerId: "cline-pass",
@@ -2687,6 +2687,6 @@ describe("composeAiSdkProviderOptions: ClinePass bucket normalization", () => {
 			}),
 		);
 		expect(result).not.toHaveProperty("cline-pass");
-		expect(result).not.toHaveProperty("clinePass");
+		expect(result).not.toHaveProperty("sekokuvaCaPass");
 	});
 });

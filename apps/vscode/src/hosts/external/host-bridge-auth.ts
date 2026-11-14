@@ -16,7 +16,7 @@ export const HOST_BRIDGE_TOKEN_HEADER = "cline-hostbridge-token"
  * orphaned/foreign one — or from unrelated local code.
  *
  * This reuses the token already issued for the core connection stream
- * (CLINE_CORE_CONNECTION_TOKEN) rather than introducing a second secret, so
+ * (SEKOKUVA_CA_CORE_CONNECTION_TOKEN) rather than introducing a second secret, so
  * there is one credential per spawn with one lifetime.
  *
  * The token lives here, in process memory, not in `process.env`: bootstrap
@@ -36,8 +36,8 @@ let hostBridgeToken: string | undefined
  * runs, older hosts) gets `undefined` and sends no header.
  */
 export function captureHostBridgeTokenFromEnvironment(): string | undefined {
-	hostBridgeToken = process.env.CLINE_CORE_CONNECTION_TOKEN || undefined
-	delete process.env.CLINE_CORE_CONNECTION_TOKEN
+	hostBridgeToken = process.env.SEKOKUVA_CA_CORE_CONNECTION_TOKEN || undefined
+	delete process.env.SEKOKUVA_CA_CORE_CONNECTION_TOKEN
 	return hostBridgeToken
 }
 

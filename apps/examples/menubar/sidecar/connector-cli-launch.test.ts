@@ -1,5 +1,5 @@
 import {
-	CLINE_CONNECTOR_CLI_LAUNCH_ENV,
+	SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV,
 	readConnectorCliLaunchSpec,
 } from "@sekokuva-ca/shared";
 import { describe, expect, it } from "vitest";
@@ -30,7 +30,7 @@ describe("menubar connector CLI launch", () => {
 	it("honors an explicit installed CLI path", () => {
 		expect(
 			resolveMenubarConnectorCliLaunchSpec("/workspace", {
-				env: { CLINE_CLI_PATH: "/Applications/Cline/bin/cline" },
+				env: { SEKOKUVA_CA_CLI_PATH: "/Applications/Cline/bin/cline" },
 				exists: () => false,
 			}),
 		).toEqual({
@@ -48,7 +48,7 @@ describe("menubar connector CLI launch", () => {
 			env,
 		);
 
-		expect(env[CLINE_CONNECTOR_CLI_LAUNCH_ENV]).toBeDefined();
+		expect(env[SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV]).toBeDefined();
 		expect(readConnectorCliLaunchSpec(env)).toEqual({
 			launcher: "cline",
 			connectArgsPrefix: ["connect"],

@@ -271,9 +271,9 @@ describe("MessageBuilder", () => {
 	it("parses message-builder limit environment overrides", () => {
 		const builder = new MessageBuilder(
 			getMessageBuilderOptionsFromEnv({
-				CLINE_MESSAGE_BUILDER_MAX_TOOL_RESULT_CHARS: "96",
-				CLINE_MESSAGE_BUILDER_MAX_TOTAL_TEXT_BYTES: "5000",
-				CLINE_MESSAGE_BUILDER_MIN_OUTDATED_REWRITE_BYTES: "0",
+				SEKOKUVA_CA_MESSAGE_BUILDER_MAX_TOOL_RESULT_CHARS: "96",
+				SEKOKUVA_CA_MESSAGE_BUILDER_MAX_TOTAL_TEXT_BYTES: "5000",
+				SEKOKUVA_CA_MESSAGE_BUILDER_MIN_OUTDATED_REWRITE_BYTES: "0",
 			}),
 		);
 		const messages: Message[] = [
@@ -319,7 +319,7 @@ describe("MessageBuilder", () => {
 
 		const eagerBuilder = new MessageBuilder(
 			getMessageBuilderOptionsFromEnv({
-				CLINE_MESSAGE_BUILDER_MIN_OUTDATED_REWRITE_BYTES: "0",
+				SEKOKUVA_CA_MESSAGE_BUILDER_MIN_OUTDATED_REWRITE_BYTES: "0",
 			}),
 		);
 		const eager = eagerBuilder.buildForApi([
@@ -335,7 +335,7 @@ describe("MessageBuilder", () => {
 	it("parses an env disable value for outdated-read rewrites", () => {
 		const builder = new MessageBuilder(
 			getMessageBuilderOptionsFromEnv({
-				CLINE_MESSAGE_BUILDER_MIN_OUTDATED_REWRITE_BYTES: "disable",
+				SEKOKUVA_CA_MESSAGE_BUILDER_MIN_OUTDATED_REWRITE_BYTES: "disable",
 			}),
 		);
 		const result = builder.buildForApi([
@@ -352,8 +352,8 @@ describe("MessageBuilder", () => {
 
 	it("ignores zero env overrides instead of disabling the limits", () => {
 		const options = getMessageBuilderOptionsFromEnv({
-			CLINE_MESSAGE_BUILDER_MAX_TOOL_RESULT_CHARS: "0",
-			CLINE_MESSAGE_BUILDER_MAX_TOTAL_TEXT_BYTES: "0",
+			SEKOKUVA_CA_MESSAGE_BUILDER_MAX_TOOL_RESULT_CHARS: "0",
+			SEKOKUVA_CA_MESSAGE_BUILDER_MAX_TOTAL_TEXT_BYTES: "0",
 		});
 		expect(options.maxToolResultChars).toBeUndefined();
 		expect(options.maxTotalTextBytes).toBeUndefined();
@@ -2357,7 +2357,7 @@ describe("MessageBuilder read-result cap", () => {
 		[
 			"the environment override",
 			getMessageBuilderOptionsFromEnv({
-				CLINE_MESSAGE_BUILDER_MAX_TOOL_RESULT_CHARS: String(EXPLICIT_CAP),
+				SEKOKUVA_CA_MESSAGE_BUILDER_MAX_TOOL_RESULT_CHARS: String(EXPLICIT_CAP),
 			}),
 		],
 	])("lets a tool-result cap set through %s bound reads too", (_label, options) => {

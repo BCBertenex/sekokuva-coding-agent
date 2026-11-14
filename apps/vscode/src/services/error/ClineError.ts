@@ -7,7 +7,7 @@ import {
 	isClinePassLimitMessage,
 } from "@sekokuva-ca/llms"
 import { serializeError } from "serialize-error"
-import { CLINE_ACCOUNT_AUTH_ERROR_MESSAGE } from "../../shared/ClineAccount"
+import { SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE } from "../../shared/ClineAccount"
 
 export enum ClineErrorType {
 	Auth = "auth",
@@ -41,9 +41,9 @@ const AUTH_STATUSES = new Set([401, 403])
 const PAYMENT_REQUIRED_STATUS = 402
 const NOT_FOUND_STATUSES = new Set([404, 405, 410])
 
-export const CLINE_FREE_MODEL_ID_PREFIX = "cline-free/"
+export const SEKOKUVA_CA_FREE_MODEL_ID_PREFIX = "cline-free/"
 /** Error code stamped by the host when it detects a retired free model (see message-translator). */
-export const CLINE_FREE_PROMOTION_ENDED_ERROR_CODE = "cline_free_promotion_ended"
+export const SEKOKUVA_CA_FREE_PROMOTION_ENDED_ERROR_CODE = "cline_free_promotion_ended"
 
 /**
  * Detects a request against a retired free model: once a promotion ends the
@@ -52,7 +52,7 @@ export const CLINE_FREE_PROMOTION_ENDED_ERROR_CODE = "cline_free_promotion_ended
  * generic path. Mirrors the CLI's detection in apps/cli/src/utils/cline-pass-errors.ts.
  */
 export function isClineFreePromotionEndedMessage(message: string, modelId?: string): boolean {
-	if (!modelId?.toLowerCase().startsWith(CLINE_FREE_MODEL_ID_PREFIX)) {
+	if (!modelId?.toLowerCase().startsWith(SEKOKUVA_CA_FREE_MODEL_ID_PREFIX)) {
 		return false
 	}
 	return isClineModelNotFoundMessage(message)
@@ -242,8 +242,8 @@ export class ClineError extends Error {
 		// Retired free models must be classified before the status branch: the
 		// backend's model-not-found answer is a 404.
 		if (
-			code === CLINE_FREE_PROMOTION_ENDED_ERROR_CODE ||
-			details?.code === CLINE_FREE_PROMOTION_ENDED_ERROR_CODE ||
+			code === SEKOKUVA_CA_FREE_PROMOTION_ENDED_ERROR_CODE ||
+			details?.code === SEKOKUVA_CA_FREE_PROMOTION_ENDED_ERROR_CODE ||
 			(detailMessage ? isClineFreePromotionEndedMessage(detailMessage, err.modelId) : false) ||
 			(rawMessage ? isClineFreePromotionEndedMessage(rawMessage, err.modelId) : false)
 		) {
@@ -281,7 +281,10 @@ export class ClineError extends Error {
 		if (message) {
 			// Check for specific error codes/messages if applicable
 			const authErrorRegex = [/(?:in)?valid[-_ ]?(?:api )?(?:token|key)/i, /authentication[-_ ]?failed/i, /unauthorized/i]
-			if (message?.includes(CLINE_ACCOUNT_AUTH_ERROR_MESSAGE) || authErrorRegex.some((regex) => regex.test(message))) {
+			if (
+				message?.includes(SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE) ||
+				authErrorRegex.some((regex) => regex.test(message))
+			) {
 				return ClineErrorType.Auth
 			}
 

@@ -110,10 +110,28 @@ export function resolveModelsSourceUrl(
 	baseUrl: string | undefined,
 	defaultBaseUrl: string | undefined,
 	modelsSourceUrl: string | undefined,
+	providerId?: string,
 ): string | undefined {
 	const source = modelsSourceUrl?.trim();
-	if (!source) return undefined;
 	const configuredBase = baseUrl?.trim();
+	if (!source) {
+		// `openai-compatible` has no registered model source, but every
+		// OpenAI-compatible endpoint exposes the standard `/models` route.
+		// Derive it from the configured base URL so a custom endpoint's
+		// catalog is discovered instead of falling back to the bundled
+		// placeholder list. Other providers keep their own parsers, which
+		// carry richer metadata than a bare id list.
+		if (providerId !== "openai-compatible" || !configuredBase) {
+			return undefined;
+		}
+		try {
+			const derived = new URL(configuredBase);
+			derived.pathname = `${trimTrailingSlash(derived.pathname)}/models`;
+			return derived.toString();
+		} catch {
+			return undefined;
+		}
+	}
 	if (!configuredBase || !defaultBaseUrl?.trim()) return source;
 
 	try {

@@ -1,5 +1,5 @@
 import {
-	type ClineSubscriptionPlan,
+	type SekoKuvaSubscriptionPlan,
 	extractClineFreeModelLimitResetTime,
 } from "@sekokuva-ca/core";
 import { useTerminalDimensions } from "@opentui/react";
@@ -18,7 +18,7 @@ import {
 	isClinePassSubscriptionError,
 } from "../../utils/cline-pass-errors";
 import {
-	CLINE_CREDITS_DASHBOARD_URL,
+	SEKOKUVA_CA_CREDITS_DASHBOARD_URL,
 	isClineAccountCreditsErrorMessage,
 } from "../cline-account";
 import { getUserMessageBackground } from "../palette";
@@ -299,8 +299,8 @@ function ClineCreditsClinePassErrorView(props: {
 				<box flexDirection="row">
 					<text fg="gray">Purchase Credits: </text>
 					<text fg={linkColor} selectable>
-						<a href={CLINE_CREDITS_DASHBOARD_URL}>
-							{CLINE_CREDITS_DASHBOARD_URL}
+						<a href={SEKOKUVA_CA_CREDITS_DASHBOARD_URL}>
+							{SEKOKUVA_CA_CREDITS_DASHBOARD_URL}
 						</a>
 					</text>
 				</box>
@@ -335,7 +335,7 @@ function ClineCreditsErrorView(props: {
 
 function ClinePassSubscriptionErrorView(props: {
 	defaultFg?: string;
-	loadIndividualSubscriptionPlans?: () => Promise<ClineSubscriptionPlan[]>;
+	loadIndividualSubscriptionPlans?: () => Promise<SekoKuvaSubscriptionPlan[]>;
 	theme: ResolvedTheme;
 }) {
 	const subscriptionUrl = getCliSubscriptionUrl();
@@ -585,7 +585,7 @@ export function ChatEntryView(props: {
 	accent?: string;
 	/** Mode the entry was produced in (resolved with the current-mode fallback). */
 	mode?: SyntaxAccentMode;
-	loadIndividualSubscriptionPlans?: () => Promise<ClineSubscriptionPlan[]>;
+	loadIndividualSubscriptionPlans?: () => Promise<SekoKuvaSubscriptionPlan[]>;
 	theme: ResolvedTheme;
 }) {
 	const { entry, mode = "act", theme } = props;

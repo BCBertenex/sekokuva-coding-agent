@@ -63,7 +63,7 @@ export function AgentContextUsage({
 	const circumference = 2 * Math.PI * radius;
 
 	return children({
-		triggerLabel: `Context window: ${totalTokens.toLocaleString()} of ${contextWindow.toLocaleString()} tokens used (${percent}%)`,
+		triggerLabel: `Context window: ${totalTokens.toLocaleString("en-US")} of ${contextWindow.toLocaleString("en-US")} tokens used (${percent}%)`,
 		ring: (
 			<svg
 				aria-hidden="true"
@@ -133,7 +133,7 @@ export function AgentContextUsage({
 					<div className="flex items-center justify-between gap-4">
 						<span className="text-cline-ui-muted-foreground">Input tokens</span>
 						<span className="font-cline-ui-mono text-cline-ui-foreground">
-							{usage.tokensIn.toLocaleString()}
+							{usage.tokensIn.toLocaleString("en-US")}
 						</span>
 					</div>
 					<div className="flex items-center justify-between gap-4">
@@ -141,7 +141,7 @@ export function AgentContextUsage({
 							Output tokens
 						</span>
 						<span className="font-cline-ui-mono text-cline-ui-foreground">
-							{usage.tokensOut.toLocaleString()}
+							{usage.tokensOut.toLocaleString("en-US")}
 						</span>
 					</div>
 					<div className="flex items-center justify-between gap-4">
@@ -149,7 +149,7 @@ export function AgentContextUsage({
 							Cached tokens
 						</span>
 						<span className="font-cline-ui-mono text-cline-ui-foreground">
-							{usage.cacheReadTokens.toLocaleString()}
+							{usage.cacheReadTokens.toLocaleString("en-US")}
 						</span>
 					</div>
 					{costLabel || costLabel === 0 ? (
@@ -173,7 +173,7 @@ function formatCompactTokens(value: number): string {
 	if (value >= 1_000) {
 		return `${formatCompactUnit(value / 1_000)}k`;
 	}
-	return value.toLocaleString();
+	return value.toLocaleString("en-US");
 }
 
 function formatCompactUnit(value: number): string {

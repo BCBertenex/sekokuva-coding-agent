@@ -164,7 +164,14 @@ describe("createHookConfigFileHooks", () => {
 		}
 	});
 
-	it("executes extensionless legacy hook files via bash fallback", async () => {
+	// These three exercise the POSIX bash fallback: an extensionless hook file
+	// is run through `bash`. On Windows `bash.exe` is the WSL launcher, which
+	// cannot execute a script at a Windows path, so the fallback is not
+	// available there. The Windows equivalents below cover the same behaviour
+	// through PowerShell.
+	it.runIf(process.platform !== "win32")(
+		"executes extensionless legacy hook files via bash fallback",
+		async () => {
 		const { workspace } = await createWorkspaceWithHook(
 			"PreToolUse",
 			'echo \'HOOK_CONTROL\t{"cancel":true,"context":"legacy-ok"}\'\nexit 0\n',
@@ -186,9 +193,12 @@ describe("createHookConfigFileHooks", () => {
 				retryDelay: 250,
 			});
 		}
-	});
+		},
+	);
 
-	it("adapts file hooks into an AgentExtension", async () => {
+	it.runIf(process.platform !== "win32")(
+		"adapts file hooks into an AgentExtension",
+		async () => {
 		const { workspace } = await createWorkspaceWithHook(
 			"PreToolUse",
 			'echo \'HOOK_CONTROL\t{"cancel":true,"context":"extension-ok"}\'\nexit 0\n',
@@ -241,9 +251,12 @@ describe("createHookConfigFileHooks", () => {
 				retryDelay: 250,
 			});
 		}
-	});
+		},
+	);
 
-	it("honors shebang interpreter when present", async () => {
+	it.runIf(process.platform !== "win32")(
+		"honors shebang interpreter when present",
+		async () => {
 		const { workspace } = await createWorkspaceWithHook(
 			"PreToolUse",
 			'#!/usr/bin/env bash\necho \'HOOK_CONTROL\t{"cancel":false,"context":"shebang-ok"}\'\n',
@@ -265,7 +278,8 @@ describe("createHookConfigFileHooks", () => {
 				retryDelay: 250,
 			});
 		}
-	});
+		},
+	);
 
 	it("parses review control from hook output", async () => {
 		const { workspace } = await createWorkspaceWithHook(
@@ -720,6 +734,125 @@ describe("createHookConfigFileHooks", () => {
 		30_000,
 	);
 
+	// Windows equivalents of the POSIX bash-fallback tests above. The behaviour
+	// under test is the same — an extensionless hook file is executed through
+	// the platform's default interpreter — but on Windows that interpreter is
+	// PowerShell, not bash.
+	it.runIf(process.platform === "win32")(
+		"executes extensionless legacy hook files via the Windows fallback",
+		async () => {
+			const { workspace } = await createWorkspaceWithHook(
+				"PreToolUse",
+				'Write-Output \'HOOK_CONTROL\t{"cancel": true, "context": "legacy-ok"}\'\n',
+			);
+			try {
+				const hooks = createHookConfigFileHooks({
+					cwd: workspace,
+					workspacePath: workspace,
+					detachAsyncHooks: false,
+				});
+				expect(hooks?.beforeTool).toBeTypeOf("function");
+				const control = await hooks?.beforeTool?.(beforeToolContext());
+				expect(control).toMatchObject({ stop: true });
+			} finally {
+				await rm(workspace, {
+					recursive: true,
+					force: true,
+					maxRetries: 3,
+					retryDelay: 250,
+				});
+			}
+		},
+		30_000,
+	);
+
+	it.runIf(process.platform === "win32")(
+		"adapts extensionless file hooks into an AgentExtension on Windows",
+		async () => {
+			const { workspace } = await createWorkspaceWithHook(
+				"PreToolUse",
+				'Write-Output \'HOOK_CONTROL\t{"cancel": true, "context": "extension-ok"}\'\n',
+			);
+			try {
+				const extension = createHookConfigFileExtension({
+					cwd: workspace,
+					workspacePath: workspace,
+					detachAsyncHooks: false,
+				});
+				expect(extension?.name).toBe("core.hook_config_files");
+				expect(extension?.manifest).toMatchObject({
+					capabilities: ["hooks"],
+				});
+				const control = await extension?.hooks?.beforeTool?.({
+					snapshot: {
+						agentId: "agent_1",
+						conversationId: "conv_1",
+						status: "running",
+						iteration: 1,
+						messages: [],
+						pendingToolCalls: [],
+						usage: {
+							inputTokens: 0,
+							outputTokens: 0,
+							cacheReadTokens: 0,
+							cacheWriteTokens: 0,
+						},
+					},
+					tool: {
+						name: "read_file",
+						description: "",
+						inputSchema: {},
+						execute: async () => "",
+					},
+					toolCall: {
+						type: "tool-call",
+						toolCallId: "call_1",
+						toolName: "read_file",
+						input: { path: "README.md" },
+					},
+					input: { path: "README.md" },
+				});
+				expect(control).toMatchObject({ stop: true });
+			} finally {
+				await rm(workspace, {
+					recursive: true,
+					force: true,
+					maxRetries: 3,
+					retryDelay: 250,
+				});
+			}
+		},
+		30_000,
+	);
+
+	it.runIf(process.platform === "win32")(
+		"honors a PowerShell shebang when present",
+		async () => {
+			const { workspace } = await createWorkspaceWithHook(
+				"PreToolUse",
+				'#!powershell\nWrite-Output \'HOOK_CONTROL\t{"cancel": false, "context": "shebang-ok"}\'\n',
+			);
+			try {
+				const hooks = createHookConfigFileHooks({
+					cwd: workspace,
+					workspacePath: workspace,
+					detachAsyncHooks: false,
+				});
+				expect(hooks?.beforeTool).toBeTypeOf("function");
+				const control = await hooks?.beforeTool?.(beforeToolContext());
+				expect(control).toEqual({ appendContext: "shebang-ok" });
+			} finally {
+				await rm(workspace, {
+					recursive: true,
+					force: true,
+					maxRetries: 3,
+					retryDelay: 250,
+				});
+			}
+		},
+		30_000,
+	);
+
 	it("maps TaskError hook files to agent_error stop events", async () => {
 		const outputPath = join(tmpdir(), `hooks-task-error-${Date.now()}.json`);
 		const { workspace } = await createWorkspaceWithHook(
@@ -765,8 +898,8 @@ describe("createHookConfigFileHooks", () => {
 
 	it("writes audit tool timing and completed turn payloads", async () => {
 		const outputPath = join(tmpdir(), `hooks-audit-${Date.now()}.jsonl`);
-		const originalLogPath = process.env.CLINE_HOOKS_LOG_PATH;
-		process.env.CLINE_HOOKS_LOG_PATH = outputPath;
+		const originalLogPath = process.env.SEKOKUVA_CA_HOOKS_LOG_PATH;
+		process.env.SEKOKUVA_CA_HOOKS_LOG_PATH = outputPath;
 		try {
 			const hooks = createHookAuditHooks({
 				workspacePath: "/workspace",
@@ -807,9 +940,9 @@ describe("createHookConfigFileHooks", () => {
 			});
 		} finally {
 			if (originalLogPath === undefined) {
-				delete process.env.CLINE_HOOKS_LOG_PATH;
+				delete process.env.SEKOKUVA_CA_HOOKS_LOG_PATH;
 			} else {
-				process.env.CLINE_HOOKS_LOG_PATH = originalLogPath;
+				process.env.SEKOKUVA_CA_HOOKS_LOG_PATH = originalLogPath;
 			}
 			await rm(outputPath, { force: true });
 		}

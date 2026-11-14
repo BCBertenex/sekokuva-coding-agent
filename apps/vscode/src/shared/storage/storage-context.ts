@@ -41,8 +41,8 @@ export interface StorageContext {
 export interface StorageContextOptions {
 	/**
 	 * Override the Cline home directory. When set, the data directory is always
-	 * `<clineDir>/data`. Defaults to env-based resolution: CLINE_DATA_DIR, then
-	 * CLINE_DIR + "/data", then ~/.cline/data.
+	 * `<clineDir>/data`. Defaults to env-based resolution: SEKOKUVA_CA_DATA_DIR, then
+	 * SEKOKUVA_CA_DIR + "/data", then ~/.cline/data.
 	 */
 	clineDir?: string
 
@@ -81,7 +81,7 @@ function hashString(str: string): string {
 
 /**
  * Resolve the Cline data directory from the environment:
- * CLINE_DATA_DIR (trimmed) > CLINE_DIR + "/data" > ~/.cline/data.
+ * SEKOKUVA_CA_DATA_DIR (trimmed) > SEKOKUVA_CA_DIR + "/data" > ~/.cline/data.
  *
  * Single source of truth shared by createStorageContext and the SDK adapter's
  * legacy-state-reader, matching the SDK's own resolveClineDataDir. Every
@@ -91,11 +91,11 @@ function hashString(str: string): string {
  * show (ENG-2332).
  */
 export function resolveDataDirFromEnv(): string {
-	const envDataDir = process.env.CLINE_DATA_DIR?.trim()
+	const envDataDir = process.env.SEKOKUVA_CA_DATA_DIR?.trim()
 	if (envDataDir) {
 		return envDataDir
 	}
-	const clineDir = process.env.CLINE_DIR?.trim() || path.join(os.homedir(), ".cline")
+	const clineDir = process.env.SEKOKUVA_CA_DIR?.trim() || path.join(os.homedir(), ".cline")
 	return path.join(clineDir, SETTINGS_SUBFOLDER)
 }
 

@@ -7,7 +7,7 @@ vi.mock("node:fs", () => ({ existsSync: vi.fn() }));
 beforeEach(() => {
 	vi.resetModules();
 	vi.mocked(existsSync).mockReset().mockReturnValue(false);
-	vi.stubEnv("CLINE_PLUGIN_RUNTIME_DIR", "");
+	vi.stubEnv("SEKOKUVA_CA_PLUGIN_RUNTIME_DIR", "");
 });
 afterEach(() => {
 	vi.unstubAllEnvs();
@@ -26,7 +26,7 @@ describe("plugin runtime discovery", () => {
 	it("validates and resolves explicit configuration even after a cached discovery miss", async () => {
 		const { resolvePluginRuntimeDirectory } = await import("./plugin-runtime");
 		resolvePluginRuntimeDirectory();
-		vi.stubEnv("CLINE_PLUGIN_RUNTIME_DIR", "./configured-runtime");
+		vi.stubEnv("SEKOKUVA_CA_PLUGIN_RUNTIME_DIR", "./configured-runtime");
 		vi.mocked(existsSync).mockReturnValue(true);
 		expect(resolvePluginRuntimeDirectory()).toBe(
 			resolve("./configured-runtime"),

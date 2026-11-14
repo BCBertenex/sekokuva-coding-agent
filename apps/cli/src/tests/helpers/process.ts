@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import { type SpawnSyncOptions, spawnSync } from "node:child_process";
-import { CLINE_BIN } from "./constants.js";
+import { SEKOKUVA_CA_BIN } from "./constants.js";
 import { clineEnv } from "./env.js";
 
 export interface RunResult {
@@ -57,7 +57,7 @@ export function runCline(args: string[], opts: RunOptions = {}): RunResult {
 		input: stdin,
 	};
 
-	const result = spawnSync(CLINE_BIN, args, spawnOpts);
+	const result = spawnSync(SEKOKUVA_CA_BIN, args, spawnOpts);
 
 	const stdout = (result.stdout as string) ?? "";
 	const stderr = (result.stderr as string) ?? "";

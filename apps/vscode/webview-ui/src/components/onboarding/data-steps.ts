@@ -1,5 +1,5 @@
 export enum NEW_USER_TYPE {
-	CLINE_PASS = "cline-pass",
+	SEKOKUVA_CA_PASS = "cline-pass",
 	FREE = "free",
 	POWER = "power",
 	BYOK = "byok",
@@ -21,7 +21,7 @@ export const STEP_CONFIG = {
 			{ text: "Login to Cline", action: "signin", variant: "secondary" },
 		],
 	},
-	[NEW_USER_TYPE.CLINE_PASS]: {
+	[NEW_USER_TYPE.SEKOKUVA_CA_PASS]: {
 		title: "Select a ClinePass model",
 		buttons: [
 			{ text: "Create my Account", action: "signup", variant: "default" },
@@ -56,10 +56,10 @@ export const STEP_CONFIG = {
 	},
 } as const
 
-const CLINE_PASS_USER_TYPE_SELECTION: UserTypeSelection = {
+const SEKOKUVA_CA_PASS_USER_TYPE_SELECTION: UserTypeSelection = {
 	title: "ClinePass",
 	description: "Low cost subscription plan for best open weights model.",
-	type: NEW_USER_TYPE.CLINE_PASS,
+	type: NEW_USER_TYPE.SEKOKUVA_CA_PASS,
 	learnMoreUrl: "https://docs.cline.bot/getting-started/clinepass",
 }
 
@@ -75,5 +75,5 @@ export function getUserTypeSelections(hasClinePassModels: boolean): UserTypeSele
 		return BASE_USER_TYPE_SELECTIONS
 	}
 	const [free, ...rest] = BASE_USER_TYPE_SELECTIONS
-	return [free, CLINE_PASS_USER_TYPE_SELECTION, ...rest]
+	return [free, SEKOKUVA_CA_PASS_USER_TYPE_SELECTION, ...rest]
 }

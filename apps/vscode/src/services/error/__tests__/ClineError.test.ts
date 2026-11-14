@@ -33,7 +33,7 @@ describe("ClineError", () => {
 
 		it("should classify the SDK org individual subscription message separately", () => {
 			const err = new ClineError(
-				"Organization accounts cannot use ClinePass subscriptions. Go to /account -> change account to switch to your personal account for ClinePass",
+				"Organization accounts cannot use SekoKuvaPass subscriptions. Go to /account -> change account to switch to your personal account for SekoKuvaPass",
 			)
 
 			ClineError.getErrorType(err)!.should.equal(ClineErrorType.OrgClinePassRestriction)

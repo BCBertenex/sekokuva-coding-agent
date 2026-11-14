@@ -63,14 +63,14 @@ export const AwsBedrockSettingsSchema = z.object({
 });
 
 // Cline Provider model schema with per-model settings
-export const ClineModelSchema = z.object({
+export const SekoKuvaModelSchema = z.object({
 	id: z.string(), // The model ID is required
 });
 
 // Cline Provider specific settings
-export const ClineSettingsSchema = z.object({
+export const SekoKuvaSettingsSchema = z.object({
 	// A list of the allowed models with their settings
-	models: z.array(ClineModelSchema).optional(),
+	models: z.array(SekoKuvaModelSchema).optional(),
 });
 
 // Vertex Provider model schema with per-model settings
@@ -113,7 +113,7 @@ export const AnthropicSchema = z.object({
 const ProviderSettingsSchema = z.object({
 	OpenAiCompatible: OpenAiCompatibleSchema.optional(),
 	AwsBedrock: AwsBedrockSettingsSchema.optional(),
-	Cline: ClineSettingsSchema.optional(),
+	Cline: SekoKuvaSettingsSchema.optional(),
 	Vertex: VertexSettingsSchema.optional(),
 	LiteLLM: LiteLLMSchema.optional(),
 	Anthropic: AnthropicSchema.optional(),

@@ -21,10 +21,10 @@ describe("ensureHubWithDesktopCli", () => {
 				cwd: "/work",
 				env: {
 					PATH: "/usr/bin",
-					CLINE_NO_AUTO_UPDATE: "1",
-					CLINE_HUB_LAUNCHER_CLIENT: "cline-desktop",
-					CLINE_HUB_LAUNCHER_VERSION: expect.stringMatching(/^\d+\.\d+\.\d+/),
-					CLINE_HUB_LAUNCHER_TRANSPORT: "local",
+					SEKOKUVA_CA_NO_AUTO_UPDATE: "1",
+					SEKOKUVA_CA_HUB_LAUNCHER_CLIENT: "cline-desktop",
+					SEKOKUVA_CA_HUB_LAUNCHER_VERSION: expect.stringMatching(/^\d+\.\d+\.\d+/),
+					SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT: "local",
 				},
 				timeoutMs: 60_000,
 			},
@@ -45,9 +45,9 @@ describe("adoptDesktopCliRuntime", () => {
 	it("routes Hub spawns through the bundled CLI and restores the workspace cwd", () => {
 		const env: NodeJS.ProcessEnv = {
 			BUN_BE_BUN: "1",
-			CLINE_DESKTOP_CLI_PATH:
+			SEKOKUVA_CA_DESKTOP_CLI_PATH:
 				"/Applications/Cline.app/Contents/MacOS/cline-cli",
-			CLINE_DESKTOP_WORKSPACE_ROOT: "/Users/dev/project",
+			SEKOKUVA_CA_DESKTOP_WORKSPACE_ROOT: "/Users/dev/project",
 		};
 		const chdir = vi.fn();
 		const setLauncher = vi.fn();
@@ -60,13 +60,13 @@ describe("adoptDesktopCliRuntime", () => {
 		});
 
 		expect(env.BUN_BE_BUN).toBeUndefined();
-		expect(env.CLINE_DESKTOP_WORKSPACE_ROOT).toBeUndefined();
-		expect(env.CLINE_DESKTOP_CLI_PATH).toBe(
+		expect(env.SEKOKUVA_CA_DESKTOP_WORKSPACE_ROOT).toBeUndefined();
+		expect(env.SEKOKUVA_CA_DESKTOP_CLI_PATH).toBe(
 			"/Applications/Cline.app/Contents/MacOS/cline-cli",
 		);
 		expect(chdir).toHaveBeenCalledWith("/Users/dev/project");
 		expect(setPluginLauncher).toHaveBeenCalledWith({
-			command: env.CLINE_DESKTOP_CLI_PATH,
+			command: env.SEKOKUVA_CA_DESKTOP_CLI_PATH,
 			argsPrefix: ["--plugin-sandbox"],
 		});
 		expect(setLauncher).toHaveBeenCalledWith({

@@ -717,8 +717,8 @@ function buildAiSdkRuntimeContext(
 		...(typeof metadata.clientVersion === "string"
 			? { clientVersion: metadata.clientVersion }
 			: {}),
-		...(typeof metadata.clineCoreVersion === "string"
-			? { clineCoreVersion: metadata.clineCoreVersion }
+		...(typeof metadata.sekokuvaCaCoreVersion === "string"
+			? { sekokuvaCaCoreVersion: metadata.sekokuvaCaCoreVersion }
 			: {}),
 		...(tags && tags.length > 0 ? { tags } : {}),
 		// Keep Cline correlation fields available even when the integration
@@ -2068,7 +2068,7 @@ async function createProviderModule(
 ): Promise<ProviderFactoryResult> {
 	switch (kind) {
 		case "cline": {
-			const { createClineProviderModule } = await import("./vendors/cline");
+			const { createClineProviderModule } = await import("./vendors/sekokuva-ca");
 			return createClineProviderModule(config, context);
 		}
 		case "openai": {
@@ -2435,7 +2435,7 @@ function createAiSdkProvider(
 									sessionId: true,
 									clientName: true,
 									clientVersion: true,
-									clineCoreVersion: true,
+									sekokuvaCaCoreVersion: true,
 									tags: true,
 									conversationId: true,
 									runId: true,

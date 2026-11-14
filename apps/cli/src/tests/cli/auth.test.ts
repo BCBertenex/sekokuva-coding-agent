@@ -11,7 +11,7 @@
 
 import { test } from "@microsoft/tui-test";
 import {
-	CLINE_BIN,
+	SEKOKUVA_CA_BIN,
 	EXIT_CODE_FAIL,
 	EXIT_CODE_SUCCESS,
 	TERMINAL_WIDE,
@@ -22,7 +22,7 @@ import { expectExitCode, expectVisible } from "../helpers/terminal.js";
 
 test.describe("cline auth (interactive screen)", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["auth"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["auth"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("unauthenticated"),
 	});
@@ -41,7 +41,7 @@ test.describe("cline auth (interactive screen)", () => {
 
 test.describe("cline auth --help", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["auth", "--help"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["auth", "--help"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("unauthenticated"),
 	});
@@ -62,7 +62,7 @@ test.describe("cline auth --help", () => {
 // ---------------------------------------------------------------------------
 test.describe("cline auth --provider only (partial flags)", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["auth", "--provider", "openai"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["auth", "--provider", "openai"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("unauthenticated"),
 	});
@@ -76,7 +76,7 @@ test.describe("cline auth --provider only (partial flags)", () => {
 test.describe("cline auth --apikey only (partial flags)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["auth", "--apikey", "sk-test-key"],
 		},
 		...TERMINAL_WIDE,
@@ -92,7 +92,7 @@ test.describe("cline auth --apikey only (partial flags)", () => {
 test.describe("cline auth --modelid only (partial flags)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["auth", "--modelid", "gpt-4o"],
 		},
 		...TERMINAL_WIDE,
@@ -108,7 +108,7 @@ test.describe("cline auth --modelid only (partial flags)", () => {
 test.describe("cline auth --baseurl only (partial flags)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["auth", "--baseurl", "https://api.example.com"],
 		},
 		...TERMINAL_WIDE,
@@ -124,7 +124,7 @@ test.describe("cline auth --baseurl only (partial flags)", () => {
 test.describe("cline auth --verbose only", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["auth", "--verbose"],
 		},
 		...TERMINAL_WIDE,
@@ -141,7 +141,7 @@ test.describe("cline auth --verbose only", () => {
 test.describe("cline auth --cwd", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["auth", "--cwd", "/tmp"],
 		},
 		...TERMINAL_WIDE,
@@ -158,7 +158,7 @@ test.describe("cline auth --cwd", () => {
 test.describe("cline auth --config", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["auth", "--config", "configs/unauthenticated"],
 		},
 		...TERMINAL_WIDE,
@@ -175,7 +175,7 @@ test.describe("cline auth --config", () => {
 test.describe("cline auth -p -k -m (golden path)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: [
 				"auth",
 				"--provider",
@@ -201,7 +201,7 @@ test.describe("cline auth -p -k -m (golden path)", () => {
 test.describe("cline auth with invalid key (still exits 0)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: [
 				"auth",
 				"--provider",
@@ -226,7 +226,7 @@ test.describe("cline auth with invalid key (still exits 0)", () => {
 test.describe("cline auth -p -k -m -b (golden path with baseUrl)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: [
 				"auth",
 				"--provider",
@@ -253,7 +253,7 @@ test.describe("cline auth -p -k -m -b (golden path with baseUrl)", () => {
 test.describe("cline auth --baseurl with non-OpenAI-compatible provider", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: [
 				"auth",
 				"--provider",
@@ -283,7 +283,7 @@ test.describe("cline auth --baseurl with non-OpenAI-compatible provider", () => 
 test.describe("cline auth with invalid provider", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: [
 				"auth",
 				"--provider",

@@ -81,10 +81,10 @@ describe("vscode-to-file-migration", () => {
 
 	beforeEach(() => {
 		sandbox = sinon.createSandbox()
-		originalMcpSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH
+		originalMcpSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH
 		tempDir = path.join(os.tmpdir(), `migration-test-${Date.now()}-${Math.random().toString(36).slice(2)}`)
 		fs.mkdirSync(tempDir, { recursive: true })
-		process.env.CLINE_MCP_SETTINGS_PATH = path.join(tempDir, "runtime-mcp-settings", "cline_mcp_settings.json")
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = path.join(tempDir, "runtime-mcp-settings", "cline_mcp_settings.json")
 
 		storageContext = createStorageContext({
 			clineDir: tempDir,
@@ -95,9 +95,9 @@ describe("vscode-to-file-migration", () => {
 	afterEach(() => {
 		sandbox.restore()
 		if (originalMcpSettingsPath === undefined) {
-			delete process.env.CLINE_MCP_SETTINGS_PATH
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH
 		} else {
-			process.env.CLINE_MCP_SETTINGS_PATH = originalMcpSettingsPath
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = originalMcpSettingsPath
 		}
 		try {
 			fs.rmSync(tempDir, { recursive: true, force: true })
@@ -296,7 +296,7 @@ describe("vscode-to-file-migration", () => {
 
 	describe("legacy MCP settings migration", () => {
 		function sharedMcpSettingsPath() {
-			return process.env.CLINE_MCP_SETTINGS_PATH!
+			return process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH!
 		}
 
 		function readSharedMcpSettings() {
@@ -842,16 +842,16 @@ describe("createStorageContext", () => {
 	})
 
 	// The data dir must resolve like the SDK's resolveClineDataDir and the
-	// legacy reader's resolveDataDir: CLINE_DATA_DIR first. Ignoring it split
+	// legacy reader's resolveDataDir: SEKOKUVA_CA_DATA_DIR first. Ignoring it split
 	// globalState.json/secrets.json and providers.json across two directories,
 	// so the two provider stores disagreed about the active provider (ENG-2332).
 	describe("environment-based data dir resolution", () => {
-		const previousClineDir = process.env.CLINE_DIR
-		const previousClineDataDir = process.env.CLINE_DATA_DIR
+		const previousClineDir = process.env.SEKOKUVA_CA_DIR
+		const previousClineDataDir = process.env.SEKOKUVA_CA_DATA_DIR
 
 		afterEach(() => {
-			restoreEnv("CLINE_DIR", previousClineDir)
-			restoreEnv("CLINE_DATA_DIR", previousClineDataDir)
+			restoreEnv("SEKOKUVA_CA_DIR", previousClineDir)
+			restoreEnv("SEKOKUVA_CA_DATA_DIR", previousClineDataDir)
 		})
 
 		function restoreEnv(key: string, value: string | undefined) {
@@ -862,10 +862,10 @@ describe("createStorageContext", () => {
 			}
 		}
 
-		it("should honor CLINE_DATA_DIR when no clineDir option is given", () => {
+		it("should honor SEKOKUVA_CA_DATA_DIR when no clineDir option is given", () => {
 			const isolatedDataDir = path.join(tempDir, "isolated-data")
-			process.env.CLINE_DATA_DIR = isolatedDataDir
-			delete process.env.CLINE_DIR
+			process.env.SEKOKUVA_CA_DATA_DIR = isolatedDataDir
+			delete process.env.SEKOKUVA_CA_DIR
 
 			const ctx = createStorageContext({ workspacePath: "/test" })
 
@@ -873,18 +873,18 @@ describe("createStorageContext", () => {
 			ctx.workspaceStoragePath.startsWith(path.join(isolatedDataDir, "workspaces")).should.be.true()
 		})
 
-		it("should prefer CLINE_DATA_DIR over CLINE_DIR", () => {
+		it("should prefer SEKOKUVA_CA_DATA_DIR over SEKOKUVA_CA_DIR", () => {
 			const isolatedDataDir = path.join(tempDir, "isolated-data")
-			process.env.CLINE_DATA_DIR = isolatedDataDir
-			process.env.CLINE_DIR = path.join(tempDir, "cline-home")
+			process.env.SEKOKUVA_CA_DATA_DIR = isolatedDataDir
+			process.env.SEKOKUVA_CA_DIR = path.join(tempDir, "cline-home")
 
 			const ctx = createStorageContext({ workspacePath: "/test" })
 
 			ctx.dataDir.should.equal(isolatedDataDir)
 		})
 
-		it("should let an explicit clineDir option win over CLINE_DATA_DIR", () => {
-			process.env.CLINE_DATA_DIR = path.join(tempDir, "isolated-data")
+		it("should let an explicit clineDir option win over SEKOKUVA_CA_DATA_DIR", () => {
+			process.env.SEKOKUVA_CA_DATA_DIR = path.join(tempDir, "isolated-data")
 
 			const ctx = createStorageContext({ clineDir: tempDir, workspacePath: "/test" })
 
@@ -892,8 +892,8 @@ describe("createStorageContext", () => {
 		})
 
 		it("should trim whitespace-padded env values like the SDK resolvers", () => {
-			delete process.env.CLINE_DATA_DIR
-			process.env.CLINE_DIR = `  ${path.join(tempDir, "cline-home")}  `
+			delete process.env.SEKOKUVA_CA_DATA_DIR
+			process.env.SEKOKUVA_CA_DIR = `  ${path.join(tempDir, "cline-home")}  `
 
 			const ctx = createStorageContext({ workspacePath: "/test" })
 

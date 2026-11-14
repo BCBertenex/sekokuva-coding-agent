@@ -28,7 +28,7 @@ export class TerminalRegistry {
 			name: "Cline",
 			iconPath: new vscode.ThemeIcon("cline-icon"),
 			env: {
-				CLINE_ACTIVE: "true",
+				SEKOKUVA_CA_ACTIVE: "true",
 				// Override $SHELL to match the selected shell profile so that
 				// child processes (make, npm scripts, etc.) that read $SHELL
 				// see the correct value instead of the user's login shell.

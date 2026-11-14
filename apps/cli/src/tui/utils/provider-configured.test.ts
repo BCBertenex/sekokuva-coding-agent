@@ -9,7 +9,7 @@ import {
 } from "./provider-configured";
 
 const ENV_KEY = "OPENROUTER_API_KEY";
-const SETTINGS_PATH_KEY = "CLINE_PROVIDER_SETTINGS_PATH";
+const SETTINGS_PATH_KEY = "SEKOKUVA_CA_PROVIDER_SETTINGS_PATH";
 const previous = process.env[ENV_KEY];
 const previousSettingsPath = process.env[SETTINGS_PATH_KEY];
 let settingsDir: string;

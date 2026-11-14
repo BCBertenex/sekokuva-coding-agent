@@ -17,11 +17,11 @@ describe("marketplace service", () => {
 		root = mkdtempSync(join(tmpdir(), "core-marketplace-"));
 		home = join(root, "home");
 		originalHome = process.env.HOME;
-		originalClineDir = process.env.CLINE_DIR;
+		originalClineDir = process.env.SEKOKUVA_CA_DIR;
 		process.env.HOME = home;
-		process.env.CLINE_DIR = join(home, ".cline");
+		process.env.SEKOKUVA_CA_DIR = join(home, ".cline");
 		setHomeDir(home);
-		setClineDir(process.env.CLINE_DIR);
+		setClineDir(process.env.SEKOKUVA_CA_DIR);
 	});
 
 	afterEach(() => {
@@ -31,9 +31,9 @@ describe("marketplace service", () => {
 			process.env.HOME = originalHome;
 		}
 		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+			delete process.env.SEKOKUVA_CA_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.SEKOKUVA_CA_DIR = originalClineDir;
 		}
 		rmSync(root, { recursive: true, force: true });
 	});
@@ -122,13 +122,13 @@ describe("marketplace service", () => {
 	});
 
 	it("cleans up remaining marketplace skill directories after skills CLI remove succeeds", async () => {
-		const clineSkillDir = join(
-			process.env.CLINE_DIR ?? "",
+		const sekokuvaCaSkillDir = join(
+			process.env.SEKOKUVA_CA_DIR ?? "",
 			"skills",
 			"review-team",
 		);
-		await mkdir(clineSkillDir, { recursive: true });
-		await writeFile(join(clineSkillDir, "SKILL.md"), "# Review Team", "utf8");
+		await mkdir(sekokuvaCaSkillDir, { recursive: true });
+		await writeFile(join(sekokuvaCaSkillDir, "SKILL.md"), "# Review Team", "utf8");
 
 		const result = await uninstallMarketplaceEntry(
 			{
@@ -147,8 +147,8 @@ describe("marketplace service", () => {
 		);
 
 		expect(result.status).toBe("uninstalled");
-		expect(result.output).toContain(`Removed: ${clineSkillDir}`);
-		expect(existsSync(clineSkillDir)).toBe(false);
+		expect(result.output).toContain(`Removed: ${sekokuvaCaSkillDir}`);
+		expect(existsSync(sekokuvaCaSkillDir)).toBe(false);
 	});
 
 	it("uninstalls official marketplace plugins by marketplace slug", async () => {

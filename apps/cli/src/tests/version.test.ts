@@ -1,5 +1,5 @@
 import { test } from "@microsoft/tui-test";
-import { CLINE_BIN } from "./helpers/constants.js";
+import { SEKOKUVA_CA_BIN } from "./helpers/constants.js";
 import { clineEnv } from "./helpers/env.js";
 import { expectVisible } from "./helpers/terminal.js";
 
@@ -8,7 +8,7 @@ import { expectVisible } from "./helpers/terminal.js";
 // ---------------------------------------------------------------------------
 test.describe("cline --version", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["--version"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["--version"] },
 		env: clineEnv("claude-sonnet-4.6"),
 	});
 
@@ -22,7 +22,7 @@ test.describe("cline --version", () => {
 // ---------------------------------------------------------------------------
 test.describe("cline -V", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["-V"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["-V"] },
 		env: clineEnv("claude-sonnet-4.6"),
 	});
 
@@ -36,7 +36,7 @@ test.describe("cline -V", () => {
 // ---------------------------------------------------------------------------
 test.describe("cline version subcommand", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["version"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["version"] },
 		env: clineEnv("claude-sonnet-4.6"),
 	});
 

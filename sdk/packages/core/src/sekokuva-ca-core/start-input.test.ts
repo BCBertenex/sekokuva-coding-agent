@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { normalizeClineCoreStartInput } from "./start-input";
-import type { ClineCoreStartInput } from "./types";
+import type { SekoKuvaCoreStartInput } from "./types";
 
 function createInput(
-	overrides: Partial<ClineCoreStartInput> = {},
-): ClineCoreStartInput {
+	overrides: Partial<SekoKuvaCoreStartInput> = {},
+): SekoKuvaCoreStartInput {
 	return {
 		config: {
 			providerId: "anthropic",

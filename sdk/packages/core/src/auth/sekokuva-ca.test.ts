@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ClineOAuthCredentials } from "./cline";
+import type { SekoKuvaOAuthCredentials } from "./sekokuva-ca";
 import {
 	completeClineDeviceAuth,
 	getValidClineCredentials,
 	loginClineOAuth,
-} from "./cline";
+} from "./sekokuva-ca";
 
 const PROVIDER_OPTIONS = {
 	apiBaseUrl: "https://auth.example.com",
@@ -23,8 +23,8 @@ function createJwt(payload: Record<string, unknown>): string {
 }
 
 function createCredentials(
-	overrides: Partial<ClineOAuthCredentials> = {},
-): ClineOAuthCredentials {
+	overrides: Partial<SekoKuvaOAuthCredentials> = {},
+): SekoKuvaOAuthCredentials {
 	return {
 		access: "access-old",
 		refresh: "refresh-old",

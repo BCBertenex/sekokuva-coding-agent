@@ -115,7 +115,7 @@ describe("buildConnectorStartRequest", () => {
 			auth: { accessToken: "workos:resolved-token" },
 		});
 		mockGetProviderCollection.mockReturnValue({
-			provider: { env: ["CLINE_API_KEY"] },
+			provider: { env: ["SEKOKUVA_CA_API_KEY"] },
 		});
 		mockResolveSystemPrompt.mockResolvedValue("system");
 
@@ -170,7 +170,7 @@ describe("buildConnectorStartRequest", () => {
 			auth: { accessToken: "workos:resolved-token" },
 		});
 		mockGetProviderCollection.mockReturnValue({
-			provider: { env: ["CLINE_API_KEY"] },
+			provider: { env: ["SEKOKUVA_CA_API_KEY"] },
 		});
 		mockResolveSystemPrompt.mockResolvedValue("system");
 

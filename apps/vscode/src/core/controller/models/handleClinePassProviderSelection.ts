@@ -2,7 +2,7 @@ import type { ApiConfiguration } from "@shared/api"
 import { Logger } from "@/shared/services/Logger"
 import type { Controller } from "../index"
 
-export const CLINE_PASS_PROVIDER_ID = "cline-pass"
+export const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass"
 
 /**
  * ClinePass always uses the user's personal Cline account balance.
@@ -25,8 +25,8 @@ export function clearOrganizationForClinePassProviderSelection(
 	apiConfiguration: Pick<ApiConfiguration, "planModeApiProvider" | "actModeApiProvider">,
 ): void {
 	if (
-		apiConfiguration.planModeApiProvider !== CLINE_PASS_PROVIDER_ID &&
-		apiConfiguration.actModeApiProvider !== CLINE_PASS_PROVIDER_ID
+		apiConfiguration.planModeApiProvider !== SEKOKUVA_CA_PASS_PROVIDER_ID &&
+		apiConfiguration.actModeApiProvider !== SEKOKUVA_CA_PASS_PROVIDER_ID
 	) {
 		return
 	}

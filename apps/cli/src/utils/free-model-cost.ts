@@ -2,7 +2,7 @@ import { type AgentEvent, buildClineClientHeaders } from "@sekokuva-ca/core";
 import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 import type { Config } from "./types";
 
-const CLINE_RECOMMENDED_MODELS_TIMEOUT_MS = 5_000;
+const SEKOKUVA_CA_RECOMMENDED_MODELS_TIMEOUT_MS = 5_000;
 const freeModelIdsByBaseUrl = new Map<
 	string,
 	Promise<readonly string[] | undefined>
@@ -33,7 +33,7 @@ async function fetchClineFreeModelIds(
 	const controller = new AbortController();
 	const timeout = setTimeout(
 		() => controller.abort(),
-		CLINE_RECOMMENDED_MODELS_TIMEOUT_MS,
+		SEKOKUVA_CA_RECOMMENDED_MODELS_TIMEOUT_MS,
 	);
 	try {
 		const response = await fetch(resolveClineRecommendedModelsUrl(baseUrl), {

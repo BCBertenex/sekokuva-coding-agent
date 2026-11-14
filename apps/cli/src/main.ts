@@ -3,7 +3,7 @@ import { homedir } from "node:os";
 import { basename } from "node:path";
 import type { ToolPolicy } from "@sekokuva-ca/core";
 
-import { CLINE_DEFAULT_MODEL_ID, registerDisposable } from "@sekokuva-ca/shared";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID, registerDisposable } from "@sekokuva-ca/shared";
 import type { Command } from "commander";
 import { createDashboardCommand } from "./commands/dashboard-command";
 import { registerHistoryCommand } from "./commands/history-command";
@@ -235,7 +235,7 @@ export async function runCli(): Promise<void> {
 			// Honor --data-dir before constructing the provider settings manager
 			// so writes land under the chosen data dir instead of ~/.cline.
 			configureSandboxEnvironment({
-				enabled: !!opts.dataDir || process.env.CLINE_SANDBOX?.trim() === "1",
+				enabled: !!opts.dataDir || process.env.SEKOKUVA_CA_SANDBOX?.trim() === "1",
 				cwd: opts.cwd ?? process.cwd(),
 				explicitDir: opts.dataDir,
 			});
@@ -734,9 +734,9 @@ export async function runCli(): Promise<void> {
 		}
 		resumeSessionId = sessionId;
 		startupTarget = "chat";
-		process.env.CLINE_HOOK_AGENT_RESUME = "1";
+		process.env.SEKOKUVA_CA_HOOK_AGENT_RESUME = "1";
 	} else {
-		delete process.env.CLINE_HOOK_AGENT_RESUME;
+		delete process.env.SEKOKUVA_CA_HOOK_AGENT_RESUME;
 	}
 	if (startupTarget) {
 		args = {
@@ -780,7 +780,7 @@ export async function runCli(): Promise<void> {
 		);
 	}
 	if (args.hooksDir?.trim()) {
-		process.env.CLINE_HOOKS_DIR = args.hooksDir.trim();
+		process.env.SEKOKUVA_CA_HOOKS_DIR = args.hooksDir.trim();
 	}
 	if (args.prompt && !args.interactive) {
 		if (program.args.length > 1 || !promptArgLooksQuoted(program.args[0])) {
@@ -857,10 +857,10 @@ export async function runCli(): Promise<void> {
 	const cwd = args.cwd ?? process.cwd();
 	const workspaceRoot = resolveWorkspaceRoot(cwd);
 	// Sandbox mode is enabled implicitly whenever --data-dir is provided, or
-	// when CLINE_SANDBOX=1 is set in the environment (in which case the data
-	// dir falls back to $CLINE_SANDBOX_DATA_DIR or /tmp/cline-sandbox).
+	// when SEKOKUVA_CA_SANDBOX=1 is set in the environment (in which case the data
+	// dir falls back to $SEKOKUVA_CA_SANDBOX_DATA_DIR or /tmp/cline-sandbox).
 	const sandboxEnabled =
-		!!args.dataDir || process.env.CLINE_SANDBOX?.trim() === "1";
+		!!args.dataDir || process.env.SEKOKUVA_CA_SANDBOX?.trim() === "1";
 	const sandboxDataDir = configureSandboxEnvironment({
 		enabled: sandboxEnabled,
 		cwd,
@@ -906,7 +906,7 @@ export async function runCli(): Promise<void> {
 
 	// Register the SDK early logger as early as possible — before any
 	// provider settings reads — so the full startup sequence is captured.
-	// These components operate before/outside ClineCore sessions, so the
+	// These components operate before/outside SekoKuvaCore sessions, so the
 	// session-scoped logger can't reach them.
 	const { createCliLoggerAdapter } = await import("./logging/adapter");
 	const loggerAdapter = createCliLoggerAdapter({
@@ -1071,7 +1071,7 @@ export async function runCli(): Promise<void> {
 				selectedProviderSettings?.model ??
 				providerDefaultModelId ??
 				knownModelIds[0] ??
-				CLINE_DEFAULT_MODEL_ID,
+				SEKOKUVA_CA_DEFAULT_MODEL_ID,
 			apiKey: apiKey ?? "",
 			knownModels,
 			systemPrompt: await resolveSystemPrompt({

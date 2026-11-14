@@ -90,7 +90,7 @@ const buildEnvVars = {
 	"process.env.IS_STANDALONE": JSON.stringify(standalone ? "true" : "false"),
 	// Always inline these values so ordinary builds cannot be mislabeled by a
 	// user's runtime environment. Only the combined rollout workflow sets them.
-	"process.env.CLINE_ROLLOUT_VARIANT": JSON.stringify(process.env.CLINE_ROLLOUT_VARIANT || ""),
+	"process.env.SEKOKUVA_CA_ROLLOUT_VARIANT": JSON.stringify(process.env.SEKOKUVA_CA_ROLLOUT_VARIANT || ""),
 }
 
 if (production) {
@@ -99,8 +99,8 @@ if (production) {
 }
 // Set the environment and telemetry env vars. The API key env vars need to be populated in the GitHub
 // workflows from the secrets.
-if (process.env.CLINE_ENVIRONMENT) {
-	buildEnvVars["process.env.CLINE_ENVIRONMENT"] = JSON.stringify(process.env.CLINE_ENVIRONMENT)
+if (process.env.SEKOKUVA_CA_ENVIRONMENT) {
+	buildEnvVars["process.env.SEKOKUVA_CA_ENVIRONMENT"] = JSON.stringify(process.env.SEKOKUVA_CA_ENVIRONMENT)
 }
 if (process.env.TELEMETRY_SERVICE_API_KEY) {
 	buildEnvVars["process.env.TELEMETRY_SERVICE_API_KEY"] = JSON.stringify(process.env.TELEMETRY_SERVICE_API_KEY)
@@ -123,11 +123,11 @@ if (process.env.OTEL_METRICS_EXPORTER) {
 if (process.env.OTEL_TRACES_EXPORTER) {
 	buildEnvVars["process.env.OTEL_TRACES_EXPORTER"] = JSON.stringify(process.env.OTEL_TRACES_EXPORTER)
 }
-if (process.env.CLINE_TRACE_SAMPLE_PERCENT) {
-	buildEnvVars["process.env.CLINE_TRACE_SAMPLE_PERCENT"] = JSON.stringify(process.env.CLINE_TRACE_SAMPLE_PERCENT)
+if (process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT) {
+	buildEnvVars["process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT"] = JSON.stringify(process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT)
 }
-if (process.env.CLINE_TRACE_RECORD_CONTENT) {
-	buildEnvVars["process.env.CLINE_TRACE_RECORD_CONTENT"] = JSON.stringify(process.env.CLINE_TRACE_RECORD_CONTENT)
+if (process.env.SEKOKUVA_CA_TRACE_RECORD_CONTENT) {
+	buildEnvVars["process.env.SEKOKUVA_CA_TRACE_RECORD_CONTENT"] = JSON.stringify(process.env.SEKOKUVA_CA_TRACE_RECORD_CONTENT)
 }
 if (process.env.OTEL_EXPORTER_OTLP_PROTOCOL) {
 	buildEnvVars["process.env.OTEL_EXPORTER_OTLP_PROTOCOL"] = JSON.stringify(process.env.OTEL_EXPORTER_OTLP_PROTOCOL)

@@ -93,7 +93,7 @@ describe("BrowserWebSocketHubAdapter history", () => {
 	let directory: string;
 	beforeEach(async () => {
 		directory = await mkdtemp(join(tmpdir(), "hub-browser-history-"));
-		vi.stubEnv("CLINE_DATA_DIR", directory);
+		vi.stubEnv("SEKOKUVA_CA_DATA_DIR", directory);
 	});
 	it.each([
 		"cancel",

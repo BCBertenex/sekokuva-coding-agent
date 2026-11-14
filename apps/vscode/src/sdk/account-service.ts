@@ -15,7 +15,7 @@ import type {
 import axios, { type AxiosRequestConfig, type AxiosResponse } from "axios"
 import { ClineEnv } from "@/config"
 import { buildBasicClineHeaders } from "@/services/EnvUtils"
-import { CLINE_API_ENDPOINT } from "@/shared/cline/api"
+import { SEKOKUVA_CA_API_ENDPOINT } from "@/shared/cline/api"
 import { getAxiosSettings } from "@/shared/net"
 import { Logger } from "@/shared/services/Logger"
 import { AuthService } from "./auth-service"
@@ -171,7 +171,7 @@ export class ClineAccountService {
 	 */
 	async fetchMe(): Promise<UserResponse | undefined> {
 		try {
-			const data = await this.authenticatedRequest<UserResponse>(CLINE_API_ENDPOINT.USER_INFO)
+			const data = await this.authenticatedRequest<UserResponse>(SEKOKUVA_CA_API_ENDPOINT.USER_INFO)
 			return data
 		} catch (error) {
 			Logger.error("Failed to fetch user data (RPC):", error)
@@ -249,7 +249,7 @@ export class ClineAccountService {
 		}
 
 		return await this.authenticatedRequest<UserRemoteConfigDiscoveryResponse | null>(
-			CLINE_API_ENDPOINT.USER_REMOTE_CONFIG,
+			SEKOKUVA_CA_API_ENDPOINT.USER_REMOTE_CONFIG,
 			{},
 			{ allowNullData: true, authToken: token },
 		)
@@ -321,7 +321,7 @@ export class ClineAccountService {
 		const changesCachedAccount = (this._authService.getActiveOrganizationId() ?? undefined) !== (organizationId || undefined)
 		const change = async () => {
 			try {
-				await this.authenticatedRequest<string>(CLINE_API_ENDPOINT.ACTIVE_ACCOUNT, {
+				await this.authenticatedRequest<string>(SEKOKUVA_CA_API_ENDPOINT.ACTIVE_ACCOUNT, {
 					method: "PUT",
 					// No client deadline: the server can still commit a PUT the client gave
 					// up on, and only its answer triggers the auth refresh below that brings

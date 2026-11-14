@@ -43,14 +43,14 @@ describe("plugin install command", () => {
 		home = join(root, "home");
 		workspace = join(root, "workspace");
 		originalHome = process.env.HOME;
-		originalClineDir = process.env.CLINE_DIR;
-		originalClineDataDir = process.env.CLINE_DATA_DIR;
-		originalMcpSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		originalClineDir = process.env.SEKOKUVA_CA_DIR;
+		originalClineDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
+		originalMcpSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		process.env.HOME = home;
-		process.env.CLINE_DIR = join(home, ".cline");
-		process.env.CLINE_DATA_DIR = join(home, ".cline", "data");
+		process.env.SEKOKUVA_CA_DIR = join(home, ".cline");
+		process.env.SEKOKUVA_CA_DATA_DIR = join(home, ".cline", "data");
 		setHomeDir(home);
-		setClineDir(process.env.CLINE_DIR);
+		setClineDir(process.env.SEKOKUVA_CA_DIR);
 	});
 
 	function runGitCommand(cwd: string, args: string[]): void {
@@ -118,19 +118,19 @@ describe("plugin install command", () => {
 			process.env.HOME = originalHome;
 		}
 		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+			delete process.env.SEKOKUVA_CA_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.SEKOKUVA_CA_DIR = originalClineDir;
 		}
 		if (originalClineDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+			delete process.env.SEKOKUVA_CA_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = originalClineDataDir;
+			process.env.SEKOKUVA_CA_DATA_DIR = originalClineDataDir;
 		}
 		if (originalMcpSettingsPath === undefined) {
-			delete process.env.CLINE_MCP_SETTINGS_PATH;
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_MCP_SETTINGS_PATH = originalMcpSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = originalMcpSettingsPath;
 		}
 		rmSync(root, { recursive: true, force: true });
 	});
@@ -728,7 +728,7 @@ describe("plugin install command", () => {
 	});
 
 	it("does not run MCP OAuth follow-up for JSON plugin installs", async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
 		const source = join(root, "json-oauth-mcp-plugin.js");
 		writeFileSync(
 			source,
@@ -800,8 +800,8 @@ export default {
 		);
 		const blockedDirectory = join(root, "not-a-directory");
 		writeFileSync(blockedDirectory, "file", "utf8");
-		const originalSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
-		process.env.CLINE_MCP_SETTINGS_PATH = join(
+		const originalSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(
 			blockedDirectory,
 			"cline_mcp_settings.json",
 		);
@@ -823,15 +823,15 @@ export default {
 			expect(output.join("\n")).toContain("mcp-plugin");
 		} finally {
 			if (originalSettingsPath === undefined) {
-				delete process.env.CLINE_MCP_SETTINGS_PATH;
+				delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 			} else {
-				process.env.CLINE_MCP_SETTINGS_PATH = originalSettingsPath;
+				process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = originalSettingsPath;
 			}
 		}
 	});
 
 	it("detects plugin-owned remote MCP servers as OAuth candidates", async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
 		const source = join(root, "oauth-mcp-plugin.js");
 		writeFileSync(
 			source,
@@ -862,7 +862,7 @@ export default {
 	});
 
 	it("does not treat remote MCP servers with static headers as OAuth candidates", async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
 		const source = join(root, "headers-mcp-plugin.js");
 		writeFileSync(
 			source,
@@ -892,7 +892,7 @@ export default {
 
 	it("skips plugin MCP OAuth candidates that already have tokens", async () => {
 		const settingsPath = join(root, "mcp-settings.json");
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		const source = join(root, "authorized-mcp-plugin.js");
 		writeFileSync(
 			source,
@@ -930,7 +930,7 @@ export default {
 	});
 
 	it("authorizes selected plugin MCP OAuth candidates during interactive installs", async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
 		const source = join(root, "interactive-mcp-plugin.js");
 		writeFileSync(
 			source,
@@ -972,7 +972,7 @@ export default {
 	});
 
 	it("keeps plugin install successful when MCP OAuth authorization fails", async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
 		const source = join(root, "failing-oauth-mcp-plugin.js");
 		writeFileSync(
 			source,
@@ -1014,7 +1014,7 @@ export default {
 	});
 
 	it("prints guidance for plugin MCP OAuth candidates in non-interactive installs", async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(root, "mcp-settings.json");
 		const source = join(root, "non-interactive-mcp-plugin.js");
 		writeFileSync(
 			source,

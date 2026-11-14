@@ -68,7 +68,7 @@ describe("local cloud development ownership", () => {
 				expect(new URL(url).origin).toBe(development.environment.apiBaseUrl)
 				expect((await fetch(url)).status).toBe(200)
 			}
-			vi.stubEnv("CLINE_LOCAL_CLOUD_URL", "https://example.com")
+			vi.stubEnv("SEKOKUVA_CA_LOCAL_CLOUD_URL", "https://example.com")
 			expect(() => ClineEnv.config()).toThrow("loopback")
 			ClineEnv.setEnvironment(Environment.production)
 			expect(ClineEnv.config().appBaseUrl).toBe("https://app.cline.bot")
@@ -262,7 +262,7 @@ describe("local cloud development ownership", () => {
 	})
 
 	it("serves seeded expired sessions as archived-or-missing history and refuses their sandbox connection", async () => {
-		vi.stubEnv("CLINE_LOCAL_CLOUD_SEED_EXPIRED", "1")
+		vi.stubEnv("SEKOKUVA_CA_LOCAL_CLOUD_SEED_EXPIRED", "1")
 		const development = await startLocalCloudDevelopment({ port: 0 })
 		const { environment } = development
 		const service = new CloudSessionsService({
@@ -321,7 +321,7 @@ describe("local cloud development ownership", () => {
 	})
 
 	it("scripts the hosted insufficient-credits reply for every model request", async () => {
-		vi.stubEnv("CLINE_LOCAL_CLOUD_INSUFFICIENT_CREDITS", "1")
+		vi.stubEnv("SEKOKUVA_CA_LOCAL_CLOUD_INSUFFICIENT_CREDITS", "1")
 		const development = await startLocalCloudDevelopment({ port: 0 })
 		try {
 			const response = await development.environment.modelFetch("https://api.cline.bot/api/v1/chat/completions", {

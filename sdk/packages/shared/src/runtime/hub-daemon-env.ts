@@ -1,11 +1,11 @@
-export const CLINE_RUN_AS_HUB_DAEMON_ENV = "CLINE_RUN_AS_HUB_DAEMON";
-export const CLINE_CONNECTOR_CLI_LAUNCH_ENV = "CLINE_CONNECTOR_CLI_LAUNCH";
-export const CLINE_CONNECTOR_STARTING_INSTANCE_ENV =
-	"CLINE_CONNECTOR_STARTING_INSTANCE";
-export const CLINE_CONNECTOR_SUPERVISED_ENV = "CLINE_CONNECTOR_SUPERVISED";
-export const CLINE_HUB_LAUNCHER_CLIENT_ENV = "CLINE_HUB_LAUNCHER_CLIENT";
-export const CLINE_HUB_LAUNCHER_VERSION_ENV = "CLINE_HUB_LAUNCHER_VERSION";
-export const CLINE_HUB_LAUNCHER_TRANSPORT_ENV = "CLINE_HUB_LAUNCHER_TRANSPORT";
+export const SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV = "SEKOKUVA_CA_RUN_AS_HUB_DAEMON";
+export const SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV = "SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH";
+export const SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV =
+	"SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE";
+export const SEKOKUVA_CA_CONNECTOR_SUPERVISED_ENV = "SEKOKUVA_CA_CONNECTOR_SUPERVISED";
+export const SEKOKUVA_CA_HUB_LAUNCHER_CLIENT_ENV = "SEKOKUVA_CA_HUB_LAUNCHER_CLIENT";
+export const SEKOKUVA_CA_HUB_LAUNCHER_VERSION_ENV = "SEKOKUVA_CA_HUB_LAUNCHER_VERSION";
+export const SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT_ENV = "SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT";
 
 /**
  * Which Cline client started a Hub daemon. The daemon is one shared process
@@ -33,7 +33,7 @@ export interface HubLauncherIdentity {
 export function withHubLauncherIdentity<
 	T extends Record<string, string | undefined>,
 >(env: T, identity: HubLauncherIdentity | undefined): T {
-	if (env[CLINE_HUB_LAUNCHER_CLIENT_ENV]?.trim()) {
+	if (env[SEKOKUVA_CA_HUB_LAUNCHER_CLIENT_ENV]?.trim()) {
 		return env;
 	}
 	const client = identity?.client?.trim();
@@ -43,9 +43,9 @@ export function withHubLauncherIdentity<
 	const version = identity?.version?.trim();
 	return {
 		...env,
-		[CLINE_HUB_LAUNCHER_CLIENT_ENV]: client,
-		...(version ? { [CLINE_HUB_LAUNCHER_VERSION_ENV]: version } : {}),
-		[CLINE_HUB_LAUNCHER_TRANSPORT_ENV]: identity?.transport ?? "local",
+		[SEKOKUVA_CA_HUB_LAUNCHER_CLIENT_ENV]: client,
+		...(version ? { [SEKOKUVA_CA_HUB_LAUNCHER_VERSION_ENV]: version } : {}),
+		[SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT_ENV]: identity?.transport ?? "local",
 	};
 }
 
@@ -62,21 +62,21 @@ export function claimHubLauncherIdentity(
 	env: Record<string, string | undefined> = process.env,
 ): HubLauncherIdentity | undefined {
 	const identity = readHubLauncherIdentity(env);
-	delete env[CLINE_HUB_LAUNCHER_CLIENT_ENV];
-	delete env[CLINE_HUB_LAUNCHER_VERSION_ENV];
-	delete env[CLINE_HUB_LAUNCHER_TRANSPORT_ENV];
+	delete env[SEKOKUVA_CA_HUB_LAUNCHER_CLIENT_ENV];
+	delete env[SEKOKUVA_CA_HUB_LAUNCHER_VERSION_ENV];
+	delete env[SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT_ENV];
 	return identity;
 }
 
 export function readHubLauncherIdentity(
 	env: Record<string, string | undefined> = process.env,
 ): HubLauncherIdentity | undefined {
-	const client = env[CLINE_HUB_LAUNCHER_CLIENT_ENV]?.trim();
+	const client = env[SEKOKUVA_CA_HUB_LAUNCHER_CLIENT_ENV]?.trim();
 	if (!client) {
 		return undefined;
 	}
-	const version = env[CLINE_HUB_LAUNCHER_VERSION_ENV]?.trim();
-	const transport = env[CLINE_HUB_LAUNCHER_TRANSPORT_ENV]?.trim();
+	const version = env[SEKOKUVA_CA_HUB_LAUNCHER_VERSION_ENV]?.trim();
+	const transport = env[SEKOKUVA_CA_HUB_LAUNCHER_TRANSPORT_ENV]?.trim();
 	return {
 		client,
 		...(version ? { version } : {}),
@@ -121,8 +121,8 @@ let claimedHubDaemonProcess: boolean | undefined;
 export function claimHubDaemonProcess(
 	env: Record<string, string | undefined> = process.env,
 ): boolean {
-	claimedHubDaemonProcess = env[CLINE_RUN_AS_HUB_DAEMON_ENV] === "1";
-	delete env[CLINE_RUN_AS_HUB_DAEMON_ENV];
+	claimedHubDaemonProcess = env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] === "1";
+	delete env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV];
 	return claimedHubDaemonProcess;
 }
 
@@ -138,10 +138,10 @@ export function isHubDaemonProcess(
 	env?: Record<string, string | undefined>,
 ): boolean {
 	if (env) {
-		return env[CLINE_RUN_AS_HUB_DAEMON_ENV] === "1";
+		return env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] === "1";
 	}
 	return (
-		claimedHubDaemonProcess ?? process.env[CLINE_RUN_AS_HUB_DAEMON_ENV] === "1"
+		claimedHubDaemonProcess ?? process.env[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV] === "1"
 	);
 }
 
@@ -149,7 +149,7 @@ export function setConnectorCliLaunchSpec(
 	spec: ConnectorCliLaunchSpec,
 	env: Record<string, string | undefined> = process.env,
 ): void {
-	env[CLINE_CONNECTOR_CLI_LAUNCH_ENV] = JSON.stringify(spec);
+	env[SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV] = JSON.stringify(spec);
 }
 
 /** Latched result of {@link claimSupervisedConnectorProcess}. */
@@ -172,8 +172,8 @@ export function claimSupervisedConnectorProcess(
 	env: Record<string, string | undefined> = process.env,
 ): boolean {
 	claimedSupervisedConnectorProcess =
-		env[CLINE_CONNECTOR_SUPERVISED_ENV] === "1";
-	delete env[CLINE_CONNECTOR_SUPERVISED_ENV];
+		env[SEKOKUVA_CA_CONNECTOR_SUPERVISED_ENV] === "1";
+	delete env[SEKOKUVA_CA_CONNECTOR_SUPERVISED_ENV];
 	return claimedSupervisedConnectorProcess;
 }
 
@@ -194,11 +194,11 @@ export function isSupervisedConnectorProcess(
 	env?: Record<string, string | undefined>,
 ): boolean {
 	if (env) {
-		return env[CLINE_CONNECTOR_SUPERVISED_ENV] === "1";
+		return env[SEKOKUVA_CA_CONNECTOR_SUPERVISED_ENV] === "1";
 	}
 	return (
 		claimedSupervisedConnectorProcess ??
-		process.env[CLINE_CONNECTOR_SUPERVISED_ENV] === "1"
+		process.env[SEKOKUVA_CA_CONNECTOR_SUPERVISED_ENV] === "1"
 	);
 }
 
@@ -217,13 +217,13 @@ export function setStartingConnectorInstance(
 	ref: ConnectorInstanceRef,
 	env: Record<string, string | undefined> = process.env,
 ): void {
-	env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV] = JSON.stringify(ref);
+	env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV] = JSON.stringify(ref);
 }
 
 export function readStartingConnectorInstance(
 	env: Record<string, string | undefined> = process.env,
 ): ConnectorInstanceRef | undefined {
-	const raw = env[CLINE_CONNECTOR_STARTING_INSTANCE_ENV];
+	const raw = env[SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE_ENV];
 	if (!raw) {
 		return undefined;
 	}
@@ -246,7 +246,7 @@ export function readStartingConnectorInstance(
 export function readConnectorCliLaunchSpec(
 	env: Record<string, string | undefined> = process.env,
 ): ConnectorCliLaunchSpec | undefined {
-	const raw = env[CLINE_CONNECTOR_CLI_LAUNCH_ENV];
+	const raw = env[SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV];
 	if (!raw) {
 		return undefined;
 	}

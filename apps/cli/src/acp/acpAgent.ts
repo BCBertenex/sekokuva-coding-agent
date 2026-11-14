@@ -26,7 +26,7 @@ import type {
 import { PROTOCOL_VERSION, RequestError } from "@agentclientprotocol/sdk";
 import {
 	type AgentEvent,
-	type ClineCore,
+	type SekoKuvaCore,
 	Llms,
 	ProviderSettingsManager,
 	SessionSource,
@@ -86,7 +86,7 @@ interface SessionState {
 	/** When true, all tool calls are approved without asking the client. */
 	autoApproveTools: boolean;
 	/** Active session manager for the running agent, if any. */
-	sessionManager?: ClineCore;
+	sessionManager?: SekoKuvaCore;
 	/** Internal session id within the session manager. */
 	activeSessionId?: string;
 	/** Abort controller for the current prompt, if running. */
@@ -151,7 +151,7 @@ export class AcpAgent implements Agent {
 
 	isSessionReady() {
 		// Require authentication unless an API key is provided via env var.
-		if (!this.authResult && !process.env.CLINE_API_KEY) {
+		if (!this.authResult && !process.env.SEKOKUVA_CA_API_KEY) {
 			// Check for valid persisted credentials from a previous session
 			// before forcing the client to re-authenticate.
 			this.authResult = this.tryRestoreAuth();
@@ -188,7 +188,7 @@ export class AcpAgent implements Agent {
 
 		const defaultMode = "act";
 		const providerId =
-			process.env.CLINE_PROVIDER ?? this.authResult?.providerId ?? "cline";
+			process.env.SEKOKUVA_CA_PROVIDER ?? this.authResult?.providerId ?? "cline";
 
 		const providerModels = await Llms.getModelsForProvider(
 			providerId,
@@ -199,7 +199,7 @@ export class AcpAgent implements Agent {
 		// nothing to `cline`, and vice versa.
 		const defaultModelId = await resolveDefaultModelId(
 			providerId,
-			process.env.CLINE_MODEL,
+			process.env.SEKOKUVA_CA_MODEL,
 			providerModels,
 		);
 
@@ -265,7 +265,7 @@ export class AcpAgent implements Agent {
 				// as a new session, with the model resolved against the
 				// provider's own catalog just like newSession.
 				const providerId =
-					process.env.CLINE_PROVIDER ?? this.authResult?.providerId ?? "cline";
+					process.env.SEKOKUVA_CA_PROVIDER ?? this.authResult?.providerId ?? "cline";
 				const providerModels = await Llms.getModelsForProvider(
 					providerId,
 					CHAT_MODEL_QUERY_OPTIONS,
@@ -278,7 +278,7 @@ export class AcpAgent implements Agent {
 					currentProviderId: providerId,
 					currentModelId: await resolveDefaultModelId(
 						providerId,
-						process.env.CLINE_MODEL,
+						process.env.SEKOKUVA_CA_MODEL,
 						providerModels,
 					),
 					autoApproveTools: this.defaultAutoApproveTools,
@@ -464,10 +464,10 @@ export class AcpAgent implements Agent {
 
 		switch (params.configId) {
 			case "provider": {
-				if (process.env.CLINE_PROVIDER) {
+				if (process.env.SEKOKUVA_CA_PROVIDER) {
 					throw RequestError.invalidParams(
 						undefined,
-						"Cannot change provider: CLINE_PROVIDER environment variable is set",
+						"Cannot change provider: SEKOKUVA_CA_PROVIDER environment variable is set",
 					);
 				}
 				if (!isAcpAuthMethodId(value)) {
@@ -610,7 +610,7 @@ export class AcpAgent implements Agent {
 	}
 
 	private get accountApiKey(): string {
-		return process.env.CLINE_API_KEY ?? this.authResult?.apiKey ?? "";
+		return process.env.SEKOKUVA_CA_API_KEY ?? this.authResult?.apiKey ?? "";
 	}
 
 	private async getOrganizationConfigOption(
@@ -765,8 +765,8 @@ export class AcpAgent implements Agent {
 		const cwd = session.cwd || process.cwd();
 		const workspaceRoot = resolveWorkspaceRoot(cwd);
 		// Resolve credentials: env vars take precedence, then session provider.
-		const providerId = process.env.CLINE_PROVIDER ?? session.currentProviderId;
-		const apiKey = process.env.CLINE_API_KEY ?? this.authResult?.apiKey ?? "";
+		const providerId = process.env.SEKOKUVA_CA_PROVIDER ?? session.currentProviderId;
+		const apiKey = process.env.SEKOKUVA_CA_API_KEY ?? this.authResult?.apiKey ?? "";
 		const systemPrompt = await resolveSystemPrompt({
 			cwd,
 			providerId,

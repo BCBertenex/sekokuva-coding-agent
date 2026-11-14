@@ -168,13 +168,13 @@ export class BannerService {
 	 * so the webview falls back to hardcoded welcome items.
 	 */
 	public getWelcomeBanners(): BannerCardData[] | undefined {
-		const isLocal = process.env.IS_DEV === "true" || process.env.CLINE_ENVIRONMENT === "local"
+		const isLocal = process.env.IS_DEV === "true" || process.env.SEKOKUVA_CA_ENVIRONMENT === "local"
 		const flagEnabled = isLocal || featureFlagsService.getBooleanFlagEnabled(FeatureFlag.REMOTE_WELCOME_BANNERS)
 
 		if (!flagEnabled) {
 			return undefined
 		}
-		const bypassDismissals = process.env.IS_DEV === "true" || process.env.CLINE_ENVIRONMENT === "local"
+		const bypassDismissals = process.env.IS_DEV === "true" || process.env.SEKOKUVA_CA_ENVIRONMENT === "local"
 
 		this.ensureFreshCache()
 

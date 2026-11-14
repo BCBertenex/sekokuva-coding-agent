@@ -1,18 +1,18 @@
-export const CLINE_ENVIRONMENT_ENV = "CLINE_ENVIRONMENT";
-export const CLINE_ENVIRONMENT_OVERRIDE_ENV = "CLINE_ENVIRONMENT_OVERRIDE";
+export const SEKOKUVA_CA_ENVIRONMENT_ENV = "SEKOKUVA_CA_ENVIRONMENT";
+export const SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV = "SEKOKUVA_CA_ENVIRONMENT_OVERRIDE";
 
-export type ClineEnvironment = "production" | "staging" | "local";
+export type SekoKuvaEnvironment = "production" | "staging" | "local";
 
-export interface ClineEnvironmentConfig {
-	readonly environment: ClineEnvironment;
+export interface SekoKuvaEnvironmentConfig {
+	readonly environment: SekoKuvaEnvironment;
 	readonly appBaseUrl: string;
 	readonly apiBaseUrl: string;
 	readonly mcpBaseUrl: string;
 	readonly workOsClientId: string;
 }
 
-export const CLINE_ENVIRONMENTS: Readonly<
-	Record<ClineEnvironment, ClineEnvironmentConfig>
+export const SEKOKUVA_CA_ENVIRONMENTS: Readonly<
+	Record<SekoKuvaEnvironment, SekoKuvaEnvironmentConfig>
 > = {
 	production: {
 		environment: "production",
@@ -37,7 +37,7 @@ export const CLINE_ENVIRONMENTS: Readonly<
 	},
 };
 
-export const DEFAULT_CLINE_ENVIRONMENT: ClineEnvironment = "production";
+export const DEFAULT_CLINE_ENVIRONMENT: SekoKuvaEnvironment = "production";
 
 export interface ResolveClineEnvironmentOptions {
 	env?: Partial<NodeJS.ProcessEnv>;
@@ -45,7 +45,7 @@ export interface ResolveClineEnvironmentOptions {
 
 function normalizeClineEnvironment(
 	value: string | undefined,
-): ClineEnvironment | undefined {
+): SekoKuvaEnvironment | undefined {
 	const normalized = value?.trim().toLowerCase();
 	if (
 		normalized === "production" ||
@@ -67,31 +67,31 @@ function readProcessEnv(): NodeJS.ProcessEnv {
 	return process.env;
 }
 
-export function resolveClineEnvironment(): ClineEnvironment {
+export function resolveClineEnvironment(): SekoKuvaEnvironment {
 	const env = readProcessEnv();
 	return (
-		normalizeClineEnvironment(env[CLINE_ENVIRONMENT_OVERRIDE_ENV]) ??
-		normalizeClineEnvironment(env[CLINE_ENVIRONMENT_ENV]) ??
+		normalizeClineEnvironment(env[SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV]) ??
+		normalizeClineEnvironment(env[SEKOKUVA_CA_ENVIRONMENT_ENV]) ??
 		DEFAULT_CLINE_ENVIRONMENT
 	);
 }
 
-function getEnvConfig(env?: ClineEnvironment) {
+function getEnvConfig(env?: SekoKuvaEnvironment) {
 	if (typeof env === "string") {
-		return CLINE_ENVIRONMENTS[env];
+		return SEKOKUVA_CA_ENVIRONMENTS[env];
 	}
-	return CLINE_ENVIRONMENTS[resolveClineEnvironment()];
+	return SEKOKUVA_CA_ENVIRONMENTS[resolveClineEnvironment()];
 }
 
 function applyConfigOverrides(
-	config: ClineEnvironmentConfig,
+	config: SekoKuvaEnvironmentConfig,
 	env: NodeJS.ProcessEnv,
-): ClineEnvironmentConfig {
-	if (env.CLINE_API_BASE_URL) {
+): SekoKuvaEnvironmentConfig {
+	if (env.SEKOKUVA_CA_API_BASE_URL) {
 		config = {
 			...config,
-			apiBaseUrl: env.CLINE_API_BASE_URL,
-			mcpBaseUrl: `${env.CLINE_API_BASE_URL}/v1/mcp`,
+			apiBaseUrl: env.SEKOKUVA_CA_API_BASE_URL,
+			mcpBaseUrl: `${env.SEKOKUVA_CA_API_BASE_URL}/v1/mcp`,
 		};
 	}
 
@@ -99,8 +99,8 @@ function applyConfigOverrides(
 }
 
 export function getClineEnvironmentConfig(
-	env?: ClineEnvironment,
-): ClineEnvironmentConfig {
+	env?: SekoKuvaEnvironment,
+): SekoKuvaEnvironmentConfig {
 	const config = getEnvConfig(env);
 
 	return applyConfigOverrides(config, readProcessEnv());
@@ -108,7 +108,7 @@ export function getClineEnvironmentConfig(
 
 /**
  * Resolves a web app path, such as a server-provided
- * `ClineAccountUser.dataPrivacyPath`, against the Cline web app. Returns
+ * `SekoKuvaAccountUser.dataPrivacyPath`, against the Cline web app. Returns
  * undefined when either input is missing or the result would leave the app's
  * origin, so a bad path never becomes a link to somewhere else.
  */

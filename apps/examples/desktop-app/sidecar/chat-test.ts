@@ -107,7 +107,7 @@ async function main() {
 				config: {
 					provider: "cline",
 					model: "claude-sonnet-4-20250514",
-					apiKey: process.env.CLINE_API_KEY || "",
+					apiKey: process.env.SEKOKUVA_CA_API_KEY || "",
 					workspaceRoot: cwd,
 					cwd: cwd,
 					mode: "act",

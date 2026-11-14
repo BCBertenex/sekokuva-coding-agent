@@ -27,13 +27,13 @@ import {
 } from "./update";
 
 const originalArgv = [...process.argv];
-const originalBuildEnv = process.env.CLINE_BUILD_ENV;
-const originalDataDir = process.env.CLINE_DATA_DIR;
-const originalHubDiscoveryPath = process.env.CLINE_HUB_DISCOVERY_PATH;
-const originalWrapperPath = process.env.CLINE_WRAPPER_PATH;
-const originalGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+const originalBuildEnv = process.env.SEKOKUVA_CA_BUILD_ENV;
+const originalDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
+const originalHubDiscoveryPath = process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
+const originalWrapperPath = process.env.SEKOKUVA_CA_WRAPPER_PATH;
+const originalGlobalSettingsPath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 const originalIsDev = process.env.IS_DEV;
-const originalNoAutoUpdate = process.env.CLINE_NO_AUTO_UPDATE;
+const originalNoAutoUpdate = process.env.SEKOKUVA_CA_NO_AUTO_UPDATE;
 const tempDirs: string[] = [];
 
 function createFile(path: string): string {
@@ -52,29 +52,29 @@ describe("getInstallationInfo", () => {
 	afterEach(() => {
 		process.argv = [...originalArgv];
 		if (originalBuildEnv === undefined) {
-			delete process.env.CLINE_BUILD_ENV;
+			delete process.env.SEKOKUVA_CA_BUILD_ENV;
 		} else {
-			process.env.CLINE_BUILD_ENV = originalBuildEnv;
+			process.env.SEKOKUVA_CA_BUILD_ENV = originalBuildEnv;
 		}
 		if (originalDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+			delete process.env.SEKOKUVA_CA_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = originalDataDir;
+			process.env.SEKOKUVA_CA_DATA_DIR = originalDataDir;
 		}
 		if (originalHubDiscoveryPath === undefined) {
-			delete process.env.CLINE_HUB_DISCOVERY_PATH;
+			delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 		} else {
-			process.env.CLINE_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
+			process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
 		}
 		if (originalWrapperPath === undefined) {
-			delete process.env.CLINE_WRAPPER_PATH;
+			delete process.env.SEKOKUVA_CA_WRAPPER_PATH;
 		} else {
-			process.env.CLINE_WRAPPER_PATH = originalWrapperPath;
+			process.env.SEKOKUVA_CA_WRAPPER_PATH = originalWrapperPath;
 		}
 		if (originalGlobalSettingsPath === undefined) {
-			delete process.env.CLINE_GLOBAL_SETTINGS_PATH;
+			delete process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
 		}
 		if (originalIsDev === undefined) {
 			delete process.env.IS_DEV;
@@ -82,9 +82,9 @@ describe("getInstallationInfo", () => {
 			process.env.IS_DEV = originalIsDev;
 		}
 		if (originalNoAutoUpdate === undefined) {
-			delete process.env.CLINE_NO_AUTO_UPDATE;
+			delete process.env.SEKOKUVA_CA_NO_AUTO_UPDATE;
 		} else {
-			process.env.CLINE_NO_AUTO_UPDATE = originalNoAutoUpdate;
+			process.env.SEKOKUVA_CA_NO_AUTO_UPDATE = originalNoAutoUpdate;
 		}
 		vi.restoreAllMocks();
 		for (const dir of tempDirs.splice(0)) {
@@ -94,7 +94,7 @@ describe("getInstallationInfo", () => {
 
 	it("detects npm installs from the wrapper path passed to the compiled binary", () => {
 		const wrapperPath = createTempFile("lib/node_modules/cline/bin/cline");
-		process.env.CLINE_WRAPPER_PATH = wrapperPath;
+		process.env.SEKOKUVA_CA_WRAPPER_PATH = wrapperPath;
 		process.argv = ["bun", "/$bunfs/root/cline", "update", "--verbose"];
 
 		expect(getInstallationInfo("1.2.3")).toEqual({
@@ -106,7 +106,7 @@ describe("getInstallationInfo", () => {
 
 	it("uses the nightly tag when the current CLI version is nightly", () => {
 		const wrapperPath = createTempFile("lib/node_modules/cline/bin/cline");
-		process.env.CLINE_WRAPPER_PATH = wrapperPath;
+		process.env.SEKOKUVA_CA_WRAPPER_PATH = wrapperPath;
 		process.argv = ["bun", "/$bunfs/root/cline", "update", "--verbose"];
 
 		expect(getInstallationInfo("1.2.3-nightly.456")).toEqual({
@@ -122,7 +122,7 @@ describe("getInstallationInfo", () => {
 		const wrapperPath = createTempFile(
 			".bun/install/global/node_modules/cline/bin/cline",
 		);
-		process.env.CLINE_WRAPPER_PATH = wrapperPath;
+		process.env.SEKOKUVA_CA_WRAPPER_PATH = wrapperPath;
 		process.argv = ["bun", "/$bunfs/root/cline", "update", "--verbose"];
 
 		expect(getInstallationInfo("1.2.3")).toEqual({
@@ -133,7 +133,7 @@ describe("getInstallationInfo", () => {
 	});
 
 	it("falls back to unknown when only Bun's virtual compiled path is available", () => {
-		delete process.env.CLINE_WRAPPER_PATH;
+		delete process.env.SEKOKUVA_CA_WRAPPER_PATH;
 		process.argv = ["bun", "/$bunfs/root/cline", "update", "--verbose"];
 
 		expect(getInstallationInfo("1.2.3")).toEqual({
@@ -147,29 +147,29 @@ describe("auto update settings", () => {
 	afterEach(() => {
 		process.argv = [...originalArgv];
 		if (originalBuildEnv === undefined) {
-			delete process.env.CLINE_BUILD_ENV;
+			delete process.env.SEKOKUVA_CA_BUILD_ENV;
 		} else {
-			process.env.CLINE_BUILD_ENV = originalBuildEnv;
+			process.env.SEKOKUVA_CA_BUILD_ENV = originalBuildEnv;
 		}
 		if (originalDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+			delete process.env.SEKOKUVA_CA_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = originalDataDir;
+			process.env.SEKOKUVA_CA_DATA_DIR = originalDataDir;
 		}
 		if (originalHubDiscoveryPath === undefined) {
-			delete process.env.CLINE_HUB_DISCOVERY_PATH;
+			delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 		} else {
-			process.env.CLINE_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
+			process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
 		}
 		if (originalWrapperPath === undefined) {
-			delete process.env.CLINE_WRAPPER_PATH;
+			delete process.env.SEKOKUVA_CA_WRAPPER_PATH;
 		} else {
-			process.env.CLINE_WRAPPER_PATH = originalWrapperPath;
+			process.env.SEKOKUVA_CA_WRAPPER_PATH = originalWrapperPath;
 		}
 		if (originalGlobalSettingsPath === undefined) {
-			delete process.env.CLINE_GLOBAL_SETTINGS_PATH;
+			delete process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
 		}
 		if (originalIsDev === undefined) {
 			delete process.env.IS_DEV;
@@ -177,9 +177,9 @@ describe("auto update settings", () => {
 			process.env.IS_DEV = originalIsDev;
 		}
 		if (originalNoAutoUpdate === undefined) {
-			delete process.env.CLINE_NO_AUTO_UPDATE;
+			delete process.env.SEKOKUVA_CA_NO_AUTO_UPDATE;
 		} else {
-			process.env.CLINE_NO_AUTO_UPDATE = originalNoAutoUpdate;
+			process.env.SEKOKUVA_CA_NO_AUTO_UPDATE = originalNoAutoUpdate;
 		}
 		vi.restoreAllMocks();
 		for (const dir of tempDirs.splice(0)) {
@@ -190,9 +190,9 @@ describe("auto update settings", () => {
 	it("skips startup auto update when disabled globally", () => {
 		const settingsPath = createTempFile("data/global-settings.json");
 		writeFileSync(settingsPath, JSON.stringify({ autoUpdateEnabled: false }));
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = settingsPath;
 		delete process.env.IS_DEV;
-		delete process.env.CLINE_NO_AUTO_UPDATE;
+		delete process.env.SEKOKUVA_CA_NO_AUTO_UPDATE;
 		const fetchSpy = vi
 			.spyOn(globalThis, "fetch")
 			.mockRejectedValue(new Error("should not fetch"));
@@ -205,8 +205,8 @@ describe("auto update settings", () => {
 	it("still lets manual update checks run when startup auto update is disabled", async () => {
 		const settingsPath = createTempFile("data/global-settings.json");
 		writeFileSync(settingsPath, JSON.stringify({ autoUpdateEnabled: false }));
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
-		delete process.env.CLINE_NO_AUTO_UPDATE;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = settingsPath;
+		delete process.env.SEKOKUVA_CA_NO_AUTO_UPDATE;
 		const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
 			ok: true,
 			json: async () => ({ version: "0.0.0" }),
@@ -221,26 +221,26 @@ describe("auto update settings", () => {
 describe("hub restart owner selection", () => {
 	afterEach(() => {
 		if (originalBuildEnv === undefined) {
-			delete process.env.CLINE_BUILD_ENV;
+			delete process.env.SEKOKUVA_CA_BUILD_ENV;
 		} else {
-			process.env.CLINE_BUILD_ENV = originalBuildEnv;
+			process.env.SEKOKUVA_CA_BUILD_ENV = originalBuildEnv;
 		}
 		if (originalDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+			delete process.env.SEKOKUVA_CA_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = originalDataDir;
+			process.env.SEKOKUVA_CA_DATA_DIR = originalDataDir;
 		}
 		if (originalHubDiscoveryPath === undefined) {
-			delete process.env.CLINE_HUB_DISCOVERY_PATH;
+			delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 		} else {
-			process.env.CLINE_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
+			process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
 		}
 	});
 
 	it("uses the shared hub owner outside production builds", () => {
-		process.env.CLINE_BUILD_ENV = "development";
-		process.env.CLINE_DATA_DIR = "/tmp/cline-update-test-data";
-		delete process.env.CLINE_HUB_DISCOVERY_PATH;
+		process.env.SEKOKUVA_CA_BUILD_ENV = "development";
+		process.env.SEKOKUVA_CA_DATA_DIR = "/tmp/cline-update-test-data";
+		delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 
 		const owner = resolveCliHubOwnerContext();
 
@@ -255,14 +255,14 @@ describe("deferred auto update", () => {
 	afterEach(() => {
 		mockSpawn.mockReset();
 		if (originalBuildEnv === undefined) {
-			delete process.env.CLINE_BUILD_ENV;
+			delete process.env.SEKOKUVA_CA_BUILD_ENV;
 		} else {
-			process.env.CLINE_BUILD_ENV = originalBuildEnv;
+			process.env.SEKOKUVA_CA_BUILD_ENV = originalBuildEnv;
 		}
 		if (originalHubDiscoveryPath === undefined) {
-			delete process.env.CLINE_HUB_DISCOVERY_PATH;
+			delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 		} else {
-			process.env.CLINE_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
+			process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = originalHubDiscoveryPath;
 		}
 		for (const dir of tempDirs.splice(0)) {
 			rmSync(dir, { recursive: true, force: true });
@@ -277,8 +277,8 @@ describe("deferred auto update", () => {
 	it("starts the detached install when no hub is discoverable", async () => {
 		const root = mkdtempSync(join(tmpdir(), "cline-update-test-"));
 		tempDirs.push(root);
-		process.env.CLINE_BUILD_ENV = "production";
-		process.env.CLINE_HUB_DISCOVERY_PATH = join(root, "production.json");
+		process.env.SEKOKUVA_CA_BUILD_ENV = "production";
+		process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = join(root, "production.json");
 		const unref = vi.fn();
 		mockSpawn.mockReturnValue({ unref } as unknown as ChildProcess);
 
@@ -302,8 +302,8 @@ describe("deferred auto update", () => {
 		const root = mkdtempSync(join(tmpdir(), "cline-update-test-"));
 		tempDirs.push(root);
 		const discoveryPath = join(root, "production.json");
-		process.env.CLINE_BUILD_ENV = "production";
-		process.env.CLINE_HUB_DISCOVERY_PATH = discoveryPath;
+		process.env.SEKOKUVA_CA_BUILD_ENV = "production";
+		process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = discoveryPath;
 		const {
 			createLocalHubScheduleRuntimeHandlers,
 			NodeHubClient,

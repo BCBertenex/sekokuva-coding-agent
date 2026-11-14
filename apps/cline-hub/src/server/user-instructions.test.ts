@@ -7,21 +7,21 @@ import { listUserInstructionConfigs } from "./user-instructions";
 describe("listUserInstructionConfigs", () => {
 	const tempRoots: string[] = [];
 	const envSnapshot = {
-		CLINE_GLOBAL_SETTINGS_PATH: process.env.CLINE_GLOBAL_SETTINGS_PATH,
-		CLINE_MCP_SETTINGS_PATH: process.env.CLINE_MCP_SETTINGS_PATH,
+		SEKOKUVA_CA_GLOBAL_SETTINGS_PATH: process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH,
+		SEKOKUVA_CA_MCP_SETTINGS_PATH: process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH,
 	};
 
 	afterEach(async () => {
-		if (envSnapshot.CLINE_GLOBAL_SETTINGS_PATH === undefined) {
-			delete process.env.CLINE_GLOBAL_SETTINGS_PATH;
+		if (envSnapshot.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH === undefined) {
+			delete process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_GLOBAL_SETTINGS_PATH =
-				envSnapshot.CLINE_GLOBAL_SETTINGS_PATH;
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH =
+				envSnapshot.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
 		}
-		if (envSnapshot.CLINE_MCP_SETTINGS_PATH === undefined) {
-			delete process.env.CLINE_MCP_SETTINGS_PATH;
+		if (envSnapshot.SEKOKUVA_CA_MCP_SETTINGS_PATH === undefined) {
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_MCP_SETTINGS_PATH = envSnapshot.CLINE_MCP_SETTINGS_PATH;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = envSnapshot.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		}
 		await Promise.all(
 			tempRoots.map((dir) => rm(dir, { recursive: true, force: true })),
@@ -32,8 +32,8 @@ describe("listUserInstructionConfigs", () => {
 	it("uses the package name for package-backed plugin entries", async () => {
 		const tempRoot = await mkdtemp(join(tmpdir(), "cline-hub-config-"));
 		tempRoots.push(tempRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(tempRoot, "settings.json");
-		process.env.CLINE_MCP_SETTINGS_PATH = join(tempRoot, "mcp.json");
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(tempRoot, "settings.json");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(tempRoot, "mcp.json");
 		const packageDir = join(
 			tempRoot,
 			".cline",

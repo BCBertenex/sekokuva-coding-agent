@@ -12,7 +12,7 @@ import type {
 	PluginCommandsRuntimeService,
 } from "../services/plugin-command-api";
 import {
-	type ClineCoreSettingsApi,
+	type SekoKuvaCoreSettingsApi,
 	type CoreSettingsListInput,
 	type CoreSettingsMutationResult,
 	type CoreSettingsSnapshot,
@@ -40,7 +40,7 @@ export type RuntimeHostServiceExtensions = RuntimeHost &
 
 export function createClineCoreSettingsApi(
 	host: RuntimeHost,
-): ClineCoreSettingsApi {
+): SekoKuvaCoreSettingsApi {
 	return {
 		async list(input) {
 			const settingsHost = host as RuntimeHostWithSettings;

@@ -409,7 +409,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 		// A caller-owned telemetry service may already be identified to an
 		// authenticated account (the long-lived Hub daemon is one example).
 		// Only replace that identity when the caller explicitly supplied the
-		// runtime distinct id. ClineCore always does so through host.ts.
+		// runtime distinct id. SekoKuvaCore always does so through host.ts.
 		if (options.distinctId !== undefined) {
 			this.defaultTelemetry?.setDistinctId(distinctId);
 		}

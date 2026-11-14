@@ -186,7 +186,7 @@ function hashSource(source: string): string {
 }
 
 function resolveClineHome(): string {
-	return process.env.CLINE_DIR?.trim() || join(homedir(), ".cline")
+	return process.env.SEKOKUVA_CA_DIR?.trim() || join(homedir(), ".cline")
 }
 
 function sanitizeSegment(value: string): string {

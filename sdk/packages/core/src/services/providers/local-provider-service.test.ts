@@ -2,14 +2,14 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import * as LlmsModels from "@sekokuva-ca/llms";
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	FALLBACK_CLINE_RECOMMENDED_MODELS,
 	getCachedClineRecommendedModels,
 	idSlug,
 	resetClineRecommendedModelsCacheForTests,
-} from "../llms/cline-recommended-models";
+} from "../llms/sekokuva-ca-recommended-models";
 import {
 	clearLiveModelsCatalogCache,
 	clearPrivateModelsCatalogCache,
@@ -955,7 +955,7 @@ describe("addLocalProvider – model ID parsing via modelsSourceUrl", () => {
 		});
 	});
 
-	it("uses only live ClinePass models when live models are found", async () => {
+	it("uses only live SekoKuvaPass models when live models are found", async () => {
 		const fetchMock = vi.fn(async (url: string) => {
 			if (url === "https://models.dev/api.json") {
 				return new Response(
@@ -1075,7 +1075,7 @@ describe("addLocalProvider – model ID parsing via modelsSourceUrl", () => {
 		);
 	});
 
-	it("falls back to generated ClinePass models when no live ClinePass models are found", async () => {
+	it("falls back to generated SekoKuvaPass models when no live SekoKuvaPass models are found", async () => {
 		const fetchMock = vi.fn(async (url: string) => {
 			if (url === "https://models.dev/api.json") {
 				return new Response(
@@ -2031,7 +2031,7 @@ describe("models.json model overlays", () => {
 				baseUrl: "https://api.cline.bot/api/v1",
 				defaultModelId:
 					LlmsModels.GENERATED_CLINE_RECOMMENDED_MODELS.free?.[0]?.id ??
-					CLINE_DEFAULT_MODEL_ID,
+					SEKOKUVA_CA_DEFAULT_MODEL_ID,
 			});
 
 			const { models } = await getLocalProviderModels("cline");
@@ -2850,7 +2850,7 @@ describe("listLocalProviders", () => {
 		expect(ids).toContain("list-provider-b");
 	});
 
-	it("hides ClinePass when the ClinePass feature flag is disabled", async () => {
+	it("hides SekoKuvaPass when the SekoKuvaPass feature flag is disabled", async () => {
 		const { providers } = await listLocalProviders(manager, {
 			isClinePassEnabled: false,
 		});
@@ -2858,7 +2858,7 @@ describe("listLocalProviders", () => {
 		expect(providers.map((p) => p.id)).not.toContain("cline-pass");
 	});
 
-	it("includes ClinePass when the ClinePass feature flag is enabled", async () => {
+	it("includes SekoKuvaPass when the SekoKuvaPass feature flag is enabled", async () => {
 		const { providers } = await listLocalProviders(manager, {
 			isClinePassEnabled: true,
 		});
@@ -2893,10 +2893,10 @@ describe("listLocalProviders", () => {
 	});
 
 	it("stamps featured tiers from the cached live feed once warmed", async () => {
-		const clineModelIds = Object.keys(
+		const sekokuvaCaModelIds = Object.keys(
 			await LlmsModels.getModelsForProvider("cline"),
 		);
-		const [recommendedId, freeId] = clineModelIds;
+		const [recommendedId, freeId] = sekokuvaCaModelIds;
 		await getCachedClineRecommendedModels({
 			baseUrl: "https://api.example.test",
 			fetchImpl: async () =>
@@ -2982,7 +2982,7 @@ describe("listLocalProviders", () => {
 		expect(state.providers["cline-pass"]?.tokenSource).toBe("oauth");
 	});
 
-	it("resolves shared OAuth metadata for ClinePass catalog entries", async () => {
+	it("resolves shared OAuth metadata for SekoKuvaPass catalog entries", async () => {
 		manager.saveProviderSettings(
 			{
 				provider: "cline",
@@ -2998,19 +2998,19 @@ describe("listLocalProviders", () => {
 		const { providers } = await listLocalProviders(manager, {
 			isClinePassEnabled: true,
 		});
-		const clinePass = providers.find(
+		const sekokuvaCaPass = providers.find(
 			(provider) => provider.id === "cline-pass",
 		);
 
-		expect(clinePass).toMatchObject({
+		expect(sekokuvaCaPass).toMatchObject({
 			enabled: true,
 			oauthAccessTokenPresent: true,
 		});
 	});
 
-	it("enables ClinePass from a Cline sign-in that never wrote a ClinePass entry", async () => {
+	it("enables SekoKuvaPass from a Cline sign-in that never wrote a SekoKuvaPass entry", async () => {
 		// Desktop onboarding signs in as "cline" only; the shared credentials
-		// make ClinePass usable, so it must surface as enabled without its own
+		// make SekoKuvaPass usable, so it must surface as enabled without its own
 		// providers.json entry.
 		manager.saveProviderSettings(
 			{
@@ -3026,27 +3026,27 @@ describe("listLocalProviders", () => {
 		const { providers } = await listLocalProviders(manager, {
 			isClinePassEnabled: true,
 		});
-		const clinePass = providers.find(
+		const sekokuvaCaPass = providers.find(
 			(provider) => provider.id === "cline-pass",
 		);
 
 		expect(manager.read().providers["cline-pass"]).toBeUndefined();
-		expect(clinePass).toMatchObject({
+		expect(sekokuvaCaPass).toMatchObject({
 			enabled: true,
 			configured: true,
 			oauthAccessTokenPresent: true,
 		});
 	});
 
-	it("keeps ClinePass disabled when Cline has no entry", async () => {
+	it("keeps SekoKuvaPass disabled when Cline has no entry", async () => {
 		const { providers } = await listLocalProviders(manager, {
 			isClinePassEnabled: true,
 		});
-		const clinePass = providers.find(
+		const sekokuvaCaPass = providers.find(
 			(provider) => provider.id === "cline-pass",
 		);
 
-		expect(clinePass?.enabled).toBe(false);
+		expect(sekokuvaCaPass?.enabled).toBe(false);
 	});
 
 	it("exposes model count", async () => {
@@ -3139,7 +3139,7 @@ describe("listLocalProviders", () => {
 		const openrouter = providers.find(
 			(provider) => provider.id === "openrouter",
 		);
-		const clineModelIds = new Set(
+		const sekokuvaCaModelIds = new Set(
 			cline?.modelList?.map((model) => model.id) ?? [],
 		);
 		const openrouterModelIds = new Set(
@@ -3147,8 +3147,8 @@ describe("listLocalProviders", () => {
 		);
 
 		expect(cline?.modelList?.length).toBeGreaterThan(0);
-		expect(clineModelIds).toContain("zai/glm-5.2");
-		expect(clineModelIds).not.toContain("z-ai/glm-5.2");
+		expect(sekokuvaCaModelIds).toContain("zai/glm-5.2");
+		expect(sekokuvaCaModelIds).not.toContain("z-ai/glm-5.2");
 		expect(openrouterModelIds).toContain("z-ai/glm-5.2");
 	});
 

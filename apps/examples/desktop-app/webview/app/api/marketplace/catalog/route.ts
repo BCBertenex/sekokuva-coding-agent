@@ -1,5 +1,5 @@
 const MARKETPLACE_CATALOG_URL =
-	process.env.CLINE_MARKETPLACE_CATALOG_URL?.trim() ||
+	process.env.SEKOKUVA_CA_MARKETPLACE_CATALOG_URL?.trim() ||
 	"https://cline.github.io/marketplace/catalog.json";
 
 export const dynamic = "force-static";

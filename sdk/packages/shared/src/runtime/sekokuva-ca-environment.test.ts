@@ -1,18 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
-	CLINE_ENVIRONMENT_ENV,
-	CLINE_ENVIRONMENT_OVERRIDE_ENV,
-	CLINE_ENVIRONMENTS,
+	SEKOKUVA_CA_ENVIRONMENT_ENV,
+	SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV,
+	SEKOKUVA_CA_ENVIRONMENTS,
 	DEFAULT_CLINE_ENVIRONMENT,
 	getClineEnvironmentConfig,
 	resolveClineAppUrl,
 	resolveClineEnvironment,
-} from "./cline-environment";
+} from "./sekokuva-ca-environment";
 
 const ENV_KEYS = [
-	CLINE_ENVIRONMENT_ENV,
-	CLINE_ENVIRONMENT_OVERRIDE_ENV,
-	"CLINE_API_BASE_URL",
+	SEKOKUVA_CA_ENVIRONMENT_ENV,
+	SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV,
+	"SEKOKUVA_CA_API_BASE_URL",
 ] as const;
 
 const originalEnvValues = Object.fromEntries(
@@ -43,34 +43,34 @@ describe("resolveClineEnvironment", () => {
 		expect(resolveClineEnvironment()).toBe(DEFAULT_CLINE_ENVIRONMENT);
 	});
 
-	it("reads CLINE_ENVIRONMENT from process.env", () => {
-		process.env[CLINE_ENVIRONMENT_ENV] = "staging";
+	it("reads SEKOKUVA_CA_ENVIRONMENT from process.env", () => {
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "staging";
 		expect(resolveClineEnvironment()).toBe("staging");
 
-		process.env[CLINE_ENVIRONMENT_ENV] = "local";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "local";
 		expect(resolveClineEnvironment()).toBe("local");
 	});
 
-	it("prefers CLINE_ENVIRONMENT_OVERRIDE over CLINE_ENVIRONMENT", () => {
-		process.env[CLINE_ENVIRONMENT_OVERRIDE_ENV] = "local";
-		process.env[CLINE_ENVIRONMENT_ENV] = "staging";
+	it("prefers SEKOKUVA_CA_ENVIRONMENT_OVERRIDE over SEKOKUVA_CA_ENVIRONMENT", () => {
+		process.env[SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV] = "local";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "staging";
 
 		expect(resolveClineEnvironment()).toBe("local");
 	});
 
 	it("normalizes case and surrounding whitespace", () => {
-		process.env[CLINE_ENVIRONMENT_ENV] = "  STAGING  ";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "  STAGING  ";
 
 		expect(resolveClineEnvironment()).toBe("staging");
 	});
 
 	it("ignores unknown values and falls through to the next source", () => {
-		process.env[CLINE_ENVIRONMENT_OVERRIDE_ENV] = "qa";
-		process.env[CLINE_ENVIRONMENT_ENV] = "staging";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV] = "qa";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "staging";
 		expect(resolveClineEnvironment()).toBe("staging");
 
-		delete process.env[CLINE_ENVIRONMENT_OVERRIDE_ENV];
-		process.env[CLINE_ENVIRONMENT_ENV] = "qa";
+		delete process.env[SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV];
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "qa";
 		expect(resolveClineEnvironment()).toBe(DEFAULT_CLINE_ENVIRONMENT);
 	});
 
@@ -84,39 +84,39 @@ describe("resolveClineEnvironment", () => {
 describe("getClineEnvironmentConfig", () => {
 	it("returns the config for an explicit environment", () => {
 		expect(getClineEnvironmentConfig("staging")).toBe(
-			CLINE_ENVIRONMENTS.staging,
+			SEKOKUVA_CA_ENVIRONMENTS.staging,
 		);
-		expect(getClineEnvironmentConfig("local")).toBe(CLINE_ENVIRONMENTS.local);
+		expect(getClineEnvironmentConfig("local")).toBe(SEKOKUVA_CA_ENVIRONMENTS.local);
 		expect(getClineEnvironmentConfig("production")).toBe(
-			CLINE_ENVIRONMENTS.production,
+			SEKOKUVA_CA_ENVIRONMENTS.production,
 		);
 	});
 
 	it("falls back to production by default", () => {
-		expect(getClineEnvironmentConfig()).toBe(CLINE_ENVIRONMENTS.production);
+		expect(getClineEnvironmentConfig()).toBe(SEKOKUVA_CA_ENVIRONMENTS.production);
 	});
 
 	it("uses the resolved process.env environment when no explicit environment is provided", () => {
-		process.env[CLINE_ENVIRONMENT_ENV] = "staging";
+		process.env[SEKOKUVA_CA_ENVIRONMENT_ENV] = "staging";
 
-		expect(getClineEnvironmentConfig()).toBe(CLINE_ENVIRONMENTS.staging);
+		expect(getClineEnvironmentConfig()).toBe(SEKOKUVA_CA_ENVIRONMENTS.staging);
 	});
 
-	it("applies CLINE_API_BASE_URL without mutating the catalog config", () => {
-		process.env.CLINE_API_BASE_URL = "http://127.0.0.1:3000";
+	it("applies SEKOKUVA_CA_API_BASE_URL without mutating the catalog config", () => {
+		process.env.SEKOKUVA_CA_API_BASE_URL = "http://127.0.0.1:3000";
 
 		expect(getClineEnvironmentConfig("local")).toEqual({
-			...CLINE_ENVIRONMENTS.local,
+			...SEKOKUVA_CA_ENVIRONMENTS.local,
 			apiBaseUrl: "http://127.0.0.1:3000",
 			mcpBaseUrl: "http://127.0.0.1:3000/v1/mcp",
 		});
-		expect(CLINE_ENVIRONMENTS.local.apiBaseUrl).toBe("http://localhost:7777");
+		expect(SEKOKUVA_CA_ENVIRONMENTS.local.apiBaseUrl).toBe("http://localhost:7777");
 	});
 
 	it("defaults to production when process is unavailable", () => {
 		vi.stubGlobal("process", undefined);
 
-		expect(getClineEnvironmentConfig()).toBe(CLINE_ENVIRONMENTS.production);
+		expect(getClineEnvironmentConfig()).toBe(SEKOKUVA_CA_ENVIRONMENTS.production);
 	});
 });
 
@@ -146,15 +146,15 @@ describe("resolveClineAppUrl", () => {
 	});
 });
 
-describe("CLINE_ENVIRONMENTS catalog", () => {
+describe("SEKOKUVA_CA_ENVIRONMENTS catalog", () => {
 	it("exposes an environment field that matches its key", () => {
-		for (const [key, config] of Object.entries(CLINE_ENVIRONMENTS)) {
+		for (const [key, config] of Object.entries(SEKOKUVA_CA_ENVIRONMENTS)) {
 			expect(config.environment).toBe(key);
 		}
 	});
 
 	it("populates appBaseUrl, apiBaseUrl, and mcpBaseUrl for every environment", () => {
-		for (const config of Object.values(CLINE_ENVIRONMENTS)) {
+		for (const config of Object.values(SEKOKUVA_CA_ENVIRONMENTS)) {
 			expect(config.appBaseUrl).toMatch(/^https?:\/\//);
 			expect(config.apiBaseUrl).toMatch(/^https?:\/\//);
 			expect(config.mcpBaseUrl).toMatch(/^https?:\/\//);

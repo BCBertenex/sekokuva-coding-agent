@@ -1,13 +1,13 @@
 "use client";
 
 import type {
-	ClineAccountBalance,
-	ClineAccountOrganization,
-	ClineAccountOrganizationBalance,
-	ClineAccountOrganizationUsageTransaction,
-	ClineAccountPaymentTransaction,
-	ClineAccountUsageTransaction,
-	ClineAccountUser,
+	SekoKuvaAccountBalance,
+	SekoKuvaAccountOrganization,
+	SekoKuvaAccountOrganizationBalance,
+	SekoKuvaAccountOrganizationUsageTransaction,
+	SekoKuvaAccountPaymentTransaction,
+	SekoKuvaAccountUsageTransaction,
+	SekoKuvaAccountUser,
 } from "@sekokuva-ca/core";
 import {
 	AlertCircle,
@@ -52,24 +52,24 @@ function isAccountAuthError(message: string): boolean {
 // Data fetching helpers via sidecar command
 // ---------------------------------------------------------------------------
 
-async function fetchAccountUser(): Promise<ClineAccountUser> {
-	return await desktopClient.invoke<ClineAccountUser>("cline_account", {
+async function fetchAccountUser(): Promise<SekoKuvaAccountUser> {
+	return await desktopClient.invoke<SekoKuvaAccountUser>("cline_account", {
 		action: "clineAccount",
 		operation: "fetchMe",
 	});
 }
 
-async function fetchAccountBalance(): Promise<ClineAccountBalance> {
-	return await desktopClient.invoke<ClineAccountBalance>("cline_account", {
+async function fetchAccountBalance(): Promise<SekoKuvaAccountBalance> {
+	return await desktopClient.invoke<SekoKuvaAccountBalance>("cline_account", {
 		action: "clineAccount",
 		operation: "fetchBalance",
 	});
 }
 
 async function fetchAccountOrganizations(): Promise<
-	ClineAccountOrganization[]
+	SekoKuvaAccountOrganization[]
 > {
-	return await desktopClient.invoke<ClineAccountOrganization[]>(
+	return await desktopClient.invoke<SekoKuvaAccountOrganization[]>(
 		"cline_account",
 		{
 			action: "clineAccount",
@@ -80,8 +80,8 @@ async function fetchAccountOrganizations(): Promise<
 
 async function fetchOrganizationBalance(
 	organizationId: string,
-): Promise<ClineAccountOrganizationBalance> {
-	return await desktopClient.invoke<ClineAccountOrganizationBalance>(
+): Promise<SekoKuvaAccountOrganizationBalance> {
+	return await desktopClient.invoke<SekoKuvaAccountOrganizationBalance>(
 		"cline_account",
 		{
 			action: "clineAccount",
@@ -92,9 +92,9 @@ async function fetchOrganizationBalance(
 }
 
 async function fetchUsageTransactions(): Promise<
-	ClineAccountUsageTransaction[]
+	SekoKuvaAccountUsageTransaction[]
 > {
-	return await desktopClient.invoke<ClineAccountUsageTransaction[]>(
+	return await desktopClient.invoke<SekoKuvaAccountUsageTransaction[]>(
 		"cline_account",
 		{
 			action: "clineAccount",
@@ -106,8 +106,8 @@ async function fetchUsageTransactions(): Promise<
 async function fetchOrganizationUsageTransactions(
 	organizationId: string,
 	memberId?: string,
-): Promise<ClineAccountOrganizationUsageTransaction[]> {
-	return await desktopClient.invoke<ClineAccountOrganizationUsageTransaction[]>(
+): Promise<SekoKuvaAccountOrganizationUsageTransaction[]> {
+	return await desktopClient.invoke<SekoKuvaAccountOrganizationUsageTransaction[]>(
 		"cline_account",
 		{
 			action: "clineAccount",
@@ -119,9 +119,9 @@ async function fetchOrganizationUsageTransactions(
 }
 
 async function fetchPaymentTransactions(): Promise<
-	ClineAccountPaymentTransaction[]
+	SekoKuvaAccountPaymentTransaction[]
 > {
-	return await desktopClient.invoke<ClineAccountPaymentTransaction[]>(
+	return await desktopClient.invoke<SekoKuvaAccountPaymentTransaction[]>(
 		"cline_account",
 		{
 			action: "clineAccount",
@@ -143,19 +143,19 @@ export function AccountView() {
 	>(null);
 
 	// Overview data
-	const [user, setUser] = useState<ClineAccountUser | null>(null);
-	const [balance, setBalance] = useState<ClineAccountBalance | null>(null);
+	const [user, setUser] = useState<SekoKuvaAccountUser | null>(null);
+	const [balance, setBalance] = useState<SekoKuvaAccountBalance | null>(null);
 	const [organizationBalance, setOrganizationBalance] =
-		useState<ClineAccountOrganizationBalance | null>(null);
+		useState<SekoKuvaAccountOrganizationBalance | null>(null);
 	const [organizations, setOrganizations] = useState<
-		ClineAccountOrganization[]
+		SekoKuvaAccountOrganization[]
 	>([]);
 	const [overviewLoading, setOverviewLoading] = useState(true);
 	const [overviewError, setOverviewError] = useState<string | null>(null);
 
 	// Usage data
 	const [usageTransactions, setUsageTransactions] = useState<
-		ClineAccountUsageTransaction[]
+		SekoKuvaAccountUsageTransaction[]
 	>([]);
 	const [usageLoading, setUsageLoading] = useState(false);
 	const [usageError, setUsageError] = useState<string | null>(null);
@@ -164,7 +164,7 @@ export function AccountView() {
 
 	// Billing data
 	const [paymentTransactions, setPaymentTransactions] = useState<
-		ClineAccountPaymentTransaction[]
+		SekoKuvaAccountPaymentTransaction[]
 	>([]);
 	const [billingLoading, setBillingLoading] = useState(false);
 	const [billingError, setBillingError] = useState<string | null>(null);

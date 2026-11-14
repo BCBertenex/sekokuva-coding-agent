@@ -41,8 +41,8 @@ describe("clearLegacyProviderCredentials", () => {
 		writeFileSync(
 			secretsPath,
 			JSON.stringify({
-				"cline:clineAccountId": JSON.stringify({ idToken: "t" }),
-				clineApiKey: "cline-key",
+				"cline:sekokuvaCaAccountId": JSON.stringify({ idToken: "t" }),
+				sekokuvaCaApiKey: "cline-key",
 				openRouterApiKey: "sk-or-keep",
 			}),
 		);

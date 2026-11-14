@@ -123,10 +123,10 @@ for (const outer of shells) {
 						);
 						const withEnv = createShellExecutor({
 							shell: outer.name,
-							env: { CLINE_SHELL_TEST: "inherited value" },
+							env: { SEKOKUVA_CA_SHELL_TEST: "inherited value" },
 						});
 						const output = await withEnv(
-							`${inner.name} -NoProfile -Command "Get-ChildItem . -Recurse -File | Where-Object { $_.Name -match 'MyEditForm|EditContext|Validator' } | ForEach-Object { $_.FullName }; Write-Output $env:CLINE_SHELL_TEST"`,
+							`${inner.name} -NoProfile -Command "Get-ChildItem . -Recurse -File | Where-Object { $_.Name -match 'MyEditForm|EditContext|Validator' } | ForEach-Object { $_.FullName }; Write-Output $env:SEKOKUVA_CA_SHELL_TEST"`,
 							cwd,
 							ctx,
 						);

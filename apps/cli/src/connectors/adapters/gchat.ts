@@ -259,7 +259,7 @@ class GoogleChatConnector extends ConnectorBase<
 				.option(
 					"--rpc-address <host:port>",
 					"RPC address",
-					process.env.CLINE_RPC_ADDRESS?.trim() ||
+					process.env.SEKOKUVA_CA_RPC_ADDRESS?.trim() ||
 						resolveDefaultCliRpcAddress(),
 				)
 				.option("--host <host>", "Webhook listen host")
@@ -327,11 +327,11 @@ class GoogleChatConnector extends ConnectorBase<
 			enableTools: opts.tools !== false,
 			rpcAddress:
 				opts.rpcAddress?.trim() ||
-				process.env.CLINE_RPC_ADDRESS?.trim() ||
+				process.env.SEKOKUVA_CA_RPC_ADDRESS?.trim() ||
 				resolveDefaultCliRpcAddress(),
 			hookCommand:
 				opts.hookCommand?.trim() ||
-				process.env.CLINE_CONNECT_HOOK_COMMAND?.trim(),
+				process.env.SEKOKUVA_CA_CONNECT_HOOK_COMMAND?.trim(),
 			port,
 			host: opts.host?.trim() || process.env.HOST?.trim() || "0.0.0.0",
 			baseUrl:
@@ -498,7 +498,7 @@ class GoogleChatConnector extends ConnectorBase<
 			rawArgs,
 			io,
 			interactive: options.interactive,
-			childEnvVar: "CLINE_GCHAT_CONNECT_CHILD",
+			childEnvVar: "SEKOKUVA_CA_GCHAT_CONNECT_CHILD",
 			statePath,
 			readState: (path) => this.readConnectorState(path),
 			isRunning: (state) => isProcessRunning(state.pid),

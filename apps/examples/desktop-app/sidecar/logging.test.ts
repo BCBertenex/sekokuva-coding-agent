@@ -13,10 +13,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { createDesktopLoggerAdapter, DESKTOP_LOG_MAX_BYTES } from "./logging";
 
 const originalEnv = {
-	CLINE_LOG_ENABLED: process.env.CLINE_LOG_ENABLED,
-	CLINE_LOG_LEVEL: process.env.CLINE_LOG_LEVEL,
-	CLINE_LOG_NAME: process.env.CLINE_LOG_NAME,
-	CLINE_LOG_PATH: process.env.CLINE_LOG_PATH,
+	SEKOKUVA_CA_LOG_ENABLED: process.env.SEKOKUVA_CA_LOG_ENABLED,
+	SEKOKUVA_CA_LOG_LEVEL: process.env.SEKOKUVA_CA_LOG_LEVEL,
+	SEKOKUVA_CA_LOG_NAME: process.env.SEKOKUVA_CA_LOG_NAME,
+	SEKOKUVA_CA_LOG_PATH: process.env.SEKOKUVA_CA_LOG_PATH,
 };
 
 afterEach(() => {
@@ -30,9 +30,9 @@ describe("desktop sidecar logging", () => {
 	it("writes structured SDK logs to the configured file", () => {
 		const directory = mkdtempSync(join(tmpdir(), "cline-code-logging-"));
 		const destination = join(directory, "sidecar.log");
-		process.env.CLINE_LOG_PATH = destination;
-		process.env.CLINE_LOG_LEVEL = "debug";
-		delete process.env.CLINE_LOG_ENABLED;
+		process.env.SEKOKUVA_CA_LOG_PATH = destination;
+		process.env.SEKOKUVA_CA_LOG_LEVEL = "debug";
+		delete process.env.SEKOKUVA_CA_LOG_ENABLED;
 
 		try {
 			const adapter = createDesktopLoggerAdapter();
@@ -50,8 +50,8 @@ describe("desktop sidecar logging", () => {
 
 	it("warns once before falling back to stderr when the log file cannot open", () => {
 		const directory = mkdtempSync(join(tmpdir(), "cline-code-fallback-"));
-		process.env.CLINE_LOG_PATH = directory;
-		delete process.env.CLINE_LOG_ENABLED;
+		process.env.SEKOKUVA_CA_LOG_PATH = directory;
+		delete process.env.SEKOKUVA_CA_LOG_ENABLED;
 		const stderr = vi.spyOn(process.stderr, "write").mockReturnValue(true);
 
 		try {
@@ -73,8 +73,8 @@ describe("desktop sidecar logging", () => {
 	it("rotates the active log before a write exceeds the size limit", () => {
 		const directory = mkdtempSync(join(tmpdir(), "cline-code-rotation-"));
 		const destination = join(directory, "sidecar.log");
-		process.env.CLINE_LOG_PATH = destination;
-		delete process.env.CLINE_LOG_ENABLED;
+		process.env.SEKOKUVA_CA_LOG_PATH = destination;
+		delete process.env.SEKOKUVA_CA_LOG_ENABLED;
 
 		try {
 			mkdirSync(directory, { recursive: true });

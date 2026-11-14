@@ -95,7 +95,7 @@ export interface CaptureTaskLifecycleEventInput {
 
 /**
  * Why an out-of-process host spawned this core. The JetBrains plugin sets it via
- * `CLINE_CORE_SPAWN_REASON`; keep in sync with its `SpawnReason`.
+ * `SEKOKUVA_CA_CORE_SPAWN_REASON`; keep in sync with its `SpawnReason`.
  */
 export const CORE_SPAWN_REASONS = [
 	"initial",
@@ -114,7 +114,7 @@ export interface TelemetryMetadata {
 	 * `extension_version`). Absent when the host does not report one.
 	 */
 	host_plugin_version?: string;
-	cline_type: string;
+	sekokuva_ca_type: string;
 	platform: string;
 	platform_version: string;
 	os_type: string;

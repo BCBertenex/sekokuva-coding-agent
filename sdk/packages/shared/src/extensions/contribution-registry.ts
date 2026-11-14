@@ -176,7 +176,7 @@ export interface PluginSetupContext {
 	 */
 	workspaceInfo?: WorkspaceInfo;
 	/**
-	 * Automation ingress made available by hosts that enable ClineCore
+	 * Automation ingress made available by hosts that enable SekoKuvaCore
 	 * automation. Plugins should feature-detect this property so the same plugin
 	 * can run in hosts that do not enable automation.
 	 */

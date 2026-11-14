@@ -355,7 +355,7 @@ async function isConnectorsAvailable(
 	},
 ): Promise<boolean> {
 	if (getClineAccountId() !== scope.accountId) return false;
-	if (!(await isClineAccountFeatureEnabled(FeatureFlag.CLINE_COMPOSIO_BETA))) {
+	if (!(await isClineAccountFeatureEnabled(FeatureFlag.SEKOKUVA_CA_COMPOSIO_BETA))) {
 		scope.configuredCache = null;
 		scope.catalogCache = null;
 		return false;

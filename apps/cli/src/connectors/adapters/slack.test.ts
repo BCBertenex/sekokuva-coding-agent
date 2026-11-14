@@ -443,9 +443,9 @@ describe("slack legacy connector state", () => {
 		const { tmpdir } = await import("node:os");
 		const { join } = await import("node:path");
 
-		const previousDataDir = process.env.CLINE_DATA_DIR;
+		const previousDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
 		const dataDir = mkdtempSync(join(tmpdir(), "slack-legacy-state-"));
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.SEKOKUVA_CA_DATA_DIR = dataDir;
 		const child = spawn(
 			process.execPath,
 			["-e", "setInterval(() => {}, 1000)"],
@@ -483,9 +483,9 @@ describe("slack legacy connector state", () => {
 				});
 			}
 			if (previousDataDir === undefined) {
-				delete process.env.CLINE_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_DATA_DIR;
 			} else {
-				process.env.CLINE_DATA_DIR = previousDataDir;
+				process.env.SEKOKUVA_CA_DATA_DIR = previousDataDir;
 			}
 			rmSync(dataDir, { recursive: true, force: true });
 		}

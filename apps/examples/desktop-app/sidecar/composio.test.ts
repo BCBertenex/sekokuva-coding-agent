@@ -63,15 +63,15 @@ import {
 	parseComposioToolkitSlug,
 } from "./composio";
 
-const originalDataDir = process.env.CLINE_DATA_DIR;
-const originalClineDir = process.env.CLINE_DIR;
+const originalDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
+const originalClineDir = process.env.SEKOKUVA_CA_DIR;
 const cleanupPaths: string[] = [];
 
 function useTempDataDir(): string {
 	const dir = mkdtempSync(join(tmpdir(), "composio-proxy-test-"));
 	cleanupPaths.push(dir);
-	process.env.CLINE_DATA_DIR = dir;
-	process.env.CLINE_DIR = dir;
+	process.env.SEKOKUVA_CA_DATA_DIR = dir;
+	process.env.SEKOKUVA_CA_DIR = dir;
 	return dir;
 }
 
@@ -122,10 +122,10 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-	if (originalDataDir === undefined) delete process.env.CLINE_DATA_DIR;
-	else process.env.CLINE_DATA_DIR = originalDataDir;
-	if (originalClineDir === undefined) delete process.env.CLINE_DIR;
-	else process.env.CLINE_DIR = originalClineDir;
+	if (originalDataDir === undefined) delete process.env.SEKOKUVA_CA_DATA_DIR;
+	else process.env.SEKOKUVA_CA_DATA_DIR = originalDataDir;
+	if (originalClineDir === undefined) delete process.env.SEKOKUVA_CA_DIR;
+	else process.env.SEKOKUVA_CA_DIR = originalClineDir;
 	for (const path of cleanupPaths.splice(0)) {
 		rmSync(path, { recursive: true, force: true });
 	}

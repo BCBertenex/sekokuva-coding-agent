@@ -38,7 +38,7 @@ const BASE_URL = "https://openrouter.ai/api/v1";
 /** Env var the gateway reads for the API key when one is not passed in the
  * session config. */
 const API_KEY_ENV = "OPENROUTER_API_KEY";
-const DEFAULT_MODEL_ID = Llms.CLINE_DEFAULT_MODEL_ID;
+const DEFAULT_MODEL_ID = Llms.SEKOKUVA_CA_DEFAULT_MODEL_ID;
 
 // ---------------------------------------------------------------------------
 // Model catalog

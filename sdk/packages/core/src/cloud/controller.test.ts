@@ -976,7 +976,7 @@ describe("CloudSessionController neutral host contract", () => {
 				Response.json(
 					String(input).endsWith("/models")
 						? [{ id: "model" }]
-						: { clinePass: [{ id: "pass-only" }] },
+						: { sekokuvaCaPass: [{ id: "pass-only" }] },
 				),
 			);
 		try {

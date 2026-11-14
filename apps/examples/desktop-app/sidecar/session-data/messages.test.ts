@@ -368,8 +368,8 @@ describe("readSessionMessages", () => {
 	it("records file blocks of a user message relative to the mention base", async () => {
 		const sessionId = `file-projection-${Date.now()}`;
 		const dataDir = mkdtempSync(join(tmpdir(), "session-data-"));
-		const previousDataDir = process.env.CLINE_SESSION_DATA_DIR;
-		process.env.CLINE_SESSION_DATA_DIR = dataDir;
+		const previousDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
+		process.env.SEKOKUVA_CA_SESSION_DATA_DIR = dataDir;
 		try {
 			writeSessionManifest(sessionId, {
 				session_id: sessionId,
@@ -418,9 +418,9 @@ describe("readSessionMessages", () => {
 			]);
 		} finally {
 			if (previousDataDir === undefined) {
-				delete process.env.CLINE_SESSION_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 			} else {
-				process.env.CLINE_SESSION_DATA_DIR = previousDataDir;
+				process.env.SEKOKUVA_CA_SESSION_DATA_DIR = previousDataDir;
 			}
 			rmSync(dataDir, { recursive: true, force: true });
 		}

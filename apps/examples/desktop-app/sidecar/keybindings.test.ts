@@ -13,11 +13,11 @@ let dataDir: string;
 
 beforeEach(() => {
 	dataDir = mkdtempSync(join(tmpdir(), "cline-keybindings-"));
-	process.env.CLINE_DATA_DIR = dataDir;
+	process.env.SEKOKUVA_CA_DATA_DIR = dataDir;
 });
 
 afterEach(() => {
-	delete process.env.CLINE_DATA_DIR;
+	delete process.env.SEKOKUVA_CA_DATA_DIR;
 	rmSync(dataDir, { recursive: true, force: true });
 });
 

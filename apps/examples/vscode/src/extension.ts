@@ -3,7 +3,7 @@ import { basename, join } from "node:path";
 import {
 	type BasicLogger,
 	buildWorkspaceMetadata,
-	ClineCore,
+	SekoKuvaCore,
 	captureExtensionActivated,
 	createConfiguredTelemetryService,
 	createLocalHubScheduleRuntimeHandlers,
@@ -640,7 +640,7 @@ class CoreChatWebviewController implements vscode.Disposable {
 	private readonly disposables: vscode.Disposable[] = [];
 	private readonly providerSettingsManager = new ProviderSettingsManager();
 	private readonly telemetry: ITelemetryService;
-	private host: ClineCore | undefined;
+	private host: SekoKuvaCore | undefined;
 	private hubClient: NodeHubClient | undefined;
 	private stopHostSubscription: (() => void) | undefined;
 	private stopSessionRefreshInterval: (() => void) | undefined;
@@ -675,7 +675,7 @@ class CoreChatWebviewController implements vscode.Disposable {
 				createClineTelemetryServiceConfig({
 					metadata: createClineTelemetryServiceMetadata({
 						extension_version: version,
-						cline_type: displayName,
+						sekokuva_ca_type: displayName,
 						platform: vscode.env.appName,
 						platform_version: vscode.version,
 						os_type: os.platform(),
@@ -1152,7 +1152,7 @@ class CoreChatWebviewController implements vscode.Disposable {
 	}
 
 	private async buildStartConfigFromSession(
-		session: NonNullable<Awaited<ReturnType<ClineCore["get"]>>>,
+		session: NonNullable<Awaited<ReturnType<SekoKuvaCore["get"]>>>,
 	): Promise<StartConfig> {
 		const mode: "act" | "plan" =
 			session.metadata?.mode === "plan" ? "plan" : "act";
@@ -1412,11 +1412,11 @@ class CoreChatWebviewController implements vscode.Disposable {
 		this.stopSessionSubscription = undefined;
 	}
 
-	private async getSessionHost(): Promise<ClineCore> {
+	private async getSessionHost(): Promise<SekoKuvaCore> {
 		if (!this.host) {
 			await this.ensureHub();
 			const defaults = this.resolveWorkspaceDefaults();
-			this.host = await ClineCore.create({
+			this.host = await SekoKuvaCore.create({
 				backendMode: "hub",
 				capabilities: this.createRuntimeCapabilities(),
 				hub: {

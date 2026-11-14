@@ -1,5 +1,5 @@
 // @jsxImportSource @opentui/react
-import type { ClineAccountOrganization } from "@sekokuva-ca/core";
+import type { SekoKuvaAccountOrganization } from "@sekokuva-ca/core";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -227,7 +227,7 @@ function accountActions(snapshot: ClineAccountSnapshot): AccountAction[] {
 	return actions;
 }
 
-function organizationDescription(org: ClineAccountOrganization): string {
+function organizationDescription(org: SekoKuvaAccountOrganization): string {
 	const roles = org.roles.length > 0 ? org.roles.join(", ") : "member";
 	return roles;
 }

@@ -6,7 +6,7 @@ import { setClineClientIdentity } from "@sekokuva-ca/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	applyClineFeaturedModels,
-	type ClineRecommendedModelsData,
+	type SekoKuvaRecommendedModelsData,
 	FALLBACK_CLINE_RECOMMENDED_MODELS,
 	fetchClineRecommendedModels,
 	getCachedClineRecommendedModels,
@@ -14,7 +14,7 @@ import {
 	peekClineRecommendedModels,
 	resetClineRecommendedModelsCacheForTests,
 	resolveClineDefaultModelId,
-} from "./cline-recommended-models";
+} from "./sekokuva-ca-recommended-models";
 import type { ModelInfo } from "./provider-settings";
 
 const BASE_URL = "https://api.example.test";
@@ -88,11 +88,11 @@ const CATALOG = {
 	},
 };
 
-function namesOf(data: ClineRecommendedModelsData) {
+function namesOf(data: SekoKuvaRecommendedModelsData) {
 	return {
 		recommended: data.recommended.map((m) => m.name),
 		free: data.free.map((m) => m.name),
-		clinePass: data.clinePass.map((m) => m.name),
+		sekokuvaCaPass: data.sekokuvaCaPass.map((m) => m.name),
 	};
 }
 
@@ -115,7 +115,7 @@ describe("fetchClineRecommendedModels", () => {
 			recommended: ["Claude Opus 5", "named-model", "unnamed-model", "GLM-5.2"],
 			// Free markers are redundant next to the pickers' FREE chips.
 			free: ["DeepSeek V4 Flash", "GLM-5.2", "Laguna S 2.1"],
-			clinePass: ["GLM-5.2", "mystery"],
+			sekokuvaCaPass: ["GLM-5.2", "mystery"],
 		});
 		// Ids are preserved untouched.
 		expect(data.free.map((m) => m.id)).toEqual([
@@ -125,7 +125,7 @@ describe("fetchClineRecommendedModels", () => {
 		]);
 	});
 
-	it("keeps the cloud-only ClineFree models", async () => {
+	it("keeps the cloud-only SekoKuvaFree models", async () => {
 		const data = await fetchClineRecommendedModels({
 			baseUrl: BASE_URL,
 			fetchImpl: jsonResponse({
@@ -141,7 +141,7 @@ describe("fetchClineRecommendedModels", () => {
 			catalogLoader: async () => CATALOG,
 		});
 
-		expect(data.clineCloud).toEqual([
+		expect(data.sekokuvaCaCloud).toEqual([
 			{
 				id: "cline-cloud/deepseek-v4.1-flash",
 				name: "deepseek-v4.1-flash",
@@ -179,7 +179,7 @@ describe("fetchClineRecommendedModels", () => {
 		expect(namesOf(data)).toEqual({
 			recommended: ["claude-opus-5", "named-model", "unnamed-model", "glm-5.2"],
 			free: ["deepseek-v4-flash", "glm-5.2", "laguna-s-2.1"],
-			clinePass: ["glm-5.2", "mystery"],
+			sekokuvaCaPass: ["glm-5.2", "mystery"],
 		});
 	});
 
@@ -259,7 +259,7 @@ describe("fetchClineRecommendedModels", () => {
 });
 
 describe("applyClineFeaturedModels", () => {
-	const data: ClineRecommendedModelsData = {
+	const data: SekoKuvaRecommendedModelsData = {
 		recommended: [
 			{
 				id: "anthropic/claude-opus-5",
@@ -278,7 +278,7 @@ describe("applyClineFeaturedModels", () => {
 				tags: [],
 			},
 		],
-		clinePass: [
+		sekokuvaCaPass: [
 			{
 				id: "cline-pass/kimi-k3",
 				name: "Kimi K3",
@@ -335,7 +335,7 @@ describe("applyClineFeaturedModels", () => {
 	});
 
 	it("matches vendor-prefix mismatches by unambiguous slug without duplicating tiers", () => {
-		const fallbackVintage: ClineRecommendedModelsData = {
+		const fallbackVintage: SekoKuvaRecommendedModelsData = {
 			recommended: [],
 			free: [
 				{
@@ -345,7 +345,7 @@ describe("applyClineFeaturedModels", () => {
 					tags: ["FREE"],
 				},
 			],
-			clinePass: [],
+			sekokuvaCaPass: [],
 		};
 
 		// Catalog knows the model only under the cline-free prefix: the slug
@@ -380,7 +380,7 @@ describe("applyClineFeaturedModels", () => {
 					{ id: "vendor-b/shared-slug", name: "B", description: "", tags: [] },
 				],
 				free: [],
-				clinePass: [],
+				sekokuvaCaPass: [],
 			},
 		);
 		expect(ambiguous[0]?.featured).toBeUndefined();
@@ -543,8 +543,11 @@ describe("generated offline featured models", () => {
 				return {};
 			},
 		});
-		for (const tier of ["recommended", "free", "clinePass"] as const) {
-			const generated = GENERATED_CLINE_RECOMMENDED_MODELS[tier] ?? [];
+		for (const tier of ["recommended", "free", "sekokuvaCaPass"] as const) {
+					const generated =
+						GENERATED_CLINE_RECOMMENDED_MODELS[
+							tier === "sekokuvaCaPass" ? "clinePass" : tier
+						] ?? [];
 			expect(generated.length).toBeGreaterThan(0);
 			expect(data[tier].map((entry) => entry.id)).toEqual(
 				generated.map((entry) => entry.id),
@@ -577,7 +580,7 @@ describe("generated offline featured models", () => {
 							{ tier: "free", entries: data.free },
 						]
 					: [
-							{ tier: "subscribed", entries: data.clinePass },
+							{ tier: "subscribed", entries: data.sekokuvaCaPass },
 							{ tier: "free", entries: data.free },
 						];
 			for (const { tier, entries } of tiers) {

@@ -38,8 +38,8 @@ export interface DelegatedAgentRuntimeConfig
 	extends DelegatedAgentConnectionConfig {
 	cwd?: string;
 	providerId: string;
-	clinePlatform?: string;
-	clineIdeName?: string;
+	sekokuvaCaPlatform?: string;
+	sekokuvaCaIdeName?: string;
 	maxIterations?: number;
 	hooks?: AgentHooks;
 	extensions?: AgentExtension[];

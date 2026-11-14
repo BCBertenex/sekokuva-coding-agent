@@ -138,12 +138,12 @@ describe("langfuse telemetry", () => {
 		vi.stubEnv("LANGFUSE_BASE_URL", genericConfig.baseUrl);
 		vi.stubEnv("LANGFUSE_PUBLIC_KEY", genericConfig.publicKey);
 		vi.stubEnv("LANGFUSE_SECRET_KEY", genericConfig.secretKey);
-		vi.stubEnv("CLINE_TRACE_SAMPLE_PERCENT", "");
-		vi.stubEnv("CLINE_TRACE_RECORD_CONTENT", "");
+		vi.stubEnv("SEKOKUVA_CA_TRACE_SAMPLE_PERCENT", "");
+		vi.stubEnv("SEKOKUVA_CA_TRACE_RECORD_CONTENT", "");
 		vi.stubEnv("OTEL_SERVICE_NAME", "");
-		vi.stubEnv("CLINE_LANGFUSE_ALL_PROVIDERS", "");
-		vi.stubEnv("CLINE_LANGFUSE_TAGS", "");
-		vi.stubEnv("CLINE_LANGFUSE_METADATA", "");
+		vi.stubEnv("SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS", "");
+		vi.stubEnv("SEKOKUVA_CA_LANGFUSE_TAGS", "");
+		vi.stubEnv("SEKOKUVA_CA_LANGFUSE_METADATA", "");
 		vi.stubEnv("LANGFUSE_TRACING_ENVIRONMENT", "");
 	});
 
@@ -266,8 +266,8 @@ describe("langfuse telemetry", () => {
 				globalSettingsPathRef.current,
 				JSON.stringify({ telemetryOptOut: optedOut }),
 			);
-			vi.stubEnv("CLINE_TRACE_SAMPLE_PERCENT", sample);
-			vi.stubEnv("CLINE_TRACE_RECORD_CONTENT", "false");
+			vi.stubEnv("SEKOKUVA_CA_TRACE_SAMPLE_PERCENT", sample);
+			vi.stubEnv("SEKOKUVA_CA_TRACE_RECORD_CONTENT", "false");
 			// Register the host while the awaited direct runtime is still being
 			// constructed, before its promise resolves back to the caller.
 			integrationOptionsSpy.mockImplementationOnce(() => {
@@ -355,7 +355,7 @@ describe("langfuse telemetry", () => {
 
 		it("stays disabled when the sample rate is explicitly zero", async () => {
 			clearLangfuseEnv();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "0";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "0";
 
 			const decision = await resolveAiSdkTelemetry("cline", "task-a");
 
@@ -364,7 +364,7 @@ describe("langfuse telemetry", () => {
 
 		it("stays disabled for non-cline providers even with a sample rate", async () => {
 			clearLangfuseEnv();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
 
 			const decision = await resolveAiSdkTelemetry("openrouter", "task-a");
 
@@ -374,7 +374,7 @@ describe("langfuse telemetry", () => {
 		it("enables metadata-only telemetry at 100% when the host registered a tracer", async () => {
 			clearLangfuseEnv();
 			mockHostOtlpTracer();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
 
 			const decision = await resolveAiSdkTelemetry("cline", "task-a");
 
@@ -386,11 +386,11 @@ describe("langfuse telemetry", () => {
 			});
 		});
 
-		it("records content only when CLINE_TRACE_RECORD_CONTENT is set", async () => {
+		it("records content only when SEKOKUVA_CA_TRACE_RECORD_CONTENT is set", async () => {
 			clearLangfuseEnv();
 			mockHostOtlpTracer();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
-			process.env.CLINE_TRACE_RECORD_CONTENT = "true";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_RECORD_CONTENT = "true";
 
 			const decision = await resolveAiSdkTelemetry("cline", "task-a");
 
@@ -407,7 +407,7 @@ describe("langfuse telemetry", () => {
 			mockHostOtlpTracer();
 			// FNV-1a buckets: task-b=7, task-c=88. A 50% rate keeps the low
 			// bucket and drops the high one — on every call.
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "50";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "50";
 
 			for (let i = 0; i < 2; i++) {
 				const kept = await resolveAiSdkTelemetry("cline", "task-b");
@@ -419,7 +419,7 @@ describe("langfuse telemetry", () => {
 
 		it("stays disabled below 100% without a sampling key", async () => {
 			clearLangfuseEnv();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "50";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "50";
 
 			const decision = await resolveAiSdkTelemetry("cline", undefined);
 
@@ -428,7 +428,7 @@ describe("langfuse telemetry", () => {
 
 		it("respects the global telemetry opt-out", async () => {
 			clearLangfuseEnv();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
 			const settingsPath = path.join(
 				await fs.mkdtemp(path.join(os.tmpdir(), "lf-optout-")),
 				"settings.json",
@@ -447,8 +447,8 @@ describe("langfuse telemetry", () => {
 		it("fails closed when the settings file is malformed", async () => {
 			clearLangfuseEnv();
 			mockHostOtlpTracer();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
-			process.env.CLINE_TRACE_RECORD_CONTENT = "true";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_RECORD_CONTENT = "true";
 			const settingsPath = path.join(
 				await fs.mkdtemp(path.join(os.tmpdir(), "lf-torn-")),
 				"settings.json",
@@ -465,7 +465,7 @@ describe("langfuse telemetry", () => {
 		it("fails closed when the settings file exists but cannot be read", async () => {
 			clearLangfuseEnv();
 			mockHostOtlpTracer();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
 			// A directory at the settings path raises EISDIR, not ENOENT.
 			globalSettingsPathRef.current = await fs.mkdtemp(
 				path.join(os.tmpdir(), "lf-unreadable-"),
@@ -479,7 +479,7 @@ describe("langfuse telemetry", () => {
 		it("stays enabled when the settings file records no opt-out", async () => {
 			clearLangfuseEnv();
 			mockHostOtlpTracer();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
 			const settingsPath = path.join(
 				await fs.mkdtemp(path.join(os.tmpdir(), "lf-optin-")),
 				"settings.json",
@@ -516,7 +516,7 @@ describe("langfuse telemetry", () => {
 
 		it("does not treat a console-only tracer as the relay", async () => {
 			clearLangfuseEnv();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
 			// Recording provider without the relay marker — e.g. the SDK's
 			// console traces exporter.
 			getTracerProviderSpy.mockReturnValue({
@@ -557,7 +557,7 @@ describe("langfuse telemetry", () => {
 
 		it("stays disabled when no recording tracer provider is registered", async () => {
 			clearLangfuseEnv();
-			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
+			process.env.SEKOKUVA_CA_TRACE_SAMPLE_PERCENT = "100";
 			getTracerProviderSpy.mockReturnValue({
 				getDelegate: () => ({ constructor: { name: "NoopTracerProvider" } }),
 			});
@@ -567,9 +567,9 @@ describe("langfuse telemetry", () => {
 			expect(decision.isEnabled).toBe(false);
 		});
 	});
-	describe("BYOK providers (CLINE_LANGFUSE_ALL_PROVIDERS)", () => {
+	describe("BYOK providers (SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS)", () => {
 		it("traces third-party providers through direct credentials when opted in", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_ALL_PROVIDERS", "1");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS", "1");
 
 			const decision = await resolveAiSdkTelemetry("openrouter");
 
@@ -587,7 +587,7 @@ describe("langfuse telemetry", () => {
 		});
 
 		it("stays disabled for third-party providers without direct credentials", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_ALL_PROVIDERS", "true");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS", "true");
 			delete process.env.LANGFUSE_SECRET_KEY;
 
 			await expect(resolveAiSdkTelemetry("openrouter")).resolves.toEqual({
@@ -597,7 +597,7 @@ describe("langfuse telemetry", () => {
 		});
 
 		it("never routes third-party providers through the host relay", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_ALL_PROVIDERS", "yes");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS", "yes");
 			getTracerProviderSpy.mockReturnValue({
 				getDelegate: () => ({
 					forceFlush: forceFlushSpy,
@@ -619,7 +619,7 @@ describe("langfuse telemetry", () => {
 		});
 
 		it("ignores falsy opt-in values", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_ALL_PROVIDERS", "0");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS", "0");
 
 			await expect(resolveAiSdkTelemetry("openrouter")).resolves.toEqual({
 				isEnabled: false,
@@ -627,7 +627,7 @@ describe("langfuse telemetry", () => {
 		});
 
 		it("passes LANGFUSE_TRACING_ENVIRONMENT to the direct exporter", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_ALL_PROVIDERS", "1");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_ALL_PROVIDERS", "1");
 			vi.stubEnv("LANGFUSE_TRACING_ENVIRONMENT", "benchmark");
 
 			await resolveAiSdkTelemetry("openrouter");
@@ -642,11 +642,11 @@ describe("langfuse telemetry", () => {
 	describe("env trace attributes", () => {
 		it("reads comma-separated tags and key=value metadata", () => {
 			vi.stubEnv(
-				"CLINE_LANGFUSE_TAGS",
+				"SEKOKUVA_CA_LANGFUSE_TAGS",
 				" benchmark-run-1, nightly ,benchmark-run-1,",
 			);
 			vi.stubEnv(
-				"CLINE_LANGFUSE_METADATA",
+				"SEKOKUVA_CA_LANGFUSE_METADATA",
 				"suite=swe-bench, commit=abc123 ,bad,=x",
 			);
 
@@ -658,7 +658,7 @@ describe("langfuse telemetry", () => {
 
 		it("reads JSON metadata and stringifies non-string values", () => {
 			vi.stubEnv(
-				"CLINE_LANGFUSE_METADATA",
+				"SEKOKUVA_CA_LANGFUSE_METADATA",
 				JSON.stringify({ suite: "swe-bench", attempt: 2, skip: null }),
 			);
 
@@ -668,14 +668,14 @@ describe("langfuse telemetry", () => {
 		});
 
 		it("returns nothing for malformed JSON metadata", () => {
-			vi.stubEnv("CLINE_LANGFUSE_METADATA", "{not json");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_METADATA", "{not json");
 
 			expect(readEnvTraceAttributes()).toEqual({});
 		});
 
 		it("merges env tags and metadata under the call's own attributes", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_TAGS", "benchmark-run-1");
-			vi.stubEnv("CLINE_LANGFUSE_METADATA", "suite=swe-bench,runId=env-run");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_TAGS", "benchmark-run-1");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_METADATA", "suite=swe-bench,runId=env-run");
 
 			await withLangfuseTraceAttributes(
 				true,
@@ -698,7 +698,7 @@ describe("langfuse telemetry", () => {
 		});
 
 		it("propagates env-only attributes when the call supplies none", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_TAGS", "benchmark-run-1");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_TAGS", "benchmark-run-1");
 
 			await withLangfuseTraceAttributes(true, {}, async () => "ok");
 
@@ -717,7 +717,7 @@ describe("langfuse telemetry", () => {
 		});
 
 		it("skips propagation when disabled", async () => {
-			vi.stubEnv("CLINE_LANGFUSE_TAGS", "benchmark-run-1");
+			vi.stubEnv("SEKOKUVA_CA_LANGFUSE_TAGS", "benchmark-run-1");
 
 			await withLangfuseTraceAttributes(false, {}, async () => "ok");
 

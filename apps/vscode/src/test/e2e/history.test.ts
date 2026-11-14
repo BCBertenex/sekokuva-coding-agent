@@ -57,7 +57,7 @@ function seedSessionRecord(
 e2e("History - hides cost estimates for subscription-billed tasks", async ({ app, page, helper, server: _server }) => {
 	// Seed history BEFORE the webview loads so its first state fetch sees the
 	// records (the extension caches history metadata for ~10s).
-	const clineDir = await app.evaluate(() => process.env.CLINE_DIR)
+	const clineDir = await app.evaluate(() => process.env.SEKOKUVA_CA_DIR)
 	expect(clineDir).toBeTruthy()
 
 	const now = Date.now()

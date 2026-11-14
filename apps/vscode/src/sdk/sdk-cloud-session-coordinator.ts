@@ -16,7 +16,7 @@
 import type { ITelemetryService, SessionAccumulatedUsage, SessionHistoryRecord, StartSessionInput } from "@sekokuva-ca/core"
 import { CloudCreationUnconfirmedError, type CloudModel } from "@sekokuva-ca/core/cloud"
 import type { MessageWithMetadata as SdkMessage } from "@sekokuva-ca/llms"
-import { CLINE_DEFAULT_MODEL_ID, type ToolApprovalRequest, type ToolApprovalResult } from "@sekokuva-ca/shared"
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID, type ToolApprovalRequest, type ToolApprovalResult } from "@sekokuva-ca/shared"
 import {
 	ACTIVE_CLOUD_STATUSES,
 	CLOUD_CREATION_UNCONFIRMED_ERROR_CODE,
@@ -940,7 +940,7 @@ export class SdkCloudSessionCoordinator {
 			return local
 		}
 		const firstPass = clinePass ? catalog?.find((model) => model.catalogId === "cline-pass")?.id : undefined
-		return firstPass ?? CLINE_DEFAULT_MODEL_ID
+		return firstPass ?? SEKOKUVA_CA_DEFAULT_MODEL_ID
 	}
 
 	/** Whether the active account has ClinePass, as far as is known now. */

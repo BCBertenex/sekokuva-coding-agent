@@ -237,10 +237,10 @@ describe("ConnectorSupervisor", () => {
 	});
 
 	it("strips daemon and connector-child markers from the child environment", async () => {
-		process.env.CLINE_RUN_AS_HUB_DAEMON = "1";
-		process.env.CLINE_SLACK_CONNECT_CHILD = "1";
-		process.env.CLINE_CONNECTOR_DETACHED_CHILD = "1";
-		process.env.CLINE_CONNECTOR_STARTING_INSTANCE = '{"channel":"slack"}';
+		process.env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON = "1";
+		process.env.SEKOKUVA_CA_SLACK_CONNECT_CHILD = "1";
+		process.env.SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD = "1";
+		process.env.SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE = '{"channel":"slack"}';
 		try {
 			const harness = createHarness();
 			await harness.supervisor.start({
@@ -250,16 +250,16 @@ describe("ConnectorSupervisor", () => {
 			});
 
 			const env = harness.spawned[0]?.options.env ?? {};
-			expect(env.CLINE_RUN_AS_HUB_DAEMON).toBeUndefined();
-			expect(env.CLINE_SLACK_CONNECT_CHILD).toBeUndefined();
-			expect(env.CLINE_CONNECTOR_DETACHED_CHILD).toBeUndefined();
-			expect(env.CLINE_CONNECTOR_STARTING_INSTANCE).toBeUndefined();
+			expect(env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON).toBeUndefined();
+			expect(env.SEKOKUVA_CA_SLACK_CONNECT_CHILD).toBeUndefined();
+			expect(env.SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD).toBeUndefined();
+			expect(env.SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE).toBeUndefined();
 			expect(env.PATH).toBe(process.env.PATH);
 		} finally {
-			delete process.env.CLINE_RUN_AS_HUB_DAEMON;
-			delete process.env.CLINE_SLACK_CONNECT_CHILD;
-			delete process.env.CLINE_CONNECTOR_DETACHED_CHILD;
-			delete process.env.CLINE_CONNECTOR_STARTING_INSTANCE;
+			delete process.env.SEKOKUVA_CA_RUN_AS_HUB_DAEMON;
+			delete process.env.SEKOKUVA_CA_SLACK_CONNECT_CHILD;
+			delete process.env.SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD;
+			delete process.env.SEKOKUVA_CA_CONNECTOR_STARTING_INSTANCE;
 		}
 	});
 

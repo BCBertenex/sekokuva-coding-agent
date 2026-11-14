@@ -1,13 +1,13 @@
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { ClineCore, type PluginCommandsApi } from "@sekokuva-ca/core";
+import { SekoKuvaCore, type PluginCommandsApi } from "@sekokuva-ca/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createWorkspaceChatCommandHost } from "./plugin-chat-commands";
 
 describe("plugin chat commands", () => {
 	const tempRoots: string[] = [];
-	const cores: ClineCore[] = [];
+	const cores: SekoKuvaCore[] = [];
 
 	afterEach(async () => {
 		await Promise.all(cores.splice(0).map((core) => core.dispose()));
@@ -39,7 +39,7 @@ describe("plugin chat commands", () => {
 			].join("\n"),
 		);
 
-		const core = await ClineCore.create({ backendMode: "local" });
+		const core = await SekoKuvaCore.create({ backendMode: "local" });
 		cores.push(core);
 		const { host, listCommands } = await createWorkspaceChatCommandHost({
 			commands: core.pluginCommands,
@@ -95,7 +95,7 @@ describe("plugin chat commands", () => {
 			].join("\n"),
 		);
 
-		const core = await ClineCore.create({ backendMode: "local" });
+		const core = await SekoKuvaCore.create({ backendMode: "local" });
 		cores.push(core);
 		const { host } = await createWorkspaceChatCommandHost({
 			commands: core.pluginCommands,

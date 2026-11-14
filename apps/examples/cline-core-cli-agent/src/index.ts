@@ -1,22 +1,22 @@
 import * as readline from "node:readline";
 import {
 	type AgentEvent,
-	ClineCore,
+	SekoKuvaCore,
 	Llms,
 	type ToolApprovalRequest,
 } from "@sekokuva-ca/sdk";
 
-// ClineCore does not choose a model automatically; each session config must provide one.
+// SekoKuvaCore does not choose a model automatically; each session config must provide one.
 // These example defaults use the Cline gateway with Claude Sonnet, and can be overridden with env vars.
-const providerId = process.env.CLINE_PROVIDER_ID ?? "cline";
-const modelId = process.env.CLINE_MODEL_ID ?? Llms.CLINE_DEFAULT_MODEL_ID;
-const apiKey = process.env.CLINE_API_KEY;
+const providerId = process.env.SEKOKUVA_CA_PROVIDER_ID ?? "cline";
+const modelId = process.env.SEKOKUVA_CA_MODEL_ID ?? Llms.SEKOKUVA_CA_DEFAULT_MODEL_ID;
+const apiKey = process.env.SEKOKUVA_CA_API_KEY;
 const cwd = process.cwd();
 
 const systemPrompt = `You are a helpful assistant in an interactive terminal chat.
 Be concise. You can use built-in tools to inspect files, search the workspace, and run shell commands when helpful.`;
 
-let cline: ClineCore | undefined;
+let cline: SekoKuvaCore | undefined;
 let unsubscribe: (() => void) | undefined;
 let activeSessionId: string | undefined;
 let hasPrintedAssistantPrefix = false;
@@ -72,12 +72,12 @@ function handleAgentEvent(event: AgentEvent): void {
 	}
 }
 
-async function ensureCline(): Promise<ClineCore> {
+async function ensureCline(): Promise<SekoKuvaCore> {
 	if (cline) {
 		return cline;
 	}
 
-	cline = await ClineCore.create({
+	cline = await SekoKuvaCore.create({
 		clientName: "cline-core-cli-agent",
 		backendMode: "local",
 		capabilities: {
@@ -157,7 +157,7 @@ async function runTurn(input: string): Promise<void> {
 	console.log();
 }
 
-console.log("ClineCore CLI Agent (type 'exit' to quit)\n");
+console.log("SekoKuvaCore CLI Agent (type 'exit' to quit)\n");
 console.log(`Provider: ${providerId}`);
 console.log(`Model:    ${modelId}`);
 console.log(`CWD:      ${cwd}`);

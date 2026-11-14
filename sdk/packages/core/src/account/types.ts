@@ -1,4 +1,4 @@
-export interface ClineAccountOrganization {
+export interface SekoKuvaAccountOrganization {
 	active: boolean;
 	memberId: string;
 	name: string;
@@ -6,14 +6,14 @@ export interface ClineAccountOrganization {
 	roles: Array<"admin" | "member" | "owner">;
 }
 
-export interface ClineAccountUser {
+export interface SekoKuvaAccountUser {
 	id: string;
 	email: string;
 	displayName: string;
 	photoUrl: string;
 	createdAt: string;
 	updatedAt: string;
-	organizations: ClineAccountOrganization[];
+	organizations: SekoKuvaAccountOrganization[];
 	/** Web app path where the user manages data use and Cline Bench preferences. */
 	dataPrivacyPath?: string;
 }
@@ -30,12 +30,12 @@ export interface UserRemoteConfigResponse {
 	organizations?: UserRemoteConfigOrganization[];
 }
 
-export interface ClineAccountBalance {
+export interface SekoKuvaAccountBalance {
 	balance: number;
 	userId: string;
 }
 
-export interface ClineAccountUsageTransaction {
+export interface SekoKuvaAccountUsageTransaction {
 	aiInferenceProviderName: string;
 	aiModelName: string;
 	aiModelTypeName: string;
@@ -57,14 +57,14 @@ export interface ClineAccountUsageTransaction {
 	userId: string;
 }
 
-export interface ClineAccountPaymentTransaction {
+export interface SekoKuvaAccountPaymentTransaction {
 	paidAt: string;
 	creatorId: string;
 	amountCents: number;
 	credits: number;
 }
 
-export interface ClineOrganization {
+export interface SekoKuvaOrganization {
 	createdAt: string;
 	defaultRemoteConfig?: string;
 	deletedAt?: string;
@@ -76,7 +76,7 @@ export interface ClineOrganization {
 	updatedAt: string;
 }
 
-export interface ClineAccountOrganizationBalance {
+export interface SekoKuvaAccountOrganizationBalance {
 	balance: number;
 	organizationId: string;
 }
@@ -85,7 +85,7 @@ export interface FeaturebaseTokenResponse {
 	featurebaseJwt: string;
 }
 
-export interface ClineSubscriptionPlan {
+export interface SekoKuvaSubscriptionPlan {
 	displayName?: string;
 	features?: {
 		included?: string[];
@@ -104,14 +104,14 @@ export interface UserCurrentPlan {
 	canceledAt?: string;
 	currentPeriodEnd?: string;
 	currentPeriodStart?: string;
-	plan?: ClineSubscriptionPlan | null;
+	plan?: SekoKuvaSubscriptionPlan | null;
 	planHistoryId?: string;
 	subscriptionId?: string;
 	userId?: string;
 	[key: string]: unknown;
 }
 
-export interface ClineAccountOrganizationUsageTransaction {
+export interface SekoKuvaAccountOrganizationUsageTransaction {
 	aiInferenceProviderName: string;
 	aiModelName: string;
 	aiModelTypeName: string;

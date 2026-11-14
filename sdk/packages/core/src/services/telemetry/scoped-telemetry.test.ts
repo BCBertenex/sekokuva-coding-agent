@@ -37,7 +37,7 @@ describe("client-scoped telemetry", () => {
 				},
 			}),
 		).toEqual({
-			cline_type: "desktop",
+			sekokuva_ca_type: "desktop",
 			extension_version: "0.0.23",
 			platform: "Cline Desktop",
 			platform_version: "0.0.23",
@@ -57,7 +57,7 @@ describe("client-scoped telemetry", () => {
 			},
 			metadata: {
 				extension_version: "0.0.82",
-				cline_type: "hub",
+				sekokuva_ca_type: "hub",
 				platform: "cline-hub-daemon",
 				platform_version: "v24.0.0",
 				os_type: "darwin",
@@ -95,7 +95,7 @@ describe("client-scoped telemetry", () => {
 			account_email: "dev@example.com",
 			organization_id: "org-1",
 			extension_version: "0.0.23",
-			cline_type: "desktop",
+			sekokuva_ca_type: "desktop",
 			platform: "Cline Desktop",
 			platform_version: "0.0.23",
 			os_type: "darwin",
@@ -121,7 +121,7 @@ describe("client-scoped telemetry", () => {
 			},
 			metadata: {
 				extension_version: "0.0.82",
-				cline_type: "hub",
+				sekokuva_ca_type: "hub",
 				platform: "cline-hub-daemon",
 				platform_version: "v24.0.0",
 			},
@@ -134,7 +134,7 @@ describe("client-scoped telemetry", () => {
 		telemetry.capture({ event: CORE_TELEMETRY_EVENTS.TASK.CREATED });
 
 		expect(emit).toHaveBeenCalledWith(CORE_TELEMETRY_EVENTS.TASK.CREATED, {
-			cline_type: "desktop",
+			sekokuva_ca_type: "desktop",
 			platform: "cline-desktop",
 			distinct_id: "machine-1",
 			device_id: expect.any(String),

@@ -46,16 +46,16 @@ vi.mock("@sekokuva-ca/core", () => ({
 import { version as cliVersion } from "../../package.json";
 import { createHubCommand } from "./hub";
 
-const originalBuildEnv = process.env.CLINE_BUILD_ENV;
+const originalBuildEnv = process.env.SEKOKUVA_CA_BUILD_ENV;
 
 describe("createHubCommand", () => {
 	afterEach(() => {
 		vi.clearAllMocks();
 		vi.restoreAllMocks();
 		if (originalBuildEnv === undefined) {
-			delete process.env.CLINE_BUILD_ENV;
+			delete process.env.SEKOKUVA_CA_BUILD_ENV;
 		} else {
-			process.env.CLINE_BUILD_ENV = originalBuildEnv;
+			process.env.SEKOKUVA_CA_BUILD_ENV = originalBuildEnv;
 		}
 	});
 
@@ -302,7 +302,7 @@ describe("createHubCommand", () => {
 	});
 
 	it("passes the selected owner to graceful stop", async () => {
-		process.env.CLINE_BUILD_ENV = "development";
+		process.env.SEKOKUVA_CA_BUILD_ENV = "development";
 		mockReadHubDiscovery.mockResolvedValue({
 			url: "ws://127.0.0.1:25466/hub",
 			port: 25466,
@@ -450,9 +450,9 @@ describe("createHubCommand", () => {
 	});
 
 	it("starts a dedicated hub for programmatic clients with ensure --json", async () => {
-		const originalDiscoveryPath = process.env.CLINE_HUB_DISCOVERY_PATH;
+		const originalDiscoveryPath = process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 		mockEnsureDetachedHubServer.mockImplementation(async () => {
-			expect(process.env.CLINE_HUB_DISCOVERY_PATH).toBe(
+			expect(process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH).toBe(
 				"/home/dev/.cline/data/remote/owner.json",
 			);
 			return { url: "ws://127.0.0.1:41000/hub", authToken: "remote-token" };
@@ -504,9 +504,9 @@ describe("createHubCommand", () => {
 			});
 		} finally {
 			if (originalDiscoveryPath === undefined) {
-				delete process.env.CLINE_HUB_DISCOVERY_PATH;
+				delete process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH;
 			} else {
-				process.env.CLINE_HUB_DISCOVERY_PATH = originalDiscoveryPath;
+				process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = originalDiscoveryPath;
 			}
 		}
 	});

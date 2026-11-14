@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
-import { ClineAccountService } from "./cline-account-service";
+import { SekoKuvaAccountService } from "./sekokuva-ca-account-service";
 import {
-	type ClineAccountOperations,
+	type SekoKuvaAccountOperations,
 	executeClineAccountAction,
 	RpcClineAccountService,
 } from "./rpc";
 
-describe("ClineAccountService.fetchFeaturebaseToken", () => {
+describe("SekoKuvaAccountService.fetchFeaturebaseToken", () => {
 	it("returns featurebaseJwt on success", async () => {
 		const fetchImpl = vi.fn(async (input: unknown, init?: RequestInit) => {
 			expect(String(input)).toBe(
@@ -24,7 +24,7 @@ describe("ClineAccountService.fetchFeaturebaseToken", () => {
 			);
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -42,7 +42,7 @@ describe("ClineAccountService.fetchFeaturebaseToken", () => {
 			throw new Error("Network error");
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -55,7 +55,7 @@ describe("ClineAccountService.fetchFeaturebaseToken", () => {
 	it("returns undefined when auth token is missing", async () => {
 		const fetchImpl = vi.fn();
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => undefined,
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -74,7 +74,7 @@ describe("ClineAccountService.fetchFeaturebaseToken", () => {
 			});
 		});
 
-		const service = new ClineAccountService({
+		const service = new SekoKuvaAccountService({
 			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
@@ -87,7 +87,7 @@ describe("ClineAccountService.fetchFeaturebaseToken", () => {
 
 describe("executeClineAccountAction - fetchFeaturebaseToken", () => {
 	it("dispatches fetchFeaturebaseToken", async () => {
-		const service: ClineAccountOperations = {
+		const service: SekoKuvaAccountOperations = {
 			fetchMe: vi.fn(async () => ({
 				id: "u1",
 				email: "user1@example.com",
@@ -113,7 +113,7 @@ describe("executeClineAccountAction - fetchFeaturebaseToken", () => {
 		};
 
 		const result = await executeClineAccountAction(
-			{ action: "clineAccount", operation: "fetchFeaturebaseToken" },
+			{ action: "sekokuvaCaAccount", operation: "fetchFeaturebaseToken" },
 			service,
 		);
 		expect(service.fetchFeaturebaseToken).toHaveBeenCalledTimes(1);
@@ -121,7 +121,7 @@ describe("executeClineAccountAction - fetchFeaturebaseToken", () => {
 	});
 
 	it("returns undefined when fetchFeaturebaseToken is not implemented", async () => {
-		const service: ClineAccountOperations = {
+		const service: SekoKuvaAccountOperations = {
 			fetchMe: vi.fn(async () => ({
 				id: "u1",
 				email: "user1@example.com",
@@ -144,7 +144,7 @@ describe("executeClineAccountAction - fetchFeaturebaseToken", () => {
 		};
 
 		const result = await executeClineAccountAction(
-			{ action: "clineAccount", operation: "fetchFeaturebaseToken" },
+			{ action: "sekokuvaCaAccount", operation: "fetchFeaturebaseToken" },
 			service,
 		);
 		expect(result).toBeUndefined();
@@ -159,7 +159,7 @@ describe("RpcClineAccountService.fetchFeaturebaseToken", () => {
 				operation: string;
 			};
 			expect(parsed).toEqual({
-				action: "clineAccount",
+				action: "sekokuvaCaAccount",
 				operation: "fetchFeaturebaseToken",
 			});
 			return {

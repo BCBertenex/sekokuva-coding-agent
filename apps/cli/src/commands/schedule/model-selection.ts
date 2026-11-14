@@ -1,5 +1,5 @@
 import { type ProviderSettings, ProviderSettingsManager } from "@sekokuva-ca/core";
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 
 export const DEFAULT_SCHEDULE_PROVIDER = "cline";
 
@@ -39,7 +39,7 @@ export function resolveScheduleModelSelection(
 		explicitModel ??
 		trimToUndefined(selectedProviderSettings?.model) ??
 		(provider === DEFAULT_SCHEDULE_PROVIDER
-			? CLINE_DEFAULT_MODEL_ID
+			? SEKOKUVA_CA_DEFAULT_MODEL_ID
 			: undefined);
 
 	if (!model) {

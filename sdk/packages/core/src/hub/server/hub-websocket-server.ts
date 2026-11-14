@@ -839,7 +839,7 @@ export async function ensureHubWebSocketServer(
 		options.host !== undefined ||
 		options.port !== undefined ||
 		options.pathname !== undefined ||
-		!!process.env.CLINE_HUB_PORT?.trim();
+		!!process.env.SEKOKUVA_CA_HUB_PORT?.trim();
 	const host = options.host ?? "127.0.0.1";
 	const port = options.port ?? resolveDefaultHubPort();
 	const pathname = options.pathname ?? "/hub";

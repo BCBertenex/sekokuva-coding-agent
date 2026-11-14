@@ -24,22 +24,22 @@ import {
 } from "./openai-compatible";
 import type { ProviderFactoryResult } from "./types";
 
-export interface ClineWebSearchInput {
+export interface SekoKuvaWebSearchInput {
 	query: string;
 	allowed_domains?: string[];
 	blocked_domains?: string[];
 }
 
-export interface ClineWebSearchResult {
+export interface SekoKuvaWebSearchResult {
 	results: Array<{ title?: string; url?: string }>;
 }
 
-export interface ClineWebSearchOptions {
+export interface SekoKuvaWebSearchOptions {
 	allowedDomains?: string[];
 	blockedDomains?: string[];
 }
 
-export interface ClineProviderOptions {
+export interface SekoKuvaProviderOptions {
 	apiKey?: string;
 	baseURL: string;
 	headers?: Record<string, string>;
@@ -47,7 +47,7 @@ export interface ClineProviderOptions {
 	onResponseError?: (response: Response) => Promise<void> | void;
 }
 
-const CLINE_WEB_SEARCH_INPUT_SCHEMA: LanguageModelV4FunctionTool["inputSchema"] =
+const SEKOKUVA_CA_WEB_SEARCH_INPUT_SCHEMA: LanguageModelV4FunctionTool["inputSchema"] =
 	{
 		type: "object",
 		properties: {
@@ -70,18 +70,18 @@ const CLINE_WEB_SEARCH_INPUT_SCHEMA: LanguageModelV4FunctionTool["inputSchema"] 
 		additionalProperties: false,
 	};
 
-const ClineWebSearchInputSchema = z.object({
+const SekoKuvaWebSearchInputSchema = z.object({
 	query: z.string().min(1),
 	allowed_domains: z.array(z.string()).optional(),
 	blocked_domains: z.array(z.string()).optional(),
 });
 
 const webSearchFactory = createProviderDefinedToolFactory<
-	ClineWebSearchInput,
-	ClineWebSearchOptions
+	SekoKuvaWebSearchInput,
+	SekoKuvaWebSearchOptions
 >({
 	id: "cline.web_search",
-	inputSchema: ClineWebSearchInputSchema,
+	inputSchema: SekoKuvaWebSearchInputSchema,
 });
 
 function withoutTrailingSlash(value: string): string {
@@ -93,7 +93,7 @@ function normalizeDomains(value: string[] | undefined): string[] | undefined {
 	return domains?.length ? domains : undefined;
 }
 
-function createClineFetch(options: ClineProviderOptions): typeof fetch {
+function createClineFetch(options: SekoKuvaProviderOptions): typeof fetch {
 	const baseFetch = ensureFetch(options.fetch);
 	return (async (input, init) => {
 		const response = await baseFetch(input, init);
@@ -103,11 +103,11 @@ function createClineFetch(options: ClineProviderOptions): typeof fetch {
 }
 
 async function executeWebSearch(
-	input: ClineWebSearchInput,
-	options: ClineWebSearchOptions,
-	provider: ClineProviderOptions,
+	input: SekoKuvaWebSearchInput,
+	options: SekoKuvaWebSearchOptions,
+	provider: SekoKuvaProviderOptions,
 	abortSignal?: AbortSignal,
-): Promise<ClineWebSearchResult> {
+): Promise<SekoKuvaWebSearchResult> {
 	const allowedDomains = normalizeDomains(
 		input.allowed_domains ?? options.allowedDomains,
 	);
@@ -169,24 +169,24 @@ function createClineProviderToolMiddleware(): LanguageModelV4Middleware {
 					name: tool.name,
 					description:
 						"Search the public web for current information and return matching pages.",
-					inputSchema: CLINE_WEB_SEARCH_INPUT_SCHEMA,
+					inputSchema: SEKOKUVA_CA_WEB_SEARCH_INPUT_SCHEMA,
 				} satisfies LanguageModelV4FunctionTool;
 			}),
 		}),
 	};
 }
 
-export interface ClineProvider {
+export interface SekoKuvaProvider {
 	(modelId: string): LanguageModelV4;
 	tools: {
 		webSearch(
-			options?: ClineWebSearchOptions,
-		): ReturnType<typeof webSearchFactory<ClineWebSearchResult>>;
+			options?: SekoKuvaWebSearchOptions,
+		): ReturnType<typeof webSearchFactory<SekoKuvaWebSearchResult>>;
 	};
 }
 
 /** Create the Cline AI SDK provider, including Cline-native client tools. */
-export function createCline(options: ClineProviderOptions): ClineProvider {
+export function createCline(options: SekoKuvaProviderOptions): SekoKuvaProvider {
 	const providerFetch = createClineFetch(options);
 	const compatible = createOpenAICompatible({
 		// Both Cline gateway providers ("cline" and "cline-pass") share this AI
@@ -208,10 +208,10 @@ export function createCline(options: ClineProviderOptions): ClineProvider {
 			}),
 			middleware: splitToolImagesMiddleware,
 		});
-	const cline = ((modelId: string) => createModel(modelId)) as ClineProvider;
+	const cline = ((modelId: string) => createModel(modelId)) as SekoKuvaProvider;
 	cline.tools = {
 		webSearch: (toolOptions = {}) =>
-			webSearchFactory<ClineWebSearchResult>({
+			webSearchFactory<SekoKuvaWebSearchResult>({
 				...toolOptions,
 				execute: (input, execution) =>
 					executeWebSearch(input, toolOptions, options, execution.abortSignal),
@@ -222,10 +222,10 @@ export function createCline(options: ClineProviderOptions): ClineProvider {
 
 function readResponseErrorHandler(
 	config: GatewayResolvedProviderConfig,
-): ClineProviderOptions["onResponseError"] {
+): SekoKuvaProviderOptions["onResponseError"] {
 	const candidate = config.options?.onResponseError;
 	return typeof candidate === "function"
-		? (candidate as ClineProviderOptions["onResponseError"])
+		? (candidate as SekoKuvaProviderOptions["onResponseError"])
 		: undefined;
 }
 
@@ -233,7 +233,7 @@ export async function createClineProviderModule(
 	config: GatewayResolvedProviderConfig,
 	context: GatewayProviderContext,
 ): Promise<ProviderFactoryResult> {
-	const providerOptions: ClineProviderOptions = {
+	const providerOptions: SekoKuvaProviderOptions = {
 		apiKey: await resolveApiKey(config),
 		baseURL: config.baseUrl ?? "https://api.cline.bot/api/v1",
 		headers: config.headers,

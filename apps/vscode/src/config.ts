@@ -39,7 +39,7 @@ class ClineEndpoint {
 
 	private constructor() {
 		// Set environment at module load. Use override if provided.
-		const _env = process?.env?.CLINE_ENVIRONMENT_OVERRIDE || process?.env?.CLINE_ENVIRONMENT
+		const _env = process?.env?.SEKOKUVA_CA_ENVIRONMENT_OVERRIDE || process?.env?.SEKOKUVA_CA_ENVIRONMENT
 		if (_env && Object.values(Environment).includes(_env as Environment)) {
 			this.environment = _env as Environment
 		}
@@ -315,10 +315,10 @@ class ClineEndpoint {
 				}
 			case Environment.local:
 				// The local fixture's app and API share one listener. Resolve them together.
-				if (process.env.CLINE_LOCAL_CLOUD_URL) {
-					const url = new URL(process.env.CLINE_LOCAL_CLOUD_URL)
+				if (process.env.SEKOKUVA_CA_LOCAL_CLOUD_URL) {
+					const url = new URL(process.env.SEKOKUVA_CA_LOCAL_CLOUD_URL)
 					if (url.protocol !== "http:" || url.hostname !== "127.0.0.1" || url.username || url.password) {
-						throw new ClineConfigurationError("CLINE_LOCAL_CLOUD_URL must be an HTTP loopback URL on 127.0.0.1")
+						throw new ClineConfigurationError("SEKOKUVA_CA_LOCAL_CLOUD_URL must be an HTTP loopback URL on 127.0.0.1")
 					}
 					return {
 						environment: Environment.local,

@@ -296,13 +296,13 @@ export {
 } from "./parse/string";
 export { formatHumanReadableDate, formatUptime } from "./parse/time";
 export { validateWithZod, zodToJsonSchema } from "./parse/zod";
-export type { ClineSystemPromptOptions } from "./prompt/cline";
+export type { SekoKuvaSystemPromptOptions } from "./prompt/sekokuva-ca";
 export {
 	buildClineSystemPrompt,
 	MODE_TAG_INSTRUCTIONS,
 	PLAN_MODE_INSTRUCTIONS,
 	PLAN_MODE_INSTRUCTIONS_MANUAL_SWITCH,
-} from "./prompt/cline";
+} from "./prompt/sekokuva-ca";
 export type {
 	ModeSwitchNotice,
 	ModeSwitchNoticeTracker,
@@ -331,7 +331,7 @@ export {
 } from "./provider-auth";
 export {
 	ANTHROPIC_DEFAULT_MODEL_ID,
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 } from "./providers/defaults";
 export { isClineProvider } from "./providers/utils";
 export { REMOTE_URI_SCHEME } from "./remote-config/constants";
@@ -365,8 +365,8 @@ export {
 	AwsBedrockCustomModelSchema,
 	AwsBedrockModelSchema,
 	AwsBedrockSettingsSchema,
-	ClineModelSchema,
-	ClineSettingsSchema,
+	SekoKuvaModelSchema,
+	SekoKuvaSettingsSchema,
 	EnterpriseTelemetrySchema,
 	GlobalInstructionsFileSchema,
 	LiteLLMModelSchema,
@@ -380,7 +380,7 @@ export {
 	VertexModelSchema,
 	VertexSettingsSchema,
 } from "./remote-config/schema";
-export { CLINE_DEFAULT_RPC_ADDRESS, CLINE_DEFAULT_RPC_PORT } from "./rpc";
+export { SEKOKUVA_CA_DEFAULT_RPC_ADDRESS, SEKOKUVA_CA_DEFAULT_RPC_PORT } from "./rpc";
 export type {
 	AddProviderActionRequest,
 	ChatAttachmentFile,
@@ -392,7 +392,7 @@ export type {
 	ChatStartSessionResponse,
 	ChatToolCallResult,
 	ChatTurnResult,
-	ClineAccountActionRequest,
+	SekoKuvaAccountActionRequest,
 	EnterpriseAuthenticateRequest,
 	EnterpriseAuthenticateResponse,
 	EnterpriseStatusRequest,
@@ -443,25 +443,25 @@ export {
 	TEAM_LIFECYCLE_EVENT_TYPE,
 	TEAM_PROGRESS_EVENT_TYPE,
 } from "./rpc/team-progress";
-export type { ClineClientIdentity } from "./runtime/cline-client-identity";
+export type { SekoKuvaClientIdentity } from "./runtime/sekokuva-ca-client-identity";
 export {
 	getClineClientIdentity,
 	setClineClientIdentity,
-} from "./runtime/cline-client-identity";
+} from "./runtime/sekokuva-ca-client-identity";
 export type {
-	ClineEnvironment,
-	ClineEnvironmentConfig,
+	SekoKuvaEnvironment,
+	SekoKuvaEnvironmentConfig,
 	ResolveClineEnvironmentOptions,
-} from "./runtime/cline-environment";
+} from "./runtime/sekokuva-ca-environment";
 export {
-	CLINE_ENVIRONMENT_ENV,
-	CLINE_ENVIRONMENT_OVERRIDE_ENV,
-	CLINE_ENVIRONMENTS,
+	SEKOKUVA_CA_ENVIRONMENT_ENV,
+	SEKOKUVA_CA_ENVIRONMENT_OVERRIDE_ENV,
+	SEKOKUVA_CA_ENVIRONMENTS,
 	DEFAULT_CLINE_ENVIRONMENT,
 	getClineEnvironmentConfig,
 	resolveClineAppUrl,
 	resolveClineEnvironment,
-} from "./runtime/cline-environment";
+} from "./runtime/sekokuva-ca-environment";
 export type {
 	CaptureAgentUnexpectedReasoningTokensInput,
 	CaptureSdkErrorInput,
@@ -493,7 +493,7 @@ export {
 	TASK_PROVIDER_STREAM_FAILED_EVENT,
 	TASK_PROVIDER_STREAM_STARTED_EVENT,
 } from "./services/telemetry";
-export type { ClineTelemetryServiceConfig } from "./services/telemetry-config";
+export type { SekoKuvaTelemetryServiceConfig } from "./services/telemetry-config";
 export {
 	createClineTelemetryServiceConfig,
 	createClineTelemetryServiceMetadata,
@@ -536,8 +536,8 @@ export {
 export type { RuntimeEnv } from "./session/runtime-env";
 export * from "./session/workspace";
 export {
-	CLINE_CHAT_WORKSPACE_DIRECTORY_NAME,
-	CLINE_WORKSPACES_DIRECTORY_NAME,
+	SEKOKUVA_CA_CHAT_WORKSPACE_DIRECTORY_NAME,
+	SEKOKUVA_CA_WORKSPACES_DIRECTORY_NAME,
 	isChatWorkspacePath,
 } from "./storage/chat-workspace-paths";
 export * from "./tasks";

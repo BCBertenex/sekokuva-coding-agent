@@ -406,9 +406,9 @@ export async function startLocalCloudEnvironment(
 						data: [{ name: repository.default_branch }, { name: repository.name }],
 					})
 				}
-				// CLINE_LOCAL_CLOUD_NO_REPOSITORIES=1 reproduces a connected GitHub App with
+				// SEKOKUVA_CA_LOCAL_CLOUD_NO_REPOSITORIES=1 reproduces a connected GitHub App with
 				// no accessible repositories, so Cloud can be selected without a repository.
-				if (process.env.CLINE_LOCAL_CLOUD_NO_REPOSITORIES === "1") {
+				if (process.env.SEKOKUVA_CA_LOCAL_CLOUD_NO_REPOSITORIES === "1") {
 					return json(res, 200, { success: true, data: [] })
 				}
 				return json(res, 200, { success: true, data: [repository] })

@@ -9,7 +9,7 @@ import { join } from "node:path";
 // temp dir before any test file is imported. Tests that need specific paths
 // still override these per-test.
 const isolatedRoot = mkdtempSync(join(tmpdir(), "cline-cli-vitest-"));
-process.env.CLINE_DIR = join(isolatedRoot, ".cline");
-process.env.CLINE_DATA_DIR = join(isolatedRoot, "data");
-process.env.CLINE_HUB_DISCOVERY_PATH = join(isolatedRoot, "hub-discovery.json");
-process.env.CLINE_NO_AUTO_UPDATE = "1";
+process.env.SEKOKUVA_CA_DIR = join(isolatedRoot, ".cline");
+process.env.SEKOKUVA_CA_DATA_DIR = join(isolatedRoot, "data");
+process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH = join(isolatedRoot, "hub-discovery.json");
+process.env.SEKOKUVA_CA_NO_AUTO_UPDATE = "1";

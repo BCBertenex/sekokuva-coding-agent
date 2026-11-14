@@ -41,8 +41,8 @@ describe("createTaskWorktree", () => {
 		clineDir = path.join(sandboxRoot, ".cline");
 		repoPath = path.join(sandboxRoot, "myrepo");
 		nonRepoPath = path.join(sandboxRoot, "not-a-repo");
-		originalClineDir = process.env.CLINE_DIR;
-		process.env.CLINE_DIR = clineDir;
+		originalClineDir = process.env.SEKOKUVA_CA_DIR;
+		process.env.SEKOKUVA_CA_DIR = clineDir;
 		setClineDir(clineDir);
 
 		await writeFile(path.join(sandboxRoot, ".keep"), "");
@@ -68,9 +68,9 @@ describe("createTaskWorktree", () => {
 
 	afterEach(async () => {
 		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+			delete process.env.SEKOKUVA_CA_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.SEKOKUVA_CA_DIR = originalClineDir;
 		}
 		setClineDir(originalClineDir ?? path.join("~", ".cline"));
 		await rm(sandboxRoot, { recursive: true, force: true });

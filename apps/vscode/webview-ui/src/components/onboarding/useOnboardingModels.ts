@@ -1,5 +1,5 @@
 import { buildModelInfoNameMap, type ModelInfo, resolveClinePassModelInfo } from "@shared/api"
-import { CLINE_ONBOARDING_MODELS, type OnboardingModel, type OnboardingModelGroup } from "@shared/cline/onboarding"
+import { type OnboardingModel, type OnboardingModelGroup, SEKOKUVA_CA_ONBOARDING_MODELS } from "@shared/cline/onboarding"
 import { EmptyRequest } from "@shared/proto/cline/common"
 import type { ClineRecommendedModel } from "@shared/proto/cline/models"
 import { useEffect, useMemo, useState } from "react"
@@ -93,7 +93,7 @@ export function useOnboardingModels(): UseOnboardingModelsResult {
 
 	return useMemo<UseOnboardingModelsResult>(() => {
 		if (fetchState.status !== "success") {
-			return { status: fetchState.status, models: { models: CLINE_ONBOARDING_MODELS } }
+			return { status: fetchState.status, models: { models: SEKOKUVA_CA_ONBOARDING_MODELS } }
 		}
 
 		const { data } = fetchState

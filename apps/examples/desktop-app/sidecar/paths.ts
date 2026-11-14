@@ -36,7 +36,7 @@ export function resolveWorkspaceRoot(launchCwd: string): string {
 // ---------------------------------------------------------------------------
 
 export function sharedSessionDataDir(): string {
-	return process.env.CLINE_SESSION_DATA_DIR?.trim() || resolveSessionDataDir();
+	return process.env.SEKOKUVA_CA_SESSION_DATA_DIR?.trim() || resolveSessionDataDir();
 }
 
 export function sharedSessionArtifactPath(
@@ -60,7 +60,7 @@ export function sharedSessionMessagesWritePath(sessionId: string): string {
 
 export function toolApprovalDir(): string {
 	return (
-		process.env.CLINE_TOOL_APPROVAL_DIR?.trim() ||
+		process.env.SEKOKUVA_CA_TOOL_APPROVAL_DIR?.trim() ||
 		join(sharedSessionDataDir(), "tool-approvals")
 	);
 }
@@ -68,7 +68,7 @@ export function toolApprovalDir(): string {
 // MCP settings intentionally have no resolver here: every reader and writer
 // must share @sekokuva-ca/shared/storage `resolveMcpSettingsPath()` so the sidecar,
 // the hub runtime, and the CLI all agree on one canonical file. A local
-// duplicate silently diverged under CLINE_DIR/CLINE_DATA_DIR overrides
+// duplicate silently diverged under SEKOKUVA_CA_DIR/SEKOKUVA_CA_DATA_DIR overrides
 // (cline/cline#14152).
 
 // ---------------------------------------------------------------------------
@@ -77,7 +77,7 @@ export function toolApprovalDir(): string {
 
 function kanbanDataRoot(): string {
 	return (
-		process.env.CLINE_KANBAN_DATA_DIR?.trim() ||
+		process.env.SEKOKUVA_CA_KANBAN_DATA_DIR?.trim() ||
 		join(homedir(), ".cline", "apps", "kanban")
 	);
 }

@@ -1,7 +1,7 @@
 import { type ChildProcess, spawn } from "node:child_process";
 import { openSync } from "node:fs";
 import {
-	CLINE_CONNECTOR_SUPERVISED_ENV,
+	SEKOKUVA_CA_CONNECTOR_SUPERVISED_ENV,
 	type ConnectorCliLaunchSpec,
 	type ConnectorStartRequest,
 	type ConnectorStartResult,
@@ -419,7 +419,7 @@ export class ConnectorSupervisor {
 						// the hub to start it (which would loop back here) or spawning
 						// its own detached child and exiting (which would leave us
 						// holding a handle to a process that is already gone).
-						[CLINE_CONNECTOR_SUPERVISED_ENV]: "1",
+						[SEKOKUVA_CA_CONNECTOR_SUPERVISED_ENV]: "1",
 					},
 					// Detached so it survives this hub, but not unref'd from our
 					// listener: we still want the exit event while we are alive.

@@ -40,7 +40,7 @@ interface HubEnsureCommandOptions extends Partial<HubOptions> {
 	loginShellPath?: boolean;
 }
 
-const HUB_DISCOVERY_PATH_ENV = "CLINE_HUB_DISCOVERY_PATH";
+const HUB_DISCOVERY_PATH_ENV = "SEKOKUVA_CA_HUB_DISCOVERY_PATH";
 // A frozen Hub accepts the connection but never answers its health check.
 const HUB_PROBE_TIMEOUT_MS = 3_000;
 

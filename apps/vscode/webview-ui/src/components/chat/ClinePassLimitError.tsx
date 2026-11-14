@@ -10,13 +10,13 @@ interface ClinePassLimitErrorProps {
 	message: string
 }
 
-const CLINE_PROVIDER_ID = "cline"
+const SEKOKUVA_CA_PROVIDER_ID = "cline"
 
 const getProviderSwitchConfig = (apiConfiguration: ApiConfiguration): ApiConfiguration => {
 	return {
 		...apiConfiguration,
-		planModeApiProvider: CLINE_PROVIDER_ID,
-		actModeApiProvider: CLINE_PROVIDER_ID,
+		planModeApiProvider: SEKOKUVA_CA_PROVIDER_ID,
+		actModeApiProvider: SEKOKUVA_CA_PROVIDER_ID,
 	}
 }
 

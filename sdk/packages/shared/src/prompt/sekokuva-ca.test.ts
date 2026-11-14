@@ -5,7 +5,7 @@ import {
 	PLAN_MODE_INSTRUCTIONS,
 	PLAN_MODE_INSTRUCTIONS_MANUAL_SWITCH,
 	processWorkspaceInfo,
-} from "./cline";
+} from "./sekokuva-ca";
 
 const BASE_OPTIONS = {
 	ide: "VS Code",

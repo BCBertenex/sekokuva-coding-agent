@@ -28,11 +28,11 @@ const require = createRequire(import.meta.url);
 // its build fingerprint rebuild the record from a port probe, and the next
 // fresh launch retires stale hubs regardless of the record.
 function shieldRunningHubDiscovery() {
-	const explicitPath = process.env.CLINE_HUB_DISCOVERY_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_HUB_DISCOVERY_PATH?.trim();
 	const dataDir =
-		process.env.CLINE_DATA_DIR?.trim() ||
+		process.env.SEKOKUVA_CA_DATA_DIR?.trim() ||
 		path.join(
-			process.env.CLINE_DIR?.trim() || path.join(os.homedir(), ".cline"),
+			process.env.SEKOKUVA_CA_DIR?.trim() || path.join(os.homedir(), ".cline"),
 			"data",
 		);
 	const recordPath =

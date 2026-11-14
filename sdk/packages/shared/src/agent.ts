@@ -1,5 +1,5 @@
 /**
- * AgentRuntime contract types (ported from clinee `@sekokuva-ca/shared`).
+ * AgentRuntime contract types (ported from cline `@sekokuva-ca/shared`).
  *
  * These are the canonical type definitions consumed by `AgentRuntime`.
  *
@@ -558,7 +558,7 @@ export interface AgentRuntimeConfig {
 	/** Calling client version, such as the VS Code extension version. */
 	clientVersion?: string;
 	/** Version of the Cline Core SDK executing the runtime. */
-	clineCoreVersion?: string;
+	sekokuvaCaCoreVersion?: string;
 	/**
 	 * Core/hub runtime session identifier.
 	 *

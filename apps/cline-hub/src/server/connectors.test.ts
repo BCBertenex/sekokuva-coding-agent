@@ -1,18 +1,18 @@
 import {
-	CLINE_CONNECTOR_CLI_LAUNCH_ENV,
+	SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV,
 	readConnectorCliLaunchSpec,
 } from "@sekokuva-ca/shared";
 import { afterEach, describe, expect, it } from "vitest";
 import { __test__, configureConnectorCliLaunch } from "./connectors";
 
 describe("connector launch command", () => {
-	const originalLaunchSpec = process.env[CLINE_CONNECTOR_CLI_LAUNCH_ENV];
+	const originalLaunchSpec = process.env[SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV];
 
 	afterEach(() => {
 		if (originalLaunchSpec === undefined) {
-			delete process.env[CLINE_CONNECTOR_CLI_LAUNCH_ENV];
+			delete process.env[SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV];
 		} else {
-			process.env[CLINE_CONNECTOR_CLI_LAUNCH_ENV] = originalLaunchSpec;
+			process.env[SEKOKUVA_CA_CONNECTOR_CLI_LAUNCH_ENV] = originalLaunchSpec;
 		}
 	});
 

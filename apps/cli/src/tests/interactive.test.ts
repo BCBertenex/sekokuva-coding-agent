@@ -1,12 +1,12 @@
 import { expect, test } from "@microsoft/tui-test";
-import { CLINE_BIN } from "./helpers/constants.js";
+import { SEKOKUVA_CA_BIN } from "./helpers/constants.js";
 import { clineEnv } from "./helpers/env.js";
 import { waitForChatReady } from "./helpers/page-objects/chat.js";
 import { expectVisible, waitForTerminalExit } from "./helpers/terminal.js";
 
 test.describe("cline interactive basics", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: [] },
+		program: { file: SEKOKUVA_CA_BIN, args: [] },
 		rows: 50,
 		columns: 120,
 		env: clineEnv("default"),
@@ -39,7 +39,7 @@ test.describe("cline interactive basics", () => {
 
 test.describe("cline interactive provider flag", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["-P", "cline"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["-P", "cline"] },
 		rows: 50,
 		columns: 120,
 		env: clineEnv("default"),

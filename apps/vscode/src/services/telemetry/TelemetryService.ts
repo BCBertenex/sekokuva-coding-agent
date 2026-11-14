@@ -111,7 +111,7 @@ export type TelemetryMetadata = {
 	 * is different than the `platform` because there are many variants of VSCode and JetBrains but they
 	 * all use the same extension or plugin.
 	 */
-	cline_type: string
+	sekokuva_ca_type: string
 	/**
 	 * The version of the host-side Cline distribution package: the JetBrains plugin version
 	 * (e.g. 1.1.61) on JetBrains, the extension version on VSCode (where it matches
@@ -353,7 +353,7 @@ export class TelemetryService {
 			...(hostVersion.clineVersion ? { host_plugin_version: hostVersion.clineVersion } : {}),
 			platform: hostVersion.platform || "unknown",
 			platform_version: hostVersion.version || "unknown",
-			cline_type: hostVersion.clineType || "unknown",
+			sekokuva_ca_type: hostVersion.clineType || "unknown",
 			os_type: os.platform(),
 			os_version: os.version(),
 			// `remoteName` is normalized by the host bridge to `undefined` for local workspaces.

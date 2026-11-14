@@ -55,8 +55,8 @@ beforeEach(() => {
 	vi.stubEnv("LANGFUSE_BASE_URL", "");
 	vi.stubEnv("LANGFUSE_PUBLIC_KEY", "");
 	vi.stubEnv("LANGFUSE_SECRET_KEY", "");
-	vi.stubEnv("CLINE_TRACE_SAMPLE_PERCENT", "100");
-	vi.stubEnv("CLINE_TRACE_RECORD_CONTENT", "false");
+	vi.stubEnv("SEKOKUVA_CA_TRACE_SAMPLE_PERCENT", "100");
+	vi.stubEnv("SEKOKUVA_CA_TRACE_RECORD_CONTENT", "false");
 	trace.disable();
 	context.disable();
 	resetLangfuseTelemetryForTests();
@@ -599,7 +599,7 @@ it("preserves the collector scope contract on generation, step, and tool childre
 
 	// Opt-in fixture regeneration for cline/infra; ordinary tests never write files.
 	// These spans contain synthetic data only. Keep IDs, scope and child structure.
-	const fixturePath = process.env.CLINE_RELAY_FIXTURE_PATH;
+	const fixturePath = process.env.SEKOKUVA_CA_RELAY_FIXTURE_PATH;
 	if (fixturePath) {
 		const nanos = ([seconds, fraction]: [number, number]) =>
 			(BigInt(seconds) * 1_000_000_000n + BigInt(fraction)).toString();
@@ -660,7 +660,7 @@ it("exports AI SDK 7 stream spans through the host relay without Langfuse creden
 });
 
 it("records prompt and completion only when the content flag is enabled", async () => {
-	vi.stubEnv("CLINE_TRACE_RECORD_CONTENT", "true");
+	vi.stubEnv("SEKOKUVA_CA_TRACE_RECORD_CONTENT", "true");
 	await runStream(await resolveAiSdkTelemetry("cline", "task-a"));
 	await provider.forceFlush();
 	const attributes = JSON.stringify(
@@ -686,7 +686,7 @@ it("stops emitting after a mid-session opt-out", async () => {
 
 it("emits no spans for an excluded provider or a sampled-out task", async () => {
 	await runStream(await resolveAiSdkTelemetry("openrouter", "task-a"));
-	vi.stubEnv("CLINE_TRACE_SAMPLE_PERCENT", "50");
+	vi.stubEnv("SEKOKUVA_CA_TRACE_SAMPLE_PERCENT", "50");
 	await runStream(await resolveAiSdkTelemetry("cline", "task-c"));
 	await provider.forceFlush();
 	expect(exporter.getFinishedSpans()).toHaveLength(0);

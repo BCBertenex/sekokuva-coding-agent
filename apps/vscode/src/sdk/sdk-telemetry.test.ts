@@ -74,7 +74,7 @@ describe("VscodeTelemetryPolicyService", () => {
 		telemetryState.unsubscribe.mockReset()
 		coreTelemetryMocks.createConfig.mockClear()
 		coreTelemetryMocks.createHandle.mockReset()
-		vi.stubEnv("CLINE_ROLLOUT_VARIANT", "")
+		vi.stubEnv("SEKOKUVA_CA_ROLLOUT_VARIANT", "")
 	})
 
 	afterEach(() => {
@@ -91,7 +91,7 @@ describe("VscodeTelemetryPolicyService", () => {
 		expect(coreTelemetryMocks.createConfig).toHaveBeenCalledWith(
 			expect.objectContaining({
 				metadata: expect.objectContaining({
-					cline_type: "unknown",
+					sekokuva_ca_type: "unknown",
 					platform: "unknown",
 					platform_version: "unknown",
 				}),
@@ -112,7 +112,7 @@ describe("VscodeTelemetryPolicyService", () => {
 	})
 
 	it("adds rollout metadata as SDK common properties", () => {
-		vi.stubEnv("CLINE_ROLLOUT_VARIANT", "next")
+		vi.stubEnv("SEKOKUVA_CA_ROLLOUT_VARIANT", "next")
 		coreTelemetryMocks.createHandle.mockReturnValue(createHandle())
 
 		createVscodeSdkTelemetryHandle()
@@ -226,7 +226,7 @@ describe("VscodeTelemetryPolicyService", () => {
 
 		expect(handle.telemetry.updateMetadata).toHaveBeenCalledWith({
 			host_plugin_version: "1.1.61",
-			cline_type: "Cline for JetBrains",
+			sekokuva_ca_type: "Cline for JetBrains",
 			platform: "IntelliJ IDEA Ultimate",
 			platform_version: "2026.1.1",
 		})
@@ -247,7 +247,7 @@ describe("VscodeTelemetryPolicyService", () => {
 		service.capture({ event: "task.created" })
 
 		expect(handle.telemetry.updateMetadata).toHaveBeenCalledWith({
-			cline_type: "VSCode Extension",
+			sekokuva_ca_type: "VSCode Extension",
 			platform: "VS Code",
 			platform_version: "1.103.0",
 		})

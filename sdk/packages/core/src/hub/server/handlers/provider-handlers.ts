@@ -9,7 +9,7 @@ import {
 } from "@sekokuva-ca/shared";
 import { z } from "zod";
 import { getProviderAuthHandler } from "../../../auth/provider-auth-registry";
-import { fetchClineRecommendedModels } from "../../../services/llms/cline-recommended-models";
+import { fetchClineRecommendedModels } from "../../../services/llms/sekokuva-ca-recommended-models";
 import { ProviderSettingsSchema } from "../../../services/llms/provider-settings";
 import { clearLegacyProviderCredentials } from "../../../services/providers/legacy-provider-credentials";
 import {
@@ -192,7 +192,7 @@ export async function handleProviderCommand(
 						: undefined;
 				return okReply(envelope, {
 					...saved,
-					clineCredentialsChanged:
+					sekokuvaCaCredentialsChanged:
 						storageProviderId === "cline" &&
 						(previous?.apiKey !== current?.apiKey ||
 							!isDeepStrictEqual(previous?.auth, current?.auth)),

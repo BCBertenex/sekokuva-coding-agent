@@ -40,15 +40,15 @@ describe("Hub agenda task vertical slice", () => {
 		// the Cline dir at the test root so that home stays inside this test.
 		// Restore via onTestFinished so an early throw (before the try below)
 		// cannot leave the override behind for later tests in this worker.
-		const clineHome = join(root, "cline-home");
-		mkdirSync(clineHome);
-		const previousClineDir = process.env.CLINE_DIR;
-		process.env.CLINE_DIR = clineHome;
+		const sekokuvaCaHome = join(root, "cline-home");
+		mkdirSync(sekokuvaCaHome);
+		const previousClineDir = process.env.SEKOKUVA_CA_DIR;
+		process.env.SEKOKUVA_CA_DIR = sekokuvaCaHome;
 		onTestFinished(() => {
 			if (previousClineDir === undefined) {
-				delete process.env.CLINE_DIR;
+				delete process.env.SEKOKUVA_CA_DIR;
 			} else {
-				process.env.CLINE_DIR = previousClineDir;
+				process.env.SEKOKUVA_CA_DIR = previousClineDir;
 			}
 		});
 		const sessions = new Map<string, Record<string, unknown>>();
@@ -265,7 +265,7 @@ describe("Hub agenda task vertical slice", () => {
 			// the chat workspace that created them.
 			expect((scheduled as { error?: unknown })?.error).toBeUndefined();
 			const canonicalSchedulesHome = realpathSync.native(
-				join(clineHome, "schedules"),
+				join(sekokuvaCaHome, "schedules"),
 			);
 			expect(scheduled).toMatchObject({
 				ok: true,

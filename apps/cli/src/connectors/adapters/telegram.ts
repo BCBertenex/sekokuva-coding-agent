@@ -498,7 +498,7 @@ class TelegramConnector extends ConnectorBase<
 				.option(
 					"--rpc-address <host:port>",
 					"RPC address",
-					process.env.CLINE_RPC_ADDRESS?.trim() ||
+					process.env.SEKOKUVA_CA_RPC_ADDRESS?.trim() ||
 						resolveDefaultCliRpcAddress(),
 				)
 				.addHelpText(
@@ -544,7 +544,7 @@ class TelegramConnector extends ConnectorBase<
 		}
 		const hookCommand =
 			opts.hookCommand?.trim() ||
-			process.env.CLINE_CONNECT_HOOK_COMMAND?.trim();
+			process.env.SEKOKUVA_CA_CONNECT_HOOK_COMMAND?.trim();
 		const allowedUserId = opts.allowedUserId?.trim();
 		if (hookCommand && allowedUserId) {
 			throw new Error(
@@ -564,7 +564,7 @@ class TelegramConnector extends ConnectorBase<
 			enableTools: opts.tools !== false,
 			rpcAddress:
 				opts.rpcAddress?.trim() ||
-				process.env.CLINE_RPC_ADDRESS?.trim() ||
+				process.env.SEKOKUVA_CA_RPC_ADDRESS?.trim() ||
 				resolveDefaultCliRpcAddress(),
 			hookCommand: allowedUserId
 				? buildTelegramAllowedUserHookCommand(
@@ -707,7 +707,7 @@ class TelegramConnector extends ConnectorBase<
 		if (
 			!inputOptions.botUsername &&
 			!inputOptions.interactive &&
-			process.env.CLINE_TELEGRAM_CONNECT_CHILD !== "1"
+			process.env.SEKOKUVA_CA_TELEGRAM_CONNECT_CHILD !== "1"
 		) {
 			const runningState = this.findRunningConnectorStateByBotId(
 				readTelegramBotId(inputOptions.botToken),
@@ -749,7 +749,7 @@ class TelegramConnector extends ConnectorBase<
 			rawArgs: backgroundArgs,
 			io,
 			interactive: options.interactive,
-			childEnvVar: "CLINE_TELEGRAM_CONNECT_CHILD",
+			childEnvVar: "SEKOKUVA_CA_TELEGRAM_CONNECT_CHILD",
 			statePath,
 			readState: (path) => this.readConnectorState(path),
 			isRunning: (state) => isProcessRunning(state.pid),

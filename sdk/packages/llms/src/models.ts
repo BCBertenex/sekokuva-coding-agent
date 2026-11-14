@@ -7,7 +7,7 @@ export {
 	fetchModelsDevProviderModels,
 	sortModelsByReleaseDate,
 } from "./catalog/catalog-live";
-export { GENERATED_CLINE_RECOMMENDED_MODELS } from "./catalog/cline-recommended.generated";
+export { GENERATED_CLINE_RECOMMENDED_MODELS } from "./catalog/sekokuva-ca-recommended.generated";
 export { filterImageOutputModels } from "./catalog/model-filters";
 export type { ModelIdAliasRule } from "./catalog/model-id-aliases";
 export {

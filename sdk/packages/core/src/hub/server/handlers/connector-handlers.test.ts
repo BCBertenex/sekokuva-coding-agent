@@ -16,11 +16,11 @@ import { __test__, handleConnectorCommand } from "./connector-handlers";
 import type { HubTransportContext } from "./context";
 
 describe("connector hub handlers", () => {
-	const previousDataDir = process.env.CLINE_DATA_DIR;
+	const previousDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
 	const tempRoots: string[] = [];
 
 	afterEach(() => {
-		process.env.CLINE_DATA_DIR = previousDataDir;
+		process.env.SEKOKUVA_CA_DATA_DIR = previousDataDir;
 		for (const root of tempRoots.splice(0)) {
 			rmSync(root, { recursive: true, force: true });
 		}
@@ -29,7 +29,7 @@ describe("connector hub handlers", () => {
 	function useTempDataDir(): string {
 		const root = mkdtempSync(join(tmpdir(), "hub-connectors-"));
 		tempRoots.push(root);
-		process.env.CLINE_DATA_DIR = root;
+		process.env.SEKOKUVA_CA_DATA_DIR = root;
 		return root;
 	}
 
@@ -105,13 +105,13 @@ describe("connector hub handlers", () => {
 			enabled: true,
 			values: { userId: "123456789" },
 		});
-		expect(readPersistedConnection("telegram", "cline_bot")).toBeUndefined();
+		expect(readPersistedConnection("telegram", "sekokuva_ca_bot")).toBeUndefined();
 	});
 
 	it("does not surface CLI-only connections as dashboard configurations", () => {
 		useTempDataDir();
 		withConnectorStore((store) =>
-			store.recordConnected("telegram", "cline_bot", [
+			store.recordConnected("telegram", "sekokuva_ca_bot", [
 				"-k",
 				"123456:fake-token",
 			]),
@@ -119,7 +119,7 @@ describe("connector hub handlers", () => {
 
 		expect(__test__.connectorChannelsPayload().configured).toEqual([]);
 		expect(readPersistedConnector("telegram")).toBeUndefined();
-		expect(readPersistedConnection("telegram", "cline_bot")).toBeDefined();
+		expect(readPersistedConnection("telegram", "sekokuva_ca_bot")).toBeDefined();
 	});
 
 	it("refreshes reconnect args when a configured credential changes", () => {
@@ -245,7 +245,7 @@ describe("connector hub handlers", () => {
 	it("preserves CLI reconnect state when dashboard config is deleted", () => {
 		useTempDataDir();
 		withConnectorStore((store) =>
-			store.recordConnected("telegram", "cline_bot", [
+			store.recordConnected("telegram", "sekokuva_ca_bot", [
 				"-k",
 				"123456:fake-token",
 			]),
@@ -261,7 +261,7 @@ describe("connector hub handlers", () => {
 
 		expect(response.configured).toEqual([]);
 		expect(readPersistedConnector("telegram")).toBeUndefined();
-		expect(readPersistedConnection("telegram", "cline_bot")).toEqual(
+		expect(readPersistedConnection("telegram", "sekokuva_ca_bot")).toEqual(
 			expect.objectContaining({
 				connectArgs: ["-k", "123456:fake-token"],
 				enabled: true,

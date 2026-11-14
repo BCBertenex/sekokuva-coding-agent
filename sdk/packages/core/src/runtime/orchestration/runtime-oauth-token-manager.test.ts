@@ -22,7 +22,7 @@ vi.mock("../../auth/codex", () => ({
 	getValidOpenAICodexCredentials,
 }));
 
-vi.mock("../../auth/cline", () => ({
+vi.mock("../../auth/sekokuva-ca", () => ({
 	getValidClineCredentials,
 }));
 
@@ -87,7 +87,7 @@ describe("RuntimeOAuthTokenManager", () => {
 		);
 	});
 
-	it("resolves ClinePass OAuth using Cline storage and WorkOS formatting", async () => {
+	it("resolves SekoKuvaPass OAuth using Cline storage and WorkOS formatting", async () => {
 		const getProviderSettings = vi.fn().mockReturnValue({
 			provider: "cline",
 			baseUrl: "https://api.cline.test",

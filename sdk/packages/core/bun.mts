@@ -32,9 +32,9 @@ const external = [
 	}),
 ];
 
-const sourcemap = Bun.env.CLINE_SOURCEMAPS === "1" ? "linked" : "none";
+const sourcemap = Bun.env.SEKOKUVA_CA_SOURCEMAPS === "1" ? "linked" : "none";
 // minify: true keeps identifier mangling active even when sourcemaps are enabled.
-const minify = Bun.env.CLINE_SOURCEMAPS !== "1";
+const minify = Bun.env.SEKOKUVA_CA_SOURCEMAPS !== "1";
 
 const buildConfig = {
 	target: "node",

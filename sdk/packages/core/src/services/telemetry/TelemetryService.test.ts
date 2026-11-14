@@ -10,7 +10,7 @@ describe("TelemetryService", () => {
 			adapters: [adapter],
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 			},
 			distinctId: "distinct-1",
 			deviceId: "device-1",
@@ -35,7 +35,7 @@ describe("TelemetryService", () => {
 				sessionId: "session-1",
 				organization_id: "org-1",
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 				distinct_id: "distinct-1",
 				device_id: "device-1",
 			}),
@@ -79,7 +79,7 @@ describe("TelemetryService", () => {
 			adapters: [adapter],
 			metadata: {
 				extension_version: "0.0.82",
-				cline_type: "hub",
+				sekokuva_ca_type: "hub",
 				platform: "cline-hub-daemon",
 			},
 		});
@@ -88,7 +88,7 @@ describe("TelemetryService", () => {
 			event: "task.created",
 			properties: {
 				extension_version: "0.0.23",
-				cline_type: "desktop",
+				sekokuva_ca_type: "desktop",
 				platform: "Cline Desktop",
 			},
 		});
@@ -97,7 +97,7 @@ describe("TelemetryService", () => {
 			"task.created",
 			expect.objectContaining({
 				extension_version: "0.0.23",
-				cline_type: "desktop",
+				sekokuva_ca_type: "desktop",
 				platform: "Cline Desktop",
 			}),
 		);
@@ -113,7 +113,7 @@ describe("TelemetryService", () => {
 			logger,
 			metadata: {
 				extension_version: "1.2.3",
-				cline_type: "cli",
+				sekokuva_ca_type: "cli",
 			},
 			distinctId: "distinct-1",
 		});

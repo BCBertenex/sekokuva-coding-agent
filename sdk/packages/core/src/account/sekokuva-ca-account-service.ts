@@ -1,13 +1,13 @@
 import type {
-	ClineAccountBalance,
-	ClineAccountOrganization,
-	ClineAccountOrganizationBalance,
-	ClineAccountOrganizationUsageTransaction,
-	ClineAccountPaymentTransaction,
-	ClineAccountUsageTransaction,
-	ClineAccountUser,
-	ClineOrganization,
-	ClineSubscriptionPlan,
+	SekoKuvaAccountBalance,
+	SekoKuvaAccountOrganization,
+	SekoKuvaAccountOrganizationBalance,
+	SekoKuvaAccountOrganizationUsageTransaction,
+	SekoKuvaAccountPaymentTransaction,
+	SekoKuvaAccountUsageTransaction,
+	SekoKuvaAccountUser,
+	SekoKuvaOrganization,
+	SekoKuvaSubscriptionPlan,
 	FeaturebaseTokenResponse,
 	UserCurrentPlan,
 	UserRemoteConfigResponse,
@@ -15,7 +15,7 @@ import type {
 
 const DEFAULT_TIMEOUT_MS = 30_000;
 
-interface ClineApiEnvelope<T> {
+interface SekoKuvaApiEnvelope<T> {
 	success?: boolean;
 	error?: string;
 	data?: T;
@@ -48,7 +48,7 @@ function formatClineAccountRequestFailure(
 	return `Cline account request failed with status ${status}`;
 }
 
-export interface ClineAccountServiceOptions {
+export interface SekoKuvaAccountServiceOptions {
 	apiBaseUrl: string;
 	getAuthToken: () => Promise<string | undefined | null>;
 	getCurrentUserId?: () =>
@@ -67,16 +67,16 @@ export interface ClineAccountServiceOptions {
 	fetchImpl?: typeof fetch;
 }
 
-export class ClineAccountService {
+export class SekoKuvaAccountService {
 	private readonly apiBaseUrl: string;
-	private readonly getAuthTokenFn: ClineAccountServiceOptions["getAuthToken"];
-	private readonly getCurrentUserIdFn: ClineAccountServiceOptions["getCurrentUserId"];
-	private readonly getOrganizationMemberIdFn: ClineAccountServiceOptions["getOrganizationMemberId"];
-	private readonly getHeadersFn: ClineAccountServiceOptions["getHeaders"];
+	private readonly getAuthTokenFn: SekoKuvaAccountServiceOptions["getAuthToken"];
+	private readonly getCurrentUserIdFn: SekoKuvaAccountServiceOptions["getCurrentUserId"];
+	private readonly getOrganizationMemberIdFn: SekoKuvaAccountServiceOptions["getOrganizationMemberId"];
+	private readonly getHeadersFn: SekoKuvaAccountServiceOptions["getHeaders"];
 	private readonly requestTimeoutMs: number;
 	private readonly fetchImpl: typeof fetch;
 
-	constructor(options: ClineAccountServiceOptions) {
+	constructor(options: SekoKuvaAccountServiceOptions) {
 		const apiBaseUrl = options.apiBaseUrl.trim();
 		if (!apiBaseUrl) {
 			throw new Error("apiBaseUrl is required");
@@ -91,8 +91,8 @@ export class ClineAccountService {
 		this.fetchImpl = options.fetchImpl ?? fetch;
 	}
 
-	public async fetchMe(): Promise<ClineAccountUser> {
-		return this.request<ClineAccountUser>("/api/v1/users/me");
+	public async fetchMe(): Promise<SekoKuvaAccountUser> {
+		return this.request<SekoKuvaAccountUser>("/api/v1/users/me");
 	}
 
 	public async fetchRemoteConfig(): Promise<UserRemoteConfigResponse | null> {
@@ -113,46 +113,46 @@ export class ClineAccountService {
 		}
 	}
 
-	public async fetchBalance(userId?: string): Promise<ClineAccountBalance> {
+	public async fetchBalance(userId?: string): Promise<SekoKuvaAccountBalance> {
 		const resolvedUserId = await this.resolveUserId(userId);
-		return this.request<ClineAccountBalance>(
+		return this.request<SekoKuvaAccountBalance>(
 			`/api/v1/users/${encodeURIComponent(resolvedUserId)}/balance`,
 		);
 	}
 
 	public async fetchUsageTransactions(
 		userId?: string,
-	): Promise<ClineAccountUsageTransaction[]> {
+	): Promise<SekoKuvaAccountUsageTransaction[]> {
 		const resolvedUserId = await this.resolveUserId(userId);
 		const response = await this.request<{
-			items: ClineAccountUsageTransaction[];
+			items: SekoKuvaAccountUsageTransaction[];
 		}>(`/api/v1/users/${encodeURIComponent(resolvedUserId)}/usages`);
 		return response.items ?? [];
 	}
 
 	public async fetchPaymentTransactions(
 		userId?: string,
-	): Promise<ClineAccountPaymentTransaction[]> {
+	): Promise<SekoKuvaAccountPaymentTransaction[]> {
 		const resolvedUserId = await this.resolveUserId(userId);
 		const response = await this.request<{
-			paymentTransactions: ClineAccountPaymentTransaction[];
+			paymentTransactions: SekoKuvaAccountPaymentTransaction[];
 		}>(`/api/v1/users/${encodeURIComponent(resolvedUserId)}/payments`);
 		return response.paymentTransactions ?? [];
 	}
 
-	public async fetchUserOrganizations(): Promise<ClineAccountOrganization[]> {
+	public async fetchUserOrganizations(): Promise<SekoKuvaAccountOrganization[]> {
 		const me = await this.fetchMe();
 		return me.organizations ?? [];
 	}
 
 	public async fetchAvailableSubscriptionPlans(input?: {
 		type?: "individual" | "teams";
-	}): Promise<ClineSubscriptionPlan[]> {
+	}): Promise<SekoKuvaSubscriptionPlan[]> {
 		const path = new URL("/api/v1/plans", this.apiBaseUrl);
 		if (input?.type) {
 			path.searchParams.set("type", input.type);
 		}
-		return this.request<ClineSubscriptionPlan[]>(
+		return this.request<SekoKuvaSubscriptionPlan[]>(
 			`${path.pathname}${path.search}`,
 		);
 	}
@@ -163,24 +163,24 @@ export class ClineAccountService {
 
 	public async fetchOrganization(
 		organizationId: string,
-	): Promise<ClineOrganization> {
+	): Promise<SekoKuvaOrganization> {
 		const orgId = organizationId.trim();
 		if (!orgId) {
 			throw new Error("organizationId is required");
 		}
-		return this.request<ClineOrganization>(
+		return this.request<SekoKuvaOrganization>(
 			`/api/v1/organizations/${encodeURIComponent(orgId)}`,
 		);
 	}
 
 	public async fetchOrganizationBalance(
 		organizationId: string,
-	): Promise<ClineAccountOrganizationBalance> {
+	): Promise<SekoKuvaAccountOrganizationBalance> {
 		const orgId = organizationId.trim();
 		if (!orgId) {
 			throw new Error("organizationId is required");
 		}
-		return this.request<ClineAccountOrganizationBalance>(
+		return this.request<SekoKuvaAccountOrganizationBalance>(
 			`/api/v1/organizations/${encodeURIComponent(orgId)}/balance`,
 		);
 	}
@@ -188,7 +188,7 @@ export class ClineAccountService {
 	public async fetchOrganizationUsageTransactions(input: {
 		organizationId: string;
 		memberId?: string;
-	}): Promise<ClineAccountOrganizationUsageTransaction[]> {
+	}): Promise<SekoKuvaAccountOrganizationUsageTransaction[]> {
 		const organizationId = input.organizationId.trim();
 		if (!organizationId) {
 			throw new Error("organizationId is required");
@@ -199,7 +199,7 @@ export class ClineAccountService {
 			input.memberId,
 		);
 		const response = await this.request<{
-			items: ClineAccountOrganizationUsageTransaction[];
+			items: SekoKuvaAccountOrganizationUsageTransaction[];
 		}>(
 			`/api/v1/organizations/${encodeURIComponent(organizationId)}/members/${encodeURIComponent(memberId)}/usages`,
 		);
@@ -334,7 +334,7 @@ export class ClineAccountService {
 			}
 
 			if (typeof parsed === "object" && parsed !== null) {
-				const envelope = parsed as ClineApiEnvelope<T>;
+				const envelope = parsed as SekoKuvaApiEnvelope<T>;
 				if (typeof envelope.success === "boolean") {
 					if (!envelope.success) {
 						throw new Error(envelope.error || "Cline account request failed");

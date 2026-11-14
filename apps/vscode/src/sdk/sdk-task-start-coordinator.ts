@@ -1,6 +1,6 @@
 import { getProviderAuthStorageId } from "@sekokuva-ca/core"
 import { createSessionId } from "@sekokuva-ca/shared"
-import { CLINE_ACCOUNT_AUTH_ERROR_MESSAGE } from "@shared/ClineAccount"
+import { SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE } from "@shared/ClineAccount"
 import type { ClineMessage } from "@shared/ExtensionMessage"
 import type { HistoryItem } from "@shared/HistoryItem"
 import type { Settings } from "@shared/storage/state-keys"
@@ -281,7 +281,7 @@ export class SdkTaskStartCoordinator {
 		const reinitErrorMsg = error instanceof Error ? error.message : String(error)
 		const isClineAuthReinit =
 			this.options.isClineManagedProviderActive() &&
-			(reinitErrorMsg.includes(CLINE_ACCOUNT_AUTH_ERROR_MESSAGE) ||
+			(reinitErrorMsg.includes(SEKOKUVA_CA_ACCOUNT_AUTH_ERROR_MESSAGE) ||
 				reinitErrorMsg.toLowerCase().includes("missing api key") ||
 				reinitErrorMsg.toLowerCase().includes("unauthorized"))
 

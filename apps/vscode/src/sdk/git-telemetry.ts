@@ -3,10 +3,10 @@ import { createHmac, randomBytes, randomUUID } from "node:crypto"
 import { resolve } from "node:path"
 import { isDeepStrictEqual, promisify } from "node:util"
 import {
-	type ClineCoreStartInput,
 	captureGitSnapshot,
 	type GitSnapshotProperties,
 	type ITelemetryService,
+	type SekoKuvaCoreStartInput,
 } from "@sekokuva-ca/core"
 import type { AgentAfterModelContext } from "@sekokuva-ca/shared"
 import { workspace } from "vscode"
@@ -105,7 +105,7 @@ export class VscodeGitTelemetryManager {
 	constructor(private readonly telemetry: ITelemetryService | undefined) {}
 
 	/** Attach hooks to a freshly prepared input, not the caller's original input. */
-	init(input: ClineCoreStartInput): VscodeGitTelemetry | undefined {
+	init(input: SekoKuvaCoreStartInput): VscodeGitTelemetry | undefined {
 		if (this.disposed) return
 		const { config } = input
 		if (!config.cwd || (config.providerId !== "cline" && config.providerId !== "cline-pass") || !this.telemetry) return
@@ -151,7 +151,7 @@ export class VscodeGitTelemetry {
 	private identity?: { sessionId: string; workspaceId: string }
 
 	constructor(
-		private readonly config: ClineCoreStartInput["config"] & { cwd: string },
+		private readonly config: SekoKuvaCoreStartInput["config"] & { cwd: string },
 		private readonly telemetry: ITelemetryService,
 	) {}
 
@@ -159,7 +159,7 @@ export class VscodeGitTelemetry {
 		return this.identity?.sessionId
 	}
 
-	configure(): ClineCoreStartInput["config"] {
+	configure(): SekoKuvaCoreStartInput["config"] {
 		const config = this.config
 		const { afterModel } = config.hooks ?? {}
 		return {

@@ -13,7 +13,7 @@ export interface ClineRecommendedModelsData {
 /**
  * Hardcoded fallback shown when upstream recommended models are not enabled or unavailable.
  */
-export const CLINE_RECOMMENDED_MODELS_FALLBACK: ClineRecommendedModelsData = {
+export const SEKOKUVA_CA_RECOMMENDED_MODELS_FALLBACK: ClineRecommendedModelsData = {
 	recommended: [
 		{
 			id: "google/gemini-3.1-pro-preview",

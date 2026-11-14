@@ -1,35 +1,35 @@
 import type { BasicLogger, ITelemetryService } from "@sekokuva-ca/shared";
 import {
-	ClineCoreAutomationController,
+	SekoKuvaCoreAutomationController,
 	createClineCoreAutomationExtensionContext,
 	createClineCoreAutomationRuntimeHandlers,
 	normalizeAutomationCronScope,
 	normalizeAutomationOptions,
-} from "./cline-core/automation";
+} from "./sekokuva-ca-core/automation";
 import {
 	createClineCorePendingPromptsApi,
 	createClineCorePluginCommandsApi,
 	createClineCoreSettingsApi,
 	type RuntimeHostServiceExtensions,
-} from "./cline-core/runtime-services";
+} from "./sekokuva-ca-core/runtime-services";
 import {
 	normalizeClineCoreStartInput,
 	toClineCoreStartInput,
-} from "./cline-core/start-input";
-import { emitSessionStartedTelemetry } from "./cline-core/telemetry";
+} from "./sekokuva-ca-core/start-input";
+import { emitSessionStartedTelemetry } from "./sekokuva-ca-core/telemetry";
 import type {
-	ClineCoreAutomationApi,
-	ClineCoreAutomationOptions,
-	ClineCoreListHistoryOptions,
-	ClineCoreOptions,
-	ClineCoreSettingsApi,
-	ClineCoreStartInput,
+	SekoKuvaCoreAutomationApi,
+	SekoKuvaCoreAutomationOptions,
+	SekoKuvaCoreListHistoryOptions,
+	SekoKuvaCoreOptions,
+	SekoKuvaCoreSettingsApi,
+	SekoKuvaCoreStartInput,
 	CompareCheckpointInput,
 	CompareCheckpointResult,
 	RestoreInput,
 	RestoreResult,
 	StartSessionBootstrap,
-} from "./cline-core/types";
+} from "./sekokuva-ca-core/types";
 import { CronService } from "./cron/service/cron-service";
 import type { RuntimeCapabilities } from "./runtime/capabilities";
 import { normalizeRuntimeCapabilities } from "./runtime/capabilities";
@@ -61,21 +61,21 @@ import type { CoreSessionEvent } from "./types/events";
 import type { SessionHistoryRecord } from "./types/sessions";
 
 export type {
-	ClineAutomationEventIngressResult,
-	ClineAutomationEventLog,
-	ClineAutomationEventSuppression,
-	ClineAutomationListEventsOptions,
-	ClineAutomationListRunsOptions,
-	ClineAutomationListSpecsOptions,
-	ClineAutomationRun,
-	ClineAutomationRunStatus,
-	ClineAutomationSpec,
-	ClineCoreAutomationApi,
-	ClineCoreAutomationOptions,
-	ClineCoreListHistoryOptions,
-	ClineCoreOptions,
-	ClineCoreSettingsApi,
-	ClineCoreStartInput,
+	SekoKuvaAutomationEventIngressResult,
+	SekoKuvaAutomationEventLog,
+	SekoKuvaAutomationEventSuppression,
+	SekoKuvaAutomationListEventsOptions,
+	SekoKuvaAutomationListRunsOptions,
+	SekoKuvaAutomationListSpecsOptions,
+	SekoKuvaAutomationRun,
+	SekoKuvaAutomationRunStatus,
+	SekoKuvaAutomationSpec,
+	SekoKuvaCoreAutomationApi,
+	SekoKuvaCoreAutomationOptions,
+	SekoKuvaCoreListHistoryOptions,
+	SekoKuvaCoreOptions,
+	SekoKuvaCoreSettingsApi,
+	SekoKuvaCoreStartInput,
 	CompareCheckpointInput,
 	CompareCheckpointResult,
 	HubOptions,
@@ -85,29 +85,29 @@ export type {
 	RestoreResult,
 	RuntimeHostMode,
 	StartSessionBootstrap,
-} from "./cline-core/types";
+} from "./sekokuva-ca-core/types";
 
 /**
  * The primary entry point for the Cline Core SDK.
  *
  * @example
  * ```ts
- * import { ClineCore } from "@sekokuva-ca/core";
+ * import { SekoKuvaCore } from "@sekokuva-ca/core";
  *
- * const cline = await ClineCore.create({ clientName: "my-app" });
+ * const cline = await SekoKuvaCore.create({ clientName: "my-app" });
  * const session = await cline.start({ ... });
  * ```
  */
-export class ClineCore {
+export class SekoKuvaCore {
 	readonly clientName: string | undefined;
 	readonly runtimeAddress: string | undefined;
-	readonly automation: ClineCoreAutomationApi;
-	readonly settings: ClineCoreSettingsApi;
+	readonly automation: SekoKuvaCoreAutomationApi;
+	readonly settings: SekoKuvaCoreSettingsApi;
 	readonly pluginCommands: PluginCommandsApi;
 	readonly featureFlags: FeatureFlagsService;
 	readonly pendingPrompts: PendingPromptsServiceApi;
 	private readonly host: RuntimeHost;
-	private readonly prepare: ClineCoreOptions["prepare"] | undefined;
+	private readonly prepare: SekoKuvaCoreOptions["prepare"] | undefined;
 	private readonly capabilities: RuntimeCapabilities | undefined;
 	private readonly logger: BasicLogger | undefined;
 	private readonly telemetry: ITelemetryService | undefined;
@@ -123,14 +123,14 @@ export class ClineCore {
 		host: RuntimeHost,
 		clientName: string | undefined,
 		runtimeAddress: string | undefined,
-		prepare: ClineCoreOptions["prepare"],
+		prepare: SekoKuvaCoreOptions["prepare"],
 		capabilities: RuntimeCapabilities | undefined,
 		logger: BasicLogger | undefined,
 		telemetry: ITelemetryService | undefined,
 		distinctId: string | undefined,
 		featureFlags: FeatureFlagsService,
 		automationOptions:
-			| (ClineCoreAutomationOptions & { logger?: BasicLogger })
+			| (SekoKuvaCoreAutomationOptions & { logger?: BasicLogger })
 			| undefined,
 	) {
 		this.clientName = clientName;
@@ -145,10 +145,10 @@ export class ClineCore {
 		this.settings = createClineCoreSettingsApi(host);
 		this.pluginCommands = createClineCorePluginCommandsApi(host);
 		this.pendingPrompts = createClineCorePendingPromptsApi(host);
-		this.automation = new ClineCoreAutomationController(() => {
+		this.automation = new SekoKuvaCoreAutomationController(() => {
 			if (!this.automationService) {
 				throw new Error(
-					"ClineCore automation is not enabled. Pass `automation: true` or automation options to ClineCore.create().",
+					"SekoKuvaCore automation is not enabled. Pass `automation: true` or automation options to SekoKuvaCore.create().",
 				);
 			}
 			return this.automationService;
@@ -192,24 +192,24 @@ export class ClineCore {
 	}
 
 	/**
-	 * Creates a new ClineCore instance.
+	 * Creates a new SekoKuvaCore instance.
 	 *
 	 * This is the primary factory method for initializing the SDK. It sets up the runtime
 	 * host (local, hub, or remote) based on the provided options and prepares the SDK for
 	 * starting sessions.
 	 *
 	 * @param options Configuration options for the SDK instance
-	 * @returns A promise that resolves to a new ClineCore instance
+	 * @returns A promise that resolves to a new SekoKuvaCore instance
 	 *
 	 * @example
 	 * ```ts
-	 * const cline = await ClineCore.create({
+	 * const cline = await SekoKuvaCore.create({
 	 *   clientName: "my-app",
 	 *   backendMode: "local",
 	 * });
 	 * ```
 	 */
-	static async create(options: ClineCoreOptions = {}): Promise<ClineCore> {
+	static async create(options: SekoKuvaCoreOptions = {}): Promise<SekoKuvaCore> {
 		const distinctId = resolveCoreDistinctId(options.distinctId);
 		const capabilities = normalizeRuntimeCapabilities(options.capabilities);
 		const normalizedOptions = { ...options, capabilities, distinctId };
@@ -226,7 +226,7 @@ export class ClineCore {
 					clientName: options.clientName,
 				},
 			});
-		const core = new ClineCore(
+		const core = new SekoKuvaCore(
 			host,
 			options.clientName,
 			host.runtimeAddress,
@@ -285,16 +285,16 @@ export class ClineCore {
 	 * Starts a new Cline session with extended core-specific configuration.
 	 * This overload allows specifying local runtime options and config overrides.
 	 */
-	start(input: ClineCoreStartInput): Promise<StartSessionResult>;
+	start(input: SekoKuvaCoreStartInput): Promise<StartSessionResult>;
 	async start(
-		input: StartSessionInput | ClineCoreStartInput,
+		input: StartSessionInput | SekoKuvaCoreStartInput,
 	): Promise<StartSessionResult> {
-		const clineCoreInput = toClineCoreStartInput(input);
-		const bootstrap = await this.prepare?.(clineCoreInput);
+		const sekokuvaCaCoreInput = toClineCoreStartInput(input);
+		const bootstrap = await this.prepare?.(sekokuvaCaCoreInput);
 		try {
 			const preparedInput = bootstrap
-				? await bootstrap.applyToStartSessionInput(clineCoreInput)
-				: clineCoreInput;
+				? await bootstrap.applyToStartSessionInput(sekokuvaCaCoreInput)
+				: sekokuvaCaCoreInput;
 			const result = await this.host.startSession(
 				normalizeClineCoreStartInput(preparedInput, {
 					defaultCapabilities: this.capabilities,
@@ -396,7 +396,7 @@ export class ClineCore {
 		await this.disposeSessionBootstrap(sessionId);
 	};
 	/**
-	 * Disposes the ClineCore instance and all associated resources.
+	 * Disposes the SekoKuvaCore instance and all associated resources.
 	 *
 	 * Shuts down the runtime host, closes connections, and cleans up all active sessions
 	 * and bootstraps. Call this when you're done using the SDK instance, typically at
@@ -437,7 +437,7 @@ export class ClineCore {
 	 * Lists recent sessions through the shared history-listing path.
 	 */
 	listHistory = async (
-		options: ClineCoreListHistoryOptions = {},
+		options: SekoKuvaCoreListHistoryOptions = {},
 	): Promise<SessionHistoryRecord[]> =>
 		await listSessionHistory(this.host, options);
 	/**
@@ -459,7 +459,7 @@ export class ClineCore {
 	 */
 	list = async (
 		limit = 200,
-		options: Omit<ClineCoreListHistoryOptions, "limit"> = {},
+		options: Omit<SekoKuvaCoreListHistoryOptions, "limit"> = {},
 	): Promise<SessionHistoryRecord[]> =>
 		await this.listHistory({ ...options, limit });
 	/**
@@ -647,7 +647,7 @@ export class ClineCore {
 	/**
 	 * Whether this instance is subscribed to a session's live events.
 	 *
-	 * In hub mode ClineCore subscribes to a session when it starts, sends to,
+	 * In hub mode SekoKuvaCore subscribes to a session when it starts, sends to,
 	 * or lists pending prompts for it, and unsubscribes on stop. A client that
 	 * also observes the hub directly can use this to render one copy of the
 	 * session's events instead of both.

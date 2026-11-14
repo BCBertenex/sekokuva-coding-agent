@@ -26,14 +26,14 @@ import {
 } from "./plugin-runtime";
 import type { PluginTargeting } from "./plugin-targeting";
 
-export const CLINE_PLUGIN_IDLE_TIMEOUT_MS_ENV = "CLINE_PLUGIN_IDLE_TIMEOUT_MS";
+export const SEKOKUVA_CA_PLUGIN_IDLE_TIMEOUT_MS_ENV = "SEKOKUVA_CA_PLUGIN_IDLE_TIMEOUT_MS";
 
 /**
  * Absolute path to a compiled `plugin-sandbox-bootstrap.js`, for hosts that
  * ship it somewhere this module cannot find on its own (an app bundle's
  * resources directory).
  */
-export const CLINE_PLUGIN_BOOTSTRAP_PATH_ENV = "CLINE_PLUGIN_BOOTSTRAP_PATH";
+export const SEKOKUVA_CA_PLUGIN_BOOTSTRAP_PATH_ENV = "SEKOKUVA_CA_PLUGIN_BOOTSTRAP_PATH";
 export const DEFAULT_PLUGIN_SANDBOX_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
 
 export type SandboxedPluginSetupContext = Pick<
@@ -57,7 +57,7 @@ export interface PluginSandboxOptions extends PluginTargeting {
 	exportName?: string;
 	/**
 	 * Max wall time for plugin module imports. Defaults to 4000 ms; falls back
-	 * to the `CLINE_PLUGIN_IMPORT_TIMEOUT_MS` env var when this option is not
+	 * to the `SEKOKUVA_CA_PLUGIN_IMPORT_TIMEOUT_MS` env var when this option is not
 	 * set, allowing slower hosts (Windows cold-start, CI without warm caches)
 	 * to raise the ceiling without touching code.
 	 */
@@ -67,7 +67,7 @@ export interface PluginSandboxOptions extends PluginTargeting {
 	/**
 	 * Reclaim the plugin subprocess after this much time with no calls in
 	 * flight. Defaults to 30 minutes and can be overridden with
-	 * `CLINE_PLUGIN_IDLE_TIMEOUT_MS`.
+	 * `SEKOKUVA_CA_PLUGIN_IDLE_TIMEOUT_MS`.
 	 */
 	idleTimeoutMs?: number;
 	onEvent?: (event: { name: string; payload?: unknown }) => void;
@@ -210,7 +210,7 @@ function getPlatformPackageName(): string {
 }
 
 function resolveBootstrapFromWrapper(): string | undefined {
-	const wrapperPath = process.env.CLINE_WRAPPER_PATH?.trim();
+	const wrapperPath = process.env.SEKOKUVA_CA_WRAPPER_PATH?.trim();
 	if (!wrapperPath) {
 		return undefined;
 	}
@@ -295,7 +295,7 @@ function resolveBootstrap():
 	// In production, the main bundle is at dist/ and the bootstrap is emitted
 	// under dist/extensions/. Keep the older dist/agents/ fallback for
 	// compatibility with previously built layouts.
-	const configured = process.env[CLINE_PLUGIN_BOOTSTRAP_PATH_ENV]?.trim();
+	const configured = process.env[SEKOKUVA_CA_PLUGIN_BOOTSTRAP_PATH_ENV]?.trim();
 	if (configured && existsSync(configured)) {
 		return { file: configured };
 	}
@@ -350,7 +350,7 @@ let bootstrapUnavailableForTests = false;
 
 /**
  * Resolved on first use, not at import, so a host can set
- * `CLINE_PLUGIN_BOOTSTRAP_PATH` after loading this module. A host that ships
+ * `SEKOKUVA_CA_PLUGIN_BOOTSTRAP_PATH` after loading this module. A host that ships
  * no bootstrap cannot run plugins at all: plugin code never runs on a host's
  * main thread, so the load fails instead.
  */
@@ -380,7 +380,7 @@ export class PluginBootstrapMissingError extends Error {
 	constructor() {
 		super(
 			"This build does not ship plugin-sandbox-bootstrap.js, so plugins cannot run. " +
-				`Set ${CLINE_PLUGIN_BOOTSTRAP_PATH_ENV} to a copy of the file, or reinstall Cline.`,
+				`Set ${SEKOKUVA_CA_PLUGIN_BOOTSTRAP_PATH_ENV} to a copy of the file, or reinstall Cline.`,
 		);
 		this.name = "PluginBootstrapMissingError";
 	}
@@ -457,7 +457,7 @@ export async function loadSandboxedPlugins(
 	const idleTimeoutMs = withTimeoutFallback(
 		options.idleTimeoutMs,
 		DEFAULT_PLUGIN_SANDBOX_IDLE_TIMEOUT_MS,
-		CLINE_PLUGIN_IDLE_TIMEOUT_MS_ENV,
+		SEKOKUVA_CA_PLUGIN_IDLE_TIMEOUT_MS_ENV,
 	);
 	let resolved: ReturnType<typeof getBootstrap>;
 	try {
@@ -475,7 +475,7 @@ export async function loadSandboxedPlugins(
 	const importTimeoutMs = withTimeoutFallback(
 		options.importTimeoutMs,
 		4000,
-		"CLINE_PLUGIN_IMPORT_TIMEOUT_MS",
+		"SEKOKUVA_CA_PLUGIN_IMPORT_TIMEOUT_MS",
 	);
 	const hookTimeoutMs = withTimeoutFallback(options.hookTimeoutMs, 3000);
 	const setupTimeoutMs =

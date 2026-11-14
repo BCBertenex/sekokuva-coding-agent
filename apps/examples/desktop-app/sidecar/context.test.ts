@@ -30,7 +30,7 @@ vi.mock("@sekokuva-ca/core", async () => {
 		await vi.importActual<typeof import("@sekokuva-ca/core")>("@sekokuva-ca/core");
 	return {
 		...actual,
-		ClineCore: {
+		SekoKuvaCore: {
 			create: createCoreMock,
 		},
 		ensureCompatibleLocalHubUrl: ensureCompatibleLocalHubUrlMock,
@@ -67,7 +67,7 @@ async function createSearchCloudManager(
 	ctx: SidecarContext,
 	list: () => Promise<CloudSessionRecord[]>,
 ): Promise<CloudSessionManager> {
-	vi.stubEnv("CLINE_CODE_CLOUD_AGENTS", "1");
+	vi.stubEnv("SEKOKUVA_CA_CODE_CLOUD_AGENTS", "1");
 	await createCloudSessionTestRuntime(ctx, {
 		api: { list } as never,
 		apiBaseUrl: "https://api.example",
@@ -1817,19 +1817,19 @@ describe("disposeSidecarContext attachment cleanup", () => {
 	let testSessionDataDir: string;
 
 	beforeEach(() => {
-		previousSessionDataDir = process.env.CLINE_SESSION_DATA_DIR;
+		previousSessionDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 		testSessionDataDir = join(
 			tmpdir(),
 			`cline-desktop-dispose-${Date.now()}-${Math.random().toString(36).slice(2)}`,
 		);
-		process.env.CLINE_SESSION_DATA_DIR = testSessionDataDir;
+		process.env.SEKOKUVA_CA_SESSION_DATA_DIR = testSessionDataDir;
 	});
 
 	afterEach(() => {
 		if (previousSessionDataDir === undefined) {
-			delete process.env.CLINE_SESSION_DATA_DIR;
+			delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 		} else {
-			process.env.CLINE_SESSION_DATA_DIR = previousSessionDataDir;
+			process.env.SEKOKUVA_CA_SESSION_DATA_DIR = previousSessionDataDir;
 		}
 		rmSync(testSessionDataDir, { recursive: true, force: true });
 	});
@@ -1955,7 +1955,7 @@ describe("Chat chunk pipe selection", () => {
 		const { handleCoreSessionEvent, handleHubLiveEvent } = await import(
 			"./context"
 		);
-		// Opening a session arms both pipes: ClineCore subscribes to the session
+		// Opening a session arms both pipes: SekoKuvaCore subscribes to the session
 		// and `attach` enables the observer projection, so the hub publishes each
 		// delta to both sockets.
 		const ctx = await createStreamingContext(
@@ -2032,7 +2032,7 @@ describe("Chat chunk pipe selection", () => {
 			});
 
 		delta("observer first");
-		// A send (or pending-prompt list) subscribes ClineCore.
+		// A send (or pending-prompt list) subscribes SekoKuvaCore.
 		coreSubscriptions.add("session-1");
 		delta("muted");
 		// `stop` drops the subscription; a run another client starts on the

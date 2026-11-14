@@ -128,7 +128,7 @@ export function getMainMenuOptions(options?: {
 	);
 }
 
-export const CLINE_PASS_SUBSCRIPTION_OPTIONS: ClinePassSubscriptionOption[] = [
+export const SEKOKUVA_CA_PASS_SUBSCRIPTION_OPTIONS: ClinePassSubscriptionOption[] = [
 	{
 		value: "subscribe",
 		label: "Subscribe to ClinePass",

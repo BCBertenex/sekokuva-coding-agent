@@ -86,7 +86,7 @@ export function createHubDaemonTelemetry(): HubDaemonTelemetry {
 			// "hub", not "cli": daemon-hosted sessions can be triggered by the
 			// CLI, desktop app, or connectors, so daemon-emitted events must be
 			// distinguishable from the CLI process's own events.
-			cline_type: "hub",
+			sekokuva_ca_type: "hub",
 			platform: "cline-hub-daemon",
 			platform_version: process.version,
 			os_type: process.platform,

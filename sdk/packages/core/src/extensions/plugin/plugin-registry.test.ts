@@ -875,7 +875,7 @@ export default { name: "orphan", manifest: { capabilities: ["tools"] } };`,
 					state: "failed",
 					lastError: expect.objectContaining({
 						phase: "import",
-						message: expect.stringContaining("CLINE_PLUGIN_BOOTSTRAP_PATH"),
+						message: expect.stringContaining("SEKOKUVA_CA_PLUGIN_BOOTSTRAP_PATH"),
 					}),
 				}),
 			]);

@@ -19,7 +19,7 @@ import {
 describe("CLI distribution package shape", () => {
 	it("rejects direct source package publishing by default", () => {
 		expect(shouldAllowDirectPublish({})).toBe(false);
-		expect(shouldAllowDirectPublish({ CLINE_ALLOW_DIRECT_PUBLISH: "1" })).toBe(
+		expect(shouldAllowDirectPublish({ SEKOKUVA_CA_ALLOW_DIRECT_PUBLISH: "1" })).toBe(
 			true,
 		);
 		expect(DIRECT_PUBLISH_GUARD_MESSAGE).toContain(

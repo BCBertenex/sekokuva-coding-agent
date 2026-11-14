@@ -11,7 +11,7 @@ import {
 import {
 	fetchClineRecommendedModelsPayload,
 	normalizeClineRecommendedProviderModels,
-} from "./catalog-cline-recommended";
+} from "./catalog-sekokuva-ca-recommended";
 import {
 	resolveCatalogModelOperation,
 	resolveCatalogModelOperationModes,
@@ -595,17 +595,17 @@ export async function fetchLiveProviderModels(
 	options: { includeClineCloudModels?: boolean } = {},
 ): Promise<Record<string, Record<string, ModelInfo>>> {
 	const emptyProviderModels: Record<string, Record<string, ModelInfo>> = {};
-	const [providerModels, clineRecommendedPayload] = await Promise.all([
+	const [providerModels, sekokuvaCaRecommendedPayload] = await Promise.all([
 		fetchModelsDevProviderModels(modelsDevUrl, fetcher).catch(
 			() => emptyProviderModels,
 		),
 		fetchClineRecommendedModelsPayload(fetcher).catch(() => undefined),
 	]);
-	const clineRecommended = Object.fromEntries(
+	const sekokuvaCaRecommended = Object.fromEntries(
 		Object.entries(
-			clineRecommendedPayload
+			sekokuvaCaRecommendedPayload
 				? normalizeClineRecommendedProviderModels(
-						clineRecommendedPayload,
+						sekokuvaCaRecommendedPayload,
 						providerModels,
 						options,
 					)
@@ -623,6 +623,6 @@ export async function fetchLiveProviderModels(
 
 	return {
 		...providerModels,
-		...clineRecommended,
+		...sekokuvaCaRecommended,
 	};
 }

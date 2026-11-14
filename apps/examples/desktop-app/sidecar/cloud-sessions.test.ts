@@ -155,10 +155,10 @@ async function createFixture({
 }
 
 beforeAll(() => {
-	process.env.CLINE_CODE_CLOUD_AGENTS = "1";
+	process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "1";
 });
 afterAll(() => {
-	delete process.env.CLINE_CODE_CLOUD_AGENTS;
+	delete process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS;
 });
 
 describe("Cloud sessions sidecar wiring", () => {
@@ -232,7 +232,7 @@ describe("Cloud sessions sidecar wiring", () => {
 	});
 
 	it("blocks cloud session creation when the flag is off", async () => {
-		process.env.CLINE_CODE_CLOUD_AGENTS = "0";
+		process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "0";
 		try {
 			const create = vi.fn();
 			const { ctx, hub } = await createFixture({
@@ -253,7 +253,7 @@ describe("Cloud sessions sidecar wiring", () => {
 			expect(connect).not.toHaveBeenCalled();
 			expect(hub.commands).toEqual([]);
 		} finally {
-			process.env.CLINE_CODE_CLOUD_AGENTS = "1";
+			process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "1";
 		}
 	});
 

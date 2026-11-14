@@ -135,7 +135,7 @@ async function activateBundle(
 			void refreshCohort(context).catch(() => {});
 		}
 		// Authoritative activation event, captured by the bundle's own telemetry
-		// (built with CLINE_ROLLOUT_VARIANT). On fallback this runs in the legacy
+		// (built with SEKOKUVA_CA_ROLLOUT_VARIANT). On fallback this runs in the legacy
 		// bundle — next's pipeline is the thing that just crashed.
 		if (typeof module.reportRolloutActivation === "function") {
 			void module

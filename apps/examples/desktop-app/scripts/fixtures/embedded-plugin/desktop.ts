@@ -1,11 +1,11 @@
 import type { AgentPlugin } from "@sekokuva-ca/sdk";
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared/browser";
 
 export default {
 	name: "packaged-backend-smoke",
 	manifest: { capabilities: ["commands"] },
 	setup(api) {
-		if (typeof CLINE_DEFAULT_MODEL_ID !== "string")
+		if (typeof SEKOKUVA_CA_DEFAULT_MODEL_ID !== "string")
 			throw new Error("Missing SDK browser exports");
 		api.registerCommand({ name: "packaged-ping", handler: () => "pong" });
 	},

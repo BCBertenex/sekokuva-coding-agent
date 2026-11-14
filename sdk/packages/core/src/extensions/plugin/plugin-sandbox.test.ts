@@ -19,7 +19,7 @@ import {
 	vi,
 } from "vitest";
 import {
-	CLINE_PLUGIN_IDLE_TIMEOUT_MS_ENV,
+	SEKOKUVA_CA_PLUGIN_IDLE_TIMEOUT_MS_ENV,
 	loadSandboxedPlugins,
 } from "./plugin-sandbox";
 
@@ -633,7 +633,7 @@ describe.each([
 		}
 	});
 
-	it("respects CLINE_PLUGIN_IMPORT_TIMEOUT_MS env var when options.importTimeoutMs is unset", async () => {
+	it("respects SEKOKUVA_CA_PLUGIN_IMPORT_TIMEOUT_MS env var when options.importTimeoutMs is unset", async () => {
 		const envDir = await mkdtemp(
 			join(tmpdir(), "core-plugin-sandbox-import-env-"),
 		);
@@ -656,7 +656,7 @@ describe.each([
 			// Set env override well below the 4000 ms hardcoded default.
 			// If the env var isn't read, this test would block for ~4 s and
 			// the per-test timeout (3000 ms below) would fail it.
-			vi.stubEnv("CLINE_PLUGIN_IMPORT_TIMEOUT_MS", "150");
+			vi.stubEnv("SEKOKUVA_CA_PLUGIN_IMPORT_TIMEOUT_MS", "150");
 			await expect(
 				loadSandboxedPlugins({ pluginPaths: [pluginPath], transport }),
 			).rejects.toThrow(/timed out/i);
@@ -691,7 +691,7 @@ describe.each([
 				"utf8",
 			);
 
-			vi.stubEnv(CLINE_PLUGIN_IDLE_TIMEOUT_MS_ENV, "1000");
+			vi.stubEnv(SEKOKUVA_CA_PLUGIN_IDLE_TIMEOUT_MS_ENV, "1000");
 			vi.useFakeTimers();
 			sandboxed = await loadSandboxedPlugins({
 				transport,
@@ -798,8 +798,8 @@ describe.each([
 	});
 
 	it("ignores packaged runtime and npm wrapper bootstraps when running from source", async () => {
-		const previousWrapperPath = process.env.CLINE_WRAPPER_PATH;
-		const previousRuntimeDirectory = process.env.CLINE_PLUGIN_RUNTIME_DIR;
+		const previousWrapperPath = process.env.SEKOKUVA_CA_WRAPPER_PATH;
+		const previousRuntimeDirectory = process.env.SEKOKUVA_CA_PLUGIN_RUNTIME_DIR;
 		const wrapperRoot = await mkdtemp(
 			join(tmpdir(), "core-plugin-sandbox-wrapper-"),
 		);
@@ -861,7 +861,7 @@ describe.each([
 				"utf8",
 			);
 
-			process.env.CLINE_WRAPPER_PATH = wrapperPath;
+			process.env.SEKOKUVA_CA_WRAPPER_PATH = wrapperPath;
 			// A complete packaged runtime must not bypass the source bootstrap.
 			const runtimeDirectory = join(wrapperRoot, "plugin-runtime");
 			const corePackageDirectory = join(
@@ -883,7 +883,7 @@ describe.each([
 				bootstrapPath,
 				join(runtimeDirectory, "plugin-sandbox-bootstrap.js"),
 			);
-			process.env.CLINE_PLUGIN_RUNTIME_DIR = runtimeDirectory;
+			process.env.SEKOKUVA_CA_PLUGIN_RUNTIME_DIR = runtimeDirectory;
 			vi.resetModules();
 			const { loadSandboxedPlugins: loadSandboxedPluginsFromWrapper } =
 				await import("./plugin-sandbox");
@@ -912,14 +912,14 @@ describe.each([
 			}
 		} finally {
 			if (previousRuntimeDirectory === undefined) {
-				delete process.env.CLINE_PLUGIN_RUNTIME_DIR;
+				delete process.env.SEKOKUVA_CA_PLUGIN_RUNTIME_DIR;
 			} else {
-				process.env.CLINE_PLUGIN_RUNTIME_DIR = previousRuntimeDirectory;
+				process.env.SEKOKUVA_CA_PLUGIN_RUNTIME_DIR = previousRuntimeDirectory;
 			}
 			if (previousWrapperPath === undefined) {
-				delete process.env.CLINE_WRAPPER_PATH;
+				delete process.env.SEKOKUVA_CA_WRAPPER_PATH;
 			} else {
-				process.env.CLINE_WRAPPER_PATH = previousWrapperPath;
+				process.env.SEKOKUVA_CA_WRAPPER_PATH = previousWrapperPath;
 			}
 			vi.resetModules();
 			await rm(wrapperRoot, { recursive: true, force: true });
@@ -1236,7 +1236,7 @@ describe("plugin-sandbox (worker only)", () => {
 	});
 
 	it("does not need a JavaScript runtime executable", async () => {
-		vi.stubEnv("CLINE_JS_RUNTIME_PATH", join(dir, "missing-node"));
+		vi.stubEnv("SEKOKUVA_CA_JS_RUNTIME_PATH", join(dir, "missing-node"));
 		try {
 			const { sandboxed, tool } = await loadToolPlugin(
 				"worker_no_runtime",

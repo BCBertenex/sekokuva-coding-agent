@@ -4,7 +4,7 @@ import type {
 	CloudRepositoryOption,
 	CloudSessionSnapshot,
 } from "@sekokuva-ca/core/cloud";
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import type { DialogActions } from "@opentui-ui/dialog/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -135,7 +135,7 @@ export function useCloudSessions(input: {
 			(localProviderId === "cline-pass"
 				? models.find((candidate) => candidate.catalogId === "cline-pass")
 				: undefined) ??
-			offered(CLINE_DEFAULT_MODEL_ID) ??
+			offered(SEKOKUVA_CA_DEFAULT_MODEL_ID) ??
 			models.find((candidate) => candidate.catalogId === "cline") ??
 			models[0];
 		if (!next)

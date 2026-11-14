@@ -13,8 +13,8 @@ import { listPluginToolsWithDiagnostics } from "./plugin-tools";
 describe("listPluginToolsWithDiagnostics", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_GLOBAL_SETTINGS_PATH: process.env.CLINE_GLOBAL_SETTINGS_PATH,
-		CLINE_PLUGIN_MODE: process.env.CLINE_PLUGIN_MODE,
+		SEKOKUVA_CA_GLOBAL_SETTINGS_PATH: process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH,
+		SEKOKUVA_CA_PLUGIN_MODE: process.env.SEKOKUVA_CA_PLUGIN_MODE,
 	};
 	let root: string;
 	let registry: PluginRegistry;
@@ -23,7 +23,7 @@ describe("listPluginToolsWithDiagnostics", () => {
 		root = await mkdtemp(join(tmpdir(), "core-plugin-tools-"));
 		process.env.HOME = root;
 		setHomeDir(root);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(root, "settings.json");
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(root, "settings.json");
 		registry = new PluginRegistry({
 			failureThreshold: 1,
 			importTimeoutMs: 15_000,
@@ -99,7 +99,7 @@ describe("listPluginToolsWithDiagnostics", () => {
 
 	it("inspects plugins through the sandbox in sandbox mode", async () => {
 		await writePlugin("sandboxed");
-		process.env.CLINE_PLUGIN_MODE = "sandbox";
+		process.env.SEKOKUVA_CA_PLUGIN_MODE = "sandbox";
 
 		const result = await listPluginToolsWithDiagnostics({
 			workspacePath: root,

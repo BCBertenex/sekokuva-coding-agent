@@ -276,7 +276,7 @@ class LocalFileSessionService {
 describe("LocalRuntimeHost e2e", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_DIR: process.env.CLINE_DIR,
+		SEKOKUVA_CA_DIR: process.env.SEKOKUVA_CA_DIR,
 	};
 	const tempDirs: string[] = [];
 	let isolatedHomeDir = "";
@@ -284,16 +284,16 @@ describe("LocalRuntimeHost e2e", () => {
 	beforeEach(() => {
 		isolatedHomeDir = mkdtempSync(join(tmpdir(), "core-session-home-"));
 		process.env.HOME = isolatedHomeDir;
-		process.env.CLINE_DIR = join(isolatedHomeDir, ".cline");
+		process.env.SEKOKUVA_CA_DIR = join(isolatedHomeDir, ".cline");
 		setHomeDir(isolatedHomeDir);
-		setClineDir(process.env.CLINE_DIR);
+		setClineDir(process.env.SEKOKUVA_CA_DIR);
 	});
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		process.env.CLINE_DIR = envSnapshot.CLINE_DIR;
+		process.env.SEKOKUVA_CA_DIR = envSnapshot.SEKOKUVA_CA_DIR;
 		setHomeDir(envSnapshot.HOME ?? "~");
-		setClineDir(envSnapshot.CLINE_DIR ?? join("~", ".cline"));
+		setClineDir(envSnapshot.SEKOKUVA_CA_DIR ?? join("~", ".cline"));
 		for (const dir of tempDirs.splice(0)) {
 			rmSync(dir, { recursive: true, force: true });
 		}

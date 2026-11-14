@@ -4,7 +4,7 @@ import {
 	getGeneratedModelsForProvider,
 	MODEL_COLLECTIONS_BY_PROVIDER_ID,
 } from "@sekokuva-ca/llms"
-import { CLINE_DEFAULT_MODEL_ID, type CoreSpawnReason } from "@sekokuva-ca/shared"
+import { type CoreSpawnReason, SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared"
 import { createFileReadExecutor } from "../../../../sdk/packages/core/src/extensions/tools/executors/file-read"
 
 export interface OAuthCredentials {
@@ -61,11 +61,11 @@ export function resolveModelsRegistryPath(): string {
 
 export function ensureCustomProvidersLoadedSync(): void {}
 
-export { toClineCoreStartInput } from "../../../../sdk/packages/core/src/cline-core/start-input"
 export {
 	parseRuleConfigFromMarkdown,
 	parseSkillConfigFromMarkdown,
 } from "../../../../sdk/packages/core/src/extensions/config/user-instruction-config-loader"
+export { toClineCoreStartInput } from "../../../../sdk/packages/core/src/sekokuva-ca-core/start-input"
 export { isPrivateModelCatalogProvider } from "../../../../sdk/packages/core/src/services/llms/provider-defaults"
 // Real implementation re-exported from the sdk source (same pattern as the
 // apply-patch executors below) so store writes are reflected in the live
@@ -81,12 +81,12 @@ export type GlobalCompactionStrategy = "basic" | "agentic"
 
 // Offline behavior of the real resolver: first bundled free model, else the Cline default.
 export async function resolveClineDefaultModelId(): Promise<string> {
-	return GENERATED_CLINE_RECOMMENDED_MODELS.free?.[0]?.id ?? CLINE_DEFAULT_MODEL_ID
+	return GENERATED_CLINE_RECOMMENDED_MODELS.free?.[0]?.id ?? SEKOKUVA_CA_DEFAULT_MODEL_ID
 }
 
 export function readCompactionStrategyGlobally(): GlobalCompactionStrategy {
 	try {
-		const settings = JSON.parse(readFileSync(process.env.CLINE_GLOBAL_SETTINGS_PATH ?? "", "utf8"))
+		const settings = JSON.parse(readFileSync(process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH ?? "", "utf8"))
 		return settings.compactionStrategy === "basic" ? "basic" : "agentic"
 	} catch {
 		return "agentic"
@@ -94,7 +94,7 @@ export function readCompactionStrategyGlobally(): GlobalCompactionStrategy {
 }
 
 export function setCompactionStrategyGlobally(compactionStrategy: GlobalCompactionStrategy): void {
-	const filePath = process.env.CLINE_GLOBAL_SETTINGS_PATH
+	const filePath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH
 	if (filePath) {
 		let settings = {}
 		try {
@@ -107,7 +107,7 @@ export function setCompactionStrategyGlobally(compactionStrategy: GlobalCompacti
 export type ModelToolName = "web_search"
 
 export function isModelToolEnabledGlobally(name: ModelToolName): boolean {
-	const filePath = process.env.CLINE_GLOBAL_SETTINGS_PATH ?? ""
+	const filePath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH ?? ""
 	try {
 		const settings = JSON.parse(readFileSync(filePath, "utf8"))
 		return settings.tools?.[name]?.enabled ?? true
@@ -117,7 +117,7 @@ export function isModelToolEnabledGlobally(name: ModelToolName): boolean {
 }
 
 export function setModelToolEnabledGlobally(name: ModelToolName, enabled: boolean): void {
-	const filePath = process.env.CLINE_GLOBAL_SETTINGS_PATH
+	const filePath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH
 	if (filePath) {
 		let settings: { tools?: Record<string, { enabled: boolean }> } = {}
 		try {
@@ -249,7 +249,7 @@ export type TelemetryProperties = Record<string, unknown>
 
 export interface TelemetryMetadata {
 	extension_version: string
-	cline_type: string
+	sekokuva_ca_type: string
 	platform: string
 	platform_version: string
 	os_type: string
@@ -311,7 +311,7 @@ export function createClineTelemetryServiceConfig(config: Record<string, unknown
 		enabled: false,
 		metadata: {
 			extension_version: "test",
-			cline_type: "test",
+			sekokuva_ca_type: "test",
 			platform: "test",
 			platform_version: "test",
 			os_type: "test",
@@ -489,19 +489,19 @@ export async function resolveProviderConfig(
 	return { modelId, knownModels }
 }
 
-export interface ClineRecommendedModel {
+export interface SekoKuvaRecommendedModel {
 	id: string
 	name: string
 	description: string
 	tags: string[]
 }
 
-export interface ClineRecommendedModelsData {
-	recommended: ClineRecommendedModel[]
-	free: ClineRecommendedModel[]
+export interface SekoKuvaRecommendedModelsData {
+	recommended: SekoKuvaRecommendedModel[]
+	free: SekoKuvaRecommendedModel[]
 }
 
-export const FALLBACK_CLINE_RECOMMENDED_MODELS: ClineRecommendedModelsData = {
+export const FALLBACK_CLINE_RECOMMENDED_MODELS: SekoKuvaRecommendedModelsData = {
 	recommended: [
 		{
 			id: "anthropic/claude-sonnet-4.6",
@@ -523,7 +523,7 @@ export const FALLBACK_CLINE_RECOMMENDED_MODELS: ClineRecommendedModelsData = {
 export async function fetchClineRecommendedModels(_options?: {
 	baseUrl?: string
 	fetchImpl?: typeof fetch
-}): Promise<ClineRecommendedModelsData> {
+}): Promise<SekoKuvaRecommendedModelsData> {
 	return { recommended: [], free: [] }
 }
 

@@ -39,7 +39,7 @@ vi.mock("@/registry", () => ({
 	ExtensionRegistryInfo: { version: "9.9.9" },
 }))
 
-import { registerClineClientIdentity } from "./ClineClientIdentity"
+import { registerClineClientIdentity } from "./SekoKuvaClientIdentity"
 
 describe("registerClineClientIdentity", () => {
 	beforeEach(() => {

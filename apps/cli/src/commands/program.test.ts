@@ -19,8 +19,8 @@ describe("root option help text", () => {
 
 	beforeAll(() => {
 		// Pin the resolver inputs so the defaults below are the true defaults
-		// (no CLINE_DIR/CLINE_DATA_DIR overrides, known home directory).
-		for (const key of ["CLINE_DIR", "CLINE_DATA_DIR"]) {
+		// (no SEKOKUVA_CA_DIR/SEKOKUVA_CA_DATA_DIR overrides, known home directory).
+		for (const key of ["SEKOKUVA_CA_DIR", "SEKOKUVA_CA_DATA_DIR"]) {
 			savedEnv[key] = process.env[key];
 			delete process.env[key];
 		}

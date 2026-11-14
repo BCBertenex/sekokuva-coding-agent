@@ -71,7 +71,7 @@ export async function clearSdkRemoteConfig(
 }
 
 async function ensureGlobalRemoteConfigWorkspacePath(): Promise<string> {
-	const clineDir = process.env.CLINE_DIR || path.join(os.homedir(), ".cline")
+	const clineDir = process.env.SEKOKUVA_CA_DIR || path.join(os.homedir(), ".cline")
 	const workspacePath = path.join(clineDir, "data", "remote-config-workspace")
 	await fs.mkdir(workspacePath, { recursive: true })
 	return workspacePath

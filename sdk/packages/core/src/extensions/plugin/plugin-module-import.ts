@@ -303,7 +303,7 @@ function getHostPackageSearchRoots(): string[] {
 	const roots = [MODULE_DIR];
 	const runtimeDirectory = resolvePluginRuntimeDirectory();
 	if (runtimeDirectory) roots.unshift(runtimeDirectory);
-	const wrapperPath = process.env.CLINE_WRAPPER_PATH?.trim();
+	const wrapperPath = process.env.SEKOKUVA_CA_WRAPPER_PATH?.trim();
 	if (wrapperPath) {
 		roots.push(dirname(dirname(wrapperPath)));
 	}

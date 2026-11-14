@@ -82,7 +82,7 @@ function isChildAvailable(child: ChildProcess): boolean {
 	return isChildRunning(child) && child.connected;
 }
 
-export const CLINE_JS_RUNTIME_PATH_ENV = "CLINE_JS_RUNTIME_PATH";
+export const SEKOKUVA_CA_JS_RUNTIME_PATH_ENV = "SEKOKUVA_CA_JS_RUNTIME_PATH";
 
 function isRuntimeExecutable(value: string | undefined): boolean {
 	const trimmed = value?.trim();
@@ -130,7 +130,7 @@ export function resolveSubprocessRuntimeExecutable(
 ): string {
 	const env = options.env ?? process.env;
 	const explicit =
-		options.runtimeExecutable?.trim() || env[CLINE_JS_RUNTIME_PATH_ENV]?.trim();
+		options.runtimeExecutable?.trim() || env[SEKOKUVA_CA_JS_RUNTIME_PATH_ENV]?.trim();
 	if (explicit) {
 		return explicit;
 	}

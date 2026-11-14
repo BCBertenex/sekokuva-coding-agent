@@ -1,5 +1,5 @@
 import {
-	type ClineSubscriptionPlan,
+	type SekoKuvaSubscriptionPlan,
 	extractClineFreeModelLimitResetTime,
 	extractClinePassLimitMessage,
 	getClineOrgIndividualInferenceSubscriptionMessage,
@@ -41,13 +41,13 @@ export function getCliClinePassLimitMessage(message: string): string {
 	return lines.filter((line) => line.trim().length > 0).join("\n");
 }
 
-const CLINE_FREE_MODEL_PREFIX = "cline-free/";
-const CLINE_FREE_PROMOTION_ENDED_HEADER = "Free model promotion ended";
-const CLINE_FREE_MODEL_LIMIT_HEADER = "Daily free model limit reached";
+const SEKOKUVA_CA_FREE_MODEL_PREFIX = "cline-free/";
+const SEKOKUVA_CA_FREE_PROMOTION_ENDED_HEADER = "Free model promotion ended";
+const SEKOKUVA_CA_FREE_MODEL_LIMIT_HEADER = "Daily free model limit reached";
 
 export function getCliClineFreePromotionEndedMessage(): string {
 	return [
-		CLINE_FREE_PROMOTION_ENDED_HEADER,
+		SEKOKUVA_CA_FREE_PROMOTION_ENDED_HEADER,
 		"The free promotion for this model has ended and it is no longer available.",
 		"Select another model to continue.",
 		"Open the model selector with /model.",
@@ -57,7 +57,7 @@ export function getCliClineFreePromotionEndedMessage(): string {
 export function getCliClineFreeModelLimitMessage(message: string): string {
 	const resetTime = extractClineFreeModelLimitResetTime(message);
 	return [
-		CLINE_FREE_MODEL_LIMIT_HEADER,
+		SEKOKUVA_CA_FREE_MODEL_LIMIT_HEADER,
 		"You've reached today's free usage limit for this model.",
 		resetTime
 			? `Try again in ${resetTime} or select another model.`
@@ -67,7 +67,7 @@ export function getCliClineFreeModelLimitMessage(message: string): string {
 }
 
 export function getIndividualPlanFeatures(
-	plans: ClineSubscriptionPlan[],
+	plans: SekoKuvaSubscriptionPlan[],
 ): string[] {
 	const planWithFeatures = plans.find((plan) => plan.interval === "Monthly");
 
@@ -88,7 +88,7 @@ export function isClinePassSubscriptionError(error: unknown): boolean {
 	}
 	if (error instanceof Error) {
 		return (
-			error.name === "ClineNotSubscribedError" ||
+			error.name === "SekoKuvaNotSubscribedError" ||
 			isClineNotSubscribedMessage(error.message) ||
 			isFormattedClinePassSubscriptionMessage(error.message)
 		);
@@ -108,7 +108,7 @@ export function isClineOrgIndividualInferenceSubscriptionErrorMessage(
 	}
 	if (error instanceof Error) {
 		return (
-			error.name === "ClineOrgIndividualInferenceSubscriptionError" ||
+			error.name === "SekoKuvaOrgIndividualInferenceSubscriptionError" ||
 			isClineOrgIndividualInferenceSubscriptionMessage(error.message) ||
 			error.message === getClineOrgIndividualInferenceSubscriptionMessage()
 		);
@@ -134,7 +134,7 @@ export function isClinePassLimitErrorMessage(error: unknown): boolean {
 	}
 	if (error instanceof Error) {
 		return (
-			error.name === "ClinePassLimitError" ||
+			error.name === "SekoKuvaPassLimitError" ||
 			isClinePassLimitMessage(error.message)
 		);
 	}
@@ -157,11 +157,11 @@ export function isClineFreePromotionEndedErrorMessage(
 	if (
 		message
 			.toLowerCase()
-			.includes(CLINE_FREE_PROMOTION_ENDED_HEADER.toLowerCase())
+			.includes(SEKOKUVA_CA_FREE_PROMOTION_ENDED_HEADER.toLowerCase())
 	) {
 		return true;
 	}
-	if (!modelId?.startsWith(CLINE_FREE_MODEL_PREFIX)) {
+	if (!modelId?.startsWith(SEKOKUVA_CA_FREE_MODEL_PREFIX)) {
 		return false;
 	}
 	return isClineModelNotFoundMessage(message);
@@ -173,7 +173,7 @@ export function isClineFreeModelLimitErrorMessage(error: unknown): boolean {
 	}
 	if (error instanceof Error) {
 		return (
-			error.name === "ClineFreeModelLimitError" ||
+			error.name === "SekoKuvaFreeModelLimitError" ||
 			isClineFreeModelLimitMessage(error.message)
 		);
 	}
@@ -181,7 +181,7 @@ export function isClineFreeModelLimitErrorMessage(error: unknown): boolean {
 		typeof error === "string" &&
 		(error
 			.toLowerCase()
-			.includes(CLINE_FREE_MODEL_LIMIT_HEADER.toLowerCase()) ||
+			.includes(SEKOKUVA_CA_FREE_MODEL_LIMIT_HEADER.toLowerCase()) ||
 			isClineFreeModelLimitMessage(error))
 	);
 }

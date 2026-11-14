@@ -20,7 +20,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "@microsoft/tui-test";
 import {
-	CLINE_BIN,
+	SEKOKUVA_CA_BIN,
 	EXIT_CODE_SUCCESS,
 	TERMINAL_WIDE,
 } from "../helpers/constants.js";
@@ -52,13 +52,13 @@ test.describe("per-turn metrics in messages.json — multi-iteration @live", () 
 	const sessionDataDir = mkdtempSync(join(tmpdir(), "cline-per-turn-metrics-"));
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["--json", "run echo hello then summarize"],
 		},
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/per-turn-metrics.json",
-			CLINE_SESSION_DATA_DIR: sessionDataDir,
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/per-turn-metrics.json",
+			SEKOKUVA_CA_SESSION_DATA_DIR: sessionDataDir,
 		}),
 	});
 

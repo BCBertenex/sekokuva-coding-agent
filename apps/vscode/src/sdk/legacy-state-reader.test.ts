@@ -47,51 +47,51 @@ describe("resolveDataDir", () => {
 		expect(resolveDataDir("/custom/path")).toBe("/custom/path")
 	})
 
-	it("falls back to CLINE_DATA_DIR env", () => {
-		const original = process.env.CLINE_DATA_DIR
-		process.env.CLINE_DATA_DIR = "/env/data"
+	it("falls back to SEKOKUVA_CA_DATA_DIR env", () => {
+		const original = process.env.SEKOKUVA_CA_DATA_DIR
+		process.env.SEKOKUVA_CA_DATA_DIR = "/env/data"
 		try {
 			expect(resolveDataDir()).toBe("/env/data")
 		} finally {
-			process.env.CLINE_DATA_DIR = original
+			process.env.SEKOKUVA_CA_DATA_DIR = original
 		}
 	})
 
-	it("trims a whitespace-padded CLINE_DATA_DIR like createStorageContext", () => {
-		const original = process.env.CLINE_DATA_DIR
-		process.env.CLINE_DATA_DIR = "  /env/data  "
+	it("trims a whitespace-padded SEKOKUVA_CA_DATA_DIR like createStorageContext", () => {
+		const original = process.env.SEKOKUVA_CA_DATA_DIR
+		process.env.SEKOKUVA_CA_DATA_DIR = "  /env/data  "
 		try {
 			expect(resolveDataDir()).toBe("/env/data")
 		} finally {
-			process.env.CLINE_DATA_DIR = original
+			process.env.SEKOKUVA_CA_DATA_DIR = original
 		}
 	})
 
-	it("falls back to CLINE_DIR/data", () => {
-		const originalData = process.env.CLINE_DATA_DIR
-		const originalDir = process.env.CLINE_DIR
-		delete process.env.CLINE_DATA_DIR
-		process.env.CLINE_DIR = "/cline"
+	it("falls back to SEKOKUVA_CA_DIR/data", () => {
+		const originalData = process.env.SEKOKUVA_CA_DATA_DIR
+		const originalDir = process.env.SEKOKUVA_CA_DIR
+		delete process.env.SEKOKUVA_CA_DATA_DIR
+		process.env.SEKOKUVA_CA_DIR = "/cline"
 		try {
 			// path.join keeps the platform separator (\ on Windows), so compare
 			// against a joined path rather than a hardcoded POSIX string.
 			expect(resolveDataDir()).toBe(path.join("/cline", "data"))
 		} finally {
-			process.env.CLINE_DATA_DIR = originalData
-			process.env.CLINE_DIR = originalDir
+			process.env.SEKOKUVA_CA_DATA_DIR = originalData
+			process.env.SEKOKUVA_CA_DIR = originalDir
 		}
 	})
 
 	it("falls back to ~/.cline/data", () => {
-		const originalData = process.env.CLINE_DATA_DIR
-		const originalDir = process.env.CLINE_DIR
-		delete process.env.CLINE_DATA_DIR
-		delete process.env.CLINE_DIR
+		const originalData = process.env.SEKOKUVA_CA_DATA_DIR
+		const originalDir = process.env.SEKOKUVA_CA_DIR
+		delete process.env.SEKOKUVA_CA_DATA_DIR
+		delete process.env.SEKOKUVA_CA_DIR
 		try {
 			expect(resolveDataDir()).toBe(path.join(os.homedir(), ".cline", "data"))
 		} finally {
-			process.env.CLINE_DATA_DIR = originalData
-			process.env.CLINE_DIR = originalDir
+			process.env.SEKOKUVA_CA_DATA_DIR = originalData
+			process.env.SEKOKUVA_CA_DIR = originalDir
 		}
 	})
 })

@@ -297,10 +297,10 @@ export function AgentPullRequestBar({
 											title={`${pr.additions} additions, ${pr.deletions} deletions`}
 										>
 											<span className="cline-ui-pr-bar__tone--success text-cline-ui-success-text">
-												+{pr.additions.toLocaleString()}
+												+{pr.additions.toLocaleString("en-US")}
 											</span>{" "}
 											<span className="cline-ui-pr-bar__tone--failure text-cline-ui-error-text">
-												−{pr.deletions.toLocaleString()}
+												−{pr.deletions.toLocaleString("en-US")}
 											</span>
 										</span>
 									)}

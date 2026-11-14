@@ -47,13 +47,13 @@ const DEFAULT_HTTP_TIMEOUT_MS = 30 * 1000;
 const DEFAULT_DEVICE_AUTH_EXPIRES_IN_SECONDS = 300;
 const DEFAULT_DEVICE_AUTH_INTERVAL_SECONDS = 5;
 
-export type ClineTokenResolution = {
+export type SekoKuvaTokenResolution = {
 	forceRefresh?: boolean;
 	refreshBufferMs?: number;
 	retryableTokenGraceMs?: number;
 };
 
-interface ClineAuthApiUser {
+interface SekoKuvaAuthApiUser {
 	subject: string | null;
 	email: string;
 	name: string;
@@ -61,17 +61,17 @@ interface ClineAuthApiUser {
 	accounts: string[] | null;
 }
 
-interface ClineAuthResponseData {
+interface SekoKuvaAuthResponseData {
 	accessToken: string;
 	refreshToken?: string;
 	tokenType: string;
 	expiresAt: string;
-	userInfo: ClineAuthApiUser;
+	userInfo: SekoKuvaAuthApiUser;
 }
 
-type ClineTokenResponse = {
+type SekoKuvaTokenResponse = {
 	success: boolean;
-	data: ClineAuthResponseData;
+	data: SekoKuvaAuthResponseData;
 };
 
 type HeaderMap = Record<string, string>;
@@ -88,7 +88,7 @@ type AuthCredentialTelemetryProperties = {
 type AuthTelemetryDetails = AuthTokenTelemetryClaims &
 	AuthCredentialTelemetryProperties;
 
-export interface ClineOAuthProviderOptions {
+export interface SekoKuvaOAuthProviderOptions {
 	apiBaseUrl: string;
 	headers?: HeaderInput;
 	requestTimeoutMs?: number;
@@ -102,16 +102,16 @@ export interface ClineOAuthProviderOptions {
 	provider?: string;
 }
 
-export interface ClineOAuthCredentials extends OAuthCredentials {
+export interface SekoKuvaOAuthCredentials extends OAuthCredentials {
 	metadata?: {
 		provider?: string;
 		tokenType?: string;
-		userInfo?: ClineAuthApiUser;
+		userInfo?: SekoKuvaAuthApiUser;
 		[key: string]: unknown;
 	};
 }
 
-class ClineOAuthTokenError extends Error {
+class SekoKuvaOAuthTokenError extends Error {
 	public readonly status?: number;
 	public readonly errorCode?: string;
 	public readonly requestId?: string;
@@ -121,7 +121,7 @@ class ClineOAuthTokenError extends Error {
 		opts?: { status?: number; errorCode?: string; requestId?: string },
 	) {
 		super(message);
-		this.name = "ClineOAuthTokenError";
+		this.name = "SekoKuvaOAuthTokenError";
 		this.status = opts?.status;
 		this.errorCode = opts?.errorCode;
 		this.requestId = opts?.requestId;
@@ -150,10 +150,10 @@ function toEpochMs(isoDateTime: string): number {
 }
 
 function toClineCredentials(
-	responseData: ClineAuthResponseData,
+	responseData: SekoKuvaAuthResponseData,
 	provider: string | undefined,
-	fallback: Partial<ClineOAuthCredentials> = {},
-): ClineOAuthCredentials {
+	fallback: Partial<SekoKuvaOAuthCredentials> = {},
+): SekoKuvaOAuthCredentials {
 	const accountId = responseData.userInfo.clineUserId ?? fallback.accountId;
 	const refreshToken = responseData.refreshToken ?? fallback.refresh;
 	if (!refreshToken) {
@@ -207,7 +207,7 @@ function getAuthTokenTelemetryClaims(token: string): AuthTokenTelemetryClaims {
 }
 
 function getAuthCredentialTelemetryProperties(
-	credentials: ClineOAuthCredentials,
+	credentials: SekoKuvaOAuthCredentials,
 ): AuthCredentialTelemetryProperties {
 	const authProperties: AuthCredentialTelemetryProperties = {};
 
@@ -225,7 +225,7 @@ function getAuthCredentialTelemetryProperties(
 }
 
 function getAuthTelemetryDetails(
-	credentials: ClineOAuthCredentials,
+	credentials: SekoKuvaOAuthCredentials,
 ): AuthTelemetryDetails {
 	return {
 		...getAuthTokenTelemetryClaims(credentials.access),
@@ -260,9 +260,9 @@ type WorkOSTokenSuccess = {
 };
 
 function requireClineTokenResponse(
-	payload: ClineTokenResponse,
+	payload: SekoKuvaTokenResponse,
 	message: string,
-): ClineAuthResponseData {
+): SekoKuvaAuthResponseData {
 	if (!payload.success || !payload.data?.accessToken) {
 		throw new Error(message);
 	}
@@ -304,7 +304,7 @@ async function requestWorkOSDeviceAuthorization(
 		.json()
 		.catch(() => ({}))) as WorkOSDeviceAuthorizationResponse;
 	if (!response.ok) {
-		throw new ClineOAuthTokenError(
+		throw new SekoKuvaOAuthTokenError(
 			`Device authorization failed: ${response.status}${json.error_description ? ` - ${json.error_description}` : ""}`,
 			{
 				status: response.status,
@@ -399,7 +399,7 @@ async function pollWorkOSTokens(options: {
 			case "access_denied":
 			case "expired_token":
 			case "invalid_grant": {
-				throw new ClineOAuthTokenError(
+				throw new SekoKuvaOAuthTokenError(
 					payload.error_description || "WorkOS authorization failed",
 					{
 						status: response.status,
@@ -409,7 +409,7 @@ async function pollWorkOSTokens(options: {
 				);
 			}
 			default: {
-				throw new ClineOAuthTokenError(
+				throw new SekoKuvaOAuthTokenError(
 					`WorkOS token polling failed: ${response.status}${payload.error_description ? ` - ${payload.error_description}` : ""}`,
 					{
 						status: response.status,
@@ -428,10 +428,10 @@ async function pollWorkOSTokens(options: {
 
 async function registerWorkOSTokens(
 	workosTokens: WorkOSTokenSuccess,
-	options: ClineOAuthProviderOptions,
+	options: SekoKuvaOAuthProviderOptions,
 	provider?: string,
 	signal?: AbortSignal,
-): Promise<ClineOAuthCredentials> {
+): Promise<SekoKuvaOAuthCredentials> {
 	const body = {
 		accessToken: workosTokens.accessToken,
 		refreshToken: workosTokens.refreshToken,
@@ -458,7 +458,7 @@ async function registerWorkOSTokens(
 	if (!response.ok) {
 		const text = await response.text().catch(() => "");
 		const details = parseOAuthError(text);
-		throw new ClineOAuthTokenError(
+		throw new SekoKuvaOAuthTokenError(
 			`Token registration failed: ${response.status}${details.message ? ` - ${details.message}` : ""}`,
 			{
 				status: response.status,
@@ -468,7 +468,7 @@ async function registerWorkOSTokens(
 		);
 	}
 
-	const json = (await response.json()) as ClineTokenResponse;
+	const json = (await response.json()) as SekoKuvaTokenResponse;
 	return toClineCredentials(
 		requireClineTokenResponse(json, "Invalid token exchange response"),
 		provider ?? options.provider,
@@ -479,9 +479,9 @@ async function registerWorkOSTokens(
 async function exchangeAuthorizationCode(
 	code: string,
 	callbackUrl: string,
-	options: ClineOAuthProviderOptions,
+	options: SekoKuvaOAuthProviderOptions,
 	provider?: string,
-): Promise<ClineOAuthCredentials> {
+): Promise<SekoKuvaOAuthCredentials> {
 	const body = {
 		grant_type: "authorization_code",
 		code,
@@ -508,7 +508,7 @@ async function exchangeAuthorizationCode(
 	if (!response.ok) {
 		const text = await response.text().catch(() => "");
 		const details = parseOAuthError(text);
-		throw new ClineOAuthTokenError(
+		throw new SekoKuvaOAuthTokenError(
 			`Token exchange failed: ${response.status}${details.message ? ` - ${details.message}` : ""}`,
 			{
 				status: response.status,
@@ -518,7 +518,7 @@ async function exchangeAuthorizationCode(
 		);
 	}
 
-	const json = (await response.json()) as ClineTokenResponse;
+	const json = (await response.json()) as SekoKuvaTokenResponse;
 	return toClineCredentials(
 		requireClineTokenResponse(json, "Invalid token exchange response"),
 		provider ?? options.provider,
@@ -527,10 +527,10 @@ async function exchangeAuthorizationCode(
 }
 
 export async function loginClineOAuth(
-	options: ClineOAuthProviderOptions & {
+	options: SekoKuvaOAuthProviderOptions & {
 		callbacks: OAuthLoginCallbacks;
 	},
-): Promise<ClineOAuthCredentials> {
+): Promise<SekoKuvaOAuthCredentials> {
 	captureAuthStarted(options.telemetry, options.provider ?? "cline");
 	const useWorkOSDeviceAuth = options.useWorkOSDeviceAuth ?? true;
 	const callbackPorts = options.callbackPorts?.length
@@ -550,7 +550,7 @@ export async function loginClineOAuth(
 		`http://127.0.0.1:${callbackPorts[0] ?? DEFAULT_CALLBACK_PORTS[0]}${callbackPath}`;
 
 	try {
-		let credentials: ClineOAuthCredentials;
+		let credentials: SekoKuvaOAuthCredentials;
 		if (useWorkOSDeviceAuth) {
 			const clientId = getClineEnvironmentConfig().workOsClientId;
 			const deviceAuthorization = await requestWorkOSDeviceAuthorization(
@@ -643,7 +643,7 @@ export async function loginClineOAuth(
 			error instanceof Error ? error.message : String(error),
 			{
 				requestId:
-					error instanceof ClineOAuthTokenError ? error.requestId : undefined,
+					error instanceof SekoKuvaOAuthTokenError ? error.requestId : undefined,
 			},
 		);
 		throw error;
@@ -679,7 +679,7 @@ export async function completeClineDeviceAuth(options: {
 	headers?: HeaderInput;
 	requestTimeoutMs?: number;
 	telemetry?: ITelemetryService;
-}): Promise<ClineOAuthCredentials> {
+}): Promise<SekoKuvaOAuthCredentials> {
 	const providerName = options.provider ?? "cline";
 	captureAuthStarted(options.telemetry, providerName);
 	try {
@@ -721,7 +721,7 @@ export async function completeClineDeviceAuth(options: {
 			error instanceof Error ? error.message : String(error),
 			{
 				requestId:
-					error instanceof ClineOAuthTokenError ? error.requestId : undefined,
+					error instanceof SekoKuvaOAuthTokenError ? error.requestId : undefined,
 			},
 		);
 		throw error;
@@ -729,9 +729,9 @@ export async function completeClineDeviceAuth(options: {
 }
 
 export async function refreshClineToken(
-	current: ClineOAuthCredentials,
-	options: ClineOAuthProviderOptions,
-): Promise<ClineOAuthCredentials> {
+	current: SekoKuvaOAuthCredentials,
+	options: SekoKuvaOAuthProviderOptions,
+): Promise<SekoKuvaOAuthCredentials> {
 	const refreshUrl = resolveUrl(
 		options.apiBaseUrl,
 		DEFAULT_AUTH_ENDPOINTS.refresh,
@@ -761,13 +761,13 @@ export async function refreshClineToken(
 		sdkDebug(
 			`cline.refresh.error status=${response.status} errorCode=${details.code ?? "none"} message=${details.message ?? "none"} requestId=${requestId ?? "none"}`,
 		);
-		throw new ClineOAuthTokenError(
+		throw new SekoKuvaOAuthTokenError(
 			`Token refresh failed: ${response.status}${details.message ? ` - ${details.message}` : ""}`,
 			{ status: response.status, errorCode: details.code, requestId },
 		);
 	}
 
-	const json = (await response.json()) as ClineTokenResponse;
+	const json = (await response.json()) as SekoKuvaTokenResponse;
 	const provider =
 		(current.metadata?.provider as string | undefined) ?? options.provider;
 	const result = toClineCredentials(
@@ -790,10 +790,10 @@ export async function refreshClineToken(
  * stored credentials untouched and retry later.
  */
 export async function getValidClineCredentials(
-	currentCredentials: ClineOAuthCredentials | null,
-	providerOptions: ClineOAuthProviderOptions,
-	options?: ClineTokenResolution,
-): Promise<ClineOAuthCredentials | null> {
+	currentCredentials: SekoKuvaOAuthCredentials | null,
+	providerOptions: SekoKuvaOAuthProviderOptions,
+	options?: SekoKuvaTokenResolution,
+): Promise<SekoKuvaOAuthCredentials | null> {
 	if (!currentCredentials) {
 		sdkDebug("cline.getCredentials outcome=no_current_credentials");
 		return null;
@@ -823,18 +823,18 @@ export async function getValidClineCredentials(
 	} catch (error) {
 		const authTelemetryDetails = getAuthTelemetryDetails(currentCredentials);
 		const requestIdDetails =
-			error instanceof ClineOAuthTokenError && error.requestId
+			error instanceof SekoKuvaOAuthTokenError && error.requestId
 				? { request_id: error.requestId }
 				: {};
 		const failureDetails = {
-			status: error instanceof ClineOAuthTokenError ? error.status : undefined,
+			status: error instanceof SekoKuvaOAuthTokenError ? error.status : undefined,
 			errorCode:
-				error instanceof ClineOAuthTokenError ? error.errorCode : undefined,
+				error instanceof SekoKuvaOAuthTokenError ? error.errorCode : undefined,
 			...requestIdDetails,
 			...authTelemetryDetails,
 			errorName: error instanceof Error ? error.name : undefined,
 		};
-		if (error instanceof ClineOAuthTokenError && error.isLikelyInvalidGrant()) {
+		if (error instanceof SekoKuvaOAuthTokenError && error.isLikelyInvalidGrant()) {
 			sdkDebug(
 				`cline.getCredentials outcome=invalid_grant status=${error.status} errorCode=${error.errorCode ?? "none"}`,
 			);

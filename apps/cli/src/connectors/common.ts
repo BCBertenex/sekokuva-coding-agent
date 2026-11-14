@@ -19,15 +19,15 @@ import {
 	resolveClineDataDir,
 } from "@sekokuva-ca/core";
 import {
-	CLINE_RUN_AS_HUB_DAEMON_ENV,
+	SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV,
 	withResolvedClineBuildEnv,
 } from "@sekokuva-ca/shared";
 import { createCliLoggerAdapter } from "../logging/adapter";
 import { logSpawnedProcess } from "../logging/process";
 import { resolveCliLaunchSpec } from "../utils/internal-launch";
 
-export const CLINE_CONNECTOR_DETACHED_CHILD_ENV =
-	"CLINE_CONNECTOR_DETACHED_CHILD";
+export const SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV =
+	"SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD";
 
 /**
  * Internal success from a detached connect when an instance is already running.
@@ -164,9 +164,9 @@ function buildDetachedConnectorEnv(
 	const childEnv = {
 		...withResolvedClineBuildEnv(env),
 		[childEnvKey]: "1",
-		[CLINE_CONNECTOR_DETACHED_CHILD_ENV]: "1",
+		[SEKOKUVA_CA_CONNECTOR_DETACHED_CHILD_ENV]: "1",
 	};
-	delete childEnv[CLINE_RUN_AS_HUB_DAEMON_ENV];
+	delete childEnv[SEKOKUVA_CA_RUN_AS_HUB_DAEMON_ENV];
 	return childEnv;
 }
 

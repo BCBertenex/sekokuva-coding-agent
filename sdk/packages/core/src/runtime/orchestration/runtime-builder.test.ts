@@ -15,7 +15,7 @@ import {
 	type Message,
 } from "@sekokuva-ca/shared";
 import { setHomeDir } from "@sekokuva-ca/shared/storage";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createUserInstructionConfigService } from "../../extensions/config";
 import { PLAN_MODE_COMMAND_GUARD_EXTENSION_NAME } from "../../extensions/tools/command-guard-extension";
 import { TelemetryService } from "../../services/telemetry/TelemetryService";
@@ -63,13 +63,32 @@ async function collectExtensionTools(
 
 describe("DefaultRuntimeBuilder", () => {
 	const previousHome = process.env.HOME;
-	const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+	const previousGlobalSettingsPath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH;
+	const previousMcpSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 	const tempDirs: string[] = [];
+
+	// Point the MCP settings lookup at a path that does not exist so the suite
+	// never reads the developer's real `~/.cline/data/settings` file. Without
+	// this, a machine with a configured stdio server makes unrelated tests
+	// spawn it (and hang) instead of exercising the code under test.
+	beforeEach(() => {
+		const isolatedRoot = mkdtempSync(join(tmpdir(), "runtime-builder-mcp-"));
+		tempDirs.push(isolatedRoot);
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(
+			isolatedRoot,
+			"cline_mcp_settings.json",
+		);
+	});
 
 	afterEach(() => {
 		process.env.HOME = previousHome;
 		setHomeDir(previousHome ?? "~");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		if (previousMcpSettingsPath === undefined) {
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
+		} else {
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousMcpSettingsPath;
+		}
 		for (const dir of tempDirs.splice(0)) {
 			rmSync(dir, { recursive: true, force: true });
 		}
@@ -135,7 +154,7 @@ describe("DefaultRuntimeBuilder", () => {
 	it("enables provider web search by default without a local executor", async () => {
 		const settingsRoot = mkdtempSync(join(tmpdir(), "cline-model-tools-"));
 		tempDirs.push(settingsRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			settingsRoot,
 			"global-settings.json",
 		);
@@ -153,7 +172,7 @@ describe("DefaultRuntimeBuilder", () => {
 	it("excludes provider web search in yolo mode", async () => {
 		const settingsRoot = mkdtempSync(join(tmpdir(), "cline-model-tools-"));
 		tempDirs.push(settingsRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			settingsRoot,
 			"global-settings.json",
 		);
@@ -168,12 +187,12 @@ describe("DefaultRuntimeBuilder", () => {
 	it("honors an explicit web search opt-out", async () => {
 		const settingsRoot = mkdtempSync(join(tmpdir(), "cline-model-tools-"));
 		tempDirs.push(settingsRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = join(
 			settingsRoot,
 			"global-settings.json",
 		);
 		writeFileSync(
-			process.env.CLINE_GLOBAL_SETTINGS_PATH,
+			process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH,
 			JSON.stringify({ tools: { web_search: { enabled: false } } }),
 		);
 
@@ -524,7 +543,7 @@ Use the review guidance.`,
 	it("omits tools disabled by global settings from the advertised runtime tool list", async () => {
 		const tempRoot = mkdtempSync(join(tmpdir(), "runtime-builder-global-"));
 		const settingsPath = join(tempRoot, "global-settings.json");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = settingsPath;
 		writeFileSync(
 			settingsPath,
 			JSON.stringify({ disabledTools: ["search_codebase"] }, null, 2),
@@ -566,7 +585,7 @@ Use the review guidance.`,
 		const tempRoot = mkdtempSync(join(tmpdir(), "runtime-builder-mcp-"));
 		const serverPath = join(tempRoot, "mock-mcp-server.js");
 		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const previousSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 
 		writeFileSync(
 			serverPath,
@@ -619,7 +638,7 @@ process.stdin.on("data", (chunk) => {
 			"utf8",
 		);
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig(),
@@ -627,7 +646,7 @@ process.stdin.on("data", (chunk) => {
 			expect(runtime.tools.map((tool) => tool.name)).toContain("mock__echo");
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
@@ -636,7 +655,7 @@ process.stdin.on("data", (chunk) => {
 		tempDirs.push(tempRoot);
 		const serverPath = join(tempRoot, "apps-mcp-server.js");
 		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const previousSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 
 		writeFileSync(
 			serverPath,
@@ -676,7 +695,7 @@ process.stdin.on("data", (chunk) => {
 			"utf8",
 		);
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		let runtime:
 			| Awaited<ReturnType<DefaultRuntimeBuilder["build"]>>
 			| undefined;
@@ -723,10 +742,10 @@ process.stdin.on("data", (chunk) => {
 			});
 		} finally {
 			await runtime?.shutdown("test");
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig(),
@@ -734,10 +753,10 @@ process.stdin.on("data", (chunk) => {
 			expect(runtime.mcpApps).toBeUndefined();
 		} finally {
 			await runtime?.shutdown("test");
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig({
@@ -753,7 +772,7 @@ process.stdin.on("data", (chunk) => {
 			).rejects.toThrow("is disabled for this session");
 		} finally {
 			await runtime?.shutdown("test");
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 
 		const globalSettingsRoot = mkdtempSync(
@@ -766,8 +785,8 @@ process.stdin.on("data", (chunk) => {
 			JSON.stringify({ disabledTools: ["weather__refresh_view"] }),
 			"utf8",
 		);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = globalSettingsPath;
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH = globalSettingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig({ mcpApps: true }),
@@ -780,7 +799,7 @@ process.stdin.on("data", (chunk) => {
 			).rejects.toThrow("is disabled for this session");
 		} finally {
 			await runtime?.shutdown("test");
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
@@ -789,8 +808,8 @@ process.stdin.on("data", (chunk) => {
 			mkdtempSync(join(tmpdir(), "runtime-builder-agent-plugin-")),
 		);
 		tempDirs.push(tempRoot);
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
-		process.env.CLINE_MCP_SETTINGS_PATH = join(
+		const previousSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(
 			tempRoot,
 			"missing-settings.json",
 		);
@@ -916,7 +935,7 @@ process.stdin.on("data", (chunk) => {
 		} finally {
 			await runtime?.shutdown("test");
 			clientInstructionService.stop();
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
@@ -926,7 +945,7 @@ process.stdin.on("data", (chunk) => {
 		);
 		const serverPath = join(tempRoot, "mock-mcp-server.js");
 		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const previousSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 
 		writeFileSync(
 			serverPath,
@@ -978,7 +997,7 @@ process.stdin.on("data", (chunk) => {
 			"utf8",
 		);
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig({
@@ -990,7 +1009,7 @@ process.stdin.on("data", (chunk) => {
 			);
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
@@ -998,7 +1017,7 @@ process.stdin.on("data", (chunk) => {
 		const tempRoot = mkdtempSync(join(tmpdir(), "runtime-builder-mcp-bad-"));
 		const serverPath = join(tempRoot, "malformed-mcp-server.js");
 		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const previousSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 
 		writeFileSync(
 			serverPath,
@@ -1028,7 +1047,7 @@ process.stdin.on("data", (chunk) => {
 			"utf8",
 		);
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig(),
@@ -1039,7 +1058,7 @@ process.stdin.on("data", (chunk) => {
 			expect(mcpTools).toEqual([]);
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
@@ -1048,11 +1067,11 @@ process.stdin.on("data", (chunk) => {
 			join(tmpdir(), "runtime-builder-mcp-invalid-"),
 		);
 		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const previousSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 
 		writeFileSync(settingsPath, "{ not valid json !!!", "utf8");
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig(),
@@ -1061,7 +1080,7 @@ process.stdin.on("data", (chunk) => {
 			expect(mcpTools).toEqual([]);
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 

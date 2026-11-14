@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import type { ClineAccountOrganization } from "@sekokuva-ca/core";
+import type { SekoKuvaAccountOrganization } from "@sekokuva-ca/core";
 import type { AgendaTaskRecord } from "@sekokuva-ca/shared";
 import { getClineEnvironmentConfig } from "@sekokuva-ca/shared/browser";
 import { act, type ComponentProps, type ReactNode } from "react";
@@ -25,7 +25,7 @@ const { invokeMock, subscribeMock, accountRef, openExternalUrlMock } =
 		),
 		accountRef: {
 			user: null as { id: string } | null,
-			activeOrganization: null as ClineAccountOrganization | null,
+			activeOrganization: null as SekoKuvaAccountOrganization | null,
 		},
 	}));
 

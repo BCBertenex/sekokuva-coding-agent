@@ -968,7 +968,7 @@ describe("resolveCompatibleLocalHubUrl", () => {
 	afterEach(() => {
 		vi.unstubAllGlobals();
 		vi.unstubAllEnvs();
-		delete process.env.CLINE_HUB_BUILD_ID;
+		delete process.env.SEKOKUVA_CA_HUB_BUILD_ID;
 		vi.resetModules();
 	});
 
@@ -1123,7 +1123,7 @@ describe("resolveCompatibleLocalHubUrl", () => {
 	});
 
 	it("attaches to a managed hub from a newer build instead of retiring it", async () => {
-		vi.stubEnv("CLINE_HUB_BUILD_EPOCH_MS", "1000");
+		vi.stubEnv("SEKOKUVA_CA_HUB_BUILD_EPOCH_MS", "1000");
 		const clearHubDiscoveryMock = vi.fn();
 		vi.doMock("../discovery/workspace", () => ({
 			resolveProductionHubOwnerContext: () => ({
@@ -1464,8 +1464,8 @@ describe("resolveCompatibleLocalHubUrl", () => {
 
 	it("resolves managed shared discovery in development builds", async () => {
 		vi.stubGlobal("WebSocket", MockWebSocket);
-		const originalBuildEnv = process.env.CLINE_BUILD_ENV;
-		process.env.CLINE_BUILD_ENV = "development";
+		const originalBuildEnv = process.env.SEKOKUVA_CA_BUILD_ENV;
+		process.env.SEKOKUVA_CA_BUILD_ENV = "development";
 		const record = {
 			hubId: "hub-test",
 			protocolVersion: "v1",
@@ -1524,9 +1524,9 @@ describe("resolveCompatibleLocalHubUrl", () => {
 			);
 		} finally {
 			if (originalBuildEnv === undefined) {
-				delete process.env.CLINE_BUILD_ENV;
+				delete process.env.SEKOKUVA_CA_BUILD_ENV;
 			} else {
-				process.env.CLINE_BUILD_ENV = originalBuildEnv;
+				process.env.SEKOKUVA_CA_BUILD_ENV = originalBuildEnv;
 			}
 		}
 	});

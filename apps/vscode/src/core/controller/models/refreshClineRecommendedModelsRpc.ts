@@ -25,7 +25,7 @@ export async function refreshClineRecommendedModelsRpc(
 				tags: model.tags,
 			}),
 		),
-		clinePass: (models.clinePass ?? []).map((model) =>
+		clinePass: (models.sekokuvaCaPass ?? []).map((model) =>
 			ClineRecommendedModel.create({
 				id: model.id,
 				name: model.name,
@@ -33,7 +33,7 @@ export async function refreshClineRecommendedModelsRpc(
 				tags: model.tags,
 			}),
 		),
-		clineCloud: (models.clineCloud ?? []).map((model) =>
+		clineCloud: (models.sekokuvaCaCloud ?? []).map((model) =>
 			ClineRecommendedModel.create({
 				id: model.id,
 				name: model.name,

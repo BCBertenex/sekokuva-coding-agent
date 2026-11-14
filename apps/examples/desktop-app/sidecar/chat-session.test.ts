@@ -982,8 +982,8 @@ describe("session forks", () => {
 	it("allows a workspace restore after a queued turn completes through the event stream", async () => {
 		const sessionId = `queued-turn-session-${Date.now()}`;
 		const dataDir = mkdtempSync(join(tmpdir(), "cline-queued-restore-"));
-		const originalDataDir = process.env.CLINE_SESSION_DATA_DIR;
-		process.env.CLINE_SESSION_DATA_DIR = dataDir;
+		const originalDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
+		process.env.SEKOKUVA_CA_SESSION_DATA_DIR = dataDir;
 		try {
 			const restore = vi.fn(async () => ({
 				sessionId,
@@ -1051,9 +1051,9 @@ describe("session forks", () => {
 			expect(restore).toHaveBeenCalledTimes(1);
 		} finally {
 			if (originalDataDir === undefined) {
-				delete process.env.CLINE_SESSION_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 			} else {
-				process.env.CLINE_SESSION_DATA_DIR = originalDataDir;
+				process.env.SEKOKUVA_CA_SESSION_DATA_DIR = originalDataDir;
 			}
 			rmSync(dataDir, { force: true, recursive: true });
 		}
@@ -1247,7 +1247,7 @@ describe("first-send connection updates", () => {
 		"queue",
 	] as const)("forwards file attachments for %s delivery", async (delivery) => {
 		const { ctx, send, sessionId } = createContext();
-		const previousSessionDataDir = process.env.CLINE_SESSION_DATA_DIR;
+		const previousSessionDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 		const testSessionDataDir = join(
 			tmpdir(),
 			`cline-desktop-attachments-${Date.now()}-${delivery ?? "immediate"}`,
@@ -1262,7 +1262,7 @@ describe("first-send connection updates", () => {
 		});
 
 		try {
-			process.env.CLINE_SESSION_DATA_DIR = testSessionDataDir;
+			process.env.SEKOKUVA_CA_SESSION_DATA_DIR = testSessionDataDir;
 			await handleChatSessionCommand(ctx, {
 				action: "send",
 				sessionId,
@@ -1293,9 +1293,9 @@ describe("first-send connection updates", () => {
 			}
 		} finally {
 			if (previousSessionDataDir === undefined) {
-				delete process.env.CLINE_SESSION_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 			} else {
-				process.env.CLINE_SESSION_DATA_DIR = previousSessionDataDir;
+				process.env.SEKOKUVA_CA_SESSION_DATA_DIR = previousSessionDataDir;
 			}
 			rmSync(testSessionDataDir, { recursive: true, force: true });
 		}
@@ -1303,14 +1303,14 @@ describe("first-send connection updates", () => {
 
 	it("deletes materialized attachments when a queued prompt is removed", async () => {
 		const { ctx, send, sessionId } = createContext();
-		const previousSessionDataDir = process.env.CLINE_SESSION_DATA_DIR;
+		const previousSessionDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 		const testSessionDataDir = join(
 			tmpdir(),
 			`cline-desktop-attachments-remove-${Date.now()}`,
 		);
 
 		try {
-			process.env.CLINE_SESSION_DATA_DIR = testSessionDataDir;
+			process.env.SEKOKUVA_CA_SESSION_DATA_DIR = testSessionDataDir;
 			const queue: Array<{
 				id: string;
 				prompt: string;
@@ -1384,9 +1384,9 @@ describe("first-send connection updates", () => {
 			).toBe(0);
 		} finally {
 			if (previousSessionDataDir === undefined) {
-				delete process.env.CLINE_SESSION_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 			} else {
-				process.env.CLINE_SESSION_DATA_DIR = previousSessionDataDir;
+				process.env.SEKOKUVA_CA_SESSION_DATA_DIR = previousSessionDataDir;
 			}
 			rmSync(testSessionDataDir, { recursive: true, force: true });
 		}
@@ -1394,14 +1394,14 @@ describe("first-send connection updates", () => {
 
 	it("deletes tracked attachments when a session is reset", async () => {
 		const { ctx, sessionId } = createContext();
-		const previousSessionDataDir = process.env.CLINE_SESSION_DATA_DIR;
+		const previousSessionDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 		const testSessionDataDir = join(
 			tmpdir(),
 			`cline-desktop-attachments-reset-${Date.now()}`,
 		);
 
 		try {
-			process.env.CLINE_SESSION_DATA_DIR = testSessionDataDir;
+			process.env.SEKOKUVA_CA_SESSION_DATA_DIR = testSessionDataDir;
 			const [queuedFile] = materializeUserFiles(sessionId, [
 				{ name: "queued.txt", content: "q" },
 			]) as string[];
@@ -1425,9 +1425,9 @@ describe("first-send connection updates", () => {
 			expect(ctx.liveSessions.has(sessionId)).toBe(false);
 		} finally {
 			if (previousSessionDataDir === undefined) {
-				delete process.env.CLINE_SESSION_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 			} else {
-				process.env.CLINE_SESSION_DATA_DIR = previousSessionDataDir;
+				process.env.SEKOKUVA_CA_SESSION_DATA_DIR = previousSessionDataDir;
 			}
 			rmSync(testSessionDataDir, { recursive: true, force: true });
 		}
@@ -1435,14 +1435,14 @@ describe("first-send connection updates", () => {
 
 	it("preserves tracked attachments across re-attach", async () => {
 		const { ctx, sessionId } = createContext();
-		const previousSessionDataDir = process.env.CLINE_SESSION_DATA_DIR;
+		const previousSessionDataDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 		const testSessionDataDir = join(
 			tmpdir(),
 			`cline-desktop-attachments-attach-${Date.now()}`,
 		);
 
 		try {
-			process.env.CLINE_SESSION_DATA_DIR = testSessionDataDir;
+			process.env.SEKOKUVA_CA_SESSION_DATA_DIR = testSessionDataDir;
 			const [queuedFile] = materializeUserFiles(sessionId, [
 				{ name: "queued.txt", content: "q" },
 			]) as string[];
@@ -1471,9 +1471,9 @@ describe("first-send connection updates", () => {
 			).toEqual([queuedFile]);
 		} finally {
 			if (previousSessionDataDir === undefined) {
-				delete process.env.CLINE_SESSION_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_SESSION_DATA_DIR;
 			} else {
-				process.env.CLINE_SESSION_DATA_DIR = previousSessionDataDir;
+				process.env.SEKOKUVA_CA_SESSION_DATA_DIR = previousSessionDataDir;
 			}
 			rmSync(testSessionDataDir, { recursive: true, force: true });
 		}
@@ -1632,12 +1632,12 @@ describe("first-send connection updates", () => {
 
 	it("restores the previous provider runtime when replacement startup fails", async () => {
 		const { ctx, send, sessionId, start, stop } = createContext();
-		const previousKanbanDataDir = process.env.CLINE_KANBAN_DATA_DIR;
+		const previousKanbanDataDir = process.env.SEKOKUVA_CA_KANBAN_DATA_DIR;
 		const testKanbanDataDir = join(
 			tmpdir(),
 			`cline-provider-rollback-${process.pid}`,
 		);
-		process.env.CLINE_KANBAN_DATA_DIR = testKanbanDataDir;
+		process.env.SEKOKUVA_CA_KANBAN_DATA_DIR = testKanbanDataDir;
 		start
 			.mockRejectedValueOnce(new Error("Codex bootstrap failed"))
 			.mockResolvedValueOnce({ sessionId });
@@ -1680,9 +1680,9 @@ describe("first-send connection updates", () => {
 			expect(send).toHaveBeenCalledOnce();
 		} finally {
 			if (previousKanbanDataDir === undefined) {
-				delete process.env.CLINE_KANBAN_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_KANBAN_DATA_DIR;
 			} else {
-				process.env.CLINE_KANBAN_DATA_DIR = previousKanbanDataDir;
+				process.env.SEKOKUVA_CA_KANBAN_DATA_DIR = previousKanbanDataDir;
 			}
 			rmSync(testKanbanDataDir, { recursive: true, force: true });
 		}
@@ -1691,12 +1691,12 @@ describe("first-send connection updates", () => {
 	it("restores the previous provider when replacement label sync fails", async () => {
 		const { ctx, send, sessionId, start, stop, updateSessionConnection } =
 			createContext();
-		const previousKanbanDataDir = process.env.CLINE_KANBAN_DATA_DIR;
+		const previousKanbanDataDir = process.env.SEKOKUVA_CA_KANBAN_DATA_DIR;
 		const testKanbanDataDir = join(
 			tmpdir(),
 			`cline-provider-label-rollback-${process.pid}`,
 		);
-		process.env.CLINE_KANBAN_DATA_DIR = testKanbanDataDir;
+		process.env.SEKOKUVA_CA_KANBAN_DATA_DIR = testKanbanDataDir;
 		try {
 			updateSessionConnection
 				.mockRejectedValueOnce(new Error("manifest write failed"))
@@ -1748,9 +1748,9 @@ describe("first-send connection updates", () => {
 			expect(start).toHaveBeenCalledTimes(2);
 		} finally {
 			if (previousKanbanDataDir === undefined) {
-				delete process.env.CLINE_KANBAN_DATA_DIR;
+				delete process.env.SEKOKUVA_CA_KANBAN_DATA_DIR;
 			} else {
-				process.env.CLINE_KANBAN_DATA_DIR = previousKanbanDataDir;
+				process.env.SEKOKUVA_CA_KANBAN_DATA_DIR = previousKanbanDataDir;
 			}
 			rmSync(testKanbanDataDir, { recursive: true, force: true });
 		}
@@ -2613,7 +2613,7 @@ Follow the user cloud workflow instructions.`,
 		const { ctx, send, sessionId } = createContext(workspace);
 
 		if (enabled) enableCloudHandoffGates();
-		else process.env.CLINE_CODE_CLOUD_AGENTS = "0";
+		else process.env.SEKOKUVA_CA_CODE_CLOUD_AGENTS = "0";
 		await handleChatSessionCommand(ctx, {
 			action: "send",
 			sessionId,

@@ -19,20 +19,20 @@ import {
 } from "node:path";
 import type { PluginManifest } from "..";
 import {
-	CLINE_CHAT_WORKSPACE_DIRECTORY_NAME,
-	CLINE_WORKSPACES_DIRECTORY_NAME,
+	SEKOKUVA_CA_CHAT_WORKSPACE_DIRECTORY_NAME,
+	SEKOKUVA_CA_WORKSPACES_DIRECTORY_NAME,
 } from "./chat-workspace-paths";
 
 // Keep the structural pieces browser-safe while exposing them through the
 // canonical Node storage-path module alongside the data-dir resolver.
 export {
-	CLINE_CHAT_WORKSPACE_DIRECTORY_NAME,
-	CLINE_WORKSPACES_DIRECTORY_NAME,
+	SEKOKUVA_CA_CHAT_WORKSPACE_DIRECTORY_NAME,
+	SEKOKUVA_CA_WORKSPACES_DIRECTORY_NAME,
 	isChatWorkspacePath,
 } from "./chat-workspace-paths";
 
 const DEPRECATED_CONFIG_DIR = ".clinerules";
-const CLINE_CONFIG_DIR = ".cline";
+const SEKOKUVA_CA_CONFIG_DIR = ".cline";
 /**
  * Claude Code's project directory. Skills authored for Claude Code live in
  * `.claude/skills`, which is documented as a supported project skill location,
@@ -80,13 +80,13 @@ export const AGENT_PLUGIN_MANIFEST_FILE_NAME = "plugin.json";
 export function resolveChatWorkspacePath(): string {
 	return join(
 		resolveClineDataDir(),
-		CLINE_WORKSPACES_DIRECTORY_NAME,
-		CLINE_CHAT_WORKSPACE_DIRECTORY_NAME,
+		SEKOKUVA_CA_WORKSPACES_DIRECTORY_NAME,
+		SEKOKUVA_CA_CHAT_WORKSPACE_DIRECTORY_NAME,
 	);
 }
 
-export const CLINE_MCP_SETTINGS_FILE_NAME = "cline_mcp_settings.json";
-export const CLINE_CONNECTOR_SETTINGS_FILE_NAME = "settings.json";
+export const SEKOKUVA_CA_MCP_SETTINGS_FILE_NAME = "cline_mcp_settings.json";
+export const SEKOKUVA_CA_CONNECTOR_SETTINGS_FILE_NAME = "settings.json";
 
 function resolveDefaultHomeDir(): string {
 	const envHome = process?.env?.HOME?.trim();
@@ -132,34 +132,34 @@ export function setHomeDirIfUnset(dir: string) {
 	HOME_DIR = trimmed;
 }
 
-let CLINE_DIR: string | undefined;
-let CLINE_DIR_SET_EXPLICITLY = false;
+let SEKOKUVA_CA_DIR: string | undefined;
+let SEKOKUVA_CA_DIR_SET_EXPLICITLY = false;
 
 export function setClineDir(dir: string): void {
 	const trimmed = dir.trim();
 	if (!trimmed) {
 		return;
 	}
-	CLINE_DIR = trimmed;
-	CLINE_DIR_SET_EXPLICITLY = true;
+	SEKOKUVA_CA_DIR = trimmed;
+	SEKOKUVA_CA_DIR_SET_EXPLICITLY = true;
 }
 
 export function setClineDirIfUnset(dir: string): void {
-	if (CLINE_DIR_SET_EXPLICITLY) {
+	if (SEKOKUVA_CA_DIR_SET_EXPLICITLY) {
 		return;
 	}
 	const trimmed = dir.trim();
 	if (!trimmed) {
 		return;
 	}
-	CLINE_DIR = trimmed;
+	SEKOKUVA_CA_DIR = trimmed;
 }
 
 export function resolveClineDir(): string {
-	if (CLINE_DIR) {
-		return CLINE_DIR;
+	if (SEKOKUVA_CA_DIR) {
+		return SEKOKUVA_CA_DIR;
 	}
-	const envDir = process.env.CLINE_DIR?.trim();
+	const envDir = process.env.SEKOKUVA_CA_DIR?.trim();
 	if (envDir) {
 		return envDir;
 	}
@@ -184,7 +184,7 @@ export function resolveDocumentsExtensionPath(
 }
 
 export function resolveClineDataDir(): string {
-	const explicitDir = process.env.CLINE_DATA_DIR?.trim();
+	const explicitDir = process.env.SEKOKUVA_CA_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
@@ -192,7 +192,7 @@ export function resolveClineDataDir(): string {
 }
 
 export function resolveSessionDataDir(): string {
-	const explicitDir = process.env.CLINE_SESSION_DATA_DIR?.trim();
+	const explicitDir = process.env.SEKOKUVA_CA_SESSION_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
@@ -200,7 +200,7 @@ export function resolveSessionDataDir(): string {
 }
 
 export function resolveTeamDataDir(): string {
-	const explicitDir = process.env.CLINE_TEAM_DATA_DIR?.trim();
+	const explicitDir = process.env.SEKOKUVA_CA_TEAM_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
@@ -208,7 +208,7 @@ export function resolveTeamDataDir(): string {
 }
 
 export function resolveConnectorDataDir(): string {
-	const explicitDir = process.env.CLINE_CONNECTOR_DATA_DIR?.trim();
+	const explicitDir = process.env.SEKOKUVA_CA_CONNECTOR_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
@@ -237,15 +237,15 @@ export function resolveConnectorLogPath(
 }
 
 export function resolveConnectorSettingsPath(): string {
-	const explicitPath = process.env.CLINE_CONNECTOR_SETTINGS_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_CONNECTOR_SETTINGS_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
-	return join(resolveConnectorDataDir(), CLINE_CONNECTOR_SETTINGS_FILE_NAME);
+	return join(resolveConnectorDataDir(), SEKOKUVA_CA_CONNECTOR_SETTINGS_FILE_NAME);
 }
 
 export function resolveDbDataDir(): string {
-	const explicitDir = process.env.CLINE_DB_DATA_DIR?.trim();
+	const explicitDir = process.env.SEKOKUVA_CA_DB_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
@@ -258,7 +258,7 @@ export function resolveDbDataDir(): string {
  * credentials/config stay decoupled from session storage.
  */
 export function resolveConnectorsDbPath(): string {
-	const explicitPath = process.env.CLINE_CONNECTORS_DB_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_CONNECTORS_DB_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
@@ -271,7 +271,7 @@ export function resolveConnectorsDbPath(): string {
  * retention, and query patterns stay decoupled from session storage.
  */
 export function resolveCronDbPath(): string {
-	const explicitPath = process.env.CLINE_CRON_DB_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_CRON_DB_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
@@ -280,7 +280,7 @@ export function resolveCronDbPath(): string {
 
 /** Path to the dedicated agenda task queue database. */
 export function resolveTasksDbPath(): string {
-	const explicitPath = process.env.CLINE_TASKS_DB_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_TASKS_DB_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
@@ -429,7 +429,7 @@ export function resolveCronEventsDir(
 }
 
 export function resolveProviderSettingsPath(): string {
-	const explicitPath = process.env.CLINE_PROVIDER_SETTINGS_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_PROVIDER_SETTINGS_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
@@ -437,7 +437,7 @@ export function resolveProviderSettingsPath(): string {
 }
 
 export function resolveGlobalSettingsPath(): string {
-	const explicitPath = process.env.CLINE_GLOBAL_SETTINGS_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_GLOBAL_SETTINGS_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
@@ -445,11 +445,11 @@ export function resolveGlobalSettingsPath(): string {
 }
 
 export function resolveMcpSettingsPath(): string {
-	const explicitPath = process.env.CLINE_MCP_SETTINGS_PATH?.trim();
+	const explicitPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
-	return join(resolveClineDataDir(), "settings", CLINE_MCP_SETTINGS_FILE_NAME);
+	return join(resolveClineDataDir(), "settings", SEKOKUVA_CA_MCP_SETTINGS_FILE_NAME);
 }
 
 function dedupePaths(paths: ReadonlyArray<string>): string[] {
@@ -471,7 +471,7 @@ function getWorkspaceSkillDirectories(workspacePath?: string): string[] {
 	}
 	return [
 		DEPRECATED_CONFIG_DIR,
-		CLINE_CONFIG_DIR,
+		SEKOKUVA_CA_CONFIG_DIR,
 		CLAUDE_CONFIG_DIR,
 		LEGACY_AGENT_SKILLS_CONFIG_DIR,
 	].map((dir) => join(workspacePath, dir, SKILLS_CONFIG_DIRECTORY_NAME));
@@ -486,7 +486,7 @@ export function resolveAgentConfigSearchPaths(
 ): string[] {
 	return dedupePaths([
 		workspacePath
-			? join(workspacePath, CLINE_CONFIG_DIR, AGENT_CONFIG_DIRECTORY_NAME)
+			? join(workspacePath, SEKOKUVA_CA_CONFIG_DIR, AGENT_CONFIG_DIRECTORY_NAME)
 			: "",
 		resolveAgentsConfigDirPath(),
 	]);
@@ -502,7 +502,7 @@ export function resolveHooksConfigSearchPaths(
 	if (workspacePath) {
 		hooks.push(
 			join(workspacePath, DEPRECATED_CONFIG_DIR, HOOKS_CONFIG_DIRECTORY_NAME),
-			join(workspacePath, CLINE_CONFIG_DIR, HOOKS_CONFIG_DIRECTORY_NAME),
+			join(workspacePath, SEKOKUVA_CA_CONFIG_DIR, HOOKS_CONFIG_DIRECTORY_NAME),
 		);
 	}
 	return dedupePaths(hooks);
@@ -538,7 +538,7 @@ export function resolveWorkspaceRulesConfigPaths(
 ): string[] {
 	return [
 		join(workspacePath, DEPRECATED_CONFIG_DIR),
-		join(workspacePath, CLINE_CONFIG_DIR, RULES_CONFIG_DIRECTORY_NAME),
+		join(workspacePath, SEKOKUVA_CA_CONFIG_DIR, RULES_CONFIG_DIRECTORY_NAME),
 	];
 }
 

@@ -14,7 +14,7 @@ function defineProcessEnv(name: string): string {
 	return JSON.stringify(process.env[name] ?? "");
 }
 
-const sourcemap = Bun.env.CLINE_SOURCEMAPS === "1" ? "linked" : "none";
+const sourcemap = Bun.env.SEKOKUVA_CA_SOURCEMAPS === "1" ? "linked" : "none";
 const rootDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(rootDir, "../../");
 const hubWebviewSourcePath = join(repoRoot, "apps/cline-hub/src/webview");
@@ -112,8 +112,8 @@ const result = await Bun.build({
 		"process.env.OTEL_TRACES_EXPORTER": defineProcessEnv(
 			"OTEL_TRACES_EXPORTER",
 		),
-		"process.env.CLINE_TRACE_RECORD_CONTENT": defineProcessEnv(
-			"CLINE_TRACE_RECORD_CONTENT",
+		"process.env.SEKOKUVA_CA_TRACE_RECORD_CONTENT": defineProcessEnv(
+			"SEKOKUVA_CA_TRACE_RECORD_CONTENT",
 		),
 		"process.env.OTEL_EXPORTER_OTLP_PROTOCOL": defineProcessEnv(
 			"OTEL_EXPORTER_OTLP_PROTOCOL",

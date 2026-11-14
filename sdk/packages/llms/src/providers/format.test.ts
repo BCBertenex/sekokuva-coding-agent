@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
-	ClineNotSubscribedError,
-	ClineOrgIndividualInferenceSubscriptionError,
-	ClinePassLimitError,
+	SekoKuvaNotSubscribedError,
+	SekoKuvaOrgIndividualInferenceSubscriptionError,
+	SekoKuvaPassLimitError,
 	getClineNotSubscribedMessage,
 	getClineOrgIndividualInferenceSubscriptionMessage,
 	isClineNotSubscribedMessage,
@@ -108,14 +108,14 @@ describe("extractErrorMessage", () => {
 	});
 });
 
-describe("ClineNotSubscribedError", () => {
+describe("SekoKuvaNotSubscribedError", () => {
 	it("uses the user-facing subscription message", () => {
-		expect(new ClineNotSubscribedError("cline-pass").message).toBe(
+		expect(new SekoKuvaNotSubscribedError("cline-pass").message).toBe(
 			getClineNotSubscribedMessage(),
 		);
 	});
 
-	it("detects the ClinePass required-plan message", () => {
+	it("detects the clinepass required-plan message", () => {
 		expect(
 			isClineNotSubscribedMessage(
 				JSON.stringify({
@@ -130,19 +130,19 @@ describe("ClineNotSubscribedError", () => {
 		);
 	});
 
-	it("detects the formatted ClinePass subscription message regardless of URL", () => {
+	it("detects the formatted clinepass subscription message regardless of URL", () => {
 		expect(
 			isClineNotSubscribedMessage(
-				"No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan:",
+				"No access to clinepass subscription models yet. Subscribe to clinepass, the low cost open weights model coding plan:",
 			),
 		).toBe(true);
 	});
 });
 
-describe("ClineOrgIndividualInferenceSubscriptionError", () => {
+describe("SekoKuvaOrgIndividualInferenceSubscriptionError", () => {
 	it("uses the user-facing organization account message", () => {
 		expect(
-			new ClineOrgIndividualInferenceSubscriptionError("cline").message,
+			new SekoKuvaOrgIndividualInferenceSubscriptionError("cline").message,
 		).toBe(getClineOrgIndividualInferenceSubscriptionMessage());
 	});
 
@@ -166,29 +166,29 @@ describe("ClineOrgIndividualInferenceSubscriptionError", () => {
 	});
 });
 
-describe("ClinePassLimitError", () => {
+describe("SekoKuvaPassLimitError", () => {
 	it("preserves the dynamic backend limit message", () => {
 		const message =
-			"You have reached your weekly Clinepass limit. The limit resets in 7d, please try again later.";
-		expect(new ClinePassLimitError(message, "cline-pass").message).toBe(
+			"You have reached your weekly clinepass limit. The limit resets in 7d, please try again later.";
+		expect(new SekoKuvaPassLimitError(message, "cline-pass").message).toBe(
 			message,
 		);
 	});
 
-	it("detects ClinePass period limit messages with variable period and reset", () => {
+	it("detects clinepass period limit messages with variable period and reset", () => {
 		expect(
 			isClinePassLimitMessage(
-				"You have reached your weekly Clinepass limit. The limit resets in 7d, please try again later.",
+				"You have reached your weekly clinepass limit. The limit resets in 7d, please try again later.",
 			),
 		).toBe(true);
 		expect(
 			isClinePassLimitMessage(
-				"You have reached your monthly Clinepass limit. The limit resets in 12h, please try again later.",
+				"You have reached your monthly clinepass limit. The limit resets in 12h, please try again later.",
 			),
 		).toBe(true);
 		expect(
 			isClinePassLimitMessage(
-				`You have reached your\t-\tClinepass limit.The limit resets in\t${"\t".repeat(10_000)}`,
+				`You have reached your\t-\tclinepass limit.The limit resets in\t${"\t".repeat(10_000)}`,
 			),
 		).toBe(false);
 		expect(

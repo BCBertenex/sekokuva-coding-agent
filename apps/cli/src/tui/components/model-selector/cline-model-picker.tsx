@@ -1,7 +1,7 @@
 // @jsxImportSource @opentui/react
 
 import {
-	type ClineRecommendedModelsData,
+	type SekoKuvaRecommendedModelsData,
 	fetchClineRecommendedModels,
 } from "@sekokuva-ca/core";
 import type { ReactNode } from "react";
@@ -10,14 +10,14 @@ import "opentui-spinner/react";
 import { useDialogPalette } from "../../hooks/use-theme";
 import type { DialogPalette } from "../../themes";
 import {
-	CLINE_MODEL_PICKER_TIER_LABELS,
+	SEKOKUVA_CA_MODEL_PICKER_TIER_LABELS,
 	type ClineModelPickerEntry,
 	freeTierDescriptionFor,
 } from "./cline-model-entries";
 
 export {
 	buildFeaturedModelEntries,
-	CLINE_MODEL_PICKER_TIER_LABELS,
+	SEKOKUVA_CA_MODEL_PICKER_TIER_LABELS,
 	type ClineModelPickerBrowse,
 	type ClineModelPickerEntry,
 	type ClineModelPickerItem,
@@ -32,7 +32,7 @@ function tagColor(tag: string, palette: DialogPalette): string {
 }
 
 export function useClineRecommendedModels() {
-	const [data, setData] = useState<ClineRecommendedModelsData | null>(null);
+	const [data, setData] = useState<SekoKuvaRecommendedModelsData | null>(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -83,7 +83,7 @@ export function ClineModelPicker(props: {
 		if (entry.kind === "model") {
 			if (entry.tier !== lastTier) {
 				lastTier = entry.tier;
-				const label = CLINE_MODEL_PICKER_TIER_LABELS[entry.tier];
+				const label = SEKOKUVA_CA_MODEL_PICKER_TIER_LABELS[entry.tier];
 				rows.push(
 					<box
 						key={`tier-${entry.tier}`}

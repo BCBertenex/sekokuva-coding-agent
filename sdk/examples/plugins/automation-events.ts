@@ -2,7 +2,7 @@
  * Automation Event Plugin Example
  *
  * Shows how a plugin can declare normalized event types and emit events into
- * ClineCore automation without importing cron internals.
+ * SekoKuvaCore automation without importing cron internals.
  *
  * Local demo:
  *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/automation-events.ts --cwd .

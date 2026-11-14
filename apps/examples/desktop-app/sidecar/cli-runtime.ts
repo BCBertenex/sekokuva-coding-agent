@@ -4,9 +4,9 @@ import { withHubLauncherIdentity } from "@sekokuva-ca/shared";
 import { DESKTOP_CLIENT_CONTEXT } from "./client-context";
 
 /** Absolute path of the Cline CLI binary the desktop shell bundles and launched us with. */
-export const DESKTOP_CLI_PATH_ENV = "CLINE_DESKTOP_CLI_PATH";
+export const DESKTOP_CLI_PATH_ENV = "SEKOKUVA_CA_DESKTOP_CLI_PATH";
 /** Workspace root the shell resolved; the backend starts in its own resource directory. */
-export const DESKTOP_WORKSPACE_ROOT_ENV = "CLINE_DESKTOP_WORKSPACE_ROOT";
+export const DESKTOP_WORKSPACE_ROOT_ENV = "SEKOKUVA_CA_DESKTOP_WORKSPACE_ROOT";
 /** Makes a compiled Bun executable run a script instead of its embedded entrypoint. */
 export const BUN_BE_BUN_ENV = "BUN_BE_BUN";
 
@@ -104,7 +104,7 @@ export async function ensureHubWithDesktopCli(
 			// The CLI spawns the daemon, so stamp the desktop as its launcher
 			// here or the hub's telemetry would say the CLI started it.
 			env: withHubLauncherIdentity(
-				{ ...(options.env ?? process.env), CLINE_NO_AUTO_UPDATE: "1" },
+				{ ...(options.env ?? process.env), SEKOKUVA_CA_NO_AUTO_UPDATE: "1" },
 				{
 					client: DESKTOP_CLIENT_CONTEXT.name,
 					version: DESKTOP_CLIENT_CONTEXT.version,

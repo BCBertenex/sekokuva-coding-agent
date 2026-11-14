@@ -21,7 +21,7 @@ import { resolveDataDirFromEnv } from "@shared/storage/storage-context"
 
 /**
  * Resolve the Cline data directory.
- * Priority: CLINE_DATA_DIR env > CLINE_DIR env + "/data" > ~/.cline/data
+ * Priority: SEKOKUVA_CA_DATA_DIR env > SEKOKUVA_CA_DIR env + "/data" > ~/.cline/data
  */
 export function resolveDataDir(override?: string): string {
 	// Delegates to the same resolver createStorageContext uses so the two

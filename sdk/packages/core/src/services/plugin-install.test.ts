@@ -40,19 +40,19 @@ describe("plugin install service", () => {
 		home = join(root, "home");
 		workspace = join(root, "workspace");
 		originalHome = process.env.HOME;
-		originalClineDir = process.env.CLINE_DIR;
-		originalClineDataDir = process.env.CLINE_DATA_DIR;
-		originalMcpSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		originalClineDir = process.env.SEKOKUVA_CA_DIR;
+		originalClineDataDir = process.env.SEKOKUVA_CA_DATA_DIR;
+		originalMcpSettingsPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		process.env.HOME = home;
-		process.env.CLINE_DIR = join(home, ".cline");
-		process.env.CLINE_DATA_DIR = join(home, ".cline", "data");
-		process.env.CLINE_MCP_SETTINGS_PATH = join(
+		process.env.SEKOKUVA_CA_DIR = join(home, ".cline");
+		process.env.SEKOKUVA_CA_DATA_DIR = join(home, ".cline", "data");
+		process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = join(
 			home,
 			".cline",
 			"cline_mcp_settings.json",
 		);
 		setHomeDir(home);
-		setClineDir(process.env.CLINE_DIR);
+		setClineDir(process.env.SEKOKUVA_CA_DIR);
 	});
 
 	afterEach(() => {
@@ -63,19 +63,19 @@ describe("plugin install service", () => {
 			process.env.HOME = originalHome;
 		}
 		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+			delete process.env.SEKOKUVA_CA_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.SEKOKUVA_CA_DIR = originalClineDir;
 		}
 		if (originalClineDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+			delete process.env.SEKOKUVA_CA_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = originalClineDataDir;
+			process.env.SEKOKUVA_CA_DATA_DIR = originalClineDataDir;
 		}
 		if (originalMcpSettingsPath === undefined) {
-			delete process.env.CLINE_MCP_SETTINGS_PATH;
+			delete process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_MCP_SETTINGS_PATH = originalMcpSettingsPath;
+			process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH = originalMcpSettingsPath;
 		}
 		rmSync(root, { recursive: true, force: true });
 	});
@@ -240,7 +240,7 @@ export default {
 			}),
 		]);
 		const settings = JSON.parse(
-			readFileSync(process.env.CLINE_MCP_SETTINGS_PATH ?? "", "utf8"),
+			readFileSync(process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH ?? "", "utf8"),
 		) as {
 			mcpServers?: Record<
 				string,

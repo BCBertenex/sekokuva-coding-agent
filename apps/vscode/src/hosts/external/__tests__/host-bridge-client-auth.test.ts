@@ -24,7 +24,7 @@ type SeenCall = { method: string; token: string | undefined }
  * template, so the wiring is identical per service.
  */
 describe("generated host bridge clients (end to end)", () => {
-	const originalToken = process.env.CLINE_CORE_CONNECTION_TOKEN
+	const originalToken = process.env.SEKOKUVA_CA_CORE_CONNECTION_TOKEN
 	let server: Server
 	let address: string
 	let seen: SeenCall[]
@@ -49,7 +49,7 @@ describe("generated host bridge clients (end to end)", () => {
 		setToken("e2e-token")
 		// The startup-to-receiver path: by the time any bridge call is made the
 		// variable is gone, so the header can only come from the retained copy.
-		expect(process.env.CLINE_CORE_CONNECTION_TOKEN).to.equal(undefined)
+		expect(process.env.SEKOKUVA_CA_CORE_CONNECTION_TOKEN).to.equal(undefined)
 
 		await new EnvServiceClientImpl(address).getHostVersion(proto.cline.EmptyRequest.create({}))
 
@@ -84,9 +84,9 @@ describe("generated host bridge clients (end to end)", () => {
 /** The bootstrap step a spawned core runs: capture the host's token, scrub the environment. */
 function setToken(token: string | undefined) {
 	if (token === undefined) {
-		delete process.env.CLINE_CORE_CONNECTION_TOKEN
+		delete process.env.SEKOKUVA_CA_CORE_CONNECTION_TOKEN
 	} else {
-		process.env.CLINE_CORE_CONNECTION_TOKEN = token
+		process.env.SEKOKUVA_CA_CORE_CONNECTION_TOKEN = token
 	}
 	captureHostBridgeTokenFromEnvironment()
 }

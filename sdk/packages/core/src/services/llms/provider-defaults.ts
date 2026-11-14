@@ -699,6 +699,7 @@ async function getPublicProviderModels(
 		config.baseUrl,
 		collection?.provider.baseUrl,
 		collection?.provider.modelsSourceUrl,
+		providerId,
 	);
 	if (!sourceUrl) {
 		return {};
@@ -992,6 +993,11 @@ export async function resolveProviderConfig(
 
 		return {
 			...defaults,
+			// The caller's explicit overrides win over the provider's built-in
+			// defaults. Without this, a custom base URL or model id is silently
+			// discarded and the request goes to the provider's own endpoint.
+			...(config?.baseUrl ? { baseUrl: config.baseUrl } : {}),
+			...(config?.modelId ? { modelId: config.modelId } : {}),
 			knownModels,
 		};
 	} catch (error) {

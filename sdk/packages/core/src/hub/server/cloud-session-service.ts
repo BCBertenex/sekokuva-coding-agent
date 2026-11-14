@@ -3,7 +3,7 @@ import { isAbsolute } from "node:path";
 import type { BasicLogger, ITelemetryService } from "@sekokuva-ca/shared";
 import { FeatureFlag, getClineEnvironmentConfig } from "@sekokuva-ca/shared";
 import { z } from "zod";
-import { ClineAccountService } from "../../account";
+import { SekoKuvaAccountService } from "../../account";
 import { getProviderAuthHandler } from "../../auth/provider-auth-registry";
 import { CloudSessionApi } from "../../cloud/api";
 import { CLOUD_COMPUTER_USE_ENV } from "../../cloud/computer-use-prompt";
@@ -22,7 +22,7 @@ import {
 } from "../../runtime/orchestration/runtime-oauth-token-manager";
 import { normalizeGitHubRemoteUrl } from "../../services/cloud-handoff/git-preflight";
 import { publishCloudHandoff } from "../../services/cloud-handoff/publication";
-import { isClineAccountFeatureEnabled } from "../../services/feature-flags/cline-account-feature-flags";
+import { isClineAccountFeatureEnabled } from "../../services/feature-flags/sekokuva-ca-account-feature-flags";
 import { ProviderSettingsManager } from "../../services/storage/provider-settings-manager";
 import { captureAuthRefreshSoftFailure } from "../../services/telemetry/core-events";
 
@@ -385,7 +385,7 @@ export class HubCloudSessionService {
 			if (!this.isCurrentScope(scope)) throw new Error("Cline account changed");
 			return token;
 		};
-		const account = new ClineAccountService({ apiBaseUrl, getAuthToken });
+		const account = new SekoKuvaAccountService({ apiBaseUrl, getAuthToken });
 		return new CloudSessionController({
 			api: new CloudSessionApi({
 				apiBaseUrl,

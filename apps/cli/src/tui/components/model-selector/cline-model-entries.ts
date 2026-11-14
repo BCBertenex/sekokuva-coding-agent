@@ -1,13 +1,13 @@
 import type {
-	ClineRecommendedModel,
-	ClineRecommendedModelsData,
+	SekoKuvaRecommendedModel,
+	SekoKuvaRecommendedModelsData,
 } from "@sekokuva-ca/core";
 
 export type ClineModelPickerTier = "recommended" | "subscribed" | "free";
 
 export interface ClineModelPickerItem {
 	kind: "model";
-	model: ClineRecommendedModel;
+	model: SekoKuvaRecommendedModel;
 	tier: ClineModelPickerTier;
 }
 
@@ -19,7 +19,7 @@ export type ClineModelPickerEntry =
 	| ClineModelPickerItem
 	| ClineModelPickerBrowse;
 
-export const CLINE_MODEL_PICKER_TIER_LABELS: Record<
+export const SEKOKUVA_CA_MODEL_PICKER_TIER_LABELS: Record<
 	ClineModelPickerTier,
 	string
 > = {
@@ -33,7 +33,7 @@ export const CLINE_MODEL_PICKER_TIER_LABELS: Record<
 // gets Subscribed/Free (see buildClinePassModelEntries for why no browse-all).
 export function buildFeaturedModelEntries(
 	providerId: string,
-	data: ClineRecommendedModelsData,
+	data: SekoKuvaRecommendedModelsData,
 ): ClineModelPickerEntry[] {
 	return providerId === "cline-pass"
 		? buildClinePassModelEntries(data)
@@ -41,7 +41,7 @@ export function buildFeaturedModelEntries(
 }
 
 function buildClineModelEntries(
-	data: ClineRecommendedModelsData,
+	data: SekoKuvaRecommendedModelsData,
 ): ClineModelPickerEntry[] {
 	const entries: ClineModelPickerEntry[] = [];
 	for (const m of data.recommended) {
@@ -55,7 +55,7 @@ function buildClineModelEntries(
 }
 
 // Shown under the Free section header when picking a model for ClinePass
-export const CLINE_PASS_FREE_SECTION_DESCRIPTION =
+export const SEKOKUVA_CA_PASS_FREE_SECTION_DESCRIPTION =
 	"Try with limited usage, separate from ClinePass quota.";
 
 // ClinePass shows the subscription's models plus the Cline free models — both
@@ -68,16 +68,16 @@ export const CLINE_PASS_FREE_SECTION_DESCRIPTION =
 // escape into the full catalog a subscriber could only pick free models, so
 // browse-all comes back in that degraded mode.
 function buildClinePassModelEntries(
-	data: ClineRecommendedModelsData,
+	data: SekoKuvaRecommendedModelsData,
 ): ClineModelPickerEntry[] {
 	const entries: ClineModelPickerEntry[] = [];
-	for (const m of data.clinePass) {
+	for (const m of data.sekokuvaCaPass) {
 		entries.push({ kind: "model", model: m, tier: "subscribed" });
 	}
 	for (const m of data.free) {
 		entries.push({ kind: "model", model: m, tier: "free" });
 	}
-	if (data.clinePass.length === 0) {
+	if (data.sekokuvaCaPass.length === 0) {
 		entries.push({ kind: "browse" });
 	}
 	return entries;
@@ -91,5 +91,5 @@ export function freeTierDescriptionFor(
 	const isClinePassPicker = entries.some(
 		(entry) => entry.kind === "model" && entry.tier === "subscribed",
 	);
-	return isClinePassPicker ? CLINE_PASS_FREE_SECTION_DESCRIPTION : undefined;
+	return isClinePassPicker ? SEKOKUVA_CA_PASS_FREE_SECTION_DESCRIPTION : undefined;
 }

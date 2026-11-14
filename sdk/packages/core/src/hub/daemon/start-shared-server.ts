@@ -60,7 +60,7 @@ export async function ensureHubServer(
 	options: EnsureHubServerOptions,
 ): Promise<EnsureHubServerResult> {
 	const hasExplicitPort =
-		options.port !== undefined || !!process.env.CLINE_HUB_PORT?.trim();
+		options.port !== undefined || !!process.env.SEKOKUVA_CA_HUB_PORT?.trim();
 	const endpoint = resolveHubEndpointOptions({
 		host: options.host,
 		port: options.port,

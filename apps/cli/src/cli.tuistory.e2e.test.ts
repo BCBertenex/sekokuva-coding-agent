@@ -41,23 +41,23 @@ function createCliEnv(
 
 	return {
 		HOME: homeDir,
-		CLINE_DATA_DIR: dataDir,
-		CLINE_DB_DATA_DIR: path.join(dataDir, "db"),
-		CLINE_SESSION_DATA_DIR: sessionDir,
-		CLINE_TEAM_DATA_DIR: teamDir,
-		CLINE_SESSION_BACKEND_MODE: "local",
-		CLINE_PROVIDER_SETTINGS_PATH: path.join(
+		SEKOKUVA_CA_DATA_DIR: dataDir,
+		SEKOKUVA_CA_DB_DATA_DIR: path.join(dataDir, "db"),
+		SEKOKUVA_CA_SESSION_DATA_DIR: sessionDir,
+		SEKOKUVA_CA_TEAM_DATA_DIR: teamDir,
+		SEKOKUVA_CA_SESSION_BACKEND_MODE: "local",
+		SEKOKUVA_CA_PROVIDER_SETTINGS_PATH: path.join(
 			dataDir,
 			"settings",
 			"providers.json",
 		),
-		CLINE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
-		CLINE_TELEMETRY_DISABLED: "1",
-		CLINE_NO_AUTO_UPDATE: "1",
+		SEKOKUVA_CA_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+		SEKOKUVA_CA_TELEMETRY_DISABLED: "1",
+		SEKOKUVA_CA_NO_AUTO_UPDATE: "1",
 		// Without this, the ClinePass promo dialog renders over the chat view.
 		// The stream-grepping interactive suite doesn't notice the overlay, but
 		// tuistory's screen snapshot reflects what the user actually sees.
-		CLINE_DISABLE_CLINE_PASS_NOTICE: "1",
+		SEKOKUVA_CA_DISABLE_CLINE_PASS_NOTICE: "1",
 		// The parent vitest process sets CI/VITEST; clear them so the spawned
 		// CLI renders as a real interactive terminal.
 		CI: undefined,
@@ -211,8 +211,8 @@ describe("cli tuistory e2e", () => {
 
 	it("dismisses the ClinePass promo with any key and marks it as shown", async () => {
 		// Re-enable the promo dialog that the shared env suppresses.
-		const env = createCliEnv({ CLINE_DISABLE_CLINE_PASS_NOTICE: undefined });
-		const dataDir = env.CLINE_DATA_DIR as string;
+		const env = createCliEnv({ SEKOKUVA_CA_DISABLE_CLINE_PASS_NOTICE: undefined });
+		const dataDir = env.SEKOKUVA_CA_DATA_DIR as string;
 		const session = await launchCli([], env);
 
 		await session.waitForText("Try ClinePass", { timeout: LAUNCH_TIMEOUT_MS });

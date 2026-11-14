@@ -358,7 +358,7 @@ export interface SessionWorkspaceEnv {
 	/**
 	 * Structured workspace and git metadata for the session.
 	 *
-	 * Contains the same information as the `{{CLINE_METADATA}}` block in the
+	 * Contains the same information as the `{{SEKOKUVA_CA_METADATA}}` block in the
 	 * system prompt but in structured form: `rootPath`, `hint`,
 	 * `associatedRemoteUrls`, `latestGitCommitHash`, `latestGitBranchName`.
 	 *

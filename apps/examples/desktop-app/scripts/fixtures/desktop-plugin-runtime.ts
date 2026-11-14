@@ -1,4 +1,4 @@
-import { ClineCore, resolvePluginRuntimeDirectory } from "@sekokuva-ca/core";
+import { SekoKuvaCore, resolvePluginRuntimeDirectory } from "@sekokuva-ca/core";
 import { adoptDesktopCliRuntime } from "../../sidecar/cli-runtime";
 
 async function main() {
@@ -6,7 +6,7 @@ async function main() {
 	const runtime = resolvePluginRuntimeDirectory();
 	if (!runtime?.includes("desktop-backend"))
 		throw new Error(`Expected the packaged backend runtime, got ${runtime}`);
-	const core = await ClineCore.create({ backendMode: "local" });
+	const core = await SekoKuvaCore.create({ backendMode: "local" });
 	try {
 		const workspacePath = process.cwd();
 		const { commands } = await core.pluginCommands.list({ workspacePath });

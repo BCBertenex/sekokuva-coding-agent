@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import { test } from "@microsoft/tui-test";
-import { CLINE_BIN, TERMINAL_WIDE } from "../helpers/constants.js";
+import { SEKOKUVA_CA_BIN, TERMINAL_WIDE } from "../helpers/constants.js";
 import { clineEnv } from "../helpers/env.js";
 import { waitForChatReady } from "../helpers/page-objects/chat.js";
 import { expectVisible } from "../helpers/terminal.js";
@@ -19,7 +19,7 @@ import { expectVisible } from "../helpers/terminal.js";
 test.describe("cline --model (interactive mode, flag ignored)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["--model", "openai/gpt-5.3-codex"],
 		},
 		...TERMINAL_WIDE,
@@ -34,7 +34,7 @@ test.describe("cline --model (interactive mode, flag ignored)", () => {
 
 test.describe("cline --cwd <dir>", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["--cwd", "/tmp"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["--cwd", "/tmp"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default"),
 	});
@@ -47,7 +47,7 @@ test.describe("cline --cwd <dir>", () => {
 
 test.describe("cline -c <dir> (short alias)", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["-c", "/tmp"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["-c", "/tmp"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default"),
 	});
@@ -61,7 +61,7 @@ test.describe("cline -c <dir> (short alias)", () => {
 test.describe("cline --config (claude-sonnet-4.6)", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["--config", "configs/claude-sonnet-4.6"],
 		},
 		...TERMINAL_WIDE,
@@ -81,7 +81,7 @@ test.describe("cline --config (claude-sonnet-4.6)", () => {
 // ---------------------------------------------------------------------------
 test.describe("cline --json (headless yolo mode)", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["--json", "--yolo", "tell me a joke"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["--json", "--yolo", "tell me a joke"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("unauthenticated"),
 	});

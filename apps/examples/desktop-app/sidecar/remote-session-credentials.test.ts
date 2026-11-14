@@ -225,7 +225,7 @@ describe("SSH session credentials and history", () => {
 
 	it("never reads a same-ID local transcript when starting or forking remotely", async () => {
 		const directory = mkdtempSync(join(tmpdir(), "cline-remote-fork-"));
-		vi.stubEnv("CLINE_SESSION_DATA_DIR", directory);
+		vi.stubEnv("SEKOKUVA_CA_SESSION_DATA_DIR", directory);
 		try {
 			mkdirSync(join(directory, "shared-id"));
 			writeFileSync(

@@ -49,8 +49,8 @@ export interface ResolveLastUsedProviderSettingsOptions {
 	isClinePassEnabled?: boolean;
 }
 
-const CLINE_PROVIDER_ID = "cline";
-const CLINE_PASS_PROVIDER_ID = "cline-pass";
+const SEKOKUVA_CA_PROVIDER_ID = "cline";
+const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass";
 
 /**
  * A pasted credential can carry invisible control or format characters (BOM,
@@ -170,9 +170,9 @@ export class ProviderSettingsManager {
 			const result = StoredProviderSettingsSchema.safeParse(parsed);
 			if (result.success) {
 				registerConfiguredProvidersFromSettings(result.data);
-				const clineAuth = result.data.providers["cline"]?.settings?.auth;
+				const sekokuvaCaAuth = result.data.providers["cline"]?.settings?.auth;
 				sdkDebug(
-					`providers.read providers=[${Object.keys(result.data.providers).join(",")}] lastUsed=${result.data.lastUsedProvider ?? "none"} clineAuthPresent=${!!clineAuth?.accessToken} clineAccessTokenHash=${hashSecret(clineAuth?.accessToken)} clineRefreshTokenHash=${hashSecret(clineAuth?.refreshToken)}`,
+					`providers.read providers=[${Object.keys(result.data.providers).join(",")}] lastUsed=${result.data.lastUsedProvider ?? "none"} sekokuvaCaAuthPresent=${!!sekokuvaCaAuth?.accessToken} sekokuvaCaAccessTokenHash=${hashSecret(sekokuvaCaAuth?.accessToken)} sekokuvaCaRefreshTokenHash=${hashSecret(sekokuvaCaAuth?.refreshToken)}`,
 				);
 				return result.data;
 			}
@@ -249,7 +249,7 @@ export class ProviderSettingsManager {
 		const authDropped =
 			!!prevClineAuth?.accessToken && !nextClineAuth?.accessToken;
 		sdkDebug(
-			`providers.save providerId=${providerId} tokenSource=${tokenSource} clineAuthWasPresent=${!!prevClineAuth?.accessToken} clineAuthIsPresent=${!!nextClineAuth?.accessToken} authDropped=${authDropped}`,
+			`providers.save providerId=${providerId} tokenSource=${tokenSource} sekokuvaCaAuthWasPresent=${!!prevClineAuth?.accessToken} sekokuvaCaAuthIsPresent=${!!nextClineAuth?.accessToken} authDropped=${authDropped}`,
 		);
 		return next;
 	}
@@ -307,10 +307,10 @@ export class ProviderSettingsManager {
 	): string | undefined {
 		const providerId = state.lastUsedProvider;
 		if (
-			providerId === CLINE_PASS_PROVIDER_ID &&
+			providerId === SEKOKUVA_CA_PASS_PROVIDER_ID &&
 			options.isClinePassEnabled === false
 		) {
-			return CLINE_PROVIDER_ID;
+			return SEKOKUVA_CA_PROVIDER_ID;
 		}
 
 		return providerId;

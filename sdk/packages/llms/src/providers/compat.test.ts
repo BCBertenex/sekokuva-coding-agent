@@ -5,7 +5,7 @@ import {
 	createGatewayApiHandlerAsync,
 	toGatewayRequestMessages,
 } from "./compat";
-import { ClineNotSubscribedError } from "./errors";
+import { SekoKuvaNotSubscribedError } from "./errors";
 import { DEFAULT_GATEWAY_MAX_OUTPUT_FRACTION } from "./gateway";
 import type { Message } from "./types";
 
@@ -698,7 +698,7 @@ describe("createGatewayApiHandler.createMessage", () => {
 		);
 	});
 
-	it("throws ClineNotSubscribedError for ClinePass required-plan 403 responses", async () => {
+	it("throws SekoKuvaNotSubscribedError for SekoKuvaPass required-plan 403 responses", async () => {
 		streamTextSpy.mockReturnValue({
 			fullStream: (async function* () {
 				yield { type: "finish", finishReason: "stop" };
@@ -739,7 +739,7 @@ describe("createGatewayApiHandler.createMessage", () => {
 			factoryConfig?.fetch?.("https://api.cline.bot/api/v1/chat/completions", {
 				method: "POST",
 			}),
-		).rejects.toBeInstanceOf(ClineNotSubscribedError);
+		).rejects.toBeInstanceOf(SekoKuvaNotSubscribedError);
 	});
 });
 

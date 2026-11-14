@@ -1,36 +1,36 @@
 import type {
-	ClineAccountActionRequest,
+	SekoKuvaAccountActionRequest,
 	ProviderActionRequest,
 } from "@sekokuva-ca/shared";
 import type {
-	ClineAccountBalance,
-	ClineAccountOrganization,
-	ClineAccountOrganizationBalance,
-	ClineAccountOrganizationUsageTransaction,
-	ClineAccountPaymentTransaction,
-	ClineAccountUsageTransaction,
-	ClineAccountUser,
+	SekoKuvaAccountBalance,
+	SekoKuvaAccountOrganization,
+	SekoKuvaAccountOrganizationBalance,
+	SekoKuvaAccountOrganizationUsageTransaction,
+	SekoKuvaAccountPaymentTransaction,
+	SekoKuvaAccountUsageTransaction,
+	SekoKuvaAccountUser,
 	FeaturebaseTokenResponse,
 	UserCurrentPlan,
 } from "./types";
 
-export interface ClineAccountOperations {
-	fetchMe(): Promise<ClineAccountUser>;
-	fetchBalance(userId?: string): Promise<ClineAccountBalance>;
+export interface SekoKuvaAccountOperations {
+	fetchMe(): Promise<SekoKuvaAccountUser>;
+	fetchBalance(userId?: string): Promise<SekoKuvaAccountBalance>;
 	fetchUsageTransactions(
 		userId?: string,
-	): Promise<ClineAccountUsageTransaction[]>;
+	): Promise<SekoKuvaAccountUsageTransaction[]>;
 	fetchPaymentTransactions(
 		userId?: string,
-	): Promise<ClineAccountPaymentTransaction[]>;
-	fetchUserOrganizations(): Promise<ClineAccountOrganization[]>;
+	): Promise<SekoKuvaAccountPaymentTransaction[]>;
+	fetchUserOrganizations(): Promise<SekoKuvaAccountOrganization[]>;
 	fetchOrganizationBalance(
 		organizationId: string,
-	): Promise<ClineAccountOrganizationBalance>;
+	): Promise<SekoKuvaAccountOrganizationBalance>;
 	fetchOrganizationUsageTransactions(input: {
 		organizationId: string;
 		memberId?: string;
-	}): Promise<ClineAccountOrganizationUsageTransaction[]>;
+	}): Promise<SekoKuvaAccountOrganizationUsageTransaction[]>;
 	switchAccount(organizationId?: string | null): Promise<void>;
 	fetchFeaturebaseToken?(): Promise<FeaturebaseTokenResponse | undefined>;
 	fetchCurrentUserPlan?(): Promise<UserCurrentPlan | undefined>;
@@ -38,13 +38,13 @@ export interface ClineAccountOperations {
 
 export function isClineAccountActionRequest(
 	request: ProviderActionRequest,
-): request is ClineAccountActionRequest {
-	return request.action === "clineAccount";
+): request is SekoKuvaAccountActionRequest {
+	return request.action === "sekokuvaCaAccount";
 }
 
 export async function executeClineAccountAction(
-	request: ClineAccountActionRequest,
-	service: ClineAccountOperations,
+	request: SekoKuvaAccountActionRequest,
+	service: SekoKuvaAccountOperations,
 ): Promise<unknown> {
 	switch (request.operation) {
 		case "fetchMe":
@@ -86,23 +86,23 @@ export interface ProviderActionExecutor {
 	}>;
 }
 
-export class RpcClineAccountService implements ClineAccountOperations {
+export class RpcClineAccountService implements SekoKuvaAccountOperations {
 	private readonly executor: ProviderActionExecutor;
 
 	constructor(executor: ProviderActionExecutor) {
 		this.executor = executor;
 	}
 
-	public async fetchMe(): Promise<ClineAccountUser> {
-		return this.request<ClineAccountUser>({
-			action: "clineAccount",
+	public async fetchMe(): Promise<SekoKuvaAccountUser> {
+		return this.request<SekoKuvaAccountUser>({
+			action: "sekokuvaCaAccount",
 			operation: "fetchMe",
 		});
 	}
 
-	public async fetchBalance(userId?: string): Promise<ClineAccountBalance> {
-		return this.request<ClineAccountBalance>({
-			action: "clineAccount",
+	public async fetchBalance(userId?: string): Promise<SekoKuvaAccountBalance> {
+		return this.request<SekoKuvaAccountBalance>({
+			action: "sekokuvaCaAccount",
 			operation: "fetchBalance",
 			...(userId?.trim() ? { userId: userId.trim() } : {}),
 		});
@@ -110,9 +110,9 @@ export class RpcClineAccountService implements ClineAccountOperations {
 
 	public async fetchUsageTransactions(
 		userId?: string,
-	): Promise<ClineAccountUsageTransaction[]> {
-		return this.request<ClineAccountUsageTransaction[]>({
-			action: "clineAccount",
+	): Promise<SekoKuvaAccountUsageTransaction[]> {
+		return this.request<SekoKuvaAccountUsageTransaction[]>({
+			action: "sekokuvaCaAccount",
 			operation: "fetchUsageTransactions",
 			...(userId?.trim() ? { userId: userId.trim() } : {}),
 		});
@@ -120,30 +120,30 @@ export class RpcClineAccountService implements ClineAccountOperations {
 
 	public async fetchPaymentTransactions(
 		userId?: string,
-	): Promise<ClineAccountPaymentTransaction[]> {
-		return this.request<ClineAccountPaymentTransaction[]>({
-			action: "clineAccount",
+	): Promise<SekoKuvaAccountPaymentTransaction[]> {
+		return this.request<SekoKuvaAccountPaymentTransaction[]>({
+			action: "sekokuvaCaAccount",
 			operation: "fetchPaymentTransactions",
 			...(userId?.trim() ? { userId: userId.trim() } : {}),
 		});
 	}
 
-	public async fetchUserOrganizations(): Promise<ClineAccountOrganization[]> {
-		return this.request<ClineAccountOrganization[]>({
-			action: "clineAccount",
+	public async fetchUserOrganizations(): Promise<SekoKuvaAccountOrganization[]> {
+		return this.request<SekoKuvaAccountOrganization[]>({
+			action: "sekokuvaCaAccount",
 			operation: "fetchUserOrganizations",
 		});
 	}
 
 	public async fetchOrganizationBalance(
 		organizationId: string,
-	): Promise<ClineAccountOrganizationBalance> {
+	): Promise<SekoKuvaAccountOrganizationBalance> {
 		const orgId = organizationId.trim();
 		if (!orgId) {
 			throw new Error("organizationId is required");
 		}
-		return this.request<ClineAccountOrganizationBalance>({
-			action: "clineAccount",
+		return this.request<SekoKuvaAccountOrganizationBalance>({
+			action: "sekokuvaCaAccount",
 			operation: "fetchOrganizationBalance",
 			organizationId: orgId,
 		});
@@ -152,13 +152,13 @@ export class RpcClineAccountService implements ClineAccountOperations {
 	public async fetchOrganizationUsageTransactions(input: {
 		organizationId: string;
 		memberId?: string;
-	}): Promise<ClineAccountOrganizationUsageTransaction[]> {
+	}): Promise<SekoKuvaAccountOrganizationUsageTransaction[]> {
 		const orgId = input.organizationId.trim();
 		if (!orgId) {
 			throw new Error("organizationId is required");
 		}
-		return this.request<ClineAccountOrganizationUsageTransaction[]>({
-			action: "clineAccount",
+		return this.request<SekoKuvaAccountOrganizationUsageTransaction[]>({
+			action: "sekokuvaCaAccount",
 			operation: "fetchOrganizationUsageTransactions",
 			organizationId: orgId,
 			...(input.memberId?.trim() ? { memberId: input.memberId.trim() } : {}),
@@ -167,7 +167,7 @@ export class RpcClineAccountService implements ClineAccountOperations {
 
 	public async switchAccount(organizationId?: string | null): Promise<void> {
 		await this.request<{ updated: boolean }>({
-			action: "clineAccount",
+			action: "sekokuvaCaAccount",
 			operation: "switchAccount",
 			organizationId: organizationId?.trim() || null,
 		});
@@ -177,19 +177,19 @@ export class RpcClineAccountService implements ClineAccountOperations {
 		FeaturebaseTokenResponse | undefined
 	> {
 		return this.request<FeaturebaseTokenResponse | undefined>({
-			action: "clineAccount",
+			action: "sekokuvaCaAccount",
 			operation: "fetchFeaturebaseToken",
 		});
 	}
 
 	public async fetchCurrentUserPlan(): Promise<UserCurrentPlan | undefined> {
 		return this.request<UserCurrentPlan | undefined>({
-			action: "clineAccount",
+			action: "sekokuvaCaAccount",
 			operation: "fetchCurrentUserPlan",
 		});
 	}
 
-	private async request<T>(request: ClineAccountActionRequest): Promise<T> {
+	private async request<T>(request: SekoKuvaAccountActionRequest): Promise<T> {
 		const response = await this.executor.runProviderAction(request);
 		return response.result as T;
 	}

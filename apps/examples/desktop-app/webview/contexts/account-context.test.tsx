@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import type { ClineAccountUser } from "@sekokuva-ca/core";
+import type { SekoKuvaAccountUser } from "@sekokuva-ca/core";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -15,7 +15,7 @@ import {
 const { invoke } = vi.hoisted(() => ({ invoke: vi.fn() }));
 vi.mock("@/lib/desktop-client", () => ({ desktopClient: { invoke } }));
 
-function makeUser(overrides: Partial<ClineAccountUser> = {}): ClineAccountUser {
+function makeUser(overrides: Partial<SekoKuvaAccountUser> = {}): SekoKuvaAccountUser {
 	return {
 		id: "user-1",
 		email: "beatrix@cline.bot",

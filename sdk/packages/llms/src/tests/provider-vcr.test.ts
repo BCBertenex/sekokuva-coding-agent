@@ -48,7 +48,7 @@ const targets: ProviderVcrTarget[] = [
 			modelId: "anthropic/claude-sonnet-4.6",
 			apiKey: "workos:test-token",
 		},
-		cassetteName: "cline-anthropic-sonnet.json",
+		cassetteName: "sekokuva-ca-anthropic-sonnet.json",
 	},
 	{
 		label: "ChatGPT OAuth provider",
@@ -156,7 +156,7 @@ function readEnvironmentApiKey(providerId: string): string | undefined {
 		case "anthropic":
 			return readString(process.env.ANTHROPIC_API_KEY);
 		case "cline":
-			return readString(process.env.CLINE_API_KEY);
+			return readString(process.env.SEKOKUVA_CA_API_KEY);
 		default:
 			return undefined;
 	}
@@ -241,11 +241,11 @@ function configureVcr(cassettePath: string): void {
 			: undefined;
 	activeCassetteSucceeded = false;
 	assertPlaybackCassetteHasRequestContracts(cassettePath);
-	process.env.CLINE_VCR = RECORD_MODE ? "record" : "playback";
-	process.env.CLINE_VCR_CASSETTE = cassettePath;
-	process.env.CLINE_VCR_INCLUDE_REQUEST_BODY = "1";
-	process.env.CLINE_VCR_FILTER = "";
-	initVcr(process.env.CLINE_VCR);
+	process.env.SEKOKUVA_CA_VCR = RECORD_MODE ? "record" : "playback";
+	process.env.SEKOKUVA_CA_VCR_CASSETTE = cassettePath;
+	process.env.SEKOKUVA_CA_VCR_INCLUDE_REQUEST_BODY = "1";
+	process.env.SEKOKUVA_CA_VCR_FILTER = "";
+	initVcr(process.env.SEKOKUVA_CA_VCR);
 }
 
 function keepRecordedCassette(): void {

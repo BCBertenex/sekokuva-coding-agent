@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSyn
 import * as os from "node:os"
 import path from "node:path"
 import { CloudCreationUnconfirmedError, type CloudModel } from "@sekokuva-ca/core/cloud"
-import { CLINE_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared"
+import { SEKOKUVA_CA_DEFAULT_MODEL_ID } from "@sekokuva-ca/shared"
 import { CLOUD_CREATION_UNCONFIRMED_ERROR_CODE, type CloudSessionStatus } from "@shared/cloud/cloud-sessions"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { HostProvider } from "@/hosts/host-provider"
@@ -725,7 +725,7 @@ describe("SdkCloudSessionCoordinator ownership", () => {
 		// The catalog is for the next task: once the displayed task is gone the composer offers the default.
 		await vi.waitFor(() => expect(options.postStateToWebview).toHaveBeenCalled())
 		options.setTask(undefined)
-		expect(coordinator.getCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID)
+		expect(coordinator.getCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID)
 		await coordinator.dispose()
 	})
 
@@ -745,9 +745,9 @@ describe("SdkCloudSessionCoordinator ownership", () => {
 		expect(coordinator.nextCloudModelId()).toBe("local/model")
 		// The local ClinePass provider's free models don't run in the cloud.
 		apiConfig = { actModeApiProvider: "cline-pass", actModeClinePassModelId: "cline-free/local" }
-		expect(coordinator.nextCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID)
+		expect(coordinator.nextCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID)
 		apiConfig = { actModeApiProvider: "anthropic" }
-		expect(coordinator.nextCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID)
+		expect(coordinator.nextCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID)
 		expect(loadCloudModels).toHaveBeenCalledTimes(1)
 		expect(options.postStateToWebview).not.toHaveBeenCalled()
 		await coordinator.dispose()
@@ -785,9 +785,9 @@ describe("SdkCloudSessionCoordinator ownership", () => {
 		apiConfig = { actModeApiProvider: "cline", actModeClineModelId: "usage/model" }
 		expect(coordinator.nextCloudModelId()).toBe("usage/model")
 		apiConfig = { actModeApiProvider: "cline", actModeClineModelId: "usage/retired" }
-		expect(coordinator.nextCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID)
+		expect(coordinator.nextCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID)
 		apiConfig = { actModeApiProvider: "anthropic" }
-		expect(coordinator.nextCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID)
+		expect(coordinator.nextCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID)
 		await coordinator.dispose()
 	})
 
@@ -811,11 +811,11 @@ describe("SdkCloudSessionCoordinator ownership", () => {
 		expect(coordinator.nextCloudModelId()).toBe("cline-pass/first")
 		plan.resolve(false)
 		await vi.waitFor(() => expect(coordinator.clinePassSubscribed()).toBe(false))
-		expect(coordinator.nextCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID)
+		expect(coordinator.nextCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID)
 		expect(options.postStateToWebview).toHaveBeenCalledTimes(2)
 		// A lapsed plan keeps even an offered local ClinePass model out of the cloud.
 		apiConfig = { actModeApiProvider: "cline-pass", actModeClinePassModelId: "cline-pass/local" }
-		expect(coordinator.nextCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID)
+		expect(coordinator.nextCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID)
 		await coordinator.dispose()
 	})
 
@@ -869,7 +869,7 @@ describe("SdkCloudSessionCoordinator ownership", () => {
 
 		coordinator.nextCloudModelId()
 		await vi.waitFor(() => expect(coordinator.clinePassSubscribed()).toBe(false))
-		await vi.waitFor(() => expect(coordinator.nextCloudModelId()).toBe(CLINE_DEFAULT_MODEL_ID))
+		await vi.waitFor(() => expect(coordinator.nextCloudModelId()).toBe(SEKOKUVA_CA_DEFAULT_MODEL_ID))
 		await coordinator.dispose()
 	})
 

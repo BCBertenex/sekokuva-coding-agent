@@ -1,7 +1,7 @@
 /** @deprecated Import from `@sekokuva-ca/shared`; kept for compatibility. */
 export {
 	ANTHROPIC_DEFAULT_MODEL_ID,
-	CLINE_DEFAULT_MODEL_ID,
+	SEKOKUVA_CA_DEFAULT_MODEL_ID,
 	type ProviderLocalCli,
 	resolveProviderLocalCli,
 } from "@sekokuva-ca/shared";
@@ -72,10 +72,10 @@ export type {
 export {
 	BUILT_IN_PROVIDER,
 	BUILT_IN_PROVIDER_IDS,
-	ClineFreeModelLimitError,
-	ClineNotSubscribedError,
-	ClineOrgIndividualInferenceSubscriptionError,
-	ClinePassLimitError,
+	SekoKuvaFreeModelLimitError,
+	SekoKuvaNotSubscribedError,
+	SekoKuvaOrgIndividualInferenceSubscriptionError,
+	SekoKuvaPassLimitError,
 	classifyProviderError,
 	createHandler,
 	createHandlerAsync,
@@ -115,7 +115,7 @@ export {
 	resolveProviderUsageCostDisplay,
 	shouldShowProviderUsageCost,
 } from "./providers/billing";
-export { buildClineClientHeaders } from "./providers/cline-client-headers";
+export { buildClineClientHeaders } from "./providers/sekokuva-ca-client-headers";
 export type * from "./providers/gateway";
 export { createGateway, DefaultGateway } from "./providers/gateway";
 export { toGatewayModelCapabilities } from "./providers/model-capabilities";
@@ -141,13 +141,13 @@ export {
 	resolveProviderRequestHeaders,
 } from "./providers/request-headers";
 export {
-	type ClineProvider,
-	type ClineProviderOptions,
-	type ClineWebSearchInput,
-	type ClineWebSearchOptions,
-	type ClineWebSearchResult,
+	type SekoKuvaProvider,
+	type SekoKuvaProviderOptions,
+	type SekoKuvaWebSearchInput,
+	type SekoKuvaWebSearchOptions,
+	type SekoKuvaWebSearchResult,
 	createCline,
-} from "./providers/vendors/cline";
+} from "./providers/vendors/sekokuva-ca";
 export { LangfuseAttributesSpanProcessor } from "./services/LangfuseAttributesSpanProcessor";
 export {
 	disposeLangfuseTelemetry,

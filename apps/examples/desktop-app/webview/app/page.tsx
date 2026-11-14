@@ -1723,7 +1723,10 @@ function ChatThreadPane({
 			? "worktree"
 			: "local";
 	const [providerCredentials, setProviderCredentials] = useState<
-		Record<string, { apiKey: string; auth?: ProviderAuthInfo }>
+		Record<
+			string,
+			{ apiKey: string; auth?: ProviderAuthInfo; baseUrl?: string }
+		>
 	>(() => readProviderCatalogSnapshot()?.credentials ?? {});
 	const [providerModelContextWindows, setProviderModelContextWindows] =
 		useState<Record<string, Record<string, number>>>(
@@ -1841,7 +1844,7 @@ function ChatThreadPane({
 	// Threads opened on Cloud have no captured Local config.
 	const localConfigRef = useRef<Pick<
 		ChatSessionConfig,
-		"provider" | "model" | "apiKey" | "workspaceRoot" | "cwd"
+		"provider" | "model" | "apiKey" | "baseUrl" | "workspaceRoot" | "cwd"
 	> | null>(
 		config.executionTarget === "cloud"
 			? null
@@ -1849,6 +1852,7 @@ function ChatThreadPane({
 					provider: config.provider,
 					model: config.model,
 					apiKey: config.apiKey,
+					baseUrl: config.baseUrl,
 					workspaceRoot: config.workspaceRoot,
 					cwd: config.cwd,
 				},
@@ -1902,8 +1906,10 @@ function ChatThreadPane({
 			if (providerCredentialsRequestRef.current !== requestId) {
 				return;
 			}
-			const next: Record<string, { apiKey: string; auth?: ProviderAuthInfo }> =
-				{};
+			const next: Record<
+				string,
+				{ apiKey: string; auth?: ProviderAuthInfo; baseUrl?: string }
+			> = {};
 			const nextContextWindows: Record<string, Record<string, number>> = {};
 			let anyConnected = false;
 			for (const provider of payload.providers ?? []) {
@@ -1914,6 +1920,7 @@ function ChatThreadPane({
 				next[id] = {
 					apiKey: provider.apiKey?.trim() ?? "",
 					auth: provider.auth,
+					baseUrl: provider.baseUrl?.trim() || undefined,
 				};
 				if (isProviderConnected(provider)) {
 					anyConnected = true;
@@ -1966,16 +1973,23 @@ function ChatThreadPane({
 			return;
 		}
 		const nextApiKey = selected.apiKey;
-		if (config.apiKey === nextApiKey && config.providerAuth === selected.auth) {
+		const nextBaseUrl = selected.baseUrl;
+		if (
+			config.apiKey === nextApiKey &&
+			config.providerAuth === selected.auth &&
+			config.baseUrl === nextBaseUrl
+		) {
 			return;
 		}
 		setConfig((prev) => ({
 			...prev,
 			apiKey: nextApiKey,
 			providerAuth: selected?.auth,
+			baseUrl: nextBaseUrl,
 		}));
 	}, [
 		config.apiKey,
+		config.baseUrl,
 		config.provider,
 		config.providerAuth,
 		providerCredentials,
@@ -2863,6 +2877,7 @@ function ChatThreadPane({
 						provider: prev.provider,
 						model: prev.model,
 						apiKey: prev.apiKey,
+						baseUrl: prev.baseUrl,
 						workspaceRoot: prev.workspaceRoot,
 						cwd: prev.cwd,
 					};
@@ -3003,10 +3018,12 @@ function ChatThreadPane({
 			setConfig((prev) => {
 				const selected = providerCredentials[nextProvider];
 				const nextApiKey = selected?.apiKey ?? "";
+				const nextBaseUrl = selected?.baseUrl;
 				if (
 					prev.provider === nextProvider &&
 					prev.apiKey === nextApiKey &&
-					prev.providerAuth === selected?.auth
+					prev.providerAuth === selected?.auth &&
+					prev.baseUrl === nextBaseUrl
 				) {
 					return prev;
 				}
@@ -3015,6 +3032,7 @@ function ChatThreadPane({
 					provider: nextProvider,
 					apiKey: nextApiKey,
 					providerAuth: selected?.auth,
+					baseUrl: nextBaseUrl,
 				};
 			}),
 		[providerCredentials, setConfig],

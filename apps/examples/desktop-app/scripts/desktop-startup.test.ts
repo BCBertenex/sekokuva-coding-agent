@@ -32,8 +32,8 @@ function ensureBuildDir(): string {
 
 let compiledCli: string | undefined;
 async function resolveCliBinary(): Promise<string> {
-	if (process.env.CLINE_TEST_DESKTOP_CLI_BIN) {
-		return resolve(process.env.CLINE_TEST_DESKTOP_CLI_BIN);
+	if (process.env.SEKOKUVA_CA_TEST_DESKTOP_CLI_BIN) {
+		return resolve(process.env.SEKOKUVA_CA_TEST_DESKTOP_CLI_BIN);
 	}
 	if (!compiledCli) {
 		const outfile = join(
@@ -54,8 +54,8 @@ async function resolveCliBinary(): Promise<string> {
 
 let bundledBackend: string | undefined;
 function resolveBackendBundle(): string {
-	if (process.env.CLINE_TEST_DESKTOP_BACKEND_BUNDLE) {
-		return resolve(process.env.CLINE_TEST_DESKTOP_BACKEND_BUNDLE);
+	if (process.env.SEKOKUVA_CA_TEST_DESKTOP_BACKEND_BUNDLE) {
+		return resolve(process.env.SEKOKUVA_CA_TEST_DESKTOP_BACKEND_BUNDLE);
 	}
 	if (!bundledBackend) {
 		const outdir = join(ensureBuildDir(), "desktop-backend");
@@ -195,10 +195,10 @@ async function runStartupScenario(
 			),
 		);
 		Object.assign(env, {
-			CLINE_DIR: root,
-			CLINE_DATA_DIR: join(root, "data"),
-			CLINE_HUB_DISCOVERY_PATH: discoveryPath,
-			CLINE_NO_AUTO_UPDATE: "1",
+			SEKOKUVA_CA_DIR: root,
+			SEKOKUVA_CA_DATA_DIR: join(root, "data"),
+			SEKOKUVA_CA_HUB_DISCOVERY_PATH: discoveryPath,
+			SEKOKUVA_CA_NO_AUTO_UPDATE: "1",
 			...extraEnv,
 		});
 		// Pin the Hub to a free port so this test cannot touch a developer's
@@ -230,10 +230,10 @@ async function runStartupScenario(
 				url: hub.url,
 				authToken: hub.authToken,
 			});
-			env.CLINE_HUB_PORT = String(hub.port);
+			env.SEKOKUVA_CA_HUB_PORT = String(hub.port);
 			existingHub = { pid: hub.pid, url: hub.url };
 		} else {
-			env.CLINE_HUB_PORT = String(await reserveLoopbackPort());
+			env.SEKOKUVA_CA_HUB_PORT = String(await reserveLoopbackPort());
 		}
 
 		// The backend bundle on the CLI's runtime, started outside the
@@ -245,8 +245,8 @@ async function runStartupScenario(
 				env: {
 					...env,
 					BUN_BE_BUN: "1",
-					CLINE_DESKTOP_CLI_PATH: cli,
-					CLINE_DESKTOP_WORKSPACE_ROOT: root,
+					SEKOKUVA_CA_DESKTOP_CLI_PATH: cli,
+					SEKOKUVA_CA_DESKTOP_WORKSPACE_ROOT: root,
 				},
 				stdin: "ignore",
 				stdout,
@@ -291,7 +291,7 @@ async function runStartupScenario(
 			// The backend attached to the running Hub instead of replacing it.
 			expect(hub).toMatchObject(existingHub);
 		} else {
-			expect(hub.port).toBe(Number(env.CLINE_HUB_PORT));
+			expect(hub.port).toBe(Number(env.SEKOKUVA_CA_HUB_PORT));
 		}
 		// Either way the Hub daemon is the bundled CLI, not the backend.
 		expect(hub.pid).not.toBe(child.pid);
@@ -415,16 +415,16 @@ test.each([
 				...env,
 				HOME: root,
 				USERPROFILE: root,
-				CLINE_DIR: join(root, ".cline"),
+				SEKOKUVA_CA_DIR: join(root, ".cline"),
 				PATH: root,
 				JITI_FS_CACHE: "false",
-				CLINE_PLUGIN_MODE: mode,
+				SEKOKUVA_CA_PLUGIN_MODE: mode,
 				// Cold Windows runners can take more than the 4s default to start a
 				// sandbox child; this test covers resource loading, not startup time.
-				CLINE_PLUGIN_IMPORT_TIMEOUT_MS: "20000",
-				CLINE_TEST_PLUGIN_RESULT_PATH: marker,
+				SEKOKUVA_CA_PLUGIN_IMPORT_TIMEOUT_MS: "20000",
+				SEKOKUVA_CA_TEST_PLUGIN_RESULT_PATH: marker,
 				TMPDIR: root,
-				CLINE_NO_AUTO_UPDATE: "1",
+				SEKOKUVA_CA_NO_AUTO_UPDATE: "1",
 			},
 		});
 		expect(result.status, result.stderr || String(result.error)).toBe(0);
@@ -498,10 +498,10 @@ test.each([
 					PATH: root,
 					HOME: root,
 					USERPROFILE: root,
-					CLINE_DIR: join(root, ".cline"),
+					SEKOKUVA_CA_DIR: join(root, ".cline"),
 					BUN_BE_BUN: "1",
-					CLINE_DESKTOP_CLI_PATH: cli,
-					CLINE_PLUGIN_MODE: mode,
+					SEKOKUVA_CA_DESKTOP_CLI_PATH: cli,
+					SEKOKUVA_CA_PLUGIN_MODE: mode,
 					JITI_FS_CACHE: "false",
 				},
 			},
@@ -537,10 +537,10 @@ test("standalone CLI serves the dashboard and its assets without external files 
 		...env,
 		HOME: root,
 		USERPROFILE: root,
-		CLINE_DIR: join(root, ".cline"),
-		CLINE_HUB_DISCOVERY_PATH: join(root, "hub.json"),
-		CLINE_HUB_PORT: String(await reserveLoopbackPort()),
-		CLINE_NO_AUTO_UPDATE: "1",
+		SEKOKUVA_CA_DIR: join(root, ".cline"),
+		SEKOKUVA_CA_HUB_DISCOVERY_PATH: join(root, "hub.json"),
+		SEKOKUVA_CA_HUB_PORT: String(await reserveLoopbackPort()),
+		SEKOKUVA_CA_NO_AUTO_UPDATE: "1",
 		PATH: root,
 	};
 	const child = Bun.spawn(

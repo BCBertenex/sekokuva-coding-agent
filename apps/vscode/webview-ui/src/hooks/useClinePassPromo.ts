@@ -5,7 +5,7 @@ import { useClineAuth } from "@/context/ClineAuthContext"
 import { useExtensionState } from "@/context/ExtensionStateContext"
 import { UiServiceClient } from "@/services/grpc-client"
 
-export const CLINE_PASS_PROVIDER_ID = "cline-pass"
+export const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass"
 
 /**
  * Shared state + actions for the ClinePass promotional surfaces (home banner,
@@ -22,16 +22,16 @@ export function useClinePassPromo() {
 
 	const isSelfHostedOrUnknown = !environment || environment === "selfHosted"
 	const remoteProviders: string[] = remoteConfigSettings?.remoteConfiguredProviders || []
-	const isBlockedByRemoteConfig = remoteProviders.length > 0 && !remoteProviders.includes(CLINE_PASS_PROVIDER_ID)
+	const isBlockedByRemoteConfig = remoteProviders.length > 0 && !remoteProviders.includes(SEKOKUVA_CA_PASS_PROVIDER_ID)
 	const isClinePassEnabled = !isSelfHostedOrUnknown && !isBlockedByRemoteConfig
 
 	// Mirrors the switch action's scope: with separate plan/act models the
 	// promos only affect (and therefore only reflect) the current mode.
 	const currentModeProvider = mode === "plan" ? apiConfiguration?.planModeApiProvider : apiConfiguration?.actModeApiProvider
 	const isUsingClinePass = planActSeparateModelsSetting
-		? currentModeProvider === CLINE_PASS_PROVIDER_ID
-		: apiConfiguration?.planModeApiProvider === CLINE_PASS_PROVIDER_ID ||
-			apiConfiguration?.actModeApiProvider === CLINE_PASS_PROVIDER_ID
+		? currentModeProvider === SEKOKUVA_CA_PASS_PROVIDER_ID
+		: apiConfiguration?.planModeApiProvider === SEKOKUVA_CA_PASS_PROVIDER_ID ||
+			apiConfiguration?.actModeApiProvider === SEKOKUVA_CA_PASS_PROVIDER_ID
 
 	const subscribeUrl = useMemo(() => buildClinePassSubscribeUrl(clineUser?.appBaseUrl), [clineUser?.appBaseUrl])
 	const manageSubscriptionUrl = useMemo(() => buildClinePassSubscriptionPageUrl(clineUser?.appBaseUrl), [clineUser?.appBaseUrl])
@@ -55,7 +55,11 @@ export function useClinePassPromo() {
 	// provider update actually succeeded.
 	const selectClinePassProvider = useCallback(async (): Promise<boolean> => {
 		try {
-			await handleModeFieldChange({ plan: "planModeApiProvider", act: "actModeApiProvider" }, CLINE_PASS_PROVIDER_ID, mode)
+			await handleModeFieldChange(
+				{ plan: "planModeApiProvider", act: "actModeApiProvider" },
+				SEKOKUVA_CA_PASS_PROVIDER_ID,
+				mode,
+			)
 			return true
 		} catch (error) {
 			console.error("Failed to switch to ClinePass provider:", error)

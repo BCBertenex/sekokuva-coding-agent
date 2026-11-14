@@ -7,7 +7,7 @@ import type {
 	SessionRecord,
 } from "@sekokuva-ca/core";
 import {
-	ClineCore,
+	SekoKuvaCore,
 	listSessionHistoryFromBackend,
 	resolveSessionBackend,
 } from "@sekokuva-ca/core";
@@ -34,7 +34,7 @@ export async function createCliCore(options?: {
 	forceLocalBackend?: boolean;
 	cwd?: string;
 	workspaceRoot?: string;
-}): Promise<ClineCore> {
+}): Promise<SekoKuvaCore> {
 	const explicitBackendMode = options?.forceLocalBackend
 		? "local"
 		: options?.backendMode;
@@ -46,7 +46,7 @@ export async function createCliCore(options?: {
 		logger: options?.logger,
 		telemetry,
 	});
-	const core = await ClineCore.create({
+	const core = await SekoKuvaCore.create({
 		...(explicitBackendMode ? { backendMode: explicitBackendMode } : {}),
 		...(options?.forceLocalBackend !== true
 			? {
@@ -79,7 +79,7 @@ export async function createCliCore(options?: {
 }
 
 async function withCliCore<T>(
-	run: (core: ClineCore) => Promise<T>,
+	run: (core: SekoKuvaCore) => Promise<T>,
 	options?: {
 		forceLocalBackend?: boolean;
 		logger?: BasicLogger;
@@ -164,7 +164,7 @@ export async function getLatestSessionRow(): Promise<unknown | undefined> {
 }
 
 export async function handleSessionHookEvent(
-	payload: Parameters<ClineCore["ingestHookEvent"]>[0],
+	payload: Parameters<SekoKuvaCore["ingestHookEvent"]>[0],
 ): Promise<void> {
 	await withCliCore(
 		async (core) => {

@@ -1,5 +1,5 @@
 import { captureSdkError } from "@sekokuva-ca/shared";
-import type { ClineCoreOptions } from "../../cline-core/types";
+import type { SekoKuvaCoreOptions } from "../../sekokuva-ca-core/types";
 import {
 	ensureCompatibleLocalHubUrl,
 	resolveCompatibleLocalHubUrl,
@@ -15,15 +15,15 @@ import { LocalRuntimeHost } from "./local-runtime-host";
 import type { RuntimeHost, RuntimeHostMode } from "./runtime-host";
 
 function resolveConfiguredBackendMode(
-	options: ClineCoreOptions,
+	options: SekoKuvaCoreOptions,
 ): RuntimeHostMode {
 	if (options.backendMode) {
 		return options.backendMode;
 	}
-	if (process.env.CLINE_VCR?.trim()) {
+	if (process.env.SEKOKUVA_CA_VCR?.trim()) {
 		return "local";
 	}
-	const raw = process.env.CLINE_SESSION_BACKEND_MODE?.trim().toLowerCase();
+	const raw = process.env.SEKOKUVA_CA_SESSION_BACKEND_MODE?.trim().toLowerCase();
 	if (raw === "local" || raw === "hub" || raw === "remote") {
 		return raw;
 	}
@@ -37,7 +37,7 @@ let backendInitPromise: Promise<SessionBackend> | undefined;
 
 function prewarmLocalHubIfNeeded(
 	configuredMode: RuntimeHostMode,
-	options: ClineCoreOptions,
+	options: SekoKuvaCoreOptions,
 ): void {
 	if (configuredMode !== "auto" && configuredMode !== "hub") {
 		return;
@@ -61,7 +61,7 @@ async function reconcileDeadSessionsIfSupported(
 	await service.reconcileDeadSessions?.().catch(() => {});
 }
 
-function createLocalBackend(options: ClineCoreOptions): SessionBackend {
+function createLocalBackend(options: SekoKuvaCoreOptions): SessionBackend {
 	try {
 		const store = new SqliteSessionStore();
 		store.init();
@@ -97,7 +97,7 @@ function createLocalBackend(options: ClineCoreOptions): SessionBackend {
 }
 
 function createLocalRuntimeHost(
-	options: ClineCoreOptions,
+	options: SekoKuvaCoreOptions,
 	distinctId: string,
 	backend?: SessionBackend,
 ): LocalRuntimeHost {
@@ -114,7 +114,7 @@ function createLocalRuntimeHost(
 }
 
 export async function resolveSessionBackend(
-	options: ClineCoreOptions,
+	options: SekoKuvaCoreOptions,
 ): Promise<SessionBackend> {
 	if (cachedBackend) {
 		return cachedBackend;
@@ -135,7 +135,7 @@ export async function resolveSessionBackend(
 }
 
 export async function createRuntimeHost(
-	options: ClineCoreOptions,
+	options: SekoKuvaCoreOptions,
 ): Promise<RuntimeHost> {
 	const distinctId = resolveCoreDistinctId(options.distinctId);
 	options.telemetry?.setDistinctId(distinctId);

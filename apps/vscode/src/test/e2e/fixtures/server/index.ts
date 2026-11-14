@@ -16,7 +16,7 @@ const E2E_API_SERVER_PORT = 7777
 
 export const MOCK_CLINE_API_SERVER_URL = `http://localhost:${E2E_API_SERVER_PORT}`
 
-const useVerboseLogging = process.env.CLINE_E2E_TESTS_VERBOSE === "true"
+const useVerboseLogging = process.env.SEKOKUVA_CA_E2E_TESTS_VERBOSE === "true"
 function log(...args: unknown[]) {
 	if (useVerboseLogging) {
 		console.log("[ClineApiServerMock]", ...args)

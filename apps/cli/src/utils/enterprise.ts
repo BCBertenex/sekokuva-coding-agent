@@ -1,7 +1,7 @@
 import {
 	buildRemoteConfigSessionBlobUploadMetadata,
-	ClineAccountService,
-	type ClineCoreStartInput,
+	SekoKuvaAccountService,
+	type SekoKuvaCoreStartInput,
 	createRemoteConfigSessionMessagesArtifactUploader,
 	ProviderSettingsManager,
 	prepareRemoteConfigCoreIntegration,
@@ -44,7 +44,7 @@ async function loadCliRemoteConfigBundleUncached(): Promise<
 		return undefined;
 	}
 
-	const service = new ClineAccountService({
+	const service = new SekoKuvaAccountService({
 		apiBaseUrl:
 			settings?.baseUrl?.trim() || getClineEnvironmentConfig().apiBaseUrl,
 		getAuthToken: async () => authToken,
@@ -139,7 +139,7 @@ function captureRemoteConfigInitialized(bundle: RemoteConfigBundle): void {
 }
 
 export async function prepareCliEnterpriseIntegration(
-	input: ClineCoreStartInput,
+	input: SekoKuvaCoreStartInput,
 ) {
 	const workspacePath =
 		input.config.workspaceRoot?.trim() || input.config.cwd?.trim();

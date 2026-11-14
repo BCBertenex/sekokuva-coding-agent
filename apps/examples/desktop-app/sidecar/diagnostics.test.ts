@@ -23,15 +23,15 @@ const savedEnv: Record<string, string | undefined> = {};
 beforeEach(() => {
 	dataDir = mkdtempSync(join(tmpdir(), "cline-diagnostics-"));
 	for (const key of [
-		"CLINE_DATA_DIR",
-		"CLINE_SESSION_DATA_DIR",
-		"CLINE_LOG_PATH",
+		"SEKOKUVA_CA_DATA_DIR",
+		"SEKOKUVA_CA_SESSION_DATA_DIR",
+		"SEKOKUVA_CA_LOG_PATH",
 	]) {
 		savedEnv[key] = process.env[key];
 		delete process.env[key];
 	}
-	process.env.CLINE_DATA_DIR = dataDir;
-	process.env.CLINE_SESSION_DATA_DIR = join(dataDir, "sessions");
+	process.env.SEKOKUVA_CA_DATA_DIR = dataDir;
+	process.env.SEKOKUVA_CA_SESSION_DATA_DIR = join(dataDir, "sessions");
 	mkdirSync(join(dataDir, "logs"), { recursive: true });
 });
 

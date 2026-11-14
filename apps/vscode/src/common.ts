@@ -10,10 +10,10 @@ import { HookProcessRegistry } from "./core/hooks/HookProcessRegistry"
 import { StateManager } from "./core/storage/StateManager"
 import { ExtensionRegistryInfo } from "./registry"
 import { registerVsCodeLmHandler } from "./sdk/vscode-lm/register-vscode-lm"
-import { registerClineClientIdentity } from "./services/ClineClientIdentity"
 import { ErrorService } from "./services/error"
 import { featureFlagsService } from "./services/feature-flags"
 import { getDistinctId } from "./services/logging/distinctId"
+import { registerClineClientIdentity } from "./services/SekoKuvaClientIdentity"
 import { telemetryService } from "./services/telemetry"
 import { PostHogClientProvider } from "./services/telemetry/providers/posthog/PostHogClientProvider"
 import { ClineTempManager } from "./services/temp"
@@ -38,7 +38,7 @@ export async function initialize(storageContext: StorageContext): Promise<Webvie
 	// Register the SDK early logger so diagnostic events from
 	// ProviderSettingsManager, RuntimeOAuthTokenManager, and Cline auth
 	// flow through Logger.debug → Cline output channel.
-	// These components operate before/outside of ClineCore sessions, so the
+	// These components operate before/outside of SekoKuvaCore sessions, so the
 	// session-scoped logger can't reach them.
 	setSdkLogger({
 		debug: (message) => Logger.debug(message),

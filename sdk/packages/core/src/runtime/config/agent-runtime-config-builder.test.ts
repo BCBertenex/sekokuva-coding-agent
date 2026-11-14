@@ -13,7 +13,7 @@ import type {
 	ITelemetryService,
 } from "@sekokuva-ca/shared";
 import { describe, expect, it, vi } from "vitest";
-import { version as clineCoreVersion } from "../../../package.json";
+import { version as sekokuvaCaCoreVersion } from "../../../package.json";
 import {
 	buildMessageModelInfo,
 	buildModelOptions,
@@ -207,7 +207,7 @@ describe("createAgentRuntimeConfig", () => {
 		expect(runtimeConfig.distinctId).toBe("user-123");
 		expect(runtimeConfig.clientName).toBe("cline-cli");
 		expect(runtimeConfig.clientVersion).toBe("3.0.38");
-		expect(runtimeConfig.clineCoreVersion).toBe(clineCoreVersion);
+		expect(runtimeConfig.sekokuvaCaCoreVersion).toBe(sekokuvaCaCoreVersion);
 	});
 
 	it("falls back to AgentConfig.sessionId when the input has none", () => {

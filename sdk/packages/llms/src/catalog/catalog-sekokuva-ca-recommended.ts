@@ -1,19 +1,19 @@
 import { getClineEnvironmentConfig } from "@sekokuva-ca/shared";
-import { buildClineClientHeaders } from "../providers/cline-client-headers";
+import { buildClineClientHeaders } from "../providers/sekokuva-ca-client-headers";
 import type { ModelInfo } from "./types";
 
-export interface ClineRecommendedModelEntry {
+export interface SekoKuvaRecommendedModelEntry {
 	id: string;
 	name?: string;
 	description?: string;
 	tags?: string[];
 }
 
-export interface ClineRecommendedModelsPayload {
-	recommended?: ClineRecommendedModelEntry[];
-	clinePass?: ClineRecommendedModelEntry[];
-	free?: ClineRecommendedModelEntry[];
-	clineCloud?: ClineRecommendedModelEntry[];
+export interface SekoKuvaRecommendedModelsPayload {
+	recommended?: SekoKuvaRecommendedModelEntry[];
+	clinePass?: SekoKuvaRecommendedModelEntry[];
+	free?: SekoKuvaRecommendedModelEntry[];
+	clineCloud?: SekoKuvaRecommendedModelEntry[];
 }
 
 type ModelCapabilities = Pick<
@@ -26,10 +26,10 @@ type ModelCapabilities = Pick<
 	| "pricing"
 >;
 
-const CLINE_PASS_PROVIDER_ID = "cline-pass";
-const CLINE_PROVIDER_ID = "cline";
+const SEKOKUVA_CA_PASS_PROVIDER_ID = "cline-pass";
+const SEKOKUVA_CA_PROVIDER_ID = "cline";
 
-const CLINE_PASS_MODEL_DEFAULTS = {
+const SEKOKUVA_CA_PASS_MODEL_DEFAULTS = {
 	contextWindow: 128_000,
 	maxInputTokens: 128_000,
 	maxTokens: 8_192,
@@ -43,7 +43,7 @@ const CLINE_PASS_MODEL_DEFAULTS = {
 } as const satisfies ModelCapabilities;
 
 function findModelBySlug(
-	entry: ClineRecommendedModelEntry,
+	entry: SekoKuvaRecommendedModelEntry,
 	modelsByName: Record<string, ModelInfo>,
 ): ModelInfo | undefined {
 	const modelSlug = entry.id.split("/").at(-1) ?? entry.id;
@@ -75,23 +75,23 @@ function buildModelsNameMap(
  * Vercel-only models (e.g. free promotions).
  */
 export function normalizeClineRecommendedProviderModels(
-	payload: ClineRecommendedModelsPayload,
+	payload: SekoKuvaRecommendedModelsPayload,
 	providerModels: Record<string, Record<string, ModelInfo>>,
 	options: { includeClineCloudModels?: boolean } = {},
 ): Record<string, Record<string, ModelInfo>> {
-	const clinePass = payload.clinePass ?? [];
+	const sekokuvaCaPass = payload.clinePass ?? [];
 	const models: Record<string, ModelInfo> = {};
-	const clineModels: Record<string, ModelInfo> = {};
+	const sekokuvaCaModels: Record<string, ModelInfo> = {};
 	const openRouterModels = providerModels.openrouter ?? {};
 	const openRouterModelsByName = buildModelsNameMap(openRouterModels);
 	const vercelModels = providerModels["vercel-ai-gateway"] ?? {};
 	const vercelModelsByName = buildModelsNameMap(vercelModels);
 
-	clinePass.forEach((entry) => {
+	sekokuvaCaPass.forEach((entry) => {
 		const capabilities =
 			findModelBySlug(entry, openRouterModelsByName) ??
 			findModelBySlug(entry, vercelModelsByName) ??
-			CLINE_PASS_MODEL_DEFAULTS;
+			SEKOKUVA_CA_PASS_MODEL_DEFAULTS;
 
 		models[entry.id] = {
 			// We should use the OR name, unless there is not one (like when using defaults)
@@ -104,7 +104,7 @@ export function normalizeClineRecommendedProviderModels(
 	});
 
 	const addClineModel = (
-		entry: ClineRecommendedModelEntry,
+		entry: SekoKuvaRecommendedModelEntry,
 		includeInClinePass: boolean,
 	) => {
 		const capabilities =
@@ -112,7 +112,7 @@ export function normalizeClineRecommendedProviderModels(
 			findModelBySlug(entry, openRouterModelsByName) ??
 			vercelModels[entry.id] ??
 			findModelBySlug(entry, vercelModelsByName) ??
-			CLINE_PASS_MODEL_DEFAULTS;
+			SEKOKUVA_CA_PASS_MODEL_DEFAULTS;
 		// The recommended-models endpoint only sends slug-like names (e.g.
 		// "deepseek-v4-flash"), so prefer the OpenRouter catalog's display name
 		// for every free entry. Without this, the free overlay overwrites the
@@ -134,7 +134,7 @@ export function normalizeClineRecommendedProviderModels(
 			description: entry.description,
 		};
 
-		clineModels[entry.id] = {
+		sekokuvaCaModels[entry.id] = {
 			...modelInfo,
 			pricing: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
 		};
@@ -159,18 +159,18 @@ export function normalizeClineRecommendedProviderModels(
 	}
 
 	const result: Record<string, Record<string, ModelInfo>> = {};
-	if (Object.keys(clineModels).length > 0) {
-		result[CLINE_PROVIDER_ID] = clineModels;
+	if (Object.keys(sekokuvaCaModels).length > 0) {
+		result[SEKOKUVA_CA_PROVIDER_ID] = sekokuvaCaModels;
 	}
-	if (clinePass.length > 0) {
-		result[CLINE_PASS_PROVIDER_ID] = models;
+	if (sekokuvaCaPass.length > 0) {
+		result[SEKOKUVA_CA_PASS_PROVIDER_ID] = models;
 	}
 	return result;
 }
 
 export async function fetchClineRecommendedModelsPayload(
 	fetcher: typeof fetch = fetch,
-): Promise<ClineRecommendedModelsPayload> {
+): Promise<SekoKuvaRecommendedModelsPayload> {
 	const url = `${getClineEnvironmentConfig().apiBaseUrl}/api/v1/ai/cline/recommended-models`;
 	const response = await fetcher(url, { headers: buildClineClientHeaders() });
 	if (!response.ok) {
@@ -179,7 +179,7 @@ export async function fetchClineRecommendedModelsPayload(
 		);
 	}
 
-	return (await response.json()) as ClineRecommendedModelsPayload;
+	return (await response.json()) as SekoKuvaRecommendedModelsPayload;
 }
 
 export async function fetchClineRecommendedProviderModels(

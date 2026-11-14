@@ -11,7 +11,7 @@ import {
 	type AgentPlugin,
 	type AgentTool,
 	type AgentToolContext,
-	ClineCore,
+	SekoKuvaCore,
 	createTool,
 	type ITelemetryService,
 	Llms,
@@ -24,7 +24,7 @@ import { z } from "zod";
 // Types
 // ---------------------------------------------------------------------------
 
-type SessionManager = ClineCore;
+type SessionManager = SekoKuvaCore;
 
 /** Minimal plugin host interface injected by the runtime via globalThis. */
 interface ClinePluginHost {
@@ -102,7 +102,7 @@ const envOr = (key: string, fallback: string): string =>
 const DEFAULT_PROVIDER_ID = envOr("CLINE_SUBAGENT_PROVIDER_ID", "cline");
 const DEFAULT_MODEL_ID = envOr(
 	"CLINE_SUBAGENT_MODEL_ID",
-	Llms.CLINE_DEFAULT_MODEL_ID,
+	Llms.SEKOKUVA_CA_DEFAULT_MODEL_ID,
 );
 type SubagentBackendMode = "auto" | "hub" | "local";
 
@@ -355,7 +355,7 @@ function emitSteer(sessionId: string | undefined, prompt: string): void {
 }
 
 async function getSessionManager(): Promise<SessionManager> {
-	sessionManagerPromise ??= ClineCore.create({
+	sessionManagerPromise ??= SekoKuvaCore.create({
 		backendMode: resolveSubagentBackendMode(DEFAULT_BACKEND_MODE),
 	}).catch((err) => {
 		// Clear the cached promise so subsequent calls can retry.

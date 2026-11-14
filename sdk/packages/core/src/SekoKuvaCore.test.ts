@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { ClineCoreStartInput } from "./cline-core/types";
+import type { SekoKuvaCoreStartInput } from "./sekokuva-ca-core/types";
 import type {
 	StartSessionInput,
 	StartSessionResult,
@@ -18,10 +18,10 @@ vi.mock("./runtime/host/host", () => ({
 }));
 
 import type { AgentResult } from "@sekokuva-ca/shared";
-import { ClineCore } from "./ClineCore";
+import { SekoKuvaCore } from "./SekoKuvaCore";
 import { NoOpFeatureFlagsProvider } from "./services/feature-flags";
 
-function createStartInput(): ClineCoreStartInput {
+function createStartInput(): SekoKuvaCoreStartInput {
 	return {
 		config: {
 			providerId: "anthropic",
@@ -77,7 +77,7 @@ function git(cwd: string, args: string[]): string {
 	}).trim();
 }
 
-describe("ClineCore", () => {
+describe("SekoKuvaCore", () => {
 	beforeEach(() => {
 		createRuntimeHostMock.mockReset();
 	});
@@ -118,7 +118,7 @@ describe("ClineCore", () => {
 			subscribe: vi.fn(() => () => {}),
 		};
 		createRuntimeHostMock.mockResolvedValue(host);
-		const core = await ClineCore.create();
+		const core = await SekoKuvaCore.create();
 
 		const displayMessages = await core.readDisplayMessages("session-1");
 
@@ -140,7 +140,7 @@ describe("ClineCore", () => {
 
 	it("compares a checkpoint to the current workspace through the public SDK API", async () => {
 		const dir = mkdtempSync(join(tmpdir(), "cline-core-compare-"));
-		let core: ClineCore | undefined;
+		let core: SekoKuvaCore | undefined;
 		try {
 			git(dir, ["init", "-b", "main"]);
 			git(dir, ["config", "user.email", "test@example.com"]);
@@ -187,7 +187,7 @@ describe("ClineCore", () => {
 			};
 			createRuntimeHostMock.mockResolvedValue(host);
 
-			core = await ClineCore.create();
+			core = await SekoKuvaCore.create();
 			const result = await core.compareCheckpoint({
 				sessionId: "session-1",
 				checkpointRunCount: 1,
@@ -240,7 +240,7 @@ describe("ClineCore", () => {
 
 		const dispose = vi.fn(async () => {});
 		const applyToStartSessionInput = vi.fn(
-			async (input: ClineCoreStartInput) => ({
+			async (input: SekoKuvaCoreStartInput) => ({
 				...input,
 				config: {
 					...input.config,
@@ -256,7 +256,7 @@ describe("ClineCore", () => {
 			}),
 		);
 
-		const core = await ClineCore.create({
+		const core = await SekoKuvaCore.create({
 			prepare: async () => ({
 				applyToStartSessionInput,
 				dispose,
@@ -290,7 +290,7 @@ describe("ClineCore", () => {
 			updateSessionModel: vi.fn(),
 		};
 		createRuntimeHostMock.mockResolvedValue(host);
-		const core = await ClineCore.create();
+		const core = await SekoKuvaCore.create();
 
 		await core.start({
 			config: {
@@ -336,7 +336,7 @@ describe("ClineCore", () => {
 		createRuntimeHostMock.mockResolvedValue(host);
 
 		const dispose = vi.fn(async () => {});
-		const core = await ClineCore.create({
+		const core = await SekoKuvaCore.create({
 			prepare: async () => ({
 				applyToStartSessionInput: (input) => input,
 				dispose,
@@ -385,7 +385,7 @@ describe("ClineCore", () => {
 			dispose: vi.fn().mockResolvedValue(undefined),
 		};
 
-		const core = await ClineCore.create({
+		const core = await SekoKuvaCore.create({
 			backendMode: "local",
 			clientName: "unit-test-client",
 			telemetry: telemetry as never,
@@ -432,7 +432,7 @@ describe("ClineCore", () => {
 		const submit = vi.fn(async () => "submitted");
 		const requestToolApproval = vi.fn(async () => ({ approved: true }));
 
-		const core = await ClineCore.create({
+		const core = await SekoKuvaCore.create({
 			capabilities: {
 				toolExecutors: { askQuestion },
 				requestToolApproval,
@@ -488,7 +488,7 @@ describe("ClineCore", () => {
 			platformVersion: "1.102.3",
 			isMultiRoot: true,
 		};
-		const core = await ClineCore.create();
+		const core = await SekoKuvaCore.create();
 
 		await core.start({
 			...createStartInput(),
@@ -515,7 +515,7 @@ describe("ClineCore", () => {
 		expect(startInput.localRuntime?.onTeamRestored).toBe(onTeamRestored);
 	});
 
-	it("prefers the per-session telemetry service over the ClineCore one", async () => {
+	it("prefers the per-session telemetry service over the SekoKuvaCore one", async () => {
 		const host = {
 			runtimeAddress: undefined,
 			startSession: vi.fn(async () => createStartResult("session-override")),
@@ -546,7 +546,7 @@ describe("ClineCore", () => {
 			isEnabled: vi.fn(() => true),
 		};
 
-		const core = await ClineCore.create({
+		const core = await SekoKuvaCore.create({
 			backendMode: "local",
 			telemetry: coreTelemetry as never,
 		});
@@ -578,7 +578,7 @@ describe("ClineCore", () => {
 		};
 		createRuntimeHostMock.mockResolvedValue(host);
 
-		const core = await ClineCore.create();
+		const core = await SekoKuvaCore.create();
 
 		expect(core.featureFlags.getProvider()).toBeInstanceOf(
 			NoOpFeatureFlagsProvider,
@@ -642,7 +642,7 @@ describe("ClineCore", () => {
 		};
 		createRuntimeHostMock.mockResolvedValue(host);
 
-		const core = await ClineCore.create();
+		const core = await SekoKuvaCore.create();
 		const [row] = await core.list(10);
 
 		expect(host.listSessions).toHaveBeenCalledWith(20, { rootOnly: true });
@@ -697,11 +697,11 @@ describe("ClineCore", () => {
 		};
 		createRuntimeHostMock.mockResolvedValue(host);
 
-		const core = await ClineCore.create();
+		const core = await SekoKuvaCore.create();
 		const [row] = await core.list(10, { hydrate: false });
 
 		// Hydration and default root-session filtering are consumed by
-		// ClineCore/listSessionHistory; the host list contract only receives the
+		// SekoKuvaCore/listSessionHistory; the host list contract only receives the
 		// numeric scan limit.
 		expect(host.listSessions.mock.calls).toEqual([[20, { rootOnly: true }]]);
 		expect(host.readSessionMessages).not.toHaveBeenCalled();
@@ -713,7 +713,7 @@ describe("ClineCore", () => {
 		});
 	});
 
-	it("exposes event automation through ClineCore instead of CronService", async () => {
+	it("exposes event automation through SekoKuvaCore instead of CronService", async () => {
 		const root = mkdtempSync(join(tmpdir(), "cline-core-automation-"));
 		const cronDir = join(root, ".cline", "cron");
 		const reportsDir = join(cronDir, "reports");
@@ -754,7 +754,7 @@ Summarize the local event.
 		createRuntimeHostMock.mockResolvedValue(host);
 
 		try {
-			const core = await ClineCore.create({
+			const core = await SekoKuvaCore.create({
 				automation: {
 					cronDir,
 					reportsDir,
@@ -831,7 +831,7 @@ Summarize the local event.
 		};
 		createRuntimeHostMock.mockResolvedValue(host);
 
-		const core = await ClineCore.create();
+		const core = await SekoKuvaCore.create();
 		const result = await core.restore({
 			sessionId: "source-session",
 			checkpointRunCount: 2,

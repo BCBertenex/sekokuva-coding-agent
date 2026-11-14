@@ -5,12 +5,12 @@
 // stdout, stderr, and exit codes.
 //
 // Tests tagged @live require a configured provider and are skipped by default.
-// Run them with:  CLINE_BIN=... npm test -- headless @live
+// Run them with:  SEKOKUVA_CA_BIN=... npm test -- headless @live
 // ---------------------------------------------------------------------------
 
 import { test } from "@microsoft/tui-test";
 import {
-	CLINE_BIN,
+	SEKOKUVA_CA_BIN,
 	EXIT_CODE_FAIL,
 	EXIT_CODE_SUCCESS,
 	TERMINAL_WIDE,
@@ -25,7 +25,7 @@ import { expectExitCode, expectVisible } from "../helpers/terminal.js";
 // ---------------------------------------------------------------------------
 test.describe("cline -y (headless auth failure mode) - unauthenticated", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["-y", "tell me a joke"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["-y", "tell me a joke"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("unauthenticated"),
 	});
@@ -46,7 +46,7 @@ test.describe("piped stdin | cline - unauthenticated", () => {
 			file: "sh",
 			args: [
 				"-c",
-				`echo "max paulus" | ${CLINE_BIN} "print only the second word I gave you"`,
+				`echo "max paulus" | ${SEKOKUVA_CA_BIN} "print only the second word I gave you"`,
 			],
 		},
 		...TERMINAL_WIDE,
@@ -67,7 +67,7 @@ test.describe("cline -y --verbose - unauthenticated", () => {
 	test.use({
 		program: {
 			file: "sh",
-			args: ["-c", `${CLINE_BIN} -y --verbose "tell me a joke" 2>&1`],
+			args: ["-c", `${SEKOKUVA_CA_BIN} -y --verbose "tell me a joke" 2>&1`],
 		},
 		...TERMINAL_WIDE,
 		env: clineEnv("unauthenticated"),
@@ -85,7 +85,7 @@ test.describe("cline -y --verbose - unauthenticated", () => {
 // ---------------------------------------------------------------------------
 test.describe("cline -y --json - unauthenticated", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["-y", "--json", "tell me a joke"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["-y", "--json", "tell me a joke"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("unauthenticated"),
 	});
@@ -99,10 +99,10 @@ test.describe("cline -y --json - unauthenticated", () => {
 
 test.describe("cline (headless prompt mode) - authenticated @live", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["tell me a joke"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["tell me a joke"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-yolo-basic.json",
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-yolo-basic.json",
 		}),
 	});
 
@@ -123,12 +123,12 @@ test.describe("piped stdin | cline - authenticated", () => {
 			file: "sh",
 			args: [
 				"-c",
-				`echo "butterfly horse country" | ${CLINE_BIN} "print only the second word I gave you"`,
+				`echo "butterfly horse country" | ${SEKOKUVA_CA_BIN} "print only the second word I gave you"`,
 			],
 		},
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-piped-stdin.json",
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-piped-stdin.json",
 		}),
 	});
 
@@ -147,11 +147,11 @@ test.describe("cline --verbose - authenticated @live", () => {
 	test.use({
 		program: {
 			file: "sh",
-			args: ["-c", `${CLINE_BIN} --verbose "tell me a joke" 2>&1`],
+			args: ["-c", `${SEKOKUVA_CA_BIN} --verbose "tell me a joke" 2>&1`],
 		},
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-verbose.json",
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-verbose.json",
 		}),
 	});
 
@@ -170,10 +170,10 @@ test.describe("cline --verbose - authenticated @live", () => {
 // ---------------------------------------------------------------------------
 test.describe("cline --json - authenticated @live", () => {
 	test.use({
-		program: { file: CLINE_BIN, args: ["--json", "tell me a joke"] },
+		program: { file: SEKOKUVA_CA_BIN, args: ["--json", "tell me a joke"] },
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-json.json",
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-json.json",
 		}),
 	});
 
@@ -190,12 +190,12 @@ test.describe("cline --json - authenticated @live", () => {
 test.describe("cline -t (timeout) - headless yolo", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["-t", "2", "-y", "tell me a long detailed joke"],
 		},
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-timeout.json",
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-timeout.json",
 		}),
 	});
 
@@ -210,12 +210,12 @@ test.describe("cline -t (timeout) - headless yolo", () => {
 test.describe("cline --json -t (timeout) - JSON mode", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["--json", "-t", "2", "tell me a long detailed joke"],
 		},
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-json-timeout.json",
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-json-timeout.json",
 		}),
 	});
 
@@ -232,12 +232,12 @@ test.describe("cline --json -t (timeout) - JSON mode", () => {
 test.describe("cline -m (model flag in headless) @live", () => {
 	test.use({
 		program: {
-			file: CLINE_BIN,
+			file: SEKOKUVA_CA_BIN,
 			args: ["-m", "anthropic/claude-sonnet-4", "what model are you"],
 		},
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
-			CLINE_VCR_CASSETTE: "./fixtures/headless-model-flag.json",
+			SEKOKUVA_CA_VCR_CASSETTE: "./fixtures/headless-model-flag.json",
 		}),
 	});
 

@@ -42,14 +42,14 @@ function resolveLogLevel(value: string | undefined): LevelWithSilent {
 }
 
 function resolveRuntimeConfig(): Required<RuntimeLoggerConfig> {
-	const enabledValue = process.env.CLINE_LOG_ENABLED?.trim().toLowerCase();
+	const enabledValue = process.env.SEKOKUVA_CA_LOG_ENABLED?.trim().toLowerCase();
 	return {
 		enabled: enabledValue !== "0" && enabledValue !== "false",
-		level: resolveLogLevel(process.env.CLINE_LOG_LEVEL),
+		level: resolveLogLevel(process.env.SEKOKUVA_CA_LOG_LEVEL),
 		destination:
-			process.env.CLINE_LOG_PATH?.trim() ||
+			process.env.SEKOKUVA_CA_LOG_PATH?.trim() ||
 			join(resolveClineDataDir(), "logs", "code.log"),
-		name: process.env.CLINE_LOG_NAME?.trim() || "cline-code.sidecar",
+		name: process.env.SEKOKUVA_CA_LOG_NAME?.trim() || "cline-code.sidecar",
 		bindings: {},
 	};
 }

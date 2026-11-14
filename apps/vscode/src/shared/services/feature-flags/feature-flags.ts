@@ -13,7 +13,7 @@ export enum FeatureFlag {
 	// off => OpenRouter model list, on => Cline endpoint model list.
 	EXTENSION_CLINE_MODELS_ENDPOINT = "extension_cline_models_endpoint",
 	// Rollout flag for fetching recommended Cline models from the upstream endpoint.
-	CLINE_RECOMMENDED_MODELS_UPSTREAM = "cline_recommended_models_upstream",
+	SEKOKUVA_CA_RECOMMENDED_MODELS_UPSTREAM = "cline_recommended_models_upstream",
 	// Use the websocket mode for OpenAI native Responses API format
 	OPENAI_RESPONSES_WEBSOCKET_MODE = "openai-responses-websocket-mode",
 	// Rollout flag for Cline Cloud sessions (run a task in a hosted sandbox)
@@ -26,7 +26,7 @@ export const FeatureFlagDefaultValue: Partial<Record<FeatureFlag, FeatureFlagPay
 	[FeatureFlag.EXTENSION_REMOTE_BANNERS_TTL]: 24 * 60 * 60 * 1000,
 	[FeatureFlag.REMOTE_WELCOME_BANNERS]: process.env.E2E_TEST === "true" || process.env.IS_DEV === "true",
 	[FeatureFlag.EXTENSION_CLINE_MODELS_ENDPOINT]: false,
-	[FeatureFlag.CLINE_RECOMMENDED_MODELS_UPSTREAM]: false,
+	[FeatureFlag.SEKOKUVA_CA_RECOMMENDED_MODELS_UPSTREAM]: false,
 	[FeatureFlag.OPENAI_RESPONSES_WEBSOCKET_MODE]: false,
 	[FeatureFlag.CLOUD_SESSIONS]: false,
 }

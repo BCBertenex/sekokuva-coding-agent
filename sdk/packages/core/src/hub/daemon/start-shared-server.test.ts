@@ -51,7 +51,7 @@ vi.mock("../server", () => ({
 	startHubWebSocketServer: mockStartHubWebSocketServer,
 }));
 
-const originalHubPort = process.env.CLINE_HUB_PORT;
+const originalHubPort = process.env.SEKOKUVA_CA_HUB_PORT;
 const runtimeHandlers =
 	{} as unknown as EnsureHubServerOptions["runtimeHandlers"];
 
@@ -65,14 +65,14 @@ describe("ensureHubServer", () => {
 		mockResolveSharedHubOwnerContext.mockClear();
 		mockStartHubWebSocketServer.mockClear();
 		if (originalHubPort === undefined) {
-			delete process.env.CLINE_HUB_PORT;
+			delete process.env.SEKOKUVA_CA_HUB_PORT;
 		} else {
-			process.env.CLINE_HUB_PORT = originalHubPort;
+			process.env.SEKOKUVA_CA_HUB_PORT = originalHubPort;
 		}
 	});
 
 	it("does not allow port fallback by default in production", async () => {
-		delete process.env.CLINE_HUB_PORT;
+		delete process.env.SEKOKUVA_CA_HUB_PORT;
 		const { ensureHubServer } = await import("./start-shared-server");
 
 		await ensureHubServer({ runtimeHandlers });
@@ -89,7 +89,7 @@ describe("ensureHubServer", () => {
 	});
 
 	it("allows port fallback by default in development when no port is explicit", async () => {
-		delete process.env.CLINE_HUB_PORT;
+		delete process.env.SEKOKUVA_CA_HUB_PORT;
 		mockResolveClineBuildEnv.mockReturnValue("development");
 		const { ensureHubServer } = await import("./start-shared-server");
 
@@ -107,7 +107,7 @@ describe("ensureHubServer", () => {
 	});
 
 	it("does not default port fallback when a port option is explicit", async () => {
-		delete process.env.CLINE_HUB_PORT;
+		delete process.env.SEKOKUVA_CA_HUB_PORT;
 		const { ensureHubServer } = await import("./start-shared-server");
 
 		await ensureHubServer({ port: 30000, runtimeHandlers });
@@ -120,8 +120,8 @@ describe("ensureHubServer", () => {
 		);
 	});
 
-	it("does not default port fallback when CLINE_HUB_PORT is explicit", async () => {
-		process.env.CLINE_HUB_PORT = "30001";
+	it("does not default port fallback when SEKOKUVA_CA_HUB_PORT is explicit", async () => {
+		process.env.SEKOKUVA_CA_HUB_PORT = "30001";
 		const { ensureHubServer } = await import("./start-shared-server");
 
 		await ensureHubServer({ runtimeHandlers });

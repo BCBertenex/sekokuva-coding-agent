@@ -1,11 +1,11 @@
 import { existsSync, readFileSync } from "node:fs"
 import os from "node:os"
 import path from "node:path"
-import { getDocumentsPath } from "@/core/storage/documents-path"
 import type * as vscode from "vscode"
+import { getDocumentsPath } from "@/core/storage/documents-path"
 import { updateMcpSettingsFile } from "@/services/mcp/settingsLock"
-import type { StorageContext } from "@/shared/storage/storage-context"
 import { Logger } from "@/shared/services/Logger"
+import type { StorageContext } from "@/shared/storage/storage-context"
 import { getServerAuthHash } from "@/utils/mcpAuth"
 import { arePathsEqual } from "@/utils/path"
 
@@ -252,15 +252,15 @@ export async function getLegacyMcpSettingsSources(vscodeContext: vscode.Extensio
 }
 
 export function getSharedMcpSettingsPath(storage: StorageContext): string {
-	const explicitPath = process.env.CLINE_MCP_SETTINGS_PATH?.trim()
+	const explicitPath = process.env.SEKOKUVA_CA_MCP_SETTINGS_PATH?.trim()
 	if (explicitPath) {
 		return explicitPath
 	}
-	const explicitDataDir = process.env.CLINE_DATA_DIR?.trim()
+	const explicitDataDir = process.env.SEKOKUVA_CA_DATA_DIR?.trim()
 	if (explicitDataDir) {
 		return path.join(explicitDataDir, "settings", MCP_SETTINGS_FILE_NAME)
 	}
-	const clineDir = process.env.CLINE_DIR?.trim() || path.join(os.homedir(), ".cline")
+	const clineDir = process.env.SEKOKUVA_CA_DIR?.trim() || path.join(os.homedir(), ".cline")
 	return path.join(clineDir, "data", "settings", MCP_SETTINGS_FILE_NAME)
 }
 

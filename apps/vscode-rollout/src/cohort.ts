@@ -55,7 +55,7 @@ export const LAST_ACTIVATION_STATE_KEY = "cline.rollout.lastActivationAt";
 export const ROLLOUT_FLAG = "ext-sdk-bundle-rollout";
 
 /** Env var for local dev / e2e to force a bundle. Beats everything. */
-export const BUNDLE_OVERRIDE_ENV = "CLINE_BUNDLE_OVERRIDE";
+export const BUNDLE_OVERRIDE_ENV = "SEKOKUVA_CA_BUNDLE_OVERRIDE";
 
 /**
  * User-visible escape hatch: `<prefix>.rollout.bundleOverride` in VS Code
@@ -72,7 +72,7 @@ function asBundle(value: unknown): Bundle | undefined {
 }
 
 export interface CohortInputs {
-	/** CLINE_BUNDLE_OVERRIDE, if set. */
+	/** SEKOKUVA_CA_BUNDLE_OVERRIDE, if set. */
 	envOverride: string | undefined;
 	/** The <prefix>.rollout.bundleOverride user setting ("auto" = no override). */
 	settingOverride: string | undefined;

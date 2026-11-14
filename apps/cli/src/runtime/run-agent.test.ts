@@ -38,20 +38,20 @@ const sessionEventsMocks = vi.hoisted(() => ({
 	),
 }));
 
-const CLINE_PASS_SUBSCRIPTION_URL =
+const SEKOKUVA_CA_PASS_SUBSCRIPTION_URL =
 	"https://app.cline.bot/dashboard/subscription?personal=true";
-const SDK_CLINE_PASS_SUBSCRIPTION_MESSAGE = `No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: ${CLINE_PASS_SUBSCRIPTION_URL}`;
+const SDK_CLINE_PASS_SUBSCRIPTION_MESSAGE = `No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: ${SEKOKUVA_CA_PASS_SUBSCRIPTION_URL}`;
 const CLI_CLINE_PASS_SUBSCRIPTION_MESSAGE = `No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: ${getCliSubscriptionUrl()}`;
-const CLINE_PASS_LIMIT_DETAIL_MESSAGE =
+const SEKOKUVA_CA_PASS_LIMIT_DETAIL_MESSAGE =
 	"You have reached your 5-hour Clinepass limit. The limit resets in 5h, please try again later.";
 const CLI_CLINE_PASS_LIMIT_MESSAGE = [
 	"ClinePass limit reached",
-	CLINE_PASS_LIMIT_DETAIL_MESSAGE,
+	SEKOKUVA_CA_PASS_LIMIT_DETAIL_MESSAGE,
 	"Switch to Cline usage-based billing and retry with the Cline provider.",
 	"Interactive CLI: open the model selector with /model, choose Cline, then retry.",
 	"Headless CLI: rerun with --provider cline.",
 ].join("\n");
-const CLINE_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_MESSAGE =
+const SEKOKUVA_CA_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_MESSAGE =
 	"Organization accounts cannot use ClinePass subscriptions. Go to /account -> change account to switch to your personal account for ClinePass";
 
 vi.mock(
@@ -59,17 +59,17 @@ vi.mock(
 	async (importActual: () => Promise<typeof import("@sekokuva-ca/core")>) => ({
 		...(await importActual()),
 		getClineOrgIndividualInferenceSubscriptionMessage: () =>
-			CLINE_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_MESSAGE,
-		getClinePassSubscriptionUrl: () => CLINE_PASS_SUBSCRIPTION_URL,
+			SEKOKUVA_CA_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_MESSAGE,
+		getClinePassSubscriptionUrl: () => SEKOKUVA_CA_PASS_SUBSCRIPTION_URL,
 		isClineNotSubscribedError: (error: unknown) =>
-			error instanceof Error && error.name === "ClineNotSubscribedError",
+			error instanceof Error && error.name === "SekoKuvaNotSubscribedError",
 		isClineNotSubscribedMessage: (text: string) =>
 			text
 				.toLowerCase()
 				.includes("the user is not subscribed to required model plan"),
 		isClineOrgIndividualInferenceSubscriptionError: (error: unknown) =>
 			error instanceof Error &&
-			error.name === "ClineOrgIndividualInferenceSubscriptionError",
+			error.name === "SekoKuvaOrgIndividualInferenceSubscriptionError",
 		isClineOrgIndividualInferenceSubscriptionMessage: (text: string) =>
 			text
 				.toLowerCase()
@@ -77,7 +77,7 @@ vi.mock(
 					"organization accounts cannot use individual model inference subscriptions",
 				),
 		isClinePassLimitError: (error: unknown) =>
-			error instanceof Error && error.name === "ClinePassLimitError",
+			error instanceof Error && error.name === "SekoKuvaPassLimitError",
 		isClinePassLimitMessage: (text: string) => {
 			const normalized = text.toLowerCase();
 			return (
@@ -653,7 +653,7 @@ describe("runAgent", () => {
 
 	it("renders ClinePass subscription errors with friendly copy when startup throws", async () => {
 		const error = new Error(SDK_CLINE_PASS_SUBSCRIPTION_MESSAGE);
-		error.name = "ClineNotSubscribedError";
+		error.name = "SekoKuvaNotSubscribedError";
 		sessionManagerMocks.start.mockRejectedValue(error);
 
 		const { runAgent } = await import("./run-agent");
@@ -878,7 +878,7 @@ describe("runAgent", () => {
 			messagesPath: "/tmp/messages.json",
 			manifest: { session_id: "session-1" },
 			result: {
-				text: `Error: ${CLINE_PASS_LIMIT_DETAIL_MESSAGE}`,
+				text: `Error: ${SEKOKUVA_CA_PASS_LIMIT_DETAIL_MESSAGE}`,
 				usage: {
 					inputTokens: 0,
 					outputTokens: 0,
@@ -932,7 +932,7 @@ describe("runAgent", () => {
 		sessionManagerMocks.start.mockImplementation(async () => {
 			sessionEventsMocks.listener?.({
 				type: "error",
-				error: new Error(`Error: ${CLINE_PASS_LIMIT_DETAIL_MESSAGE}`),
+				error: new Error(`Error: ${SEKOKUVA_CA_PASS_LIMIT_DETAIL_MESSAGE}`),
 				recoverable: false,
 			});
 
@@ -942,7 +942,7 @@ describe("runAgent", () => {
 				messagesPath: "/tmp/messages.json",
 				manifest: { session_id: "session-1" },
 				result: {
-					text: `Error: ${CLINE_PASS_LIMIT_DETAIL_MESSAGE}`,
+					text: `Error: ${SEKOKUVA_CA_PASS_LIMIT_DETAIL_MESSAGE}`,
 					usage: {
 						inputTokens: 0,
 						outputTokens: 0,

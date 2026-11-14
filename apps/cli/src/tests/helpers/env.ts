@@ -51,7 +51,7 @@ export function clineEnv(
 
 	// Determine effective VCR mode: extra overrides > parent env > default "playback"
 	const effectiveVcrMode =
-		extra.CLINE_VCR ?? process.env.CLINE_VCR ?? "playback";
+		extra.SEKOKUVA_CA_VCR ?? process.env.SEKOKUVA_CA_VCR ?? "playback";
 
 	// During recording, authenticated configs read real OAuth credentials from
 	// ~/.cline/data/settings/providers.json while keeping all other settings
@@ -70,17 +70,17 @@ export function clineEnv(
 	// recording/playback is silently skipped.
 	const { CI: _ci, VITEST: _vitest, ...cleanEnv } = process.env;
 	if (!isAuthenticated) {
-		delete cleanEnv.CLINE_API_KEY;
+		delete cleanEnv.SEKOKUVA_CA_API_KEY;
 	}
 
 	// Only enable VCR when a cassette path is provided (via extra or parent env),
 	// otherwise tests without cassettes would trigger a spurious
-	// "[VCR] No CLINE_VCR_CASSETTE" warning on every run.
+	// "[VCR] No SEKOKUVA_CA_VCR_CASSETTE" warning on every run.
 	const hasCassette = !!(
-		extra.CLINE_VCR_CASSETTE ?? process.env.CLINE_VCR_CASSETTE
+		extra.SEKOKUVA_CA_VCR_CASSETTE ?? process.env.SEKOKUVA_CA_VCR_CASSETTE
 	);
 	const vcrDefaults = hasCassette
-		? { CLINE_VCR: "playback", CLINE_VCR_FILTER: "" }
+		? { SEKOKUVA_CA_VCR: "playback", SEKOKUVA_CA_VCR_FILTER: "" }
 		: {};
 
 	// the order of these env vars matter; later ones override earlier ones
@@ -88,27 +88,27 @@ export function clineEnv(
 		...vcrDefaults,
 		...cleanEnv,
 		...(realProvidersFile
-			? { CLINE_PROVIDER_SETTINGS_PATH: realProvidersFile }
+			? { SEKOKUVA_CA_PROVIDER_SETTINGS_PATH: realProvidersFile }
 			: {}),
-		CLINE_TELEMETRY_DISABLED: "1",
+		SEKOKUVA_CA_TELEMETRY_DISABLED: "1",
 		HOME: path.join(isolatedClinePath, "home"),
-		CLINE_DIR: isolatedClinePath,
-		CLINE_DATA_DIR: dataDir,
-		CLINE_DB_DATA_DIR: path.join(dataDir, "db"),
-		CLINE_GLOBAL_SETTINGS_PATH: path.join(
+		SEKOKUVA_CA_DIR: isolatedClinePath,
+		SEKOKUVA_CA_DATA_DIR: dataDir,
+		SEKOKUVA_CA_DB_DATA_DIR: path.join(dataDir, "db"),
+		SEKOKUVA_CA_GLOBAL_SETTINGS_PATH: path.join(
 			dataDir,
 			"settings",
 			"global-settings.json",
 		),
-		CLINE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
-		CLINE_HUB_DISCOVERY_PATH: path.join(
+		SEKOKUVA_CA_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+		SEKOKUVA_CA_HUB_DISCOVERY_PATH: path.join(
 			dataDir,
 			"locks",
 			"hub",
 			"discovery.json",
 		),
-		CLINE_HUB_PORT: nextHubPort(),
-		CLINE_MCP_SETTINGS_PATH: path.join(
+		SEKOKUVA_CA_HUB_PORT: nextHubPort(),
+		SEKOKUVA_CA_MCP_SETTINGS_PATH: path.join(
 			dataDir,
 			"settings",
 			"cline_mcp_settings.json",
@@ -116,17 +116,17 @@ export function clineEnv(
 		...(realProvidersFile
 			? {}
 			: {
-					CLINE_PROVIDER_SETTINGS_PATH: path.join(
+					SEKOKUVA_CA_PROVIDER_SETTINGS_PATH: path.join(
 						dataDir,
 						"settings",
 						"providers.json",
 					),
 				}),
-		CLINE_SESSION_DATA_DIR: path.join(dataDir, "sessions"),
-		CLINE_TEAM_DATA_DIR: path.join(dataDir, "teams"),
-		CLINE_DISABLE_CLINE_PASS_NOTICE: "1",
+		SEKOKUVA_CA_SESSION_DATA_DIR: path.join(dataDir, "sessions"),
+		SEKOKUVA_CA_TEAM_DATA_DIR: path.join(dataDir, "teams"),
+		SEKOKUVA_CA_DISABLE_CLINE_PASS_NOTICE: "1",
 		NO_UPDATE_NOTIFIER: "1",
-		CLINE_NO_AUTO_UPDATE: "1",
+		SEKOKUVA_CA_NO_AUTO_UPDATE: "1",
 		...extra,
 	};
 }

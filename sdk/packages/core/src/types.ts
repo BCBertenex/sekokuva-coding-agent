@@ -14,14 +14,14 @@ export {
 	FEATURE_FLAGS,
 	FeatureFlagDefaultValue,
 } from "@sekokuva-ca/shared";
-export { ClineCore } from "./ClineCore";
+export { SekoKuvaCore } from "./SekoKuvaCore";
 export type {
-	ClineCoreListHistoryOptions,
-	ClineCoreOptions,
-	ClineCoreStartInput,
+	SekoKuvaCoreListHistoryOptions,
+	SekoKuvaCoreOptions,
+	SekoKuvaCoreStartInput,
 	HubOptions,
 	RemoteOptions,
-} from "./cline-core/types";
+} from "./sekokuva-ca-core/types";
 export type {
 	AgentPluginPackageDiagnostic,
 	AgentPluginPackageDiagnosticScope,
